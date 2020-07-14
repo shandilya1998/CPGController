@@ -23,6 +23,6 @@ class OscLayer{
         int N;
     public:
         OscLayer(int n_o, int n, float dT);
-        void computeZ(float *freq);
+        void computeZ(float *freq, std::complex<float> *out);
         void forwardPropagation(float *omega, std::complex<float> **Zout, float **phaseOut);
 };
