@@ -20,11 +20,12 @@ class DataLoader{
         float T;
         float beta;
         float *phaseOffset;
-        float *A;
+        float *A_h;
+        float *A_k;
         int num_osc;
         int N;
     public:
-        DataLoader(int num_osc, int n, float Tsw, float Tst, float *phaseOffset, float *A);
+        DataLoader(int num_osc, int n, float Tsw, float Tst, float *phaseOffset, float *a_h, float *a_k);
         void HipJoint(float **out);
         void KneeJoint(float **out);
         void InputVector(float *out);
