@@ -23,7 +23,7 @@ Servo servo7;
 
 int Tsw = 5;
 int Tst = 15;
-int theta = 15;
+int theta = 25;
 int T;
 float beta;
 void setup() {
@@ -44,26 +44,27 @@ void loop() {
   // put your main code here, to run repeatedly:
   for(int i = 0; i<T; i++){
     if(i>=0 && i<T*beta/2){
-      servo0.write(theta*sin(M_PI*i/(T*beta)+M_PI));
-      servo1.write(theta*sin(M_PI*(i+T/4)/(T*beta)+M_PI));
-      servo2.write(theta*sin(M_PI*(i+T/2)/(T*beta)+M_PI));
-      servo3.write(theta*sin(M_PI*(i+3*T/4)/(T*beta)+M_PI));
+      servo0.write(90+theta*sin(M_PI*i/(T*beta)+M_PI));
+      servo1.write(90+theta*sin(M_PI*(i+T/4)/(T*beta)+M_PI));
+      servo2.write(90+theta*sin(M_PI*(i+T/2)/(T*beta)+M_PI));
+      servo3.write(90+theta*sin(M_PI*(i+3*T/4)/(T*beta)+M_PI));
       }
     else if(i>=T*beta/2 && i<T*(2-beta)/2){
-      servo0.write(theta*sin(M_PI*i/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
-      servo4.write(theta*sin(M_PI*i/(T*(1-beta))-M_PI*(beta-1)/beta));
-      servo1.write(theta*sin(M_PI*(i+T/4)/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
-      servo5.write(theta*sin(M_PI*(i+T/4)/(T*(1-beta))-M_PI*(beta-1)/beta));
-      servo2.write(theta*sin(M_PI*(i+T/2)/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
-      servo6.write(theta*sin(M_PI*(i+T/2)/(T*(1-beta))-M_PI*(beta-1)/beta));
-      servo3.write(theta*sin(M_PI*i/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
-      servo7.write(theta*sin(M_PI*i/(T*(1-beta))-M_PI*(beta-1)/beta));
+      servo0.write(90+theta*sin(M_PI*i/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
+      servo4.write(90+theta*sin(M_PI*i/(T*(1-beta))-M_PI*(beta-1)/beta));
+      servo1.write(90+theta*sin(M_PI*(i+T/4)/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
+      servo5.write(90+theta*sin(M_PI*(i+T/4)/(T*(1-beta))-M_PI*(beta-1)/beta));
+      servo2.write(90+theta*sin(M_PI*(i+T/2)/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
+      servo6.write(90+theta*sin(M_PI*(i+T/2)/(T*(1-beta))-M_PI*(beta-1)/beta));
+      servo3.write(90+theta*sin(M_PI*i/(T*(1-beta))+M_PI*(3-4*beta)/(2*(1-beta))));
+      servo7.write(90+theta*sin(M_PI*i/(T*(1-beta))-M_PI*(beta-1)/beta));
       }
     else{
-      servo0.write(theta*sin(M_PI*i/(T*beta)+M_PI*(beta-1)/beta));
-      servo1.write(theta*sin(M_PI*(i+T/4)/(T*beta)+M_PI*(beta-1)/beta));
-      servo2.write(theta*sin(M_PI*(i+T/2)/(T*beta)+M_PI*(beta-1)/beta));
-      servo3.write(theta*sin(M_PI*(i+3*T/4)/(T*beta)+M_PI*(beta-1)/beta));
+      servo0.write(90+theta*sin(M_PI*i/(T*beta)+M_PI*(beta-1)/beta));
+      servo1.write(90+theta*sin(M_PI*(i+T/4)/(T*beta)+M_PI*(beta-1)/beta));
+      servo2.write(90+theta*sin(M_PI*(i+T/2)/(T*beta)+M_PI*(beta-1)/beta));
+      servo3.write(90+theta*sin(M_PI*(i+3*T/4)/(T*beta)+M_PI*(beta-1)/beta));
       }
+     delay(100);
     }
   }

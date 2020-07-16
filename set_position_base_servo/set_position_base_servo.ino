@@ -8,10 +8,10 @@
 */
 
 #include <Servo.h>
-int servo0 = 2;
-int servo1 = 3;
-int servo2 = 4;
-int servo3 = 5;
+int servo0 = 6;
+int servo1 = 7;
+int servo2 = 8;
+int servo3 = 9;
 
 Servo myservo0;
 Servo myservo1;
