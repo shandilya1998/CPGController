@@ -19,7 +19,7 @@ Servo myservo2;
 Servo myservo3;// create servo object to control a servo
 // twelve servo objects can be created on most boards
 
-int pos = 90;    // variable to store the servo position
+int pos = 120;    // variable to store the servo position
 
 void setup() {
   myservo0.attach(servo0);
