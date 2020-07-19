@@ -21,11 +21,15 @@ class OutputMLP{
         std::complex<float> **W1;
         std::complex<float> **W2;
         int N;
+        std::complex<float> **X_h;
+        float **X_out;
     public:   
         OutputMLP(int n_o, int n_h, int n_out, int n);
         void activationInput(std::complex<float> **X, std::complex<float> **out);
         void activationHidden(std::complex<float> **X, float **out);
-        void forwardPropagation(std::complex<float> **X, float **out);
-        void setInputWeights(std::complex<float> **weights){W1 = weights;}
-        void setHiddenWeights(std::complex<float> **weights){W2 = weights;} 
+        void forwardPropagation(std::complex<float> **X, float **out); 
+        void getInputWeights(std::complex<float> **weights){weights = W1;}
+        void getHiddenWeights(std::complex<float> **weights){weights = W2;}
+        void getXh(std::complex<float> **x){x = X_h;}
+        void getXout(float **x){x = X_out;}
 };

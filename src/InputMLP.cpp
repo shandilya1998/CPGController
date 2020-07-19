@@ -5,6 +5,8 @@ InputMLP::InputMLP(int n_i, int n_h, int n_o){
     num_h = n_h;
     num_osc = n_o;
     //std::cout << 'here';
+    X_h = new float[num_h];
+    X_osc = new float[num_osc];
     W1 = new float *[num_h];
     for(int i=0;i<num_h;i++){
         W1[i] = new float[num_inp];
@@ -44,10 +46,7 @@ void InputMLP::activationHidden(float *X, float *out){
 }
 
 void InputMLP::forwardPropagation(float *X, float *out){
-    float X_h[num_h];
-    float X_osc[num_osc];
     activationInput(X, X_h);
     activationHidden(X_h, X_osc);
     out = X_osc;
 }
-

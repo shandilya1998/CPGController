@@ -5,6 +5,8 @@ OutputMLP::OutputMLP(int n_o, int n_h, int n_out, int n){
     num_h = n_h;
     num_out = n_out;
     N = n;
+    X_h = new std::complex<float>*[num_h];
+    X_out = new float*[num_out];
     W1 = new std::complex<float> *[num_h];
     for(int i=0; i< num_h; ++i){
         W1[i] = new std::complex<float>[num_osc];
@@ -45,13 +47,7 @@ void OutputMLP::activationHidden(std::complex<float> **X, float **out){
 }
 
 void OutputMLP::forwardPropagation(std::complex<float> **X, float **out){
-    std::complex<float> **X_h;
-    X_h = new std::complex<float>*[num_h];
-    float **X_out;
-    X_out = new float*[num_out];
     activationInput(X, X_h);
     activationHidden(X_h, X_out);
     out = X_out;
-    //delete X_h;
-    //delete X_out;
 }
