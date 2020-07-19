@@ -61,6 +61,10 @@ int main(){
     data.getModelInput(input[3]);
     data.getModelOutput(output[3]);
     int nepochs = 3000;
-     
+    for(int i =0; i<nepochs; i++){
+        for(int j = 0; j<4; j++){
+            
+        }
+    }    
     return 0;
 }

@@ -1,6 +1,5 @@
 #ifndef COMMON_STD_IMPORTS
 #define COMMON_STD_IMPORTS
-
 #include <iostream>
 #include <cmath>
 #include "random_num_generator.h"
@@ -8,9 +7,12 @@
 
 #ifndef COMPLEX
 #define COMPLEX
-
 #include <complex>
+#endif
 
+#ifndef ACTIVATION
+#define ACTIVATION
+#include "Activation.h"
 #endif
 
 class OutputMLP{
