@@ -21,11 +21,15 @@ int main(){
         }
     }   std::cout << "\n";
     */
+    /*
     int N = 10;
     for(int i=0,j=0;i<N && j<N;i++,j++){
         std::cout << i << "\t";
-        std::cout << j << std::endl;
-        
+        std::cout << j << std::endl;  
     } 
+    */
+    for(int i=0;i<5;i++){
+        std::cout << temp[i];
+    }
     return 0;
 }

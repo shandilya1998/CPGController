@@ -20,18 +20,17 @@ class OutputMLP{
         int num_osc;
         int num_h;
         int num_out;
-        std::complex<float> **W1;
-        std::complex<float> **W2;
+        std::complex<double> **W1;
+        std::complex<double> **W2;
         int N;
-        std::complex<float> **X_h;
-        float **X_out;
+        std::complex<double> **X_h;
+        Activation activation;
     public:   
         OutputMLP(int n_o, int n_h, int n_out, int n);
-        void activationInput(std::complex<float> **X, std::complex<float> **out);
-        void activationHidden(std::complex<float> **X, float **out);
-        void forwardPropagation(std::complex<float> **X, float **out); 
-        void getInputWeights(std::complex<float> **weights){weights = W1;}
-        void getHiddenWeights(std::complex<float> **weights){weights = W2;}
-        void getXh(std::complex<float> **x){x = X_h;}
-        void getXout(float **x){x = X_out;}
+        void activationInput(std::complex<double> **X, std::complex<double> **out);
+        void activationHidden(std::complex<double> **X, double **out);
+        void forwardPropagation(std::complex<double> **X, double **out); 
+        void getInputWeights(std::complex<double> **weights){weights = W1;}
+        void getHiddenWeights(std::complex<double> **weights){weights = W2;}
+        void getXh(std::complex<double> **x){x = X_h;}
 };

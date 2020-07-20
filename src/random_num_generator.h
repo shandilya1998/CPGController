@@ -6,6 +6,6 @@
 
 #endif
 
-float get_random();
+double get_random();
 
-std::complex<float> get_complex_random();
+std::complex<double> get_complex_random();
