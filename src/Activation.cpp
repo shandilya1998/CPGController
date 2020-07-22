@@ -1,6 +1,6 @@
 #include "Activation.h"
 
-void Activation::reluf(double *inp, struct ParamsRelu *params){
+void Activation::reluf(double *inp, double *out, struct ParamsRelu *params){
     /*
         * double params array of length 2 
         * params[0] - input dimensionality
@@ -9,12 +9,12 @@ void Activation::reluf(double *inp, struct ParamsRelu *params){
     */
     for(int i=0; i<params->dim;i++){
         if(inp[i]<=0){
-            inp[i] = params->weight*inp[i];
+            out[i] = params->weight*inp[i];
         }
     }     
 }
 
-void Activation::relugrad(double *inp, struct ParamsRelu *params){
+void Activation::relugrad(double *inp, double *out, struct ParamsRelu *params){
     /*  
         * double params array of length 2 
         * params[0] - input dimensionality
@@ -23,15 +23,15 @@ void Activation::relugrad(double *inp, struct ParamsRelu *params){
     */
     for(int i=0; i<params->dim;i++){
         if(inp[i]<=0){
-            inp[i] = params->weight;
+            out[i] = params->weight;
         }   
         else{
-            inp[i] = 1.0;
+            out[i] = 1.0;
         }   
     }    
 }
 
-void Activation::reluf(std::complex<double> *inp, struct ParamsRelu *params){
+void Activation::reluf(std::complex<double> *inp, std::complex<double> *out, struct ParamsRelu *params){
     /*
         * struct with two child elements 
         * params.dim - input dimensionality
@@ -41,12 +41,12 @@ void Activation::reluf(std::complex<double> *inp, struct ParamsRelu *params){
     std::complex<double> weight(params->weight, 0);
     for(int i=0; i<params->dim;i++){
         if(real(inp[i])<=0 || imag(inp[i])<=0){
-            inp[i] = weight*inp[i];
+            out[i] = weight*inp[i];
         }
     }
 }
 
-void Activation::relugrad(std::complex<double> *inp, struct ParamsRelu *params){
+void Activation::relugrad(std::complex<double> *inp, std::complex<double> *out, struct ParamsRelu *params){
     /*  
         * double params array of length 2 
         * params[0] - input dimensionality
@@ -56,15 +56,15 @@ void Activation::relugrad(std::complex<double> *inp, struct ParamsRelu *params){
     std::complex<double> weight(params->weight, 0);
     for(int i=0; i<params->dim;i++){
         if(real(inp[i])<=0 || imag(inp[i])<=0){
-            inp[i] = weight;
+            out[i] = weight;
         }   
         else{
-            inp[i] = 1.0;
+            out[i] = 1.0;
         }   
     }    
 }
 
-void Activation::sigmoidf(double *inp, struct ParamsSigmoid *params){
+void Activation::sigmoidf(double *inp, double *out, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
@@ -72,11 +72,11 @@ void Activation::sigmoidf(double *inp, struct ParamsSigmoid *params){
                     - 1 <= bound
     */  
     for(int i =0; i<params->dim; i++){
-        inp[i] = params->upperBound/(1+exp(-inp[i]));
+        out[i] = params->upperBound/(1+exp(-inp[i]));
     }
 }
 
-void Activation::sigmoidgrad(double *inp, struct ParamsSigmoid *params){
+void Activation::sigmoidgrad(double *inp, double *out, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
@@ -84,11 +84,11 @@ void Activation::sigmoidgrad(double *inp, struct ParamsSigmoid *params){
                     - bound != 0
     */
     for(int i =0; i<params->dim; i++){
-        inp[i] = params->upperBound*exp(-inp[i])/pow(1+exp(-inp[i]), 2.0);
+        out[i] = params->upperBound*exp(-inp[i])/pow(1+exp(-inp[i]), 2.0);
     }
 }
 
-void Activation::sigmoidf(std::complex<double> *inp, struct ParamsSigmoid *params){
+void Activation::sigmoidf(std::complex<double> *inp, std::complex<double> *out, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params.dim - input dimensionality
@@ -97,27 +97,28 @@ void Activation::sigmoidf(std::complex<double> *inp, struct ParamsSigmoid *param
                     - 1 <= bound
     */
     std::complex<double> upperBound(params->upperBound, 0);
-    std::complex<double> c1(1, 0);
+    double c1 = 1.0;
+    std::complex<double> iota(0, 1);
     for(int i =0; i<params->dim; i++){
-        inp[i] = upperBound/(c1+std::exp(-inp[i]));
+        out[i] = params->upperBound*(1/(1+exp(-real(inp[i]))))+iota*params->upperBound*(1/(1+exp(-imag(inp[i]))));
     }
 }
 
-void Activation::sigmoidgrad(std::complex<double> *inp, struct ParamsSigmoid *params){
+void Activation::sigmoidgrad(std::complex<double> *inp, std::complex<double> *out, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
         * params[1] - upper bound of sigmoid values 
                     - bound != 0
     */
-    std::complex<double> upperBound(params->upperBound, 0);
     std::complex<double> c1(1, 0);
+    std::complex<double> iota(0, 1);
     for(int i =0; i<params->dim; i++){
-        inp[i] = upperBound*std::exp(-inp[i])/std::pow(c1+std::exp(-inp[i]), 2.0);
+        out[i] = params->upperBound*(-exp(-real(inp[i]))/pow((1+exp(-real(inp[i])),2)))+iota*params->upperBound*(-exp(-image(inp[i]))/pow((1+exp(-imag(inp[i])),2))) 
     }
 }
 
-void Activation::tanhf(double *inp, struct ParamsTanh *params){
+void Activation::tanhf(double *inp, double *out, struct ParamsTanh *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
@@ -125,11 +126,11 @@ void Activation::tanhf(double *inp, struct ParamsTanh *params){
                     - bound != 0
     */
     for(int i =0; i<params->dim; i++){
-        inp[i] = params->bound*tanh(inp[i]);
+        out[i] = params->bound*tanh(inp[i]);
     }
 }
 
-void Activation::tanhgrad(double *inp, struct ParamsTanh *params){
+void Activation::tanhgrad(double *inp, double *out, struct ParamsTanh *params){
     /*  
         * double params array of length 2
         * params[0] - input dimensionality
@@ -137,32 +138,31 @@ void Activation::tanhgrad(double *inp, struct ParamsTanh *params){
                     - bound != 0
     */
     for(int i =0; i<params->dim; i++){
-        inp[i] = params->bound*(1-pow(tanh(inp[i]), 2.0));
+        out[i] = params->bound*(1-pow(tanh(inp[i]), 2.0));
     }   
 }
 
-void Activation::tanhf(std::complex<double> *inp, struct ParamsTanh *params){
+void Activation::tanhf(std::complex<double> *inp, std::complex<double> *out, struct ParamsTanh *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
         * params[1] - bound of tanh values 
                     - bound != 0
     */
-    std::complex<double> bound(params->bound, 0); 
+    std::complex<double> iota(0, 1);
     for(int i =0; i<params->dim; i++){
-        inp[i] = bound*std::tanh(inp[i]);
+        out[i] = params->bound*(tanh(real(inp[i]))+iota*imag(inp[i]));
     }
 }
 
-void Activation::tanhgrad(std::complex<double> *inp, struct ParamsTanh *params){
+void Activation::tanhgrad(std::complex<double> *inp, std::complex<double> *out, struct ParamsTanh *params){
     /*  
         * double params array of length 2
         * params[0] - input dimensionality
         * params[1] - bound of tanh values 
                     - bound != 0
     */
-    std::complex<double> bound(params->bound, 0);
     for(int i =0; i<params->dim; i++){
-        inp[i] = bound*(std::pow(std::cosh(inp[i]), -2.0));
+        out[i] = params->bound*(pow(cosh(real(inp[i])), -2.0))+params->iota*bound*(pow(cosh(imag(inp[i])), -2.0));
     }
 }

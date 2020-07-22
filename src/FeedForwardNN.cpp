@@ -69,7 +69,15 @@ int main(){
     double **y = new double *[num_out];
     for(int i = 0; i<num_out; i++){
         y[i] = new double[N];    
-    }      
+    }
+    double **W1_inp_mlp, **W2_inp_mlp, *X_h_inp_mlp;
+    std::complex<double> **W1_out_mlp, **W2_out_mlp, **X_h_out_mlp;
+    out.getInputWeights(W1_out_mlp);
+    out.getHiddenWeights(W2_out_mlp);     
+    out.getXh(X_h_out_mlp);
+    inp.getInputWeights(W1_inp_mlp);
+    inp.getHiddenWeights(W2_inp_mlp);    
+    inp.getXh(X_h_inp_mlp);
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
