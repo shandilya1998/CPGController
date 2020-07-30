@@ -10,7 +10,7 @@ def get_base_signal(Tsw, Tst, theta, N):
     signal = np.zeros((N, 2))
     T = Tst+Tsw
     beta = Tst/T
-    for i in tqdm(range(N)):
+    for i in range(N):
         t = i%T
         if 0<=t<=beta*T/2:
             signal[i][0] = theta*np.sin(np.pi*t/(T*beta)+np.pi)
