@@ -10,8 +10,8 @@ OscLayer::OscLayer(int n_o, int n, double dT){
 void OscLayer::computeZ(double freq, std::complex<double> *out, double *phi){
     std::complex<double> iota(0, 1);
     for(int i=1; i<N; i++){
-        out[i] += ((1-abs(out[i-1]))*out[i-1] + iota*(freq*out[i-1]))*dt;
-        phi[i] += freq*dt;
+        out[i] = out[i-1] + ((1-pow(abs(out[i-1]),2))*out[i-1] + iota*(freq*out[i-1]))*dt;
+        phi[i] = phi[i-1] + freq*dt;
     } 
 }
 
