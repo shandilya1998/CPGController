@@ -73,8 +73,8 @@ class Train(object):
         Z = self.data.get_input(Tst, Tsw, theta)
         for i in tqdm(range(self.nepochs)):
             yr = self.out_mlp(Z)
-            print(yr)
             err = np.sum(yr-self.data.signal[:, 1:].T)**2
+            print(err)
             self.err[i] = err            
             """
                 Back propagation
