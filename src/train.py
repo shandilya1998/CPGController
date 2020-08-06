@@ -60,6 +60,31 @@ class Train(object):
         self.lr = lr
         self.err = np.zeros((self.nepochs,))
 
+    def _plot(self, axis, x, y):
+        axis.plot(
+            self.data.signal[:, 0].T, 
+            x,
+            'r',
+            label = 'ideal gait')
+        axis.plot(
+            self.data.signal[:, 0].T, 
+            y, 
+            'b',
+            label = 'generated gait')
+        axis.set_xlabel('time')
+        axis.set_ylabel('joint activation')
+        axis.legend()    
+
+    def plot(self, yr):
+        fig, axes = plt.subplots(self.num_out, 1, figsize = (5, 5*self.num_out))
+        if self.num_out!=1:
+            for i in range(self.num_out):
+                self._plot(axes[i], self.data.signal[:, i+1].T, yr[i])
+        else:
+            self._plot(axes, self.data.signal[:, 1].T, yr[0])
+        fig.savefig('../images/pred_vs_ideal_exp2.png')
+        plt.show()
+
     def __call__(self):
         self.out_mlp.build(self.num_osc, 
                            self.num_h, 
@@ -68,9 +93,9 @@ class Train(object):
             Assuming a straight line motion with a constant speed
         """
         Tst = 60
-        Tsw = 20
+        Tsw = 10
         theta = 15
-        Z = self.data.get_input(Tst, Tsw, theta)
+        Z = self.data.get_input(Tsw, Tst, theta)
         for i in tqdm(range(self.nepochs)):
             yr = self.out_mlp(Z)
             err = np.sum((self.data.signal[:, 1:self.num_out+1].T-yr)**2)
@@ -90,20 +115,20 @@ class Train(object):
                             self.out_mlp.W2.real.T, 
                             (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhr)*(1-self.out_mlp.xhr)/2, 
                         Z.real.T) + \
+                    np.matmul(
                         np.matmul(
-                            np.matmul(
-                                self.out_mlp.W2.imag.T, 
-                                (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
-                            Z.imag.T)
+                            self.out_mlp.W2.imag.T, 
+                            (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
+                        Z.imag.T)
             dW1i = np.matmul(
                         np.matmul(self.out_mlp.W2.real.T, 
                                  (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhr)*(1-self.out_mlp.xhr)/2, 
                         Z.imag.T) + \
+                    np.matmul(
                         np.matmul(
-                            np.matmul(
-                                self.out_mlp.W2.imag.T, 
-                                (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
-                            Z.real.T) 
+                            self.out_mlp.W2.imag.T, 
+                            (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
+                        Z.real.T) 
             W2r = self.out_mlp.W2.real - self.lr*dW2r 
             W2i = self.out_mlp.W2.imag - self.lr*dW2i
             self.out_mlp.set_W2(W2r + 1j*W2i)
@@ -113,11 +138,11 @@ class Train(object):
             if i>20 and self.err[i]==self.err[i-10]:
                 break
                 
-        
-        pkl = open('w2_out_mlp.pickle', 'wb')
+        yr = self.out_mlp(Z)
+        pkl = open('weights/exp2/w2_out_mlp.pickle', 'wb')
         pickle.dump(self.out_mlp.W2, pkl)
         pkl.close()
-        pkl = open('w1_out_mlp.pickle', 'wb')
+        pkl = open('weights/exp2/w1_out_mlp.pickle', 'wb')
         pickle.dump(self.out_mlp.W1, pkl)
         pkl.close()
         fig, axes = plt.subplots(1, 1, figsize = (5, 5))
@@ -125,13 +150,15 @@ class Train(object):
         axes.set_xlabel('epochs')
         axes.set_ylabel('error')
         plt.show()
-        fig.savefig('../images/training_plot_output_mlp_exp1.png')
-
+        fig.savefig('../images/training_plot_output_mlp_exp2.png')
+        self.plot(yr)
+    
 dt = 0.001
-N = 100000
+N = 500
 nepochs = 3000
-num_osc = 10
-num_h = 20
-num_out = 8
-train = Train(dt, N, nepochs, num_osc, num_h, num_out)
+num_osc = 100
+num_h = 200
+num_out = 1 
+lr = 0.00001
+train = Train(dt, N, nepochs, num_osc, num_h, num_out, 'random', lr)
 train()
