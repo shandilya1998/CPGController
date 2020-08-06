@@ -8,7 +8,8 @@ class OutputMLP(object):
         self.num_out = 2
         self.init = 'random'
         self.sig = np.vectorize(self._sigmoid)
-    
+        self.relu = np.vectorize(self._relu)
+        
     def _random_mat(self, s1, s2):
         return np.random.random((s1, s2))
     
@@ -39,6 +40,14 @@ class OutputMLP(object):
         #return self.sig(x)
         return 1/(1-np.exp(-x, dtype = np.float64))
     
+    def _relu(self, x):
+        if x<0:
+            return 0
+        return x
+
+    def reluf(self, X):
+        return self.relu(X) 
+
     def set_W1(self, w1):
         self.W1 = w1
 
@@ -53,17 +62,17 @@ class OutputMLP(object):
         #print('weights')
         #print(self.W1)
         self.nh = np.matmul(self.W1, Z)
-        #print(self.nh)
         self.nhr = self.nh.real
         self.nhi = self.nh.imag
-        self.xhr = self.sigmoidf(self.nhr)
-        self.xhi = self.sigmoidf(self.nhi)
+        self.xhr = 2*self.sigmoidf(self.nhr)-1
+        self.xhi = 2*self.sigmoidf(self.nhi)-1
         self.xh = self.xhr+1j*self.xhi
+        #print(self.xh)
         self.no = np.matmul(self.W2, self.xh)
         self.nor = self.no.real
         self.noi = self.no.imag
-        self.yr = self.sigmoidf(self.nor)
-        self.yi = self.sigmoidf(self.noi)
+        self.yr = 2*self.sigmoidf(self.nor)-1
+        self.yi = 2*self.sigmoidf(self.noi)-1
         self.y = self.yr + 1j*self.yi
         return self.yr
        

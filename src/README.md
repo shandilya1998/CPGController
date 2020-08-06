@@ -6,3 +6,7 @@ The following assumptions hold true for this experiment:->
 - The motion will be with a single speed
 - No deviation from a straight line
 - The aforementioned two points will lead to same fundamental frequency of the control signals for all legs
+The learning rate for this experiment was 1e-3. 
+It was observed from the loss plot that loss after a sudded decrease for the first time does not fall greatly. 
+A larger learning rate is required
+![Error Plot](../images/training_plot_output_mlp_exp1.png)

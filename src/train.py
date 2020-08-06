@@ -35,7 +35,7 @@ class DataLoader(object):
         ff = self.get_ff(self.signal[:, 1])
         freq = np.empty((self.num_osc,))
         for i in range(self.num_osc):
-            freq[i] = ff*(i+1)
+            freq[i] = 2*np.pi*ff*(i+1)
         return self.osc.get_signal(freq)
                 
 class Train(object):
@@ -47,7 +47,7 @@ class Train(object):
                  num_h, 
                  num_out, 
                  init = 'random',
-                 lr = 0.001):
+                 lr = 1e-3):
         self.num_osc = num_osc
         self.num_h = num_h
         self.num_out = num_out
@@ -73,38 +73,54 @@ class Train(object):
         Z = self.data.get_input(Tst, Tsw, theta)
         for i in tqdm(range(self.nepochs)):
             yr = self.out_mlp(Z)
-            err = np.sum(yr-self.data.signal[:, 1:].T)**2
-            print(err)
+            err = np.sum((self.data.signal[:, 1:self.num_out+1].T-yr)**2)
+            #print(err)
             self.err[i] = err            
             """
                 Back propagation
             """
-            dW2r = -1*np.matmul((self.data.signal[:, 1:].T-yr)*yr*(1-yr), self.out_mlp.xhr.T)
-            dW2i = np.matmul((self.data.signal[:, 1:].T-yr)*yr*(1-yr), self.out_mlp.xhi.T)
-            dW1r = -1*np.matmul(np.matmul(self.out_mlp.W2.real.T, 
-                                          (self.data.signal[:, 1:].T-yr)*yr*(1-yr)), 
-                                Z.real.T) + np.matmul(np.matmul(self.out_mlp.W2.imag.T, 
-                                                              (self.data.signal[:, 1:].T-yr)*yr*(1-yr)), 
-                                                      Z.imag.T)
-            dW1i = np.matmul(np.matmul(self.out_mlp.W2.real.T, 
-                                       (self.data.signal[:, 1:].T-yr)*yr*(1-yr)), 
-                             Z.imag.T) + np.matmul(np.matmul(self.out_mlp.W2.imag.T, 
-                                                             (self.data.signal[:, 1:].T-yr)*yr*(1-yr)), 
-                                                   Z.real.T) 
-            W2r = self.out_mlp.W2.real - self.lr*dW2r
+            dW2r = -1*np.matmul(
+                        (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2, 
+                        self.out_mlp.xhr.T)
+            dW2i = np.matmul(
+                        (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2, 
+                        self.out_mlp.xhi.T)
+            dW1r = -1*np.matmul(
+                        np.matmul(
+                            self.out_mlp.W2.real.T, 
+                            (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhr)*(1-self.out_mlp.xhr)/2, 
+                        Z.real.T) + \
+                        np.matmul(
+                            np.matmul(
+                                self.out_mlp.W2.imag.T, 
+                                (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
+                            Z.imag.T)
+            dW1i = np.matmul(
+                        np.matmul(self.out_mlp.W2.real.T, 
+                                 (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhr)*(1-self.out_mlp.xhr)/2, 
+                        Z.imag.T) + \
+                        np.matmul(
+                            np.matmul(
+                                self.out_mlp.W2.imag.T, 
+                                (self.data.signal[:, 1:self.num_out+1].T-yr)*(1+yr)*(1-yr)/2)*(1+self.out_mlp.xhi)*(1-self.out_mlp.xhi)/2, 
+                            Z.real.T) 
+            W2r = self.out_mlp.W2.real - self.lr*dW2r 
             W2i = self.out_mlp.W2.imag - self.lr*dW2i
             self.out_mlp.set_W2(W2r + 1j*W2i)
             W1r = self.out_mlp.W1.real - self.lr*dW1r
             W1i = self.out_mlp.W1.imag - self.lr*dW1i
             self.out_mlp.set_W1(W1r+1j*W1i)
+            if i>20 and self.err[i]==self.err[i-10]:
+                break
+                
         
         pkl = open('w2_out_mlp.pickle', 'wb')
-        pickle.dump(self.out_mlp.W2)
+        pickle.dump(self.out_mlp.W2, pkl)
         pkl.close()
         pkl = open('w1_out_mlp.pickle', 'wb')
-        pickle.dump(self.out_mlp.W1)
+        pickle.dump(self.out_mlp.W1, pkl)
         pkl.close()
-        fig, axes = plt.subplots(1,1 (5, 5))
+        fig, axes = plt.subplots(1, 1, figsize = (5, 5))
         axes.plot(np.arange(self.nepochs), self.err)
         axes.set_xlabel('epochs')
         axes.set_ylabel('error')

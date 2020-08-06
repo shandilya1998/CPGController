@@ -9,11 +9,11 @@ class OscLayer(object):
 
     def get_signal(self, freq):
         Z = np.zeros((self.num_osc, self.N), dtype = np.complex128)
-        r1 = np.random.random((self.num_osc, self.N))
-        r2 = np.random.random((self.num_osc, self.N)) 
-        Z = r1 + 1j*r2 
-        #print(Z.shape)
+        r = np.random.random((self.num_osc, self.N))
+        phi = np.random.random((self.num_osc, self.N))
+        Z[:, 0] = r[:, 0]*np.exp(1j*phi[:, 0])
         for i in range(self.N-1):
-            Z[:, i+1] = Z[:, i] + ((1-np.abs(Z[: ,i])**2)*Z[:, i]+1j*freq*Z[:, i])*self.dt 
-        #print(Z)
+            r[:, i+1] = r[:, i] + (1-r[:, i]**2)*r[:, i]*self.dt
+            phi[:, i+1] = phi[:, i] + freq*self.dt
+            Z[:, i+1] = r[:, i+1]*np.exp(1j*phi[:, i+1])
         return Z 
