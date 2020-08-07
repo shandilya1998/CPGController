@@ -10,3 +10,13 @@ The learning rate for this experiment was 1e-3.
 It was observed from the loss plot that loss after a sudded decrease for the first time does not fall greatly. 
 A larger learning rate is required
 ![Error Plot](../images/training_plot_output_mlp_exp1.png)
+![Signal Reconstruction Plot](../images/training_plot_output_mlp_exp1.png)
+## Experiment 2
+N = 500
+Tst = 60
+Tsw = 20
+dt = 0.001
+lr = 1e-3
+cyclic learning rate
+![Error Plot](../images/training_plot_output_mlp_exp2.png)
+![Signal Reconstruction Plot](../images/training_plot_output_mlp_exp2.png)
