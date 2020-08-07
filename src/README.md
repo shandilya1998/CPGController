@@ -19,4 +19,4 @@ lr = 1e-3
 cyclic learning rate
 
 ![Error Plot](../images/training_plot_output_mlp_exp2.png)
-![Signal Reconstruction Plot](../images/training_plot_output_mlp_exp2.png)
+![Signal Reconstruction Plot](../images/pred_vs_ideal_exp2.png)
