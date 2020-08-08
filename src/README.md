@@ -1,5 +1,8 @@
 # OutputMLP training for multi speed gait generation
 Experiments involve training the OutputMLP taking as input, fourier components obtained by using the integer multiples of fundamental frequency of the output signal. 
+Experiments 1 to 4 use [Training File Link](train.py)
+Experiments 5 and above use [Training File Link](train2.py)
+**Need to perform experiments to test the effect of change of theta on performance**. Hypothesis is that since theta does not change fundamental frequency, any changes to it will not effect model performance.
 ## Experiment 1
 Training the OutputMLP to reconstruct the control signal for a single speed.
 The following assumptions hold true for this experiment:->
