@@ -11,12 +11,51 @@ It was observed from the loss plot that loss after a sudded decrease for the fir
 A larger learning rate is required
 ![Error Plot](../images/training_plot_output_mlp_exp1.png)
 ## Experiment 2
-N = 500
-Tst = 60
-Tsw = 20
-dt = 0.001
-lr = 1e-3
-cyclic learning rate
-
+In Experiment 1, the signals were not normalized. 
+- N = 500
+- Tst = 60
+- Tsw = 20
+- dt = 0.001
+- lr = 1e-3
+- cyclic learning rate
+- num\_osc=20
+- num\_h=50
+- num\_out=8
+- fundamental frequency is computed using fft 
+The followin plot is the error plot for training
 ![Error Plot](../images/training_plot_output_mlp_exp2.png)
+The following plot is the comparison of the reconstructed signal and the original signal
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp2.png)
+## Experiment 3
+- N = 500
+- Tst = 60
+- Tsw = 20
+- dt = 0.001
+- lr = 1e-3
+- cyclic learning rate
+- num\_osc=40
+- num\_h=200
+- num\_out=8
+- nepochs = 10000
+- fundamental frequency is computed using fft
+The followin plot is the error plot for training
+![Error Plot](../images/training_plot_output_mlp_exp3.png)
+The following plot is the comparison of the reconstructed signal and the original signal
+![Signal Reconstruction Plot](../images/pred_vs_ideal_exp3.png)
+## Experiment 3
+- N = 500 
+- Tst = 60
+- Tsw = 20
+- dt = 0.001
+- lr = 1e-3
+- cyclic learning rate
+- num\_osc=20
+- num\_h=200
+- num\_out=8
+- nepochs = 30000
+- fundamental frequency is computed using fft 
+The followin plot is the error plot for training
+![Error Plot](../images/training_plot_output_mlp_exp4.png)
+The following plot is the comparison of the reconstructed signal and the original signal
+![Signal Reconstruction Plot](../images/pred_vs_ideal_exp4.png)
+
