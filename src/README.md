@@ -58,9 +58,13 @@ The following plot is the comparison of the reconstructed signal and the origina
 - nepochs = 30000
 - fundamental frequency is computed using autocorr 
 The followin plot is the error plot for training
+<br/>
 ![Error Plot](../images/training_plot_output_mlp_exp4.png)
+<br/>
 The following plot is the comparison of the reconstructed signal and the original signal
+<br/>
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp4.png)
+<br/>
 ## Experiment 4
 - N = [400, 530, 665, 800, 930, 500]
 - Tst = [60, 80, 100, 120, 140, 75]
@@ -75,9 +79,10 @@ The following plot is the comparison of the reconstructed signal and the origina
 - nepochs = 3000
 - fundamental frequency is computed using autocorr
 The followin plot is the error plot for training
-<br>
+<br/>
 ![Error Plot](../images/training_plot_output_mlp_exp5.png)
-<br>
+<br/>
 The following plot is the comparison of the reconstructed signal and the original signal
+<br/>
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp5.png)
 
