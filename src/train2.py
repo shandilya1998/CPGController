@@ -171,12 +171,12 @@ class Train(object):
    
  
 dt = 0.001
-nepochs = 3000
+nepochs = 6000
 num_osc = 20
-num_h = 50
+num_h = 200
 num_out = 8
 lr = 1e-3
-exp = 5
+exp = 6
 num = 6
 Tst = np.array([60, 80, 100, 120, 140, 75])
 Tsw = np.array([20, 26, 33, 40, 46, 25 ])

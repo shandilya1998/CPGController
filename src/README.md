@@ -30,7 +30,7 @@ In Experiment 1, the signals were not normalized.
 - num\_out=8
 - fundamental frequency is computed using fft 
 
-The followin plot is the error plot for training
+The following plot is the error plot for training
 
 ![Error Plot](../images/training_plot_output_mlp_exp2.png)
 
@@ -51,7 +51,7 @@ The following plot is the comparison of the reconstructed signal and the origina
 - nepochs = 10000
 - fundamental frequency is computed using fft
 
-The followin plot is the error plot for training
+The following plot is the error plot for training
 
 ![Error Plot](../images/training_plot_output_mlp_exp3.png)
 
@@ -72,7 +72,7 @@ The following plot is the comparison of the reconstructed signal and the origina
 - nepochs = 30000
 - fundamental frequency is computed using autocorr 
 
-The followin plot is the error plot for training:-
+The following plot is the error plot for training:-
 
 ![Error Plot](../images/training_plot_output_mlp_exp4.png)
 
@@ -94,7 +94,7 @@ The following plot is the comparison of the reconstructed signal and the origina
 - nepochs = 3000
 - fundamental frequency is computed using autocorr
 
-The followin plot is the error plot for training:-
+The following plot is the error plot for training:-
 
 ![Error Plot](../images/training_plot_output_mlp_exp5.png)
 
@@ -102,3 +102,24 @@ The following plot is the comparison of the reconstructed signal and the origina
 
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp5.png)
 
+## Experiment 6
+- N = [400, 530, 665, 800, 930, 500]
+- Tst = [60, 80, 100, 120, 140, 75]
+- Tsw = [20, 26, 33, 40, 46, 25]
+- theta = [15, 15, 15, 15, 15, 15]
+- dt = 0.001
+- lr = 1e-3
+- cyclic learning rate
+- num\_osc=20
+- num\_h=200
+- num\_out=8
+- nepochs = 6000
+- fundamental frequency is computed using autocorr
+
+The following plot is the error plot for training:-
+
+![Error Plot](../images/training_plot_output_mlp_exp6.png)
+
+The following plot is the comparison of the reconstructed signal and the original signal:-
+
+![Signal Reconstruction Plot](../images/pred_vs_ideal_exp6.png)
