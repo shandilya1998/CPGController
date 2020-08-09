@@ -45,7 +45,7 @@ The followin plot is the error plot for training
 ![Error Plot](../images/training_plot_output_mlp_exp3.png)
 The following plot is the comparison of the reconstructed signal and the original signal
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp3.png)
-## Experiment 3
+## Experiment 4
 - N = 500 
 - Tst = 60
 - Tsw = 20
@@ -56,9 +56,28 @@ The following plot is the comparison of the reconstructed signal and the origina
 - num\_h=200
 - num\_out=8
 - nepochs = 30000
-- fundamental frequency is computed using fft 
+- fundamental frequency is computed using autocorr 
 The followin plot is the error plot for training
 ![Error Plot](../images/training_plot_output_mlp_exp4.png)
 The following plot is the comparison of the reconstructed signal and the original signal
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp4.png)
+## Experiment 4
+- N = [400, 530, 665, 800, 930, 500]
+- Tst = [60, 80, 100, 120, 140, 75]
+- Tsw = [20, 26, 33, 40, 46, 25]
+- theta = [15, 15, 15, 15, 15, 15]
+- dt = 0.001
+- lr = 1e-3
+- cyclic learning rate
+- num\_osc=20
+- num\_h=50
+- num\_out=8
+- nepochs = 3000
+- fundamental frequency is computed using autocorr
+The followin plot is the error plot for training
+<br>
+![Error Plot](../images/training_plot_output_mlp_exp5.png)
+<br>
+The following plot is the comparison of the reconstructed signal and the original signal
+![Signal Reconstruction Plot](../images/pred_vs_ideal_exp5.png)
 

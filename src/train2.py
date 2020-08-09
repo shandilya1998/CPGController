@@ -10,7 +10,7 @@ import math
 import scipy.fft as fft
 import scipy.signal as signal 
 
-class DataLoader(object):
+class DataPoint(object):
     def __init__(self, 
                  dt, 
                  N,  
@@ -39,7 +39,7 @@ class DataLoader(object):
         self.num_osc = num 
   
     def get_input(self, Tsw, Tst, theta):
-        Z = np.empty((self.num_osc, N), dtype = np.complex128)
+        Z = np.empty((self.num_osc, self.N), dtype = np.complex128)
         self.set_signal(Tsw, Tst, theta)
         """ 
             Assuming a straight line motion with a constant speed
@@ -49,11 +49,24 @@ class DataLoader(object):
         for i in range(self.num_osc):
             freq[i] = 2*np.pi*ff*(i+1)
         return self.osc.get_signal(freq)
- 
+
+class DataLoader(object):
+    def __init__(self, dt, num_osc):
+        self.dt = dt
+        self.num_osc = num_osc
+        self.Y = []
+        self.X = []
+
+    def __call__(self, Tsw, Tst, theta, N, num):
+        for i in range(num):
+            datapoint = DataPoint(self.dt, N[i], self.num_osc)
+            self.Y.append(datapoint.get_input(Tsw[i], Tst[i], theta[i]))
+            self.X.append(datapoint)
+        return self.X, self.Y
+
 class Train(object):
     def __init__(self, 
                  dt, 
-                 N, 
                  nepochs,
                  num_osc, 
                  num_h, 
@@ -66,22 +79,21 @@ class Train(object):
         self.num_out = num_out
         self.init = init
         self.dt = dt
-        self.N = N
         self.nepochs = nepochs
-        self.data = DataLoader(self.dt, self.N, self.num_osc)
+        self.data = DataLoader(self.dt, self.num_osc)
         self.out_mlp = OutputMLP()
         self.lr = lr
         self.err = np.zeros((self.nepochs,))
         self.exp = exp
 
-    def _plot(self, axis, x, y):
+    def _plot(self, axis, x, y, t):
         axis.plot(
-            self.data.signal[:, 0].T, 
+            t, 
             x,
             'r',
             label = 'ideal gait')
         axis.plot(
-            self.data.signal[:, 0].T, 
+            t, 
             y, 
             'b',
             label = 'generated gait')
@@ -93,9 +105,9 @@ class Train(object):
         fig, axes = plt.subplots(self.num_out, 1, figsize = (5, 5*self.num_out))
         if self.num_out!=1:
             for i in range(self.num_out):
-                self._plot(axes[i], signal[:, i+1].T, yr[i])
+                self._plot(axes[i], signal[:, i+1].T, yr[i], signal[:, 0].T)
         else:
-            self._plot(axes, signal[:, 1].T, yr[0])
+            self._plot(axes, signal[:, 1].T, yr[0], signal[:, 0].T)
         fig.savefig('../images/pred_vs_ideal_exp{exp}.png'.format(exp=self.exp))
         plt.show()
 
@@ -103,6 +115,7 @@ class Train(object):
                  Tsw,
                  Tst,
                  theta, 
+                 N,
                  num):
         self.out_mlp.build(self.num_osc, 
                            self.num_h, 
@@ -112,35 +125,36 @@ class Train(object):
         """
             Assuming a straight line motion with a constant speed
         """
-        Z = [self.data(Tsw[i], Tst[i], theta[i]) for i in range(num)]
+        X, Y = self.data(Tsw, Tst, theta, N, num)
         for i in tqdm(range(self.nepochs)):
-            yr = self.out_mlp(Z, self.out_mlp.sigmoidf)
-            err = np.sum((self.data.signal[:, 1:self.num_out+1].T-yr)**2)
-            #print(err)
-            self.err[i] = err
-            """
-                Back propagation
-            """
-            self.out_mlp.backprop_sigmoid(yr, Z, self.data, self.lr)
-            if i>50 and math.isclose(
-                self.err[i],
-                self.err[i-50],
-                rel_tol = 1e-5,
-                abs_tol=1e-5,
-            ):
-                self.lr = self.lr*0.9
-                #break 
-                #"""
-                if math.isclose(
-                    self.lr,
-                    1e-15,
-                    abs_tol = 1e-16,
-                    rel_tol = 1e-16
+            for j in range(num-1):
+                yr = self.out_mlp(Y[j], self.out_mlp.sigmoidf)
+                err = np.sum((X[j].signal[:, 1:self.num_out+1].T-yr)**2)
+                #print(err)
+                self.err[i] = err
+                """
+                    Back propagation
+                """
+                self.out_mlp.backprop_sigmoid(yr, Y[j], X[j], self.lr)
+                if i>50 and math.isclose(
+                    self.err[i],
+                    self.err[i-50],
+                    rel_tol = 1e-5,
+                    abs_tol=1e-5,
                 ):
-                    self.lr = 1e-3
-                #"""    
+                    self.lr = self.lr*0.9
+                    #break 
+                    #"""
+                    if math.isclose(
+                        self.lr,
+                        1e-15,
+                        abs_tol = 1e-16,
+                        rel_tol = 1e-16
+                    ):
+                        self.lr = 1e-3
+                    #"""        
 
-        yr = self.out_mlp(Z, self.out_mlp.sigmoidf)
+        yr = self.out_mlp(Y[num-1], self.out_mlp.sigmoidf)
         pkl = open('weights/exp{exp}/w2_out_mlp.pickle'.format(exp=self.exp), 'wb')
         pickle.dump(self.out_mlp.W2, pkl)
         pkl.close()
@@ -153,14 +167,13 @@ class Train(object):
         axes.set_ylabel('error')
         plt.show()
         fig.savefig('../images/training_plot_output_mlp_exp{exp}.png'.format(exp=self.exp))
-        self.plot(yr)
+        self.plot(yr, X[num-1].signal)
    
  
 dt = 0.001
-N = 400
-nepochs = 30000
+nepochs = 3000
 num_osc = 20
-num_h = 200
+num_h = 50
 num_out = 8
 lr = 1e-3
 exp = 5
@@ -168,5 +181,6 @@ num = 6
 Tst = np.array([60, 80, 100, 120, 140, 75])
 Tsw = np.array([20, 26, 33, 40, 46, 25 ])
 theta = np.array([15, 15, 15, 15, 15, 15])
-train = Train(dt, N, nepochs, num_osc, num_h, num_out, exp, 'random', lr)
-train(Tsw, Tst, theta, num)
+N = np.array([400, 530, 665, 800, 930, 500])
+train = Train(dt, nepochs, num_osc, num_h, num_out, exp, 'random', lr)
+train(Tsw, Tst, theta, N, num)
