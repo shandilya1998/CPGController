@@ -9,10 +9,14 @@ The following assumptions hold true for this experiment:->
 - The motion will be with a single speed
 - No deviation from a straight line
 - The aforementioned two points will lead to same fundamental frequency of the control signals for all legs
+
 The learning rate for this experiment was 1e-3. 
+
 It was observed from the loss plot that loss after a sudded decrease for the first time does not fall greatly. 
 A larger learning rate is required
+
 ![Error Plot](../images/training_plot_output_mlp_exp1.png)
+
 ## Experiment 2
 In Experiment 1, the signals were not normalized. 
 - N = 500
@@ -25,10 +29,15 @@ In Experiment 1, the signals were not normalized.
 - num\_h=50
 - num\_out=8
 - fundamental frequency is computed using fft 
+
 The followin plot is the error plot for training
+
 ![Error Plot](../images/training_plot_output_mlp_exp2.png)
+
 The following plot is the comparison of the reconstructed signal and the original signal
+
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp2.png)
+
 ## Experiment 3
 - N = 500
 - Tst = 60
@@ -41,10 +50,15 @@ The following plot is the comparison of the reconstructed signal and the origina
 - num\_out=8
 - nepochs = 10000
 - fundamental frequency is computed using fft
+
 The followin plot is the error plot for training
+
 ![Error Plot](../images/training_plot_output_mlp_exp3.png)
+
 The following plot is the comparison of the reconstructed signal and the original signal
+
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp3.png)
+
 ## Experiment 4
 - N = 500 
 - Tst = 60
@@ -57,10 +71,15 @@ The following plot is the comparison of the reconstructed signal and the origina
 - num\_out=8
 - nepochs = 30000
 - fundamental frequency is computed using autocorr 
+
 The followin plot is the error plot for training:-
+
 ![Error Plot](../images/training_plot_output_mlp_exp4.png)
+
 The following plot is the comparison of the reconstructed signal and the original signal:-
+
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp4.png)
+
 ## Experiment 5
 - N = [400, 530, 665, 800, 930, 500]
 - Tst = [60, 80, 100, 120, 140, 75]
@@ -74,8 +93,12 @@ The following plot is the comparison of the reconstructed signal and the origina
 - num\_out=8
 - nepochs = 3000
 - fundamental frequency is computed using autocorr
+
 The followin plot is the error plot for training:-
+
 ![Error Plot](../images/training_plot_output_mlp_exp5.png)
+
 The following plot is the comparison of the reconstructed signal and the original signal:-
+
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp5.png)
 
