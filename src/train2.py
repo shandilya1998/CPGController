@@ -155,12 +155,14 @@ class Train(object):
                     #"""        
 
         yr = self.out_mlp(Y[num-1], self.out_mlp.sigmoidf)
-        pkl = open('weights/exp{exp}/w2_out_mlp.pickle'.format(exp=self.exp), 'wb')
-        pickle.dump(self.out_mlp.W2, pkl)
-        pkl.close()
-        pkl = open('weights/exp{exp}/w1_out_mlp.pickle'.format(exp=self.exp), 'wb')
-        pickle.dump(self.out_mlp.W1, pkl)
-        pkl.close()
+        np.save(
+            'weights/exp{exp}/w2_out_mlp.npy'.format(exp=self.exp), 
+            self.out_mlp.W2
+        )   
+        np.save(
+            'weights/exp{exp}/w1_out_mlp.npy'.format(exp=self.exp), 
+            self.out_mlp.W1
+        )
         fig, axes = plt.subplots(1, 1, figsize = (5, 5))
         axes.plot(np.arange(self.nepochs), self.err)
         axes.set_xlabel('epochs')
@@ -171,11 +173,11 @@ class Train(object):
    
  
 dt = 0.001
-nepochs = 6000
+nepochs = 3000
 num_osc = 20
 num_h = 200
 num_out = 8
-lr = 1e-3
+lr = 1e-2
 exp = 6
 num = 6
 Tst = np.array([60, 80, 100, 120, 140, 75])

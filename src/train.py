@@ -77,13 +77,13 @@ class Train(object):
 
     def _plot(self, axis, x, y):
         axis.plot(
-            self.data.signal[:, 0].T, 
-            x,
+            self.data.signal[:500, 0].T, 
+            x[:500],
             'r',
             label = 'ideal gait')
         axis.plot(
-            self.data.signal[:, 0].T, 
-            y, 
+            self.data.signal[:500, 0].T, 
+            y[:500], 
             'b',
             label = 'generated gait')
         axis.set_xlabel('time')
@@ -122,13 +122,13 @@ class Train(object):
                 Back propagation
             """
             self.out_mlp.backprop_sigmoid(yr, Z, self.data, self.lr)
-            if i>50 and math.isclose(
+            if i>20 and (math.isclose(
                 self.err[i], 
-                self.err[i-50], 
+                self.err[i-20], 
                 rel_tol = 1e-5, 
                 abs_tol=1e-5,
-            ):
-                self.lr = self.lr*0.9
+            ) or self.err[i]>self.err[i-20]):
+                self.lr = self.lr*0.5
                 #break 
                 #"""
                 if math.isclose(
@@ -141,12 +141,14 @@ class Train(object):
                 #"""    
         
         yr = self.out_mlp(Z, self.out_mlp.sigmoidf)
-        pkl = open('weights/exp{exp}/w2_out_mlp.pickle'.format(exp=self.exp), 'wb')
-        pickle.dump(self.out_mlp.W2, pkl)
-        pkl.close()
-        pkl = open('weights/exp{exp}/w1_out_mlp.pickle'.format(exp=self.exp), 'wb')
-        pickle.dump(self.out_mlp.W1, pkl)
-        pkl.close()
+        np.save(
+            'weights/exp{exp}/w2_out_mlp.npy'.format(exp=self.exp), 
+            self.out_mlp.W2
+        )
+        np.save(
+            'weights/exp{exp}/w1_out_mlp.npy'.format(exp=self.exp), 
+            self.out_mlp.W1
+        ) 
         fig, axes = plt.subplots(1, 1, figsize = (5, 5))
         axes.plot(np.arange(self.nepochs), self.err)
         axes.set_xlabel('epochs')
@@ -156,7 +158,7 @@ class Train(object):
         self.plot(yr)
     
 dt = 0.001
-N = 400
+N = 500
 nepochs = 30000
 num_osc = 20
 num_h = 200
