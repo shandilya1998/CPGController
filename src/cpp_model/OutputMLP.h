@@ -23,10 +23,14 @@ class OutputMLP{
         std::complex<double> **W1;
         std::complex<double> **W2;
         int N;
+        Activation activation;
     public:   
         OutputMLP(int n_o, int n_h, int n_out, int n);
-        void weightedSumInput(std::complex<double> **X, std::complex<double> **out);
-        void weightedSumHidden(std::complex<double> **X, std::complex<double> **out);
+        void inputLayer(std::complex<double> **X, std::complex<double> **out);
+        void hiddenLayer(std::complex<double> **X, std::complex<double> **out);
+        void forwardPropagation(std::complex<double> **X, std::complex<double> **out);
         void getInputWeights(std::complex<double> **weights){weights = W1;}
         void getHiddenWeights(std::complex<double> **weights){weights = W2;}
+        void setInputWeights(std::complex<double> **weights){W1 = weights;}
+        void setHiddenWeights(std::complex<double> **weights){W2 = weights;} 
 };

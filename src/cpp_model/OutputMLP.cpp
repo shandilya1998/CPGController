@@ -20,8 +20,8 @@ OutputMLP::OutputMLP(int n_o, int n_h, int n_out, int n){
     }
 }
 
-void OutputMLP::weightedSumInput(std::complex<double> **X, std::complex<double> **out){
-    ParamsTanh params = {N, 1.0};
+void OutputMLP::inputLayer(std::complex<double> **X, std::complex<double> **out){
+    ParamsSigmoid = {N, 1.0, 0.5};
     std::complex<double> z(0,1);
     for(int i=0; i<num_h; i++){
         for(int j=0; j>num_osc; j++){
@@ -29,16 +29,23 @@ void OutputMLP::weightedSumInput(std::complex<double> **X, std::complex<double> 
                 out[i][n] += W1[i][j]*X[j][n];
             }
         }
+        activation.sigmoidf(out[i]);        
     }
 }
 
-void OutputMLP::weightedSumHidden(std::complex<double> **X, std::complex<double> **out){
-    ParamsTanh params = {N, 1.0};
+void OutputMLP::hiddenLayer(std::complex<double> **X, std::complex<double> **out){
+    ParamsSigmoid params = {N, 1.0, 0.5};
     for(int i=0; i<num_out; i++){
         for(int n = 0; n<N; n++){
             for(int j = 0; j<num_h; j++){
                 out[i][n] += W2[i][j]*X[j][n];
             }
         }
+        activation.sigmoidf(out[i]);
     }
+}
+
+void forwardPropagation(std::complex<double> **X, std::complex<double> **out){
+    inputLayer(X, out);
+    hiddenLayer(X, out); 
 }

@@ -1,4 +1,4 @@
-#include "InputMLP.h"
+//#include "InputMLP.h"
 #include "OscLayer.h"
 #include "OutputMLP.h"
 #include "DataLoader.h"
@@ -31,7 +31,7 @@ int main(){
     //std::cout << "here"; 
     int N = static_cast<int>(3*M_PI/dt);
     //std::cout << "here2";    
-    InputMLP inp(num_inp, num_h, num_osc);
+    //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N);   
     DataLoader data(num_osc, N, Tsw, Tst, offset, A_h, A_k);
@@ -81,7 +81,7 @@ int main(){
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
-            inp.forwardPropagation(input[j], Y_inp_mlp);
+            //inp.forwardPropagation(input[j], Y_inp_mlp);
             osc.forwardPropagation(Y_inp_mlp, Z_out_osc, phase);
             out.forwardPropagation(Z_out_osc, y);
         }

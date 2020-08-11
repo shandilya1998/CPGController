@@ -18,6 +18,7 @@ struct ParamsRelu{
 struct ParamsSigmoid{
     int dim;
     double upperBound;
+    double weight;
 };
 
 struct ParamsTanh{

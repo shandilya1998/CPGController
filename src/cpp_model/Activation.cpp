@@ -64,7 +64,7 @@ void Activation::relugrad(std::complex<double> *inp, std::complex<double> *out, 
     }    
 }
 
-void Activation::sigmoidf(double *inp, double *out, struct ParamsSigmoid *params){
+void Activation::sigmoidf(double *inp, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
@@ -72,11 +72,15 @@ void Activation::sigmoidf(double *inp, double *out, struct ParamsSigmoid *params
                     - 1 <= bound
     */  
     for(int i =0; i<params->dim; i++){
-        out[i] = params->upperBound/(1+exp(-inp[i]));
+        inp[i] = params->upperBound/(
+            1+exp(
+                -params->weight*inp[i]
+            )
+        );
     }
 }
 
-void Activation::sigmoidgrad(double *inp, double *out, struct ParamsSigmoid *params){
+void Activation::sigmoidgrad(double *inp, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params[0] - input dimensionality
@@ -84,11 +88,17 @@ void Activation::sigmoidgrad(double *inp, double *out, struct ParamsSigmoid *par
                     - bound != 0
     */
     for(int i =0; i<params->dim; i++){
-        out[i] = params->upperBound*exp(-inp[i])/pow(1+exp(-inp[i]), 2.0);
+        inp[i] = params->upperBound*param->weight*exp(
+            -params->weight*inp[i]
+        )/pow(
+            1+exp(
+                -params->weight*inp[i]
+            ), 
+            2.0);
     }
 }
 
-void Activation::sigmoidf(std::complex<double> *inp, std::complex<double> *out, struct ParamsSigmoid *params){
+void Activation::sigmoidf(std::complex<double> *inp, struct ParamsSigmoid *params){
     /*
         * double params array of length 2
         * params.dim - input dimensionality
@@ -100,7 +110,23 @@ void Activation::sigmoidf(std::complex<double> *inp, std::complex<double> *out, 
     double c1 = 1.0;
     std::complex<double> iota(0, 1);
     for(int i =0; i<params->dim; i++){
-        out[i] = params->upperBound*(1/(1+exp(-real(inp[i]))))+iota*params->upperBound*(1/(1+exp(-imag(inp[i]))));
+        inp[i] = params->upperBound*(
+            1/(
+                1+exp(
+                    -params->weight*real(
+                        inp[i]
+                    )
+                )
+            )
+        )+iota*params->upperBound*(
+            1/(
+                1+exp(
+                    -params->weight*imag(
+                        inp[i]
+                    )
+                )
+            )
+        );
     }
 }
 
