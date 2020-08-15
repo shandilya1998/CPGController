@@ -46,7 +46,7 @@ int i;
 Complex *y;
 float *out = new float[num_out];
 
-FeedForwardCPG net(dt, w1_real, w1_imag, w2_real, w2_imag);;
+FeedForwardCPG net(dt, w1_real, w1_imag, w2_real, w2_imag);
 void setup() {
   // put your setup code here, to run once:
   //Serial.begin(9600);
