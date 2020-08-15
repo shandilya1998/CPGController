@@ -32,6 +32,8 @@ int pos1= 90;
 int pos2=75;// variable to store the servo position
 
 void setup() {
+  Serial.begin(9600);
+  Serial.print("Hello");
   myservo0.attach(servo0);
   myservo1.attach(servo1);
   myservo2.attach(servo2);
@@ -44,11 +46,11 @@ void setup() {
 
 void loop() {                     
   myservo0.write(pos1);
-  myservo1.write(pos1);
+  myservo1.write(pos2);
   myservo2.write(pos1);
-  myservo3.write(pos1);
-  myservo4.write(pos2);
+  myservo3.write(pos2);
+  myservo4.write(pos1);
   myservo5.write(pos2);
-  myservo6.write(pos2);
+  myservo6.write(pos1);
   myservo7.write(pos2);
 }

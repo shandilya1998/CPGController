@@ -173,16 +173,16 @@ class Train(object):
    
  
 dt = 0.001
-nepochs = 9000
-num_osc = 10
-num_h = 30
+nepochs = 10000
+num_osc = 8
+num_h = 16
 num_out = 8
 lr = 1e-3
-exp = 7
-num = 6
-Tst = np.array([60, 80, 100, 120, 140, 75])
-Tsw = np.array([20, 26, 33, 40, 46, 25 ])
-theta = np.array([15, 15, 15, 15, 15, 15])
-N = np.array([400, 530, 665, 800, 930, 500])
+exp = 8
+num = 10
+Tst = np.array([60, 80, 100, 120, 140, 75, 45, 30, 150, 81])
+Tsw = np.array([20, 26, 33, 40, 46, 25, 15, 10, 50, 27 ])
+theta = np.array([15, 15, 15, 15, 15, 15, 15, 15, 15, 15])
+N = np.array([400, 530, 665, 800, 930, 500, 300, 200, 1000, 540])
 train = Train(dt, nepochs, num_osc, num_h, num_out, exp, 'random', lr)
 train(Tsw, Tst, theta, N, num)
