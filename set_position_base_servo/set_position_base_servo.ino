@@ -28,8 +28,8 @@ Servo myservo7;
 // create servo object to control a servo
 // twelve servo objects can be created on most boards
 
-int pos1= 90; 
-int pos2=75;// variable to store the servo position
+int pos1 = 90; 
+int pos2 = 60;// variable to store the servo position
 
 void setup() {
   Serial.begin(9600);
