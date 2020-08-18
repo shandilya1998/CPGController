@@ -91,7 +91,7 @@ float* FeedForwardCPG::forwardPropagation(float *omega){
   for(i=0; i<num_out; i++){
     temp_r = 0.0;
     for(j=0; j<num_osc; j++){
-        temp_r += w2_real[i][j]*Z[j].getReal()-w2_imag[i][j]*Z[j].getImag();
+        temp_r += w2_real[i][j]*X1[j].getReal()-w2_imag[i][j]*X1[j].getImag();
       }
       y[i] = -1+2/(1+exp(-0.5*temp_r));
       //Serial.println(y[i]);
@@ -146,7 +146,7 @@ void loop() {
   for(i =0; i<num_out; i++){
     out[i] = theta*net.y[i];
     }
-  /*
+
   servo0.write(90+out[0]);
   servo1.write(90+out[1]);
   servo2.write(90+out[2]);
@@ -156,22 +156,23 @@ void loop() {
   servo6.write(90+out[6]);
   servo7.write(90+out[7]);
   //*/
+  
   //Serial.print(out[0]);
   //Serial.print("\t");
-  Serial.print(out[1]);
-  Serial.print("\t");
+  //Serial.println(out[1]);
+  //Serial.print("\t");
   //Serial.println(out[2]);
   //Serial.print("\t");
   //Serial.println(out[3]);
   //Serial.print("\t");
   //Serial.println(out[4]);
   //Serial.print("\t");
-  Serial.println(out[5]);
+  //Serial.println(out[5]);
   //Serial.print("\t");
   //Serial.println(out[6]);
   //Serial.print("\t");
   //Serial.println(out[7]); 
   //delay(10);
   //*/
-  delay(100);
+  delay(50);
 }

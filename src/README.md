@@ -177,3 +177,10 @@ The following plot is the error plot for training:-
 The following plot is the comparison of the reconstructed signal and the original signal:-
 
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp8.png)
+
+# ROBOT EXPERIMENTATION
+Using the model from experiment 5, the following plot is obtained
+
+![Activation Plot](../images/hip-hip-activation.png)
+
+![Activation Plot 2](../images/hip-knee-activation.png)
