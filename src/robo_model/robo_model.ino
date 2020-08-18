@@ -81,10 +81,10 @@ float* FeedForwardCPG::forwardPropagation(float *omega){
         temp_r += w1_real[i][j]*Z[j].getReal()-w1_imag[i][j]*Z[j].getImag();
         temp_i += w1_real[i][j]*Z[j].getImag()+w1_imag[i][j]*Z[j].getReal();
       }
-      X1[i].setReal(1/(1+exp(-0.5*temp_r)));
+      X1[i].setReal(-1+2/(1+exp(-0.5*temp_r)));
       //Serial.println("real");
       //Serial.println(X1[i].getReal());
-      X1[i].setImag(1/(1+exp(-0.5*temp_i))); 
+      X1[i].setImag(-1+2/(1+exp(-0.5*temp_i))); 
       //Serial.println("imag");
       //Serial.println(X1[i].getImag());
     }
@@ -93,7 +93,7 @@ float* FeedForwardCPG::forwardPropagation(float *omega){
     for(j=0; j<num_osc; j++){
         temp_r += w2_real[i][j]*Z[j].getReal()-w2_imag[i][j]*Z[j].getImag();
       }
-      y[i] = 1/(1+exp(-0.5*temp_r));
+      y[i] = -1+2/(1+exp(-0.5*temp_r));
       //Serial.println(y[i]);
     }
   delete Z;
@@ -110,16 +110,16 @@ Servo servo6;
 Servo servo7;
 
 float freq[8] = {
-  78.74, 
-  157.49,
-  236.24,
-  314.98,
-  393.73,
-  472.48,  
-  551.22,  
-  629.97};
+  78.74681, 
+  157.4936,
+  236.2404,
+  314.9872,
+  393.73404,
+  472.4808,  
+  551.2277,  
+  629.9745};
 
-float dt = 0.001;
+float dt = 0.0010;
 int Tst = 60;
 int Tsw = 20;
 int theta = 45;
@@ -130,7 +130,7 @@ FeedForwardCPG net(dt);
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.print("Hello");
+  //Serial.print("Hello");
   servo0.attach(SERVO0_PIN);
   servo1.attach(SERVO1_PIN);
   servo2.attach(SERVO2_PIN);
@@ -146,32 +146,31 @@ void loop() {
   for(i =0; i<num_out; i++){
     out[i] = theta*net.y[i];
     }
-  
-  servo0.write(90+out[0]);
-  servo1.write(75+out[1]);
-  servo2.write(90+out[2]);
-  servo3.write(75+out[3]);
-  servo4.write(90+out[4]);
-  servo5.write(75+out[5]);
-  servo6.write(90+out[6]);
-  servo7.write(75+out[7]);
-  //*/
   /*
-  Serial.println(out[0]);
+  servo0.write(90+out[0]);
+  servo1.write(90+out[1]);
+  servo2.write(90+out[2]);
+  servo3.write(90+out[3]);
+  servo4.write(90+out[4]);
+  servo5.write(90+out[5]);
+  servo6.write(90+out[6]);
+  servo7.write(90+out[7]);
+  //*/
+  //Serial.print(out[0]);
+  //Serial.print("\t");
+  Serial.print(out[1]);
   Serial.print("\t");
-  Serial.println(out[1]);
-  Serial.print("\t");
-  Serial.println(out[2]);
-  Serial.print("\t");
-  Serial.println(out[3]);
-  Serial.print("\t");
-  Serial.println(out[4]);
-  Serial.print("\t");
+  //Serial.println(out[2]);
+  //Serial.print("\t");
+  //Serial.println(out[3]);
+  //Serial.print("\t");
+  //Serial.println(out[4]);
+  //Serial.print("\t");
   Serial.println(out[5]);
-  Serial.print("\t");
-  Serial.println(out[6]);
-  Serial.print("\t");
-  Serial.println(out[7]); 
+  //Serial.print("\t");
+  //Serial.println(out[6]);
+  //Serial.print("\t");
+  //Serial.println(out[7]); 
   //delay(10);
   //*/
   delay(100);

@@ -157,13 +157,13 @@ class Train(object):
         fig.savefig('../images/training_plot_output_mlp_exp{exp}.png'.format(exp=self.exp))
         self.plot(yr)
     
-dt = 0.001
+dt = 0.0010
 N = 500
 nepochs = 30000
 num_osc = 20
 num_h = 200
 num_out = 8
-lr = 1e-3
+lr = 0.0010
 exp = 4
 train = Train(dt, N, nepochs, num_osc, num_h, num_out, exp, 'random', lr)
 train()

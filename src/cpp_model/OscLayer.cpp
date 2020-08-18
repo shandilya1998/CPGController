@@ -1,27 +1,28 @@
 #include "OscLayer.h"
 
-OscLayer::OscLayer(int n_o, int n, double dT){
-    //omega = o;
+OscLayer::OscLayer(int n_o, int n, float dT){
     num_osc = n_o;
     dt = dT;
     N = n;
-}
-
-void OscLayer::computeZ(double freq, std::complex<double> *out, double *phi){
-    std::complex<double> iota(0, 1);
-    double r = new double[N];
-    r[0] = 1.0;
-    std::complex<double> i = -1;
-    i = abs::sqrt(i);
-    for(int i=1; i<N; i++){
-        r[i] = r[i-1] + (1-pow(abs(r[i-1]),2))*r[i-1]*dt;
-        phi[i] = phi[i-1] + freq*dt;
-        out[i] = r[i]*std::exp(i*phi[i]);
-    } 
-}
-
-void OscLayer::forwardPropagation(double *omega, std::complex<double> **Zout, double **phaseOut){
+    r = new float[num_osc];
+    phi = new float[num_osc];
+    Z = new float*[num_osc];
     for(int i=0; i<num_osc; i++){
-        computeZ(omega[i], Zout[i], phaseOut[i]);  
+        Z[i] = new float[N];
+        r[i] = 1.0;
+        phi[i] = 0.0;
+    }
+}
+
+std::complex** OscLayer::forwardPropagation(float *omega){
+    std::complex<float> iota(0, 1); 
+    float power = 2.0;
+    for(int i=0; i<N; i++){
+        for(int j =0; j<num_osc; j++){
+            r[j] = r[j] + (1-pow(abs(r[j]), power))*r[j]*dt;
+            phi[j] = phi[j] + freq*dt;
+            Z[j][i] = r[i]*std::exp(phi[i]*iota);
+        }  
     } 
+    return Z;
 }

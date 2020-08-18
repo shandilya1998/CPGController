@@ -15,18 +15,21 @@ class InputMLP{
         int num_inp;
         int num_h;
         int num_osc;
-        double **W1;
-        double **W2;
-        double *X_h;
-        double *X_osc;
         Activation activation;
+        float **W1;
+        float **W2;
+        float *Y_h;
+        float *Y_osc;
+        float *Z_h;
+        float *Z_osc;
+        void inputLayerOutput(float *X);
+        void hiddenLayerOutput(float *X);
     public:
         InputMLP(int n_i, int n_h, int n_o);
-        void weightedSumInput(double *X, double *out);
-        void weightedSumHidden(double *X, double *out);
         int getNumInputUnits(){return num_inp;}
         int getNumHiddenUnits(){return num_h;}
         int getNumOscUnits(){return num_osc;}        
-        void getInputWeights(double **weights){weights = W1;}
-        void getHiddenWeights(double **weights){weights = W2;}
+        float** getInputWeights(){return W1;}
+        float** getHiddenWeights(){return W2;}
+        float* forwardPropagation(float *X);
 };

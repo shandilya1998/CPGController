@@ -15,12 +15,13 @@
 
 class OscLayer{
     private:
-        double *omega;
         int num_osc;
-        double dt;
+        float dt;
         int N;
+        float *r;
+        float *phi;
+        std::complex<float> **Z;
     public:
-        OscLayer(int n_o, int n, double dT);
-        void computeZ(double freq, std::complex<double> *out, double *phi);
-        void forwardPropagation(double *omega, std::complex<double> **Zout, double **phaseOut);
+        OscLayer(int n_o, int n, float dT);
+        std::complex<float>** forwardPropagation(float *omega);
 };
