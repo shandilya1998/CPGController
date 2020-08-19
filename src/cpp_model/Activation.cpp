@@ -49,10 +49,6 @@ void Activation::reluf(std::complex<float> *inp, std::complex<float> *out, struc
 
 void Activation::relugrad(std::complex<float> *inp, std::complex<float> *out, struct ParamsRelu *params){
     /*  
-        * float params array of length 2 
-        * params[0] - input dimensionality
-        * params[1] - weight for inputs less that 0
-                    - 0 <= weight < 1
     */
     std::complex<float> weight(params->weight, 0);
     for(int i=0; i<params->dim;i++){
@@ -67,13 +63,9 @@ void Activation::relugrad(std::complex<float> *inp, std::complex<float> *out, st
 
 void Activation::sigmoidf(float *inp, float *out, struct ParamsSigmoid *params){
     /*
-        * float params array of length 2
-        * params[0] - input dimensionality
-        * params[1] - upper bound of sigmoid values 
-                    - 1 <= bound
     */  
     for(int i =0; i<params->dim; i++){
-        out[i] = params->upperBound/(
+        out[i] = -1 + 2*params->upperBound/(
             1+exp(
                 -params->weight*inp[i]
             )
@@ -83,19 +75,9 @@ void Activation::sigmoidf(float *inp, float *out, struct ParamsSigmoid *params){
 
 void Activation::sigmoidgrad(float *inp,float *out, struct ParamsSigmoid *params){
     /*
-        * float params array of length 2
-        * params[0] - input dimensionality
-        * params[1] - upper bound of sigmoid values 
-                    - bound != 0
     */
     for(int i =0; i<params->dim; i++){
-        out[i] = params->upperBound*param->weight*exp(
-            -params->weight*inp[i]
-        )/pow(
-            1+exp(
-                -params->weight*inp[i]
-            ), 
-            2.0);
+        out[i] = 
     }
 }
 

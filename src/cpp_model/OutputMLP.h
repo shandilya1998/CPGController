@@ -20,21 +20,25 @@ class OutputMLP{
         int num_osc;
         int num_h;
         int num_out;
+        float lr;
         std::complex<float> **W1;
         std::complex<float> **W2;
         int N;
         std::complex<float> **Z_h;
-        std::complex<float> **Z_osc;
+        std::complex<float> **Z_out;
         std::complex<float> **Y_h;
         std::complex<float> **Y;
+        std::complex<float> **dW1;
+        std::complex<float> **dw2;
         Activation activation;
+        void inputLayerOutput(std::complex<float> **X);
+        void hiddenLayerOutput(std::complex<float> **X);
     public:   
-        OutputMLP(int n_o, int n_h, int n_out, int n);
-        void inputLayerOutput(std::complex<float> **X, std::complex<float> **out);
-        void hiddenLayerOutput(std::complex<float> **X, std::complex<float> **out);
-        void forwardPropagation(std::complex<float> **X, std::complex<float> **out);
-        void getInputWeights(std::complex<float> **weights){weights = W1;}
-        void getHiddenWeights(std::complex<float> **weights){weights = W2;}
+        OutputMLP(int n_o, int n_h, int n_out, int n, float LR);
+        std::complex<float>** forwardPropagation(std::complex<float> **X);
+        std::complex<float> getInputWeights(std::complex<float> **weights){return W1;}
+        std::complex<float> getHiddenWeights(std::complex<float> **weights){return W2;}
         void setInputWeights(std::complex<float> **weights){W1 = weights;}
         void setHiddenWeights(std::complex<float> **weights){W2 = weights;} 
+        void backwardPropagation();
 };
