@@ -13,6 +13,19 @@
 #include "random_num_generator.h"
 #endif
 #include "tqdm.h"
+#include "matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
+
+float mse(float **Y, float **Y_p, int n1, int n2){
+    float s=0;
+    for(int i=0;i<n1;i++){
+        for(int j=0; j<n2;j++){
+            s += pow(Y[i][j]-Y_p[i][j], 2);
+        }
+    }
+    return s/(n1*n2);
+}
 
 int main(){
     tqdm bar;
@@ -36,41 +49,28 @@ int main(){
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
     DataLoader data(num_osc, N, Tsw, Tst, offset, A_h, A_k);
-    float **input = new float *[4];
-    for(int i =0; i<4; i++){
-        input[i] = new float[3];
-    }
-    float ***output = new float **[4];
-    for(int i = 0; i<4; i++ ){
-        output[i] = new float *[2*num_out];
-        for(int j = 0; j<2*num_out; j++){
-            output[i][j] = new float [N];
-        }
-    } 
-    data.getModelInput(input[0]);
-    data.getModelOutput(output[0]);
-    data.setTsw(3);
-    data.getModelInput(input[1]);
-    data.getModelOutput(output[1]);
-    data.setTsw(5);
-    data.setTst(25);
-    data.getModelInput(input[2]);
-    data.getModelOutput(output[2]);
-    data.setTsw(3);
-    data.getModelInput(input[3]);
-    data.getModelOutput(output[3]);
-    int nepochs = 3000;
     std::complex<float> **Z;
     std::complex<float> **Y;
+    float error = new float[nepochs];
+    float temp;
+    float **signal;
+    int range = new int[nepochs]
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
             //inp.forwardPropagation(input[j], Y_inp_mlp);
+            signal = data.getSignal(j);
             Z = osc.forwardPropagation(freq[j]);
             Y = out.forwardPropagation(Z);
-            out.backwardPropagation(Z);
+            temp +=mse(signal, Y, num_out, N);
+            out.backwardPropagation(signal, Z);
         }
-    }    
+        error[i] = temp/4;
+        range[i] = i;
+    }
     bar.finish();
+    plt::figure_size(1200, 780);
+    plt::plot(range, error);
+    plt::save("../../images/training_plot_output_mlp_exp9.png")
     return 0;
 }

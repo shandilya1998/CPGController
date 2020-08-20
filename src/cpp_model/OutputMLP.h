@@ -28,8 +28,6 @@ class OutputMLP{
         std::complex<float> **Z_out;
         std::complex<float> **Y_h;
         std::complex<float> **Y;
-        std::complex<float> **dW1;
-        std::complex<float> **dw2;
         Activation activation;
         void inputLayerOutput(std::complex<float> **X);
         void hiddenLayerOutput(std::complex<float> **X);
@@ -40,5 +38,5 @@ class OutputMLP{
         std::complex<float> getHiddenWeights(std::complex<float> **weights){return W2;}
         void setInputWeights(std::complex<float> **weights){W1 = weights;}
         void setHiddenWeights(std::complex<float> **weights){W2 = weights;} 
-        void backwardPropagation();
+        void backwardPropagation(float **signal, float **X);
 };

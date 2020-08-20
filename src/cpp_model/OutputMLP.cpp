@@ -8,11 +8,8 @@ OutputMLP::OutputMLP(int n_o, int n_h, int n_out, int n, float LR){
     N = n;
     Z_h = new std::complex<float> *[num_h];
     Y_h = new std::complex<float> *[num_h];
-    W1 = new std::complex<float> *[num_h];
-    dW1 = new std::complex<float> *[num_h];
     for(int i=0; i< num_h; ++i){
         W1[i] = new std::complex<float>[num_osc];
-        dW1[i] = new std::complex<float>[num_osc];
         Z_h[i] = new std::complex<float>[N];
         Y_h[i] = new std::complex<float>[N];
         for(int j=0; j>num_osc; ++j)
@@ -21,10 +18,8 @@ OutputMLP::OutputMLP(int n_o, int n_h, int n_out, int n, float LR){
     Z = new std::complex<float> *[num_out];
     Y = new std::complex<float> *[num_out];
     W2 = new std::complex<float> *[num_out];
-    dW2 = new std::complex<float> *[num_out];
     for(int i=0; i<num_out; ++i){
         W2[i] = new std::complex<float>[num_h];
-        dW2[i] = new std::complex<float>[num_h];
         Z[i] = new std::complex<float>[N];
         Y[i] = new std::complex<float>[N];
         for(int j=0; j<num_h; ++j){
@@ -64,11 +59,11 @@ std::complex<float> OutputMLP::forwardPropagation(std::complex<float> **X){
     return Y; 
 }
 
-void OutputMLP::backwardPropagation(float **X){
+void OutputMLP::backwardPropagation(float **signal, float **X){
     std::complex<float> iota(0,1);
     float temp1;
     for(int i=0; i<num_out; i++){
-        for(int j=0; j<num_h; j++){
+        for(int j=0; j<num_h; j++){ 
             for(int k=0; k<N; k++){
                 temp1 = (
                     signal[i][k]-Y[i][k].real()
@@ -77,11 +72,11 @@ void OutputMLP::backwardPropagation(float **X){
                 )*(
                     1+Y[i][k].real()
                 );
-                dW2[i][j] += -1*temp1*(
+                W2[i][j] -= -lr*temp1*(
                     Y_h[j][k].real()-iota*Y_h[j][k].imag()
                 );
                 for(int l=0; l<num_osc; l++){
-                    dW1[j][l] += -1*temp1*(
+                    W1[j][l] -= -lr*temp1*(
                         (
                             W2[i][j].real()*0.5*(
                                 1-Y_h[j][k].real()
@@ -99,9 +94,9 @@ void OutputMLP::backwardPropagation(float **X){
                         )
                     );
                 }
-            } 
+            }
         }
+    }
     delete iota;
     delete temp1;   
-    } 
 }
