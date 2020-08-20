@@ -12,7 +12,10 @@
 #include <cmath>
 #include "random_num_generator.h"
 #endif
+#ifndef TQDM
+#define TQDM
 #include "tqdm.h"
+#endif
 #include "matplotlibcpp.h"
 
 namespace plt = matplotlibcpp;
