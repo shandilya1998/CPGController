@@ -22,6 +22,11 @@ class OscLayer{
         float *phi;
         std::complex<float> **Z;
     public:
+        ~OscLayer(){
+            delete r;
+            delete phi;
+            delete Z;
+        }
         OscLayer(int n_o, int n, float dT);
         std::complex<float>** forwardPropagation(float *omega);
 };

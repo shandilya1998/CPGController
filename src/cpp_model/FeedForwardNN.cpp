@@ -17,6 +17,7 @@
 #include "tqdm.h"
 #endif
 #include "matplotlibcpp.h"
+#include <string>
 
 namespace plt = matplotlibcpp;
 
@@ -40,30 +41,50 @@ int main(){
     int num_out = 4;
     float dt = 0.001;
     float lr = 0.001;
-    int Tsw = 5;
-    int Tst = 15;
-    float offset[4] = {0.0, 0.0, 0.0, 0.0};
-    float A_h = 15.0;
-    float A_k = 15.0;
+
+    int *Tsw;
+    int *Tst;
+    int *theta;
+    Tsw = new int[5];
+    Tst = new int[5];
+    theta = new int[5];
+    Tsw[0] = 20;
+    Tst[0] = 60;
+    theta[0] = 30;
+    Tsw[1] = 30; 
+    Tst[1] = 90; 
+    theta[1] = 30;
+    Tsw[2] = 10; 
+    Tst[2] = 30; 
+    theta[2] = 30;
+    Tsw[3] = 40; 
+    Tst[3] = 120; 
+    theta[3] = 30;
+    Tsw[4] = 10;
+    Tst[4] = 70;
+    theta[4] = 30;    
+
     //std::cout << "here"; 
-    int N = static_cast<int>(3*M_PI/dt);
+    int N = 960;
     //std::cout << "here2";    
     //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
-    DataLoader data(num_osc, N, Tsw, Tst, offset, A_h, A_k);
+    DataLoader data(num_osc, num_out, 5, dt, Tsw, Tst, theta, N, 0.6);
     std::complex<float> **Z;
     std::complex<float> **Y;
     float error = new float[nepochs];
     float temp;
     float **signal;
+    float *freq;
     int range = new int[nepochs]
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
             //inp.forwardPropagation(input[j], Y_inp_mlp);
             signal = data.getSignal(j);
-            Z = osc.forwardPropagation(freq[j]);
+            freq = data.getInput(j);
+            Z = osc.forwardPropagation(freq);
             Y = out.forwardPropagation(Z);
             temp +=mse(signal, Y, num_out, N);
             out.backwardPropagation(signal, Z);
@@ -71,9 +92,37 @@ int main(){
         error[i] = temp/4;
         range[i] = i;
     }
+    float *time;
+    float *y;
+    time = new float[N];
+    y = new float[N];
+    signal = data.getSignal(4);
+    freq = data.getInput(4);
+    Z = osc.forwardPropagation(freq);
+    Y = out.forwardPropagation(Z);
+    for(int i=0; i<N; i++){
+        time[i] = i*dt;
+    }
     bar.finish();
-    plt::figure_size(1200, 780);
-    plt::plot(range, error);
-    plt::save("../../images/training_plot_output_mlp_exp9.png")
+    plt::suptitle("Training Plot");
+    plt::subplot(1, 9, 1);
+    plt::plot(, range, error);
+    plt::title("Error Plot");
+    for(int i=0; i<num_osc-1; i=i+2){
+        for(int j=0; j<N; j++){
+            y[j] = Y[i][j];
+        }
+        plt::subplt(1, 9, i+2);
+        plt::named_plot("hip" + to_string(i+1) + "signal", time, signal[i]);
+        plt::named_plot("hip" + to_string(i+1) + "prediction", time, y );
+        for(int j=0; j<N; j++){
+            y[j] = Y[i+1][j];
+        }
+        plt::subplot(1, 9, i+3);
+        plt::named_plot("knee" + to_string(i+1) + "signal", time, signal[i+1]);
+        plt::named_plot("knee" + to_string(i+2) + "knee", time, y);
+    }
+    plt::save("../../images/training_plot_output_mlp_exp9.png");
+    
     return 0;
 }

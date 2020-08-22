@@ -31,7 +31,15 @@ class OutputMLP{
         Activation activation;
         void inputLayerOutput(std::complex<float> **X);
         void hiddenLayerOutput(std::complex<float> **X);
-    public:   
+    public:
+        ~OutputMLP(){
+            delete W1;
+            delete ~W2;
+            delete Z_h;
+            delete Z_out;
+            delete Y_h;
+            delete Y;
+        }   
         OutputMLP(int n_o, int n_h, int n_out, int n, float LR);
         std::complex<float>** forwardPropagation(std::complex<float> **X);
         std::complex<float> getInputWeights(std::complex<float> **weights){return W1;}

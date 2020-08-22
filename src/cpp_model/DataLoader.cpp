@@ -9,6 +9,7 @@ DataLoader::DataLoader(
     int *tst,
     int *t,
     int n,
+    float cutoff
 ){
     num_osc = n_o;
     num_out = n_out;
@@ -32,6 +33,13 @@ DataLoader::DataLoader(
     base = new float[2];
     base[0] = new float[N];
     base[1] = new float[N];
+    pyin = new PyinCpp *[num_d];
+    for(int i=0; i<num_d; i++){
+        pyin[i] = Pyin((int)(1/dt), N/4, N/16);
+        pyin[i].setCutOff(cutoff);
+        pyin[i].reserve(N);
+    }
+    input = new float[num_osc];
 }
 
 void DataLoader::_populate(float **out, int index){
@@ -45,7 +53,7 @@ void DataLoader::_populate(float **out, int index){
     base[0] = new float[N];
     base[1] = new float[N];
     for(int i=0;i<N+T; i++){
-        t = i%T;
+        int t = i%T;
         if(t>=0 && t<=T*b/2){
             base[0][i] = th*sin(M_PI*t/(T*b)+M_PI);
             base[1][i] = 0.0;
@@ -72,9 +80,26 @@ void DataLoader::_populate(float **out, int index){
 void DataLoader::createSignals(){
     tqdm bar;
     for(int i=0;i<num_d; i++){
-        bar.progress(i, nepochs);
-        _populate(signal[i], i); 
+        bar.progress(i, num_d);
+        _populate(signals[i], i); 
     }
     bar.finish();
 }
 
+void DataLoader::calcFF(){
+    std::vector<float> v(N);
+    for(int i=0; i<num_d; i++){
+        for(int j=0; j<N; j++){
+            v[j] = signals[i][0][j];
+        }
+        pyin[i].feed(v);
+        std::vector<float> out = pyin[i].getPitches();
+        pyin[i].clear();
+        ff[i] = out[0];
+    }
+}
+
+void DataLoader::setup(){
+    createSignals();
+    calcFF();
+}
