@@ -19,6 +19,7 @@ DataLoader::DataLoader(
     theta = t;
     dt = DT;
     N = n;
+    beta = new float[num_d];
     for(int i=0; i<num_d; i++){
         beta[i] = Tst[i]/(Tst[i]+Tsw[i]);
     }

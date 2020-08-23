@@ -41,9 +41,9 @@ int main(){
     //std::cout << "test";
     int num_inp = 3;
     int num_h = 10;
-    int num_h_out = 20; 
-    int num_osc = 4;
-    int num_out = 4;
+    int num_h_out = 16; 
+    int num_osc = 8;
+    int num_out = 8;
     float dt = 0.001;
     float lr = 0.001;
 
@@ -68,7 +68,7 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 3000;
+    int nepochs = 30;
     //std::cout << "here"; 
     int N = 960;
     //std::cout << "here2";    

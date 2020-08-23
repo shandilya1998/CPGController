@@ -13,16 +13,23 @@ zip \
 unzip \
 tar \
 vim \
-python3.6 \
+python3-pip \
+ python3-dev \
 gcc \
 g++ \
+gdb \
 libblas-dev \
 liblapack-dev \
 libboost-dev \
 libarmadillo-dev \
 libmlpack-dev \
 libgtest-dev \
-libbenchmark-dev
+libbenchmark-dev \
+&& cd /usr/local/bin \
+&& ln -s /usr/bin/python3 python \
+&& pip3 install --upgrade pip \
+&& apt-get update
+
 
 # Get and install ffts library
 RUN cd /usr/src \
@@ -39,7 +46,8 @@ RUN cd /usr/src \
 && ./bootstrap-vcpkg.sh \
 && ./vcpkg integrate install \
 && echo "export PATH=/usr/src/vcpkg:${PATH}" >> /root/.bashrc \
-&& ./vcpkg install matplotlib-cpp 
+&& ./vcpkg install matplotlib-cpp \
+&& echo "export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}" >> /root/.bashrc 
 
 # Build and install the pitch-detection library, as well as the tests and benchmarks
 RUN cd /usr/src/pitch-detection && make clean all && make -C test clean all && make install

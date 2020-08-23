@@ -6,23 +6,24 @@ OutputMLP::OutputMLP(int n_o, int n_h, int n_out, int n, float LR){
     num_out = n_out;
     lr = LR;
     N = n;
+    W1 = new std::complex<float> *[num_h];
     Z_h = new std::complex<float> *[num_h];
     Y_h = new std::complex<float> *[num_h];
-    for(int i=0; i< num_h; ++i){
-        W1[i] = new std::complex<float>[num_osc];
-        Z_h[i] = new std::complex<float>[N];
-        Y_h[i] = new std::complex<float>[N];
-        for(int j=0; j>num_osc; ++j)
+    for(int i=0; i<num_h; i++){
+        W1[i] = new std::complex<float> [num_osc];
+        Z_h[i] = new std::complex<float> [N];
+        Y_h[i] = new std::complex<float> [N];
+        for(int j=0; j<num_osc; j++)
             W1[i][j] = get_complex_random();
     }
     Z_out = new std::complex<float> *[num_out];
     Y = new std::complex<float> *[num_out];
     W2 = new std::complex<float> *[num_out];
-    for(int i=0; i<num_out; ++i){
+    for(int i=0; i<num_out; i++){
         W2[i] = new std::complex<float>[num_h];
         Z_out[i] = new std::complex<float>[N];
         Y[i] = new std::complex<float>[N];
-        for(int j=0; j<num_h; ++j){
+        for(int j=0; j<num_h; j++){
             W2[i][j] = get_complex_random();
         }
     }
@@ -32,7 +33,7 @@ void OutputMLP::inputLayerOutput(std::complex<float> **X){
     ParamsSigmoid params = {N, 1.0, 0.5};
     std::complex<float> z(0,1);
     for(int i=0; i<num_h; i++){
-        for(int j=0; j>num_osc; j++){
+        for(int j=0; j<num_osc; j++){
             for(int n=0; n<N; n++){
                 Z_h[i][n] += W1[i][j]*X[j][n];
             }
@@ -55,7 +56,7 @@ void OutputMLP::hiddenLayerOutput(std::complex<float> **X){
 
 std::complex<float>** OutputMLP::forwardPropagation(std::complex<float> **X){
     inputLayerOutput(X);
-    hiddenLayerOutput(X);
+    hiddenLayerOutput(Y_h);
     return Y; 
 }
 
