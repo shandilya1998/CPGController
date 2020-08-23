@@ -9,7 +9,7 @@
 #ifndef COMMON_STD_IMPORTS
 #define COMMON_STD_IMPORTS
 #include <iostream>
-#include <cmath>
+#include <math.h>
 #include "random_num_generator.h"
 #endif
 #ifndef TQDM

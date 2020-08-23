@@ -1,7 +1,7 @@
 #ifndef COMMON_STD_IMPORTS
 #define COMMON_STD_IMPORTS
 #include <iostream>
-#include <cmath>
+#include <math.h>
 #include "random_num_generator.h"
 #endif
 
@@ -12,31 +12,23 @@
 
 struct ParamsRelu{
     int dim;
-    double weight;
+    float weight;
 };
 
 struct ParamsSigmoid{
     int dim;
-    double upperBound;
-    double weight;
+    float upperBound;
+    float weight;
 };
 
 struct ParamsTanh{
     int dim;
-    double bound;
+    float bound;
 };
 class Activation{
     public:
-        void reluf(double *inp, double *out, struct ParamsRelu*);
-        void relugrad(double *inp, double *out, struct ParamsRelu*);
-        void sigmoidf(double *inp, double *out, struct ParamsSigmoid*);
-        void sigmoidgrad(double *inp, double *out, struct ParamsSigmoid*);
-        void tanhf(double *inp, double *out, struct ParamsTanh*);
-        void tanhgrad(double *inp, double *out, struct ParamsTanh*);
-        void reluf(std::complex<double> *inp, double *out, struct ParamsRelu*);
-        void relugrad(std::complex<double> *inp, double *out, struct ParamsRelu*);
-        void sigmoidf(std::complex<double> *inp, double *out, struct ParamsSigmoid*);
-        void sigmoidgrad(std::complex<double> *inp, double *out, struct ParamsSigmoid*);
-        void tanhf(std::complex<double> *inp, double *out, struct ParamsTanh*);
-        void tanhgrad(std::complex<double> *inp, double *out, struct ParamsTanh*);
+        void sigmoidf(float *inp, float *out, struct ParamsSigmoid);
+        void sigmoidgrad(float *inp, float *out, struct ParamsSigmoid);
+        void sigmoidf(std::complex<float> *inp, std::complex<float> *out, struct ParamsSigmoid);
+        void sigmoidgrad(std::complex<float> *inp, std::complex<float> *out, struct ParamsSigmoid);
 };

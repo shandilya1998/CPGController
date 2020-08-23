@@ -62,12 +62,13 @@ std::complex<float>** OutputMLP::forwardPropagation(std::complex<float> **X){
 void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
     std::complex<float> iota(0,1);
     float temp1;
+    float a = 0.5;
     for(int i=0; i<num_out; i++){
         for(int j=0; j<num_h; j++){ 
             for(int k=0; k<N; k++){
                 temp1 = (
                     signal[i][k]-Y[i][k].real()
-                )*0.5*(
+                )*a*(
                     1-Y[i][k].real()
                 )*(
                     1+Y[i][k].real()
@@ -78,13 +79,13 @@ void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
                 for(int l=0; l<num_osc; l++){
                     W1[j][l] -= -lr*temp1*(
                         (
-                            W2[i][j].real()*0.5*(
+                            W2[i][j].real()*a*(
                                 1-Y_h[j][k].real()
                             )*(
                                 1+Y_h[j][k].real()
                             )*(
                                 X[l][k].real() + iota*X[l][k].imag()
-                            ) - W2[i][j].imag()*0.5*(
+                            ) - W2[i][j].imag()*a*(
                                 1-Y_h[j][k].imag()
                             )*(
                                 1+Y_h[j][k].imag()
