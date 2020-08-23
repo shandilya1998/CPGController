@@ -1,4 +1,5 @@
 //#include "InputMLP.h"
+#define WITHOUT_NUMPY
 #include "OscLayer.h"
 #include "OutputMLP.h"
 #include "DataLoader.h"
@@ -18,14 +19,18 @@
 #endif
 #include "matplotlibcpp.h"
 #include <string>
+#ifndef VECTOR
+#define VECTOR
+#include <vector>
+#endif
 
 namespace plt = matplotlibcpp;
 
-float mse(float **Y, float **Y_p, int n1, int n2){
+float mse(float **Y, std::complex<float> **Y_p, int n1, int n2){
     float s=0;
     for(int i=0;i<n1;i++){
         for(int j=0; j<n2;j++){
-            s += pow(Y[i][j]-Y_p[i][j], 2);
+            s += pow(Y[i][j]-Y_p[i][j].real(), 2);
         }
     }
     return s/(n1*n2);
@@ -63,7 +68,7 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-
+    int nepochs = 3000;
     //std::cout << "here"; 
     int N = 960;
     //std::cout << "here2";    
@@ -73,11 +78,11 @@ int main(){
     DataLoader data(num_osc, num_out, 5, dt, Tsw, Tst, theta, N, 0.6);
     std::complex<float> **Z;
     std::complex<float> **Y;
-    float error = new float[nepochs];
+    std::vector<float> error(nepochs);
     float temp;
     float **signal;
     float *freq;
-    int range = new int[nepochs]
+    std::vector<int> range(nepochs);
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
@@ -92,10 +97,9 @@ int main(){
         error[i] = temp/4;
         range[i] = i;
     }
-    float *time;
-    float *y;
-    time = new float[N];
-    y = new float[N];
+    std::vector<float> time(N);
+    std::vector<float> y(N);
+    std::vector<float> x(N);
     signal = data.getSignal(4);
     freq = data.getInput(4);
     Z = osc.forwardPropagation(freq);
@@ -106,21 +110,23 @@ int main(){
     bar.finish();
     plt::suptitle("Training Plot");
     plt::subplot(1, 9, 1);
-    plt::plot(, range, error);
+    plt::plot(range, error);
     plt::title("Error Plot");
     for(int i=0; i<num_osc-1; i=i+2){
         for(int j=0; j<N; j++){
-            y[j] = Y[i][j];
+            y[j] = Y[i][j].real();
+            x[j] = signal[i][j];
         }
-        plt::subplt(1, 9, i+2);
-        plt::named_plot("hip" + to_string(i+1) + "signal", time, signal[i]);
-        plt::named_plot("hip" + to_string(i+1) + "prediction", time, y );
+        plt::subplot(1, 9, i+2);
+        plt::named_plot("hip" + std::to_string(i+1) + "signal", time, x);
+        plt::named_plot("hip" + std::to_string(i+1) + "prediction", time, y );
         for(int j=0; j<N; j++){
-            y[j] = Y[i+1][j];
+            y[j] = Y[i+1][j].real();
+            x[j] = signal[i+1][j];
         }
         plt::subplot(1, 9, i+3);
-        plt::named_plot("knee" + to_string(i+1) + "signal", time, signal[i+1]);
-        plt::named_plot("knee" + to_string(i+2) + "knee", time, y);
+        plt::named_plot("knee" + std::to_string(i+1) + "signal", time, x);
+        plt::named_plot("knee" + std::to_string(i+2) + "knee", time, y);
     }
     plt::save("../../images/training_plot_output_mlp_exp9.png");
     
