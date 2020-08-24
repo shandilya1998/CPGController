@@ -43,7 +43,7 @@ int main(){
     int num_h_out = 16; 
     int num_osc = 8;
     int num_out = 8;
-    float dt = 0.001;
+    float dt = 0.01;
     float lr = 0.001;
 
     int *Tsw;
@@ -67,7 +67,7 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 30;
+    int nepochs = 3;
     //std::cout << "here"; 
     int N = 960;
     //std::cout << "here2";    
@@ -75,6 +75,7 @@ int main(){
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
     DataLoader data(num_osc, num_out, 5, dt, Tsw, Tst, theta, N, 0.6);
+    //std::vector<float> vec(N);
     data.setup();
     std::complex<float> **Z;
     std::complex<float> **Y;
@@ -99,6 +100,7 @@ int main(){
         range.at(i) = i;
     }
     std::vector<float> time(N);
+    std::vector<float> sig(N);
     std::vector<float> y(N);
     std::vector<float> x(N);
     signal = data.getSignal(4);

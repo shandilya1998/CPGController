@@ -34,10 +34,8 @@ class DataLoader{
         float *input;
         int N;
         float *beta;
-        void _populate(float **out, int index);
-        float **base;
         void createSignals();
-        void calcFF(int n); 
+        void calcFF(std::vector<float> &vec);
         std::vector<float> sig;
     public:
         DataLoader(
@@ -56,11 +54,10 @@ class DataLoader{
             delete Tst;
             delete theta;
             delete input;
-            delete base;
             delete ff;
             delete beta;
             delete signals;
-            //delete sig;
+            //delete &sig;
         }
         float* getInput(int index){
             for(int i=0; i<num_osc; i++){
