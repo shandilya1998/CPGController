@@ -34,6 +34,7 @@ DataLoader::DataLoader(
     base = new float *[2];
     base[0] = new float[N];
     base[1] = new float[N];
+    sig.assign(N, 0);
     input = new float[num_osc];
 }
 
@@ -42,7 +43,6 @@ void DataLoader::_populate(float **out, int index){
     int tsw = Tsw[index];
     int th = theta[index];
     float b = beta[index];
-    float **base;
     int T = tst+tsw;
     for(int i=0;i<N+T; i++){
         int t = i%T;
@@ -70,27 +70,23 @@ void DataLoader::_populate(float **out, int index){
 }
 
 void DataLoader::createSignals(){
-    tqdm bar;
     for(int i=0;i<num_d; i++){
-        bar.progress(i, num_d);
         _populate(signals[i], i); 
     }
-    bar.finish();
 }
 
-void DataLoader::calcFF(){
-    std::vector<float> v(N);
-    float pitch;
+void DataLoader::calcFF(int n){
+    float p;
     for(int i=0; i<num_d; i++){
-        for(int j=0; j<N; j++){
-            v[j] = signals[i][0][j];
+        for(int j=0; j<n; j++){
+            sig.at(j) = signals[i][0][j];
         }
-        pitch = pitch::yin<float>(v, 1/dt);
-        ff[i] = pitch;
+        p = pitch::yin<float>(sig, 1/dt);
+        ff[i] = p;
     }
 }
 
 void DataLoader::setup(){
     createSignals();
-    calcFF();
+    calcFF(N);
 }

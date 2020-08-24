@@ -37,7 +37,6 @@ float mse(float **Y, std::complex<float> **Y_p, int n1, int n2){
 }
 
 int main(){
-    tqdm bar;
     //std::cout << "test";
     int num_inp = 3;
     int num_h = 10;
@@ -76,6 +75,7 @@ int main(){
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
     DataLoader data(num_osc, num_out, 5, dt, Tsw, Tst, theta, N, 0.6);
+    data.setup();
     std::complex<float> **Z;
     std::complex<float> **Y;
     std::vector<float> error(nepochs);
@@ -83,6 +83,7 @@ int main(){
     float **signal;
     float *freq;
     std::vector<int> range(nepochs);
+    tqdm bar; 
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
         for(int j = 0; j<4; j++){
@@ -94,8 +95,8 @@ int main(){
             temp +=mse(signal, Y, num_out, N);
             out.backwardPropagation(signal, Z);
         }
-        error[i] = temp/4;
-        range[i] = i;
+        error.at(i) = temp/4;
+        range.at(i) = i;
     }
     std::vector<float> time(N);
     std::vector<float> y(N);
@@ -105,30 +106,35 @@ int main(){
     Z = osc.forwardPropagation(freq);
     Y = out.forwardPropagation(Z);
     for(int i=0; i<N; i++){
-        time[i] = i*dt;
+        time.at(i) = i;
     }
     bar.finish();
-    plt::suptitle("Training Plot");
-    plt::subplot(1, 9, 1);
+    plt::figure();
+    plt::figure_size(720 ,6490);
+    plt::subplot(9, 1, 1);
     plt::plot(range, error);
     plt::title("Error Plot");
-    for(int i=0; i<num_osc-1; i=i+2){
+    for(int i=0; i<num_osc; i=i+2){
         for(int j=0; j<N; j++){
             y[j] = Y[i][j].real();
             x[j] = signal[i][j];
         }
-        plt::subplot(1, 9, i+2);
-        plt::named_plot("hip" + std::to_string(i+1) + "signal", time, x);
-        plt::named_plot("hip" + std::to_string(i+1) + "prediction", time, y );
+        plt::subplot(9, 1, i+2);
+        plt::named_plot("hip" + std::to_string(i+1) + "signal", time, x, "r");
+        plt::named_plot("hip" + std::to_string(i+1) + "prediction", time, y, "b" );
+        plt::legend();
+        plt::title("Hip" + std::to_string(i/2+1));
         for(int j=0; j<N; j++){
-            y[j] = Y[i+1][j].real();
-            x[j] = signal[i+1][j];
+            y.at(j) = Y[i+1][j].real();
+            x.at(j) = signal[i+1][j];
         }
-        plt::subplot(1, 9, i+3);
-        plt::named_plot("knee" + std::to_string(i+1) + "signal", time, x);
-        plt::named_plot("knee" + std::to_string(i+2) + "knee", time, y);
+        plt::subplot(9, 1, i+3);
+        plt::named_plot("knee" + std::to_string(i+1) + "signal", time, x, "r");
+        plt::named_plot("knee" + std::to_string(i+2) + "knee", time, y, "b");
+        plt::legend();
+        plt::title("Knee" + std::to_string(i/2+1));
     }
-    plt::save("../../images/training_plot_output_mlp_exp9.png");
-    
+    plt::show();
+    plt::save("training_plot_output_mlp_exp9.png");
     return 0;
 }

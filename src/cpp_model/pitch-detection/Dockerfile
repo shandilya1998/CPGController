@@ -28,7 +28,8 @@ libbenchmark-dev \
 && cd /usr/local/bin \
 && ln -s /usr/bin/python3 python \
 && pip3 install --upgrade pip \
-&& apt-get update
+&& apt-get update \
+&& pip install matplotlib
 
 
 # Get and install ffts library
