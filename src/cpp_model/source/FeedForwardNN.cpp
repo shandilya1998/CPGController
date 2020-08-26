@@ -67,7 +67,7 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 3;
+    int nepochs = 100;
     //std::cout << "here"; 
     int N = 960;
     //std::cout << "here2";    
@@ -83,7 +83,7 @@ int main(){
     float temp;
     float **signal;
     float *freq;
-    std::vector<int> range(nepochs);
+    std::vector<float> range(nepochs);
     tqdm bar; 
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
@@ -114,7 +114,8 @@ int main(){
     plt::figure();
     plt::figure_size(720 ,6490);
     plt::subplot(9, 1, 1);
-    plt::plot(range, error);
+    plt::named_plot("Training Error", range, error);
+    plt::legend();
     plt::title("Error Plot");
     for(int i=0; i<num_osc; i=i+2){
         for(int j=0; j<N; j++){
@@ -122,19 +123,19 @@ int main(){
             x[j] = signal[i][j];
         }
         plt::subplot(9, 1, i+2);
-        plt::named_plot("hip" + std::to_string(i+1) + "signal", time, x, "r");
-        plt::named_plot("hip" + std::to_string(i+1) + "prediction", time, y, "b" );
+        plt::named_plot("hip " + std::to_string(i+1) + " signal", time, x, "r");
+        plt::named_plot("hip " + std::to_string(i+1) + " prediction", time, y, "b" );
         plt::legend();
-        plt::title("Hip" + std::to_string(i/2+1));
+        plt::title("Hip " + std::to_string(i/2+1));
         for(int j=0; j<N; j++){
             y.at(j) = Y[i+1][j].real();
             x.at(j) = signal[i+1][j];
         }
         plt::subplot(9, 1, i+3);
-        plt::named_plot("knee" + std::to_string(i+1) + "signal", time, x, "r");
-        plt::named_plot("knee" + std::to_string(i+2) + "knee", time, y, "b");
+        plt::named_plot("knee " + std::to_string(i+1) + " signal", time, x, "r");
+        plt::named_plot("knee " + std::to_string(i+2) + " prediction", time, y, "b");
         plt::legend();
-        plt::title("Knee" + std::to_string(i/2+1));
+        plt::title("Knee " + std::to_string(i/2+1));
     }
     plt::show();
     plt::save("training_plot_output_mlp_exp9.png");

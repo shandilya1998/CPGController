@@ -31,6 +31,8 @@ class DataLoader{
         float dt;
         float *ff;
         float ***signals;
+        float ***norm_signals;
+        float **mean;
         float *input;
         int N;
         float *beta;
@@ -50,13 +52,24 @@ class DataLoader{
             float cutoff
         );
         ~DataLoader(){
-            delete Tsw;
-            delete Tst;
-            delete theta;
-            delete input;
-            delete ff;
-            delete beta;
-            delete signals;
+            delete[] Tsw;
+            delete[] Tst;
+            delete[] theta;
+            delete[] input;
+            delete[] ff;
+            delete[] beta;
+            for(int i=0; i<num_d; i++){
+                delete[] mean[i];
+                for(int j=0; j<num_osc; j++){
+                    delete[] signals[i][j];
+                    delete[] norm_signals[i][j];
+                }
+                delete signals[i];
+                delete norm_signals[i];
+            }
+            delete[] mean;
+            delete[] signals;
+            delete[] norm_signals;
             //delete &sig;
         }
         float* getInput(int index){

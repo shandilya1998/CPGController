@@ -20,15 +20,22 @@ DataLoader::DataLoader(
     dt = DT;
     N = n;
     beta = new float[num_d];
+    mean = new float*[num_d];
     for(int i=0; i<num_d; i++){
-        beta[i] = Tst[i]/(Tst[i]+Tsw[i]);
+        mean[i] = new float[2];
+        mean[i][0] = 0.0;
+        mean[i][1] = 0.0;
+        beta[i] = (float)Tst[i]/(Tst[i]+Tsw[i]);
     }
     ff = new float[num];
     signals = new float**[num];
+    norm_signals = new float**[num];
     for(int i=0; i<num; i++){
         signals[i] = new float *[num_osc];
+        norm_signals[i] = new float *[num_osc];
         for(int j=0; j<num_osc; j++){
             signals[i][j] = new float[N];
+            norm_signals[i][j] = new float[N];
         }
     }
     float zero = 0.0;
@@ -37,7 +44,7 @@ DataLoader::DataLoader(
     for(int i=0; i<N;i++){
         sig.emplace_back(i);
     }
-    input = new float[num_osc];
+    input = new float[num_osc]();
 }
 
 void DataLoader::createSignals(){
@@ -53,15 +60,15 @@ void DataLoader::createSignals(){
         tsw = Tsw[i];
         th = theta[i];
         b = beta[i];
+        std::cout<<"beta"<<b<<"\n";
         T = tst+tsw;
         for(int j=0;j<num_osc; j=j+2){
-            for(int k=T; k<N+T; k++){
+            for(int k=0; k<N+T; k++){
                 t=k%T;
-                pos = (int)(k-T*(1-(float)(j/8)));
-                if(pos>0){
-                    if(t>=0 && t<=T*b/2){
+                pos = (int)(k-T*(1-(float)(j)/8));
+                if(pos>=0){
+                    if(t>=0 && t<(int)T*b/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI);
-                        signals[i][j+1][pos] = 0.0;
                     }
                     else if(t>T*b/2 && t<=T*(2-b)/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*(1-b))+M_PI*(3-4*b)/(2*(1-b)));
@@ -69,7 +76,6 @@ void DataLoader::createSignals(){
                     }
                     else if(t>T*(2-b)/2 && t<=T){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI*(b-1)/b);
-                        signals[i][j+1][pos] = 0.0;
                     }
                 }
             } 
@@ -87,6 +93,8 @@ void DataLoader::calcFF(std::vector<float> &vec){
         ff[i] = p;
     }
 }
+
+
 
 void DataLoader::setup(){
     createSignals();

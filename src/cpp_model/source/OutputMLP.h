@@ -33,12 +33,22 @@ class OutputMLP{
         void hiddenLayerOutput(std::complex<float> **X);
     public:
         ~OutputMLP(){
-            delete W1;
-            delete W2;
-            delete Z_h;
-            delete Z_out;
-            delete Y_h;
-            delete Y;
+            for(int i=0; i>num_h; i++){
+                delete[] W1[i];
+                delete[] Z_h[i];
+                delete[] Y_h[i];
+            }
+            delete[] W1;
+            for(int i=0; i<num_out; i++){
+                delete[] W2[i];
+                delete[] Z_out[i];
+                delete[] Y[i];
+            }
+            delete[] W2;
+            delete[] Z_h;
+            delete[] Z_out;
+            delete[] Y_h;
+            delete[] Y;
         }   
         OutputMLP(int n_o, int n_h, int n_out, int n, float LR);
         std::complex<float>** forwardPropagation(std::complex<float> **X);
