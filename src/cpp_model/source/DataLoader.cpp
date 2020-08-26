@@ -21,21 +21,17 @@ DataLoader::DataLoader(
     N = n;
     beta = new float[num_d];
     mean = new float*[num_d];
+    ff = new float[num_d];
+    signals = new float**[num_d];
+    norm_signals = new float**[num_d];
     for(int i=0; i<num_d; i++){
-        mean[i] = new float[2];
-        mean[i][0] = 0.0;
-        mean[i][1] = 0.0;
+        mean[i] = new float[2]();
         beta[i] = (float)Tst[i]/(Tst[i]+Tsw[i]);
-    }
-    ff = new float[num];
-    signals = new float**[num];
-    norm_signals = new float**[num];
-    for(int i=0; i<num; i++){
         signals[i] = new float *[num_osc];
         norm_signals[i] = new float *[num_osc];
         for(int j=0; j<num_osc; j++){
-            signals[i][j] = new float[N];
-            norm_signals[i][j] = new float[N];
+            signals[i][j] = new float[N]();
+            norm_signals[i][j] = new float[N]();
         }
     }
     float zero = 0.0;
@@ -60,15 +56,15 @@ void DataLoader::createSignals(){
         tsw = Tsw[i];
         th = theta[i];
         b = beta[i];
-        std::cout<<"beta"<<b<<"\n";
         T = tst+tsw;
         for(int j=0;j<num_osc; j=j+2){
             for(int k=0; k<N+T; k++){
                 t=k%T;
                 pos = (int)(k-T*(1-(float)(j)/8));
-                if(pos>=0){
+                if(pos>=0 && pos<N){
                     if(t>=0 && t<(int)T*b/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI);
+                        signals[i][j+1][pos] = 0.0;
                     }
                     else if(t>T*b/2 && t<=T*(2-b)/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*(1-b))+M_PI*(3-4*b)/(2*(1-b)));
@@ -76,6 +72,7 @@ void DataLoader::createSignals(){
                     }
                     else if(t>T*(2-b)/2 && t<=T){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI*(b-1)/b);
+                        signals[i][j+1][pos] = 0.0;
                     }
                 }
             } 
@@ -89,8 +86,9 @@ void DataLoader::calcFF(std::vector<float> &vec){
         for(int j=0; j<N; j++){
             vec.at(j) = signals[i][0][j];
         }
-        //p = pitch::mpm<float>(vec, (int)(1/dt));
-        ff[i] = p;
+        p = pitch::pyin<float>(vec, (int)(1/dt));
+        std::cout<<"fundamental frequency gait " + std::to_string(i) +":"<<p/dt<<"\n";
+        ff[i] = p/dt;
     }
 }
 

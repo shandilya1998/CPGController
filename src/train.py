@@ -109,8 +109,8 @@ class Train(object):
         """
             Assuming a straight line motion with a constant speed
         """
-        Tst = 60
-        Tsw = 20
+        Tst = 30
+        Tsw = 10
         theta = 15
         Z = self.data.get_input(Tsw, Tst, theta)
         for i in tqdm(range(self.nepochs)):

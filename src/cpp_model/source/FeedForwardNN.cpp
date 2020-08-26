@@ -67,7 +67,7 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 100;
+    int nepochs = 300;
     //std::cout << "here"; 
     int N = 960;
     //std::cout << "here2";    
@@ -97,6 +97,9 @@ int main(){
             out.backwardPropagation(signal, Z);
         }
         error.at(i) = temp/4;
+        if(i%10==0){
+            std::cout<<"error:"<<error[i]<<"\n";
+        }
         range.at(i) = i;
     }
     std::vector<float> time(N);

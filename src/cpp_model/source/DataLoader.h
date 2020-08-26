@@ -64,8 +64,8 @@ class DataLoader{
                     delete[] signals[i][j];
                     delete[] norm_signals[i][j];
                 }
-                delete signals[i];
-                delete norm_signals[i];
+                delete[] signals[i];
+                delete[] norm_signals[i];
             }
             delete[] mean;
             delete[] signals;
