@@ -43,7 +43,7 @@ int main(){
     int num_h_out = 16; 
     int num_osc = 8;
     int num_out = 8;
-    float dt = 0.01;
+    float dt = 0.001;
     float lr = 0.001;
 
     int *Tsw;
@@ -67,9 +67,9 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 300;
+    int nepochs = 100;
     //std::cout << "here"; 
-    int N = 960;
+    int N = 1440;
     //std::cout << "here2";    
     //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);

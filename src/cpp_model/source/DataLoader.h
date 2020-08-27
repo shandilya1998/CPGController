@@ -32,7 +32,7 @@ class DataLoader{
         float *ff;
         float ***signals;
         float ***norm_signals;
-        float **mean;
+        float **max;
         float *input;
         int N;
         float *beta;
@@ -59,7 +59,7 @@ class DataLoader{
             delete[] ff;
             delete[] beta;
             for(int i=0; i<num_d; i++){
-                delete[] mean[i];
+                delete[] max[i];
                 for(int j=0; j<num_osc; j++){
                     delete[] signals[i][j];
                     delete[] norm_signals[i][j];
@@ -67,7 +67,7 @@ class DataLoader{
                 delete[] signals[i];
                 delete[] norm_signals[i];
             }
-            delete[] mean;
+            delete[] max;
             delete[] signals;
             delete[] norm_signals;
             //delete &sig;
@@ -79,7 +79,7 @@ class DataLoader{
             return input;
         }
         float** getSignal(int index){
-            return signals[index];
+            return norm_signals[index];
 
         }
         void setup();

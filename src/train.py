@@ -109,9 +109,9 @@ class Train(object):
         """
             Assuming a straight line motion with a constant speed
         """
-        Tst = 30
-        Tsw = 10
-        theta = 15
+        Tst = 60
+        Tsw = 20
+        theta = 30
         Z = self.data.get_input(Tsw, Tst, theta)
         for i in tqdm(range(self.nepochs)):
             yr = self.out_mlp(Z, self.out_mlp.sigmoidf)
@@ -157,8 +157,8 @@ class Train(object):
         fig.savefig('../images/training_plot_output_mlp_exp{exp}.png'.format(exp=self.exp))
         self.plot(yr)
     
-dt = 0.0010
-N = 500
+dt = 0.001
+N = 1440
 nepochs = 30000
 num_osc = 20
 num_h = 200

@@ -20,12 +20,12 @@ DataLoader::DataLoader(
     dt = DT;
     N = n;
     beta = new float[num_d];
-    mean = new float*[num_d];
+    max = new float*[num_d];
     ff = new float[num_d];
     signals = new float**[num_d];
     norm_signals = new float**[num_d];
     for(int i=0; i<num_d; i++){
-        mean[i] = new float[2]();
+        max[i] = new float[2]();
         beta[i] = (float)Tst[i]/(Tst[i]+Tsw[i]);
         signals[i] = new float *[num_osc];
         norm_signals[i] = new float *[num_osc];
@@ -75,7 +75,26 @@ void DataLoader::createSignals(){
                         signals[i][j+1][pos] = 0.0;
                     }
                 }
+                //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
+                //std::cout<<"knee: "<<signals[i][j+1][pos]<<"\n";
+                if(signals[i][j][pos]>max[i][0]){
+                    max[i][0] = signals[i][j][pos];
+                    std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
+                    std::cout<<"hip: "<<max[i][0]<<"\n";
+                }
+                if(signals[i][j+1][pos]>max[i][1]){
+                    max[i][1] = signals[i][j+1][pos];
+                    std::cout<<"knee: "<<max[i][1]<<"\n";
+                } 
             } 
+        }
+        for(int j=0;j<num_osc; j=j+2){
+            for(int k=0; k<N; k++){
+                norm_signals[i][j][k] = signals[i][j][k]/(1.2*max[i][0]);
+                norm_signals[i][j+1][k] = signals[i][j+1][k]/(1.2*max[i][1]);
+                //std::cout<<norm_signals[i][j][k]<<"\n";
+                //std::cout<<norm_signals[i][j+1][k]<<"\n";
+            }   
         }
     }
 }
@@ -86,13 +105,11 @@ void DataLoader::calcFF(std::vector<float> &vec){
         for(int j=0; j<N; j++){
             vec.at(j) = signals[i][0][j];
         }
-        p = pitch::pyin<float>(vec, (int)(1/dt));
-        std::cout<<"fundamental frequency gait " + std::to_string(i) +":"<<p/dt<<"\n";
-        ff[i] = p/dt;
+        p = pitch::swipe<float>(vec, (int)(1/dt));
+        std::cout<<"fundamental frequency for gait "+std::to_string(i)+": "<<p<<"\n";
+        ff[i] = p;
     }
 }
-
-
 
 void DataLoader::setup(){
     createSignals();
