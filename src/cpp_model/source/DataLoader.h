@@ -9,10 +9,15 @@
 #define VECTOR
 #include <vector>
 #endif
-
+/*
 #ifndef PYIN
 #define PYIN
 #include "pitch_detection.h"
+#endif
+*/
+#ifndef FOURIER
+#define FOURIER
+#include "Fourier.h"
 #endif
 
 #ifndef TQDM
@@ -37,8 +42,8 @@ class DataLoader{
         int N;
         float *beta;
         void createSignals();
-        void calcFF(std::vector<float> &vec);
-        std::vector<float> sig;
+        void calcFF();
+        CFourier fourier;
     public:
         DataLoader(
             int n_o, 

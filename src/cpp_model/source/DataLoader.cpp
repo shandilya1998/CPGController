@@ -35,12 +35,8 @@ DataLoader::DataLoader(
         }
     }
     float zero = 0.0;
-    //sig.assign(N, 0);
-    sig.reserve(N);
-    for(int i=0; i<N;i++){
-        sig.emplace_back(i);
-    }
     input = new float[num_osc]();
+    fourier.build((int)(1/dt), N);
 }
 
 void DataLoader::createSignals(){
@@ -79,12 +75,12 @@ void DataLoader::createSignals(){
                 //std::cout<<"knee: "<<signals[i][j+1][pos]<<"\n";
                 if(signals[i][j][pos]>max[i][0]){
                     max[i][0] = signals[i][j][pos];
-                    std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
-                    std::cout<<"hip: "<<max[i][0]<<"\n";
+                    //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
+                    //std::cout<<"hip: "<<max[i][0]<<"\n";
                 }
                 if(signals[i][j+1][pos]>max[i][1]){
                     max[i][1] = signals[i][j+1][pos];
-                    std::cout<<"knee: "<<max[i][1]<<"\n";
+                    //std::cout<<"knee: "<<max[i][1]<<"\n";
                 } 
             } 
         }
@@ -99,19 +95,15 @@ void DataLoader::createSignals(){
     }
 }
 
-void DataLoader::calcFF(std::vector<float> &vec){
+void DataLoader::calcFF(){
     float p;
     for(int i=0; i<num_d; i++){
-        for(int j=0; j<N; j++){
-            vec.at(j) = signals[i][0][j];
-        }
-        p = pitch::swipe<float>(vec, (int)(1/dt));
-        std::cout<<"fundamental frequency for gait "+std::to_string(i)+": "<<p<<"\n";
-        ff[i] = p;
+        //ff[i] = fourier.ComplexFFT(signals[i][0], 1);
+        std::cout<<"fundamental frequency for gait "+std::to_string(i)+": "<<ff[i]<<"\n";
     }
 }
 
 void DataLoader::setup(){
     createSignals();
-    calcFF(sig);
+    calcFF();
 }

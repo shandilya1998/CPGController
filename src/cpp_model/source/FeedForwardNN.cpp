@@ -69,7 +69,7 @@ int main(){
     theta[4] = 30;    
     int nepochs = 100;
     //std::cout << "here"; 
-    int N = 1440;
+    int N = 960;
     //std::cout << "here2";    
     //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);

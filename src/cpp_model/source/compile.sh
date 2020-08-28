@@ -3,6 +3,7 @@ g++ FeedForwardNN.cpp \
 	OutputMLP.cpp \
 	OscLayer.cpp \
 	DataLoader.cpp \
+	Fourier.cpp \
 	random_num_generator.cpp \
 	-fopenmp \
 	-I/usr/src/vcpkg/packages/matplotlib-cpp_x64-linux/include \
