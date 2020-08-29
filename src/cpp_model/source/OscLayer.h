@@ -18,13 +18,11 @@ class OscLayer{
         int num_osc;
         float dt;
         int N;
-        float *r;
-        float *phi;
+        float r;
+        float phi;
         std::complex<float> **Z;
     public:
         ~OscLayer(){
-            delete[] r;
-            delete[] phi;
             for(int i=0; i<num_osc; i++){
                 delete[] Z[i];
             }

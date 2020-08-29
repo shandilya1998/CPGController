@@ -122,7 +122,7 @@ float CFourier::fftFrequency (unsigned long k){
 
 float CFourier::fundamentalFrequency(float data[]){
     fft(data);
-    float max, temp, freq;
+    float max = 0.0, temp, freq;
     for(int i=0; i<number_of_samples; i++){
         temp = fftMagnitude(i);
         if(max<temp){
