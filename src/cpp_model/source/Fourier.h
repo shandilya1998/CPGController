@@ -7,18 +7,23 @@
 #include "random_num_generator.h"
 #endif
 
+#include <stdlib.h>
+
 class CFourier
 {
-public:
-	double pi;
-	unsigned long int fundamental_frequency;
-	unsigned int sample_rate;
+private:
+	float pi;
+	float fs;;
     unsigned long number_of_samples;
     float *vector;
+    // FFT 1D
+    void fft(float data[]);
+    float fftMagnitude(unsigned long k); 
+    float fftFrequency(unsigned long k);
+public:
     CFourier(void);
 	~CFourier(void);
-	// FFT 1D
-	float ComplexFFT(float data[], int sign);
-    void build(unsigned int sr, unsigned long ns);
+    void build(float FS, unsigned long nn);
+    float fundamentalFrequency(float data[]);
 };
 

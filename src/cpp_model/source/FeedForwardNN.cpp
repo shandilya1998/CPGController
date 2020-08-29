@@ -43,15 +43,16 @@ int main(){
     int num_h_out = 16; 
     int num_osc = 8;
     int num_out = 8;
+    int num_d = 5;
     float dt = 0.001;
     float lr = 0.001;
 
     int *Tsw;
     int *Tst;
     int *theta;
-    Tsw = new int[5];
-    Tst = new int[5];
-    theta = new int[5];
+    Tsw = new int[num_d];
+    Tst = new int[num_d];
+    theta = new int[num_d];
     Tsw[0] = 20;
     Tst[0] = 60;
     theta[0] = 30;
@@ -69,34 +70,39 @@ int main(){
     theta[4] = 30;    
     int nepochs = 100;
     //std::cout << "here"; 
-    int N = 960;
+    int N = 1024;
     //std::cout << "here2";    
     //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
-    DataLoader data(num_osc, num_out, 5, dt, Tsw, Tst, theta, N, 0.6);
+    DataLoader data(num_osc, num_out, num_d, dt, Tsw, Tst, theta, N, 0.6);
     //std::vector<float> vec(N);
     data.setup();
-    std::complex<float> **Z;
     std::complex<float> **Y;
     std::vector<float> error(nepochs);
     float temp;
-    float **signal;
-    float *freq;
+    float ***signal;
+    float **freq;
+    std::complex<float> ***Z;
+    freq = new float *[num_d];
+    signal = new float **[num_d];
+    Z = new std::complex<float> **[num_d];
+    for(int i=0; i<num_d; i++){
+        freq[i] = data.getInput(i);
+        signal[i] = data.getSignal(i);
+        Z[i] = osc.forwardPropagation(freq[i]);
+    }
     std::vector<float> range(nepochs);
     tqdm bar; 
     for(int i =0; i<nepochs; i++){
         bar.progress(i, nepochs);
-        for(int j = 0; j<4; j++){
+        for(int j = 0; j<num_d-1; j++){
             //inp.forwardPropagation(input[j], Y_inp_mlp);
-            signal = data.getSignal(j);
-            freq = data.getInput(j);
-            Z = osc.forwardPropagation(freq);
-            Y = out.forwardPropagation(Z);
-            temp +=mse(signal, Y, num_out, N);
-            out.backwardPropagation(signal, Z);
+            Y = out.forwardPropagation(Z[j]);
+            temp +=mse(signal[j], Y, num_out, N);
+            out.backwardPropagation(signal[j], Z[j]);
         }
-        error.at(i) = temp/4;
+        error.at(i) = temp/(num_d-1);
         if(i%10==0){
             std::cout<<"error:"<<error[i]<<"\n";
         }
@@ -106,10 +112,8 @@ int main(){
     std::vector<float> sig(N);
     std::vector<float> y(N);
     std::vector<float> x(N);
-    signal = data.getSignal(4);
-    freq = data.getInput(4);
-    Z = osc.forwardPropagation(freq);
-    Y = out.forwardPropagation(Z);
+    Z[num_d-1] = osc.forwardPropagation(freq[num_d-1]);
+    Y = out.forwardPropagation(Z[num_d-1]);
     for(int i=0; i<N; i++){
         time.at(i) = i;
     }
@@ -123,7 +127,7 @@ int main(){
     for(int i=0; i<num_osc; i=i+2){
         for(int j=0; j<N; j++){
             y[j] = Y[i][j].real();
-            x[j] = signal[i][j];
+            x[j] = signal[num_d-1][i][j];
         }
         plt::subplot(9, 1, i+2);
         plt::named_plot("hip " + std::to_string(i+1) + " signal", time, x, "r");
@@ -132,7 +136,7 @@ int main(){
         plt::title("Hip " + std::to_string(i/2+1));
         for(int j=0; j<N; j++){
             y.at(j) = Y[i+1][j].real();
-            x.at(j) = signal[i+1][j];
+            x.at(j) = signal[num_d-1][i+1][j];
         }
         plt::subplot(9, 1, i+3);
         plt::named_plot("knee " + std::to_string(i+1) + " signal", time, x, "r");

@@ -36,7 +36,7 @@ DataLoader::DataLoader(
     }
     float zero = 0.0;
     input = new float[num_osc]();
-    fourier.build((int)(1/dt), N);
+    fourier.build(1/dt, N);
 }
 
 void DataLoader::createSignals(){
@@ -70,18 +70,16 @@ void DataLoader::createSignals(){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI*(b-1)/b);
                         signals[i][j+1][pos] = 0.0;
                     }
+                    if(signals[i][j][pos]>max[i][0]){
+                        max[i][0] = signals[i][j][pos];
+                        //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
+                        //std::cout<<"hip: "<<max[i][0]<<"\n";
+                    }       
+                    if(signals[i][j+1][pos]>max[i][1]){
+                        max[i][1] = signals[i][j+1][pos];
+                        //std::cout<<"knee: "<<max[i][1]<<"\n";
+                    } 
                 }
-                //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
-                //std::cout<<"knee: "<<signals[i][j+1][pos]<<"\n";
-                if(signals[i][j][pos]>max[i][0]){
-                    max[i][0] = signals[i][j][pos];
-                    //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
-                    //std::cout<<"hip: "<<max[i][0]<<"\n";
-                }
-                if(signals[i][j+1][pos]>max[i][1]){
-                    max[i][1] = signals[i][j+1][pos];
-                    //std::cout<<"knee: "<<max[i][1]<<"\n";
-                } 
             } 
         }
         for(int j=0;j<num_osc; j=j+2){
@@ -98,7 +96,7 @@ void DataLoader::createSignals(){
 void DataLoader::calcFF(){
     float p;
     for(int i=0; i<num_d; i++){
-        //ff[i] = fourier.ComplexFFT(signals[i][0], 1);
+        ff[i] = fourier.fundamentalFrequency(signals[i][0]);
         std::cout<<"fundamental frequency for gait "+std::to_string(i)+": "<<ff[i]<<"\n";
     }
 }

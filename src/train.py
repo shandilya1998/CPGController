@@ -109,8 +109,8 @@ class Train(object):
         """
             Assuming a straight line motion with a constant speed
         """
-        Tst = 60
-        Tsw = 20
+        Tst = 30
+        Tsw = 10
         theta = 30
         Z = self.data.get_input(Tsw, Tst, theta)
         for i in tqdm(range(self.nepochs)):
@@ -158,7 +158,7 @@ class Train(object):
         self.plot(yr)
     
 dt = 0.001
-N = 1440
+N = 1024
 nepochs = 30000
 num_osc = 20
 num_h = 200

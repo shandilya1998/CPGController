@@ -74,11 +74,11 @@ void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
                 )*(
                     1+Y[i][k].real()
                 );
-                W2[i][j] += lr*temp1*(
+                W2[i][j] -= lr*temp1*(
                     Y_h[j][k].real()-iota*Y_h[j][k].imag()
                 );
                 for(int l=0; l<num_osc; l++){
-                    W1[j][l] += lr*temp1*(
+                    W1[j][l] -= lr*temp1*(
                         (
                             W2[i][j].real()*(a/2)*(
                                 1-Y_h[j][k].real()

@@ -9,8 +9,6 @@ g++ FeedForwardNN.cpp \
 	-I/usr/src/vcpkg/packages/matplotlib-cpp_x64-linux/include \
 	-I/usr/local/include \
 	-I/usr/include/python3.8 \
-	-lpitch_detection \
-	-lffts \
 	-larmadillo \
 	-lmlpack \
 	-L/usr/src/pitch-detection  \

@@ -2,7 +2,6 @@ FROM ubuntu:latest
 
 # These commands copy your files into the specified directory in the image
 # and set that as the working location
-COPY . /usr/src/pitch-detection
 
 # Install dependencies from apt
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
@@ -13,6 +12,7 @@ zip \
 unzip \
 tar \
 vim \
+valgrind \
 python3-pip \
  python3-dev \
 gcc \
@@ -31,16 +31,6 @@ libbenchmark-dev \
 && apt-get update \
 && pip install matplotlib
 
-
-# Get and install ffts library
-RUN cd /usr/src \
-&& git clone https://github.com/anthonix/ffts.git ffts-repo \
-&& cd ffts-repo \
-&& mkdir build \
-&& cd build \
-&& cmake .. \
-&& make install
-
 RUN cd /usr/src \
 && git clone https://github.com/Microsoft/vcpkg.git \
 && cd vcpkg \
@@ -51,6 +41,5 @@ RUN cd /usr/src \
 && echo "export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}" >> /root/.bashrc 
 
 # Build and install the pitch-detection library, as well as the tests and benchmarks
-RUN cd /usr/src/pitch-detection && make clean all && make -C test clean all && make install
 
-LABEL Name=pitch-detection Version=0.0.1
+LABEL Name=cpp-model Version=0.0.1
