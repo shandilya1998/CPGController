@@ -45,7 +45,7 @@ int main(){
     int num_out = 8;
     int num_d = 5;
     float dt = 0.001;
-    float lr = 0.001;
+    float lr = 0.01;
 
     int *Tsw;
     int *Tst;
@@ -112,7 +112,6 @@ int main(){
     std::vector<float> sig(N);
     std::vector<float> y(N);
     std::vector<float> x(N);
-    Z[num_d-1] = osc.forwardPropagation(freq[num_d-1]);
     Y = out.forwardPropagation(Z[num_d-1]);
     for(int i=0; i<N; i++){
         time.at(i) = i;

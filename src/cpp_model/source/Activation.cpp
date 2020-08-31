@@ -33,16 +33,18 @@ void Activation::sigmoidf(std::complex<float> *inp, std::complex<float> *out, st
     float unity = 1.0;
     std::complex<float> iota(0, 1);
     for(int i =0; i<params.dim; i++){
-        out[i] = params.upperBound*(
+        out[i] = -unity + 2*params.upperBound*(
             unity/(
                 unity+exp(
                     -params.weight*inp[i].real()
                 )
             )
-        )+iota*params.upperBound*(
-            unity/(
-                unity+exp(
-                    -params.weight*inp[i].imag()
+        )+iota*(
+            -unity + 2*params.upperBound*(
+                unity/(
+                    unity+exp(
+                        -params.weight*inp[i].imag()
+                    )
                 )
             )
         );

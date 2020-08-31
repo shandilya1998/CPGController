@@ -16,7 +16,11 @@ class OscLayer(object):
         #Zi[:, 0] = r[:, 0]*np.exp(1j*phi[:, 0]).imag
         for i in range(self.N-1):
             r[:, i+1] = r[:, i] + (1-r[:, i]**2)*r[:, i]*self.dt
+            #print(r[:, i+1])
+            #print("\n")
             phi[:, i+1] = phi[:, i] + freq*self.dt
+            print(phi[:, i+1])
+            print("\t")
             Z[:, i+1] = r[:, i+1]*np.exp(1j*phi[:, i+1])
             #Zi[:, i+1] = r[:, i+1]*np.exp(1j*phi[:, i+1]).imag
         return Z#r* 1j*Zi

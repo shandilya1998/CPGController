@@ -38,6 +38,7 @@ class DataLoader{
         float ***signals;
         float ***norm_signals;
         float **max;
+        float **mean;
         float *input;
         int N;
         float *beta;
@@ -79,7 +80,7 @@ class DataLoader{
         }
         float* getInput(int index){
             for(int i=0; i<num_osc; i++){
-                input[i] = ff[index]*(i+1)*M_PI*2;
+                input[i] = ff[index]*(i+1);
             }
             return input;
         }

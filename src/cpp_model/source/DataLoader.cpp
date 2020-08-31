@@ -24,8 +24,10 @@ DataLoader::DataLoader(
     ff = new float[num_d];
     signals = new float**[num_d];
     norm_signals = new float**[num_d];
+    mean = new float*[num_d];
     for(int i=0; i<num_d; i++){
-        max[i] = new float[2]();
+        max[i] = new float[num_osc]();
+        mean[i] = new float[num_osc]();
         beta[i] = (float)Tst[i]/(Tst[i]+Tsw[i]);
         signals[i] = new float *[num_osc];
         norm_signals[i] = new float *[num_osc];
@@ -70,22 +72,26 @@ void DataLoader::createSignals(){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI*(b-1)/b);
                         signals[i][j+1][pos] = 0.0;
                     }
-                    if(signals[i][j][pos]>max[i][0]){
-                        max[i][0] = signals[i][j][pos];
+                    mean[i][j] += signals[i][j][pos];
+                    mean[i][j+1] += signals[i][j+1][pos];
+                    if(abs(signals[i][j][pos])>max[i][j]){
+                        max[i][j] = signals[i][j][pos];
                         //std::cout<<"hip signal: "<<signals[i][j][pos]<<"\n";
                         //std::cout<<"hip: "<<max[i][0]<<"\n";
                     }       
-                    if(signals[i][j+1][pos]>max[i][1]){
-                        max[i][1] = signals[i][j+1][pos];
+                    if(abs(signals[i][j+1][pos])>max[i][j+1]){
+                        max[i][j+1] = signals[i][j+1][pos];
                         //std::cout<<"knee: "<<max[i][1]<<"\n";
                     } 
                 }
-            } 
+            }
+            mean[i][j] = mean[i][j]/N;
+            mean[i][j+1] = mean[i][j+1]/N;
         }
         for(int j=0;j<num_osc; j=j+2){
             for(int k=0; k<N; k++){
-                norm_signals[i][j][k] = signals[i][j][k]/(1.2*max[i][0]);
-                norm_signals[i][j+1][k] = signals[i][j+1][k]/(1.2*max[i][1]);
+                norm_signals[i][j][k] = (signals[i][j][k]-mean[i][j])/(1.2*max[i][0]);
+                norm_signals[i][j+1][k] = (signals[i][j+1][k]-mean[i][j+1])/(1.2*max[i][1]);
                 //std::cout<<norm_signals[i][j][k]<<"\n";
                 //std::cout<<norm_signals[i][j+1][k]<<"\n";
             }   

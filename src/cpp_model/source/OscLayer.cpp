@@ -19,9 +19,12 @@ std::complex<float>** OscLayer::forwardPropagation(float *omega){
     for(int i=0; i<num_osc; i++){
         for(int j =1; j<N; j++){
             r = r + (1-pow(abs(r), power))*r*dt;
+            //std::cout<<r<<"\t";
             phi = phi + omega[i]*dt;
-            Z[i][j] = r*cos(phi)+r*iota*sin(phi);
+            //std::cout<<phi<<"\t";
+            Z[i][j] = r*std::exp(iota*phi);
         }
+        //std::cout<<"\n";
         r = 1;
         phi = 0.0;  
     }
