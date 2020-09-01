@@ -76,13 +76,12 @@ void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
                 )*(
                     1+Y[i][k].real()
                 );
-                grad2 = lr*temp1*(
+                W2[i][j] -= lr*temp1*(
                     Y_h[j][k].real()-iota*Y_h[j][k].imag()
                 ); 
                 //std::cout<<"grad2: "<<grad2<<"\n";
-                W2[i][j] -= grad2; 
                 for(int l=0; l<num_osc; l++){
-                    grad1 = lr*temp1*(
+                    W1[j][l] -= lr*temp1*(
                         (
                             W2[i][j].real()*(a/2)*(
                                 1-Y_h[j][k].real()
@@ -100,7 +99,6 @@ void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
                         )
                     );
                     //std::cout<<"grad1 :"<<grad1<<"\n";
-                    W1[j][l] -= grad1;
                 }
                 //std::cout<<"\n";
             }

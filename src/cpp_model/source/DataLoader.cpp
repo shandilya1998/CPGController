@@ -90,8 +90,8 @@ void DataLoader::createSignals(){
         }
         for(int j=0;j<num_osc; j=j+2){
             for(int k=0; k<N; k++){
-                norm_signals[i][j][k] = (signals[i][j][k]-mean[i][j])/(1.2*max[i][0]);
-                norm_signals[i][j+1][k] = (signals[i][j+1][k]-mean[i][j+1])/(1.2*max[i][1]);
+                norm_signals[i][j][k] = (signals[i][j][k]-mean[i][j])/(1.2*max[i][j]);
+                norm_signals[i][j+1][k] = (signals[i][j+1][k]-mean[i][j+1])/(1.2*max[i][j+1]);
                 //std::cout<<norm_signals[i][j][k]<<"\n";
                 //std::cout<<norm_signals[i][j+1][k]<<"\n";
             }   

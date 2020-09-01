@@ -56,11 +56,11 @@ int main(){
     Tsw[0] = 20;
     Tst[0] = 60;
     theta[0] = 30;
-    Tsw[1] = 30; 
+    Tsw[1] = 20; 
     Tst[1] = 90; 
     theta[1] = 30;
-    Tsw[2] = 10; 
-    Tst[2] = 30; 
+    Tsw[2] = 15; 
+    Tst[2] = 60; 
     theta[2] = 30;
     Tsw[3] = 40; 
     Tst[3] = 120; 
@@ -103,6 +103,7 @@ int main(){
             out.backwardPropagation(signal[j], Z[j]);
         }
         error.at(i) = temp/(num_d-1);
+        temp = 0.0;
         if(i%10==0){
             std::cout<<"error:"<<error[i]<<"\n";
         }
