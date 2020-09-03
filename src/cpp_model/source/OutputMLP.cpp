@@ -62,13 +62,11 @@ std::complex<float>** OutputMLP::forwardPropagation(std::complex<float> **X){
 
 void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
     std::complex<float> iota(0,1);
-    float temp1;
+    float temp1, temp2, temp3;
     float a = 0.5;
-    std::complex<float> grad1, grad2;
-    std::complex<float> temp;
-    for(int i=0; i<num_out; i++){
-        for(int j=0; j<num_h; j++){ 
-            for(int k=0; k<N; k++){
+    for(int k=0; k<N; k++){
+        for(int i=0; i<num_out; i++){
+            for(int j=0; j<num_h; j++){ 
                 temp1 = -(
                     signal[i][k]-Y[i][k].real()
                 )*(a/2)*(
@@ -76,31 +74,36 @@ void OutputMLP::backwardPropagation(float **signal, std::complex<float> **X){
                 )*(
                     1+Y[i][k].real()
                 );
+
                 W2[i][j] -= lr*temp1*(
                     Y_h[j][k].real()-iota*Y_h[j][k].imag()
                 ); 
-                //std::cout<<"grad2: "<<grad2<<"\n";
-                for(int l=0; l<num_osc; l++){
-                    W1[j][l] -= lr*temp1*(
-                        (
-                            W2[i][j].real()*(a/2)*(
-                                1-Y_h[j][k].real()
-                            )*(
-                                1+Y_h[j][k].real()
-                            )*(
-                                X[l][k].real() + iota*X[l][k].imag()
-                            ) - W2[i][j].imag()*(a/2)*(
-                                1-Y_h[j][k].imag()
-                            )*(
-                                1+Y_h[j][k].imag()
-                            )*(
-                                X[l][k].imag() + iota*X[l][k].real()
-                            )
+
+                temp2 = temp1*(
+                    ( 
+                        W2[i][j].real()*(a/2)*(
+                            1-Y_h[j][k].real()
+                        )*( 
+                            1+Y_h[j][k].real()
                         )
+                    )
+                ); 
+                temp3 = -temp1*(
+                    (
+                        W2[i][j].imag()*(a/2)*(
+                            1-Y_h[j][k].imag()
+                        )*(
+                            1+Y_h[j][k].imag()
+                        )
+                    )
+                );
+                for(int l=0; l<num_osc; l++){
+                    W1[j][l] -= lr*temp2*(
+                        X[l][k].real() + iota*X[l][k].imag()
+                    ) + lr*temp3*(
+                        X[l][k].imag() + iota*X[l][k].real()
                     );
-                    //std::cout<<"grad1 :"<<grad1<<"\n";
                 }
-                //std::cout<<"\n";
             }
         }
     }

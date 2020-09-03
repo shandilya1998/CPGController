@@ -54,8 +54,7 @@ class DataLoader{
             int *tsw, 
             int *tst,
             int *t,
-            int n,
-            float cutoff
+            int n
         );
         ~DataLoader(){
             delete[] Tsw;

@@ -8,8 +8,7 @@ DataLoader::DataLoader(
     int *tsw,
     int *tst,
     int *t,
-    int n,
-    float cutoff
+    int n
 ){
     num_osc = n_o;
     num_out = n_out;

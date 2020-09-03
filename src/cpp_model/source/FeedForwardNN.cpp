@@ -68,14 +68,14 @@ int main(){
     Tsw[4] = 10;
     Tst[4] = 70;
     theta[4] = 30;    
-    int nepochs = 100;
+    int nepochs = 300;
     //std::cout << "here"; 
     int N = 1024;
     //std::cout << "here2";    
     //InputMLP inp(num_inp, num_h, num_osc);
     OscLayer osc(num_osc, N, dt);
     OutputMLP out(num_osc, num_h_out, num_out, N, lr);   
-    DataLoader data(num_osc, num_out, num_d, dt, Tsw, Tst, theta, N, 0.6);
+    DataLoader data(num_osc, num_out, num_d, dt, Tsw, Tst, theta, N);
     //std::vector<float> vec(N);
     data.setup();
     std::complex<float> **Y;
@@ -99,12 +99,12 @@ int main(){
         for(int j = 0; j<num_d-1; j++){
             //inp.forwardPropagation(input[j], Y_inp_mlp);
             Y = out.forwardPropagation(Z[j]);
-            temp +=mse(signal[j], Y, num_out, N);
+            temp += mse(signal[j], Y, num_out, N);
             out.backwardPropagation(signal[j], Z[j]);
         }
         error.at(i) = temp/(num_d-1);
         temp = 0.0;
-        if(i%10==0){
+        if(i%20==0){
             std::cout<<"error:"<<error[i]<<"\n";
         }
         range.at(i) = i;
