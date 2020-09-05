@@ -24,12 +24,12 @@ w1_str_real = 'float w1_real[%d][%d] = {'%(num_h, num_osc)
 for i in range(num_h-1):
     w1_str_real = w1_str_real+'{'
     for j in range(num_osc-1):
-        w1_str_real = w1_str_real+'%.3f,'%(w1[i][j].real)
-    w1_str_real = w1_str_real+'%.3f},\n\t'%(w1[i][num_osc-1].real)
+        w1_str_real = w1_str_real+'%.6f,'%(w1[i][j].real)
+    w1_str_real = w1_str_real+'%.6f},\n\t'%(w1[i][num_osc-1].real)
 w1_str_real = w1_str_real+'{'
 for j in range(num_osc-1):
-    w1_str_real = w1_str_real + '%.3f, '%(w1[num_h-1][j].real)
-w1_str_real = w1_str_real+'%.3f}};\n'%(w1[i][num_osc-1].real)
+    w1_str_real = w1_str_real + '%.6f, '%(w1[num_h-1][j].real)
+w1_str_real = w1_str_real+'%.6f}};\n'%(w1[i][num_osc-1].real)
 
 #print(w1_str_real)
 
@@ -37,12 +37,12 @@ w1_str_imag = 'float w1_imag[%d][%d] = {'%(num_h, num_osc)
 for i in range(num_h-1):
     w1_str_imag = w1_str_imag+'{'
     for j in range(num_osc-1):
-        w1_str_imag = w1_str_imag+'%.3f,'%(w1[i][j].imag)
-    w1_str_imag = w1_str_imag+'%.3f},\n\t'%(w1[i][num_osc-1].imag)
+        w1_str_imag = w1_str_imag+'%.6f,'%(w1[i][j].imag)
+    w1_str_imag = w1_str_imag+'%.6f},\n\t'%(w1[i][num_osc-1].imag)
 w1_str_imag = w1_str_imag+'{'
 for j in range(num_osc-1):
-    w1_str_imag = w1_str_imag + '%.3f, '%(w1[num_h-1][j].imag)
-w1_str_imag = w1_str_imag+'%.3f}};\n'%(w1[i][num_osc-1].imag)
+    w1_str_imag = w1_str_imag + '%.6f, '%(w1[num_h-1][j].imag)
+w1_str_imag = w1_str_imag+'%.6f}};\n'%(w1[i][num_osc-1].imag)
 
 #print(w1_str_imag)
 
@@ -50,12 +50,12 @@ w2_str_real = 'float w2_real[%d][%d] = {'%(num_out, num_h)
 for i in range(num_out-1):
     w2_str_real = w2_str_real+'{'
     for j in range(num_h-1):
-        w2_str_real = w2_str_real+'%.3f,'%(w2[i][j].real)
-    w2_str_real = w2_str_real+'%.3f},\n\t'%(w2[i][num_h-1].real)
+        w2_str_real = w2_str_real+'%.6f,'%(w2[i][j].real)
+    w2_str_real = w2_str_real+'%.6f},\n\t'%(w2[i][num_h-1].real)
 w2_str_real = w2_str_real+'{'
 for j in range(num_h-1):
-    w2_str_real = w2_str_real + '%.3f,'%(w2[num_out-1][j].real)
-w2_str_real = w2_str_real+'%.3f}};\n'%(w2[i][num_h-1].real)
+    w2_str_real = w2_str_real + '%.6f,'%(w2[num_out-1][j].real)
+w2_str_real = w2_str_real+'%.6f}};\n'%(w2[i][num_h-1].real)
 
 #print(w2_str_real)
 
@@ -63,17 +63,17 @@ w2_str_imag = 'float w2_imag[%d][%d] = {'%(num_out, num_h)
 for i in range(num_out-1):
     w2_str_imag = w2_str_imag+'{'
     for j in range(num_h-1):
-        w2_str_imag = w2_str_imag+'%.3f,'%(w2[i][j].imag)
-    w2_str_imag = w2_str_imag+'%.3f},\n\t'%(w2[i][num_h-1].imag)
+        w2_str_imag = w2_str_imag+'%.6f,'%(w2[i][j].imag)
+    w2_str_imag = w2_str_imag+'%.6f},\n\t'%(w2[i][num_h-1].imag)
 w2_str_imag = w2_str_imag+'{'
 for j in range(num_h-1):
-    w2_str_imag = w2_str_imag + '%.3f, '%(w2[num_out-1][j].imag)
-w2_str_imag = w2_str_imag+'%.3f}};\n'%(w2[i][num_h-1].imag)
+    w2_str_imag = w2_str_imag + '%.6f, '%(w2[num_out-1][j].imag)
+w2_str_imag = w2_str_imag+'%.6f}};\n'%(w2[i][num_h-1].imag)
 
 #print(w2_str_imag)
 
 file_str = w1_str_real + w1_str_imag + w2_str_real + w2_str_imag
-print(file_str)
+#print(file_str)
 
 f = open(os.path.join(path,'data.h'), 'w')
 f.write(file_str)

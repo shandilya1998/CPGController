@@ -63,7 +63,7 @@ float* FeedForwardCPG::forwardPropagation(float *omega){
   Complex *X1 = new Complex[num_h];
   float temp_r, temp_i;
   for(i=0; i<num_osc; i++){
-    r[i] = r[i] + (1-pow(r[i], 2)*r[i]*dt);
+    r[i] = r[i] + (1-pow(r[i], 2))*r[i]*dt;
     phi[i] = phi[i] + omega[i]*dt;
     Z[i].setReal(r[i]*cos(phi[i]));
     //Serial.println("real");
@@ -90,7 +90,7 @@ float* FeedForwardCPG::forwardPropagation(float *omega){
     }
   for(i=0; i<num_out; i++){
     temp_r = 0.0;
-    for(j=0; j<num_osc; j++){
+    for(j=0; j<num_h; j++){
         temp_r += w2_real[i][j]*X1[j].getReal()-w2_imag[i][j]*X1[j].getImag();
       }
       y[i] = -1+2/(1+exp(-0.5*temp_r));
@@ -148,31 +148,31 @@ void loop() {
     }
 
   servo0.write(90+out[0]);
-  servo1.write(90+out[1]);
+  servo1.write(90-out[1]);
   servo2.write(90+out[2]);
-  servo3.write(90+out[3]);
+  servo3.write(90-out[3]);
   servo4.write(90+out[4]);
-  servo5.write(90+out[5]);
+  servo5.write(90-out[5]);
   servo6.write(90+out[6]);
-  servo7.write(90+out[7]);
-  //*/
+  servo7.write(90-out[7]);
+/*
   
-  //Serial.print(out[0]);
-  //Serial.print("\t");
-  //Serial.println(out[1]);
+  Serial.print(out[0]);
+  Serial.print("\t");
+  Serial.println(out[1]);
   //Serial.print("\t");
   //Serial.println(out[2]);
   //Serial.print("\t");
-  //Serial.println(out[3]);
+  //Serial.print(out[3]);
   //Serial.print("\t");
   //Serial.println(out[4]);
   //Serial.print("\t");
-  //Serial.println(out[5]);
+  //Serial.print(out[5]);
   //Serial.print("\t");
   //Serial.println(out[6]);
   //Serial.print("\t");
   //Serial.println(out[7]); 
   //delay(10);
   //*/
-  delay(50);
+  delay(10);
 }
