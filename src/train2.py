@@ -10,6 +10,8 @@ import math
 import scipy.fft as fft
 import scipy.signal as signal 
 
+version = 4
+
 class DataPoint(object):
     def __init__(self, 
                  dt, 
@@ -26,7 +28,7 @@ class DataPoint(object):
         self.signal[:, 1:] = self.signal[:, 1:]/(1.2*np.abs(self.signal[:, 1:].max(axis = 0)))
     
     def set_signal(self, Tsw, Tst, theta):
-        self.signal =  gg.get_signal(self.dt, Tsw, Tst, self.N, theta)
+        self.signal =  gg.get_signal(self.dt, Tsw, Tst, self.N, theta, version)
         self.preprocess()
 
     def get_ff(self, signal, ff_type = 'fft'):
@@ -178,7 +180,7 @@ num_osc = 8
 num_h = 16
 num_out = 8
 lr = 1e-3
-exp = 8
+exp = 10
 num = 10
 Tst = np.array([60, 80, 100, 120, 140, 75, 45, 30, 150, 81])
 Tsw = np.array([20, 26, 33, 40, 46, 25, 15, 10, 50, 27 ])

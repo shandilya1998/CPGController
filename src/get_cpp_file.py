@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-path = 'weights/exp8'
+path = 'weights/exp10'
 
 files = os.listdir(path)
 

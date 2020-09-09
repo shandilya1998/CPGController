@@ -57,13 +57,13 @@ void DataLoader::createSignals(){
         for(int j=0;j<num_osc; j=j+2){
             for(int k=0; k<N+T; k++){
                 t=k%T;
-                pos = (int)(k-T*(1-(float)(j)/8));
+                pos = k-(T-(int)(T*((float)(j)/8)));
                 if(pos>=0 && pos<N){
-                    if(t>=0 && t<(int)T*b/2){
+                    if(t>=0 && t<=(int)T*b/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*b)+M_PI);
                         signals[i][j+1][pos] = 0.0;
                     }
-                    else if(t>T*b/2 && t<=T*(2-b)/2){
+                    else if(t>T*b/2 && t<T*(2-b)/2){
                         signals[i][j][pos] = th*sin(M_PI*t/(T*(1-b))+M_PI*(3-4*b)/(2*(1-b)));
                         signals[i][j+1][pos] = th*sin(M_PI*t/(T*(1-b))-M_PI*b/(2*(1-b)));
                     }
