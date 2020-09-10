@@ -120,7 +120,7 @@ float freq[8] = {
   629.9745};
 
 float dt = 0.0010;
-int Tst = 60;
+int Tst = 1000;
 int Tsw = 20;
 int theta = 45;
 Complex *y;
@@ -148,19 +148,19 @@ void loop() {
     }
 
   servo0.write(90+out[0]);
-  servo1.write(90-out[1]+out[3]/4);
+  servo1.write(75-out[1]);
   servo2.write(90+out[2]);
-  servo3.write(90-out[3]+out[1]/4);
+  servo3.write(75-out[3]);
   servo4.write(90+out[4]);
-  servo5.write(90-out[5]+out[7]/4);
+  servo5.write(75-out[5]);
   servo6.write(90+out[6]);
-  servo7.write(90-out[7]+out[5]/4);
+  servo7.write(75-out[7]);
   
-  Serial.print(out[0]);
-  Serial.print("\t");
-  Serial.println(out[1]);
+  //Serial.print(out[0]);
   //Serial.print("\t");
-  //Serial.println(out[2]);
+  //Serial.print(out[1]);
+  //Serial.print("\t");
+  //Serial.print(out[2]);
   //Serial.print("\t");
   //Serial.print(out[3]);
   //Serial.print("\t");
@@ -168,10 +168,11 @@ void loop() {
   //Serial.print("\t");
   //Serial.print(out[5]);
   //Serial.print("\t");
-  //Serial.print(out[6]);
+  //Serial.println(out[6]);
   //Serial.print("\t");
   //Serial.println(out[7]); 
-  //delay(10);
+  //delay(100);
   //*/
-  delay(5);
+  //
+  //delay(1);
 }

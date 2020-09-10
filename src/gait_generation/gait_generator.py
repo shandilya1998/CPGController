@@ -93,17 +93,20 @@ def _get_signal_v4(signal, out, T, N):
     return out
     
 def save_signal(out, N, csv = False,):
-    fig, axes = plt.subplots(4,1)
-    axes[0].plot(out[:2000, 0], out[:2000, 1])
-    axes[0].plot(out[:2000, 0], out[:2000, 2]) 
-    axes[1].plot(out[:2000, 0], out[:2000, 3])
-    axes[1].plot(out[:2000, 0], out[:2000, 4])
-    axes[2].plot(out[:2000, 0], out[:2000, 5])
-    axes[2].plot(out[:2000, 0], out[:2000, 6])
-    axes[3].plot(out[:2000, 0], out[:2000, 7]) 
-    axes[3].plot(out[:2000, 0], out[:2000, 8])
+    fig = plt.figure(figsize = (12, 12))
+    i = 1
+    while(i<9):
+        axis = fig.add_subplot(4,1,(i+1)/2)
+        axis.plot(out[:2000, 0], out[:2000, i], 'b', label = 'hip activation')
+        axis.plot(out[:2000, 0], out[:2000, i+1], 'r', label = 'knee activation')
+        axis.legend()
+        axis.set_title('Activation relative phase {phase}'.format(phase = 0.25*(i-1)/2))
+        axis.set_xlabel('time(s)')
+        axis.set_ylabel('activation(degrees)') 
+        i+=2
+    fig.tight_layout(pad = 2.0)
     plt.show()
-    fig.savefig('four_leg_gait_pattern_9.png')
+    fig.savefig('four_leg_gait_pattern_12.png')
     #print(list(range(N)))
     df = pd.DataFrame(
         data = out, 
@@ -121,14 +124,14 @@ def save_signal(out, N, csv = False,):
         ]
     )
     if csv:
-        df.to_csv('gait_data.csv', header = True)
+        df.to_csv('gait_data_3.csv', header = True)
 
 """
 These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
 """  
-#signal = get_signal(0.001, 20, 60, 500, 30, 4)
-#save_signal(signal, 500)
+signal = get_signal(0.001, 40, 120, 50000, 45, 4)
+save_signal(signal, 50000, True)
 """
     Experiment 0
         Tsw = 15
