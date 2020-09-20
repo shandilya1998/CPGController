@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot name="myfirst">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_bottom_plate.stl"/>
+            </geometry>
+        </visual>
+    </link>
+    <link name="body_spacer_1">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
+            </geometry>
+            <origin xyz="0 0.505 1.700"/>
+        </visual>
+    </link>
+    <link name="body_spacer_2">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
+            </geometry>
+            <origin rpy="0 1.571 0" xyz="1.700 0.505 0"/>
+        </visual>
+    </link>
+    <link name="body_spacer_3">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
+            </geometry>
+            <origin rpy="0 1.571 0" xyz="-1.700 0.505 0"/>
+        </visual>
+    </link>
+    <link name="body_spacer_4">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
+            </geometry>
+            <origin xyz="0 0.505 -1.700"/>
+        </visual>
+    </link>
+    <link name="body_top_plate">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/body_top_plate.stl"/>
+            </geometry>
+            <origin xyz="0  0"/>
+        </visual>
+    </link>
+
+    <joint name="base_body_spacer_1" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_spacer_1"/>
+    </joint>
+    <joint name="base_body_spacer_2" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_spacer_2"/>
+    </joint>
+    <joint name="base_body_spacer_3" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_spacer_3"/>
+    </joint>
+    <joint name="base_body_spacer_4" type="fixed">
+        <parent link="base_link"/>
+        <child link="body_spacer_4"/>
+    </joint>
+</robot>
