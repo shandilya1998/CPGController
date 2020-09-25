@@ -205,4 +205,8 @@ The following plot is the comparison of the reconstructed signal and the origina
 
 ![Signal Reconstruction Plot](../images/pred_vs_ideal_exp9.png)
 
-
+Training files-
+- train.py used for training with a single gait pattern
+- train2.py used for training with multiple gait patterns
+- dataloader.py dataloader for training with multiple gait patterns 
+- train3.py used for training version 2 of the developed CPG
