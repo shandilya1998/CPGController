@@ -210,3 +210,16 @@ Training files-
 - train2.py used for training with multiple gait patterns
 - dataloader.py dataloader for training with multiple gait patterns 
 - train3.py used for training version 2 of the developed CPG
+
+## Weight Visualization Experiments
+### Experiment 1
+- Linearly increasing Tst and Tsw. 
+- Exponentially decreasing duty factor and calculated speed
+- Training instances from 10 to 295
+- Tst min value 60, increment by 4
+- Tsw min value 20, increment by 4
+- 285 instances of training
+The following is parameter trends in the experiment data
+![Visualization Plot]('weight_visualization_exp1_parameter_trends.png')
+The following is the tsne plot for pca components of the weights
+![TSNE Plot]('tsne_weights_vis_exp1.png')

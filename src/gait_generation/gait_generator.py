@@ -130,8 +130,8 @@ def save_signal(out, N, csv = False,):
 These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
 """  
-signal = get_signal(0.001, 40, 120, 50000, 45, 4)
-save_signal(signal, 50000, True)
+#signal = get_signal(0.001, 40, 120, 50000, 45, 4)
+#save_signal(signal, 50000, True)
 """
     Experiment 0
         Tsw = 15

@@ -26,7 +26,7 @@ class DataLoader(object):
         self.signal[:, 1:] = self.signal[:, 1:]/(1.2*np.abs(self.signal[:, 1:].max(axis = 0)))
     
     def set_signal(self, Tsw, Tst, theta):
-        self.signal =  gg.get_signal(self.dt, Tsw, Tst, self.N, theta)
+        self.signal =  gg.get_signal(self.dt, Tsw, Tst, self.N, theta, 4)
         self.preprocess()
 
     def get_ff(self, signal, ff_type = 'fft'):
@@ -39,7 +39,7 @@ class DataLoader(object):
         self.num_osc = num
   
     def get_input(self, Tsw, Tst, theta):
-        Z = np.empty((self.num_osc, N), dtype = np.complex128)
+        Z = np.empty((self.num_osc, self.N), dtype = np.complex128)
         self.set_signal(Tsw, Tst, theta)
         """
             Assuming a straight line motion with a constant speed
@@ -77,13 +77,13 @@ class Train(object):
 
     def _plot(self, axis, x, y):
         axis.plot(
-            self.data.signal[:500, 0].T, 
-            x[:500],
+            self.data.signal[:self.N, 0].T, 
+            x[:self.N],
             'r',
             label = 'ideal gait')
         axis.plot(
-            self.data.signal[:500, 0].T, 
-            y[:500], 
+            self.data.signal[:self.N, 0].T, 
+            y[:self.N], 
             'b',
             label = 'generated gait')
         axis.set_xlabel('time')
@@ -97,10 +97,10 @@ class Train(object):
                 self._plot(axes[i], self.data.signal[:, i+1].T, yr[i])
         else:
             self._plot(axes, self.data.signal[:, 1].T, yr[0])
-        fig.savefig('../images/pred_vs_ideal_exp{exp}.png'.format(exp=self.exp))
-        plt.show()
+        fig.savefig('../images/visualization_exp_1/pred_vs_ideal_exp{exp}.png'.format(exp=self.exp))
+        #plt.show()
 
-    def __call__(self):
+    def __call__(self, Tst, Tsw, theta):
         self.out_mlp.build(self.num_osc, 
                            self.num_h, 
                            self.num_out,
@@ -109,9 +109,6 @@ class Train(object):
         """
             Assuming a straight line motion with a constant speed
         """
-        Tst = 60
-        Tsw = 20
-        theta = 30
         Z = self.data.get_input(Tsw, Tst, theta)
         for i in tqdm(range(self.nepochs)):
             yr = self.out_mlp(Z, self.out_mlp.sigmoidf)
@@ -153,10 +150,10 @@ class Train(object):
         axes.plot(np.arange(self.nepochs), self.err)
         axes.set_xlabel('epochs')
         axes.set_ylabel('error')
-        plt.show()
-        fig.savefig('../images/training_plot_output_mlp_exp{exp}.png'.format(exp=self.exp))
+        #plt.show()
+        fig.savefig('../images/visualization_exp_1/training_plot_output_mlp_exp{exp}.png'.format(exp=self.exp))
         self.plot(yr)
-    
+""" 
 dt = 0.001
 N = 1024
 nepochs = 30000
@@ -166,4 +163,5 @@ num_out = 8
 lr = 0.0010
 exp = 4
 train = Train(dt, N, nepochs, num_osc, num_h, num_out, exp, 'random', lr)
-train()
+train(60, 20, 30)
+"""
