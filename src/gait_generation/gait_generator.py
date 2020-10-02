@@ -254,12 +254,80 @@ def save_signal(out, N, figname, phases, csv = False, csv_name = None):
         else:
             df.to_csv('gait_data_3.csv', header = True)
 
+def _support_pos(signals, N):
+    pos = np.zeros((N, 9))
+    pos[:,0] = signals[:,0]
+    extremes = []
+    pos[:, 1] = 45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 2]/180))*np.cos(np.pi*signals[:, 1]/180 + np.pi/4)
+    pos[:, 2] = 45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 2]/180))*np.sin(np.pi*signals[:, 1]/180 + np.pi/4)
+    pos[:, 3] = 45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 4]/180))*np.cos(np.pi*signals[:, 3]/180 - np.pi/4)
+    pos[:, 4] = -45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 4]/180))*np.sin(np.pi*signals[:, 3]/180 - np.pi/4)
+    pos[:, 5] = -45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 6]/180))*np.cos(np.pi*signals[:, 5]/180 - 3*np.pi/4)
+    pos[:, 6] = -45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 6]/180))*np.sin(np.pi*signals[:, 5]/180 - 3*np.pi/4)
+    pos[:, 7] = -45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 8]/180))*np.cos(np.pi*signals[:, 7]/180 + 3*np.pi/4)
+    pos[:, 8] = 45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 8]/180))*np.sin(np.pi*signals[:, 7]/180 + 3*np.pi/4)
+    return pos
+
+def support_lines(dt, Tsw, Tst, N, theta, version = 0, figname = 'support_pos_trajectory.png'):
+    """
+        All calculations are assuming that the robot body remains parallel to the ground while traversing
+    """
+    signals, phases = get_signal(dt, Tsw, Tst, N, theta, version)
+    pos = _support_pos(signals, N)
+    """
+    fig, axes = plt.subplots(2, 2, figsize = (10, 10))
+    axes[0][1].plot(pos[: 5*(Tsw+Tst), 1], pos[: 5*(Tsw+Tst), 2])
+    axes[0][1].set_xlabel('x coordinate')
+    axes[0][1].set_ylabel('y coordinate')
+    axes[0][1].set_title('Support Trajectory Leg 1')
+    axes[1][1].plot(pos[: 5*(Tsw+Tst), 3], pos[: 5*(Tsw+Tst), 4])
+    axes[1][1].set_xlabel('x coordinate')
+    axes[1][1].set_ylabel('y coordinate')
+    axes[1][1].set_title('Support Trajectory Leg 2')
+    axes[1][0].plot(pos[: 5*(Tsw+Tst), 5], pos[: 5*(Tsw+Tst), 6])
+    axes[1][0].set_xlabel('x coordinate')
+    axes[1][0].set_ylabel('y coordinate')
+    axes[1][0].set_title('Support Trajectory Leg 3')
+    axes[0][0].plot(pos[: 5*(Tsw+Tst), 7], pos[: 5*(Tsw+Tst), 8])
+    axes[0][0].set_xlabel('x coordinate')
+    axes[0][0].set_ylabel('y coordinate')
+    axes[0][0].set_title('Support Trajectory Leg 4')
+    fig.tight_layout(pad = 0.75)
+    plt.show()
+    fig.savefig('../../images/gait_activations/{fig}'.format(fig=figname))
+    """
+    extremes = []
+    for i in range(4):
+        extremes.append(
+            [
+                [
+                    np.amax(pos[:, 2*i+1]), 
+                    np.amax(pos[: 2*i+2])
+                ],
+                [
+                    np.amin(pos[:, 2*i+1]),
+                    np.amin(pos[:, 2*i+2])
+                ]    
+            ] 
+        )
+     
+    #"""
 """
 These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
 """  
-signal, phases = get_signal(0.001, 80, 80, 50000, 45, 9)
-save_signal(signal, 50000, 'rotary_gallop_gait_tst80_tsw80_dt10e-3_theta45.png', phases, False)
+dt = 0.001
+Tsw = 60
+Tst = 60
+N = 5000
+theta = 30
+version = 8
+gait = 'transverse_gallop'
+figname = 'support_pos_trajectory_{g}_gait.png'.format(g = gait)
+signal, phases = get_signal(dt, Tsw, Tsw, N, theta, version)
+support_lines(dt, Tsw, Tst, N, theta, version, figname)
+#save_signal(signal, 50000, 'rotary_gallop_gait_tst80_tsw80_dt10e-3_theta45.png', phases, False)
+
 """
     Experiment 0
         Tsw = 15
