@@ -79,6 +79,14 @@
             <origin rpy="1.571 0.785 0"/>
         </visual>
     </link>
+    <link name="servo_1">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/servo.stl"/>
+            </geometry>
+            <origin rpy="0 -2.355 0"/>
+        </visual>
+    </link>
     <joint name="base_body_spacer_1" type="fixed">
         <parent link="base_link"/>
         <child link="body_spacer_1"/>
@@ -131,5 +139,10 @@
         <origin xyz="1.7806 0 -1.7806"/>
         <axis xyz="1.7806 0 -1.7806"/>
         <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
+    </joint>
+    <joint name="base_servo_1" type="fixed">
+        <parent link="base_link" />
+        <child link="servo_1"/>
+        <origin xyz="0 0 0"/>
     </joint>
 </robot>
