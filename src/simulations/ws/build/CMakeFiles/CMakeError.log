@@ -1,51 +1,58 @@
-Determining if the pthread_create exist failed with the following output:
-Change Dir: /home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_e4b17/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e4b17.dir/build.make CMakeFiles/cmTC_e4b17.dir/build
-make[1]: Entering directory '/home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e4b17.dir/CheckSymbolExists.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_e4b17.dir/CheckSymbolExists.c.o   -c /home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_e4b17
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e4b17.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_e4b17.dir/CheckSymbolExists.c.o  -o cmTC_e4b17 
-/usr/bin/ld: CMakeFiles/cmTC_e4b17.dir/CheckSymbolExists.c.o: in function `main':
-CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+Run Build Command(s):/usr/bin/make cmTC_5e73b/fast && /usr/bin/make -f CMakeFiles/cmTC_5e73b.dir/build.make CMakeFiles/cmTC_5e73b.dir/build
+make[1]: Entering directory '/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5e73b.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_5e73b.dir/src.c.o   -c /home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_5e73b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5e73b.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_5e73b.dir/src.c.o  -o cmTC_5e73b 
+/usr/bin/ld: CMakeFiles/cmTC_5e73b.dir/src.c.o: in function `main':
+src.c:(.text+0x46): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_e4b17.dir/build.make:87: cmTC_e4b17] Error 1
-make[1]: Leaving directory '/home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_e4b17/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_5e73b.dir/build.make:87: cmTC_5e73b] Error 1
+make[1]: Leaving directory '/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_5e73b/fast] Error 2
 
-File /home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
-/* */
+
+Source file was:
 #include <pthread.h>
 
-int main(int argc, char** argv)
+void* test_func(void* data)
 {
-  (void)argv;
-#ifndef pthread_create
-  return ((int*)(&pthread_create))[argc];
-#else
-  (void)argc;
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
   return 0;
-#endif
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp
+Change Dir: /home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ca691/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ca691.dir/build.make CMakeFiles/cmTC_ca691.dir/build
-make[1]: Entering directory '/home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_ca691.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_ca691.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.13/Modules/CheckFunctionExists.c
-Linking C executable cmTC_ca691
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca691.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_ca691.dir/CheckFunctionExists.c.o  -o cmTC_ca691 -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_f6f61/fast && /usr/bin/make -f CMakeFiles/cmTC_f6f61.dir/build.make CMakeFiles/cmTC_f6f61.dir/build
+make[1]: Entering directory '/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f6f61.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_f6f61.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_f6f61
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f6f61.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_f6f61.dir/CheckFunctionExists.c.o  -o cmTC_f6f61  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-make[1]: *** [CMakeFiles/cmTC_ca691.dir/build.make:87: cmTC_ca691] Error 1
-make[1]: Leaving directory '/home/shandilya/CPGController/src/simulations/ws/build/CMakeFiles/CMakeTmp'
-make: *** [Makefile:121: cmTC_ca691/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_f6f61.dir/build.make:87: cmTC_f6f61] Error 1
+make[1]: Leaving directory '/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_f6f61/fast] Error 2
+
 
 
