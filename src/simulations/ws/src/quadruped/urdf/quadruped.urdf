@@ -82,9 +82,42 @@
     <link name="servo_1">
         <visual>
             <geometry>
-                <mesh filename="package://quadruped/meshes/servo.stl"/>
+                <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
             </geometry>
-            <origin rpy="0 -2.355 0"/>
+            <origin rpy="1.571 2.356 0"/>
+        </visual>
+    </link>
+    <link name="retainer_1">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/leg_servo_retainer.stl"/>
+            </geometry>
+            <origin rpy="1.571 2.356 0"/>
+        </visual>
+    </link>
+
+    <link name="servo_2">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
+            </geometry>
+            <origin rpy="1.571 0.785 0"/>
+        </visual>
+    </link>
+    <link name="servo_3">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
+            </geometry>
+            <origin rpy="1.571 -0.785 0"/>
+        </visual>
+    </link>
+    <link name="servo_4">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
+            </geometry>
+            <origin rpy="1.571 -2.356 0"/>
         </visual>
     </link>
     <joint name="base_body_spacer_1" type="fixed">
@@ -140,9 +173,29 @@
         <axis xyz="1.7806 0 -1.7806"/>
         <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
     </joint>
-    <joint name="base_servo_1" type="fixed">
-        <parent link="base_link" />
+    <joint name="servo_top_1" type="fixed">
+        <parent link="body_top_plate"/>
         <child link="servo_1"/>
-        <origin xyz="0 0 0"/>
+        <origin xyz="1.7806 0.375 1.7806"/>
+    </joint>
+    <joint name="servo_retainer_1" type="fixed">
+        <parent link="servo_1"/>
+        <child link="retainer_1"/>
+        <orgin xyz="1.485 0 -1.485"/>
+    </joint>
+    <joint name="servo_top_2" type="fixed">
+        <parent link="body_top_plate"/>
+        <child link="servo_2"/>
+        <origin xyz="-1.7806 0.375 1.7806"/>
+    </joint>
+    <joint name="servo_top_3" type="fixed">
+        <parent link="body_top_plate"/>
+        <child link="servo_3"/>
+        <origin xyz="-1.7806 0.375 -1.7806"/>
+    </joint>
+    <joint name="servo_top_4" type="fixed">
+        <parent link="body_top_plate"/>
+        <child link="servo_4"/>
+        <origin xyz="1.7806 0.375 -1.7806"/>
     </joint>
 </robot>
