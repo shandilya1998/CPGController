@@ -20,7 +20,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
             </geometry>
-            <origin rpy="0 1.571 0" xyz="0 0.505 0"/>
+            <origin rpy="0 1.57079 0" xyz="0 0.505 0"/>
         </visual>
     </link>
     <link name="body_spacer_3">
@@ -28,7 +28,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/body_spacer.stl"/>
             </geometry>
-            <origin rpy="0 1.571 0" xyz="0 0.505 0"/>
+            <origin rpy="0 1.57079 0" xyz="0 0.505 0"/>
         </visual>
     </link>
     <link name="body_spacer_4">
@@ -52,7 +52,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_bottom_pivot_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 -0.785 0"/>
+            <origin rpy="1.57079 -0.78539 0"/>
         </visual>
     </link>
     <link name="leg_bottom_pivot_plate_2">
@@ -60,7 +60,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_bottom_pivot_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 -2.356 0"/>
+            <origin rpy="1.57079 -2.35619 0"/>
         </visual>
     </link>
     <link name="leg_bottom_pivot_plate_3">
@@ -68,7 +68,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_bottom_pivot_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 2.356 0"/>
+            <origin rpy="1.57079 2.35619 0"/>
         </visual>
     </link>
     <link name="leg_bottom_pivot_plate_4">
@@ -76,7 +76,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_bottom_pivot_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 0.785 0"/>
+            <origin rpy="1.57079 0.78539 0"/>
         </visual>
     </link>
     <link name="servo_1">
@@ -84,7 +84,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
             </geometry>
-            <origin rpy="1.571 2.356 0"/>
+            <origin rpy="1.57079 2.35619 0"/>
         </visual>
     </link>
     <link name="retainer_1">
@@ -92,7 +92,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_servo_retainer.stl"/>
             </geometry>
-            <origin rpy="1.571 2.356 0"/>
+            <origin rpy="1.57079 2.35619 0"/>
         </visual>
     </link>
 
@@ -101,7 +101,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
             </geometry>
-            <origin rpy="1.571 0.785 0"/>
+            <origin rpy="1.57079 0.78539 0"/>
         </visual>
     </link>
     <link name="servo_3">
@@ -109,7 +109,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
             </geometry>
-            <origin rpy="1.571 -0.785 0"/>
+            <origin rpy="1.57079 -0.78539 0"/>
         </visual>
     </link>
     <link name="servo_4">
@@ -117,7 +117,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/servo_motor.stl" scale="0.1 0.1 0.1"/>
             </geometry>
-            <origin rpy="1.571 -2.356 0"/>
+            <origin rpy="1.57079 -2.35619 0"/>
         </visual>
     </link>
     <link name="leg_top_plate_1">
@@ -125,7 +125,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_top_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 -0.785 0"/>
+            <origin rpy="1.57079 -0.78539 0"/>
         </visual>
     </link>
     <link name="leg_top_plate_2">
@@ -133,7 +133,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_top_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 -2.356 0"/>
+            <origin rpy="1.57079 -2.35619 0"/>
         </visual>
     </link>
     <link name="leg_top_plate_3">
@@ -141,7 +141,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_top_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 2.356 0"/>
+            <origin rpy="1.57079 2.35619 0"/>
         </visual>
     </link>
     <link name="leg_top_plate_4">
@@ -149,7 +149,7 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_top_plate.stl"/>
             </geometry>
-            <origin rpy="1.571 0.785 0"/>
+            <origin rpy="1.57079 0.78539 0"/>
         </visual>
     </link>
     <link name="leg_parallel_plate_1">
@@ -181,7 +181,15 @@
             <geometry>
                 <mesh filename="package://quadruped/meshes/leg_parallel_plate.stl"/>
             </geometry>
-            <origin rpy="0 0.785 0"/>
+            <origin rpy="0 0.78539 0"/>
+        </visual>
+    </link>
+    <link name="leg_servo_mount_1">
+        <visual>
+            <geometry>
+                <mesh filename="package://quadruped/meshes/leg_servo_mount.stl"/>
+            </geometry>
+            <origin rpy="0 2.3554 0"/>
         </visual>
     </link>
     <joint name="base_body_spacer_1" type="fixed">
@@ -259,33 +267,38 @@
         <child link="leg_top_plate_1"/>
         <origin xyz="0 0.303 0"/>
         <axis xyz="0 2.5184 0"/>
-        <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
+        <limit lower="-1.57079" upper="1.57079" velocity="100" effort="100"/>
     </joint>
     <joint name="servo_leg_top_plate_2" type="revolute">
         <parent link="servo_2"/>
         <child link="leg_top_plate_2"/>
         <origin xyz="0 0.303 0"/>
         <axis xyz="0 2.5184 0"/>
-        <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
+        <limit lower="-1.57079" upper="1.57079" velocity="100" effort="100"/>
     </joint>
     <joint name="servo_leg_top_plate_3" type="revolute">
         <parent link="servo_3"/>
         <child link="leg_top_plate_3"/>
         <origin xyz="0 0.303 0"/>
         <axis xyz="0 2.5184 0"/>
-        <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
+        <limit lower="-1.57079" upper="1.57079" velocity="100" effort="100"/>
     </joint>
     <joint name="servo_leg_top_plate_4" type="revolute">
         <parent link="servo_4"/>
         <child link="leg_top_plate_4"/>
         <origin xyz="0 0.303 0"/>
         <axis xyz="0 2.5184 0"/>
-        <limit lower="-1.571" upper="1.571" velocity="100" effort="100"/>
+        <limit lower="-1.57079" upper="1.57079" velocity="100" effort="100"/>
     </joint>
     <joint name="leg_parallel_plate_top_plate_1" type="fixed">
         <parent link="leg_top_plate_1" />
         <child link="leg_parallel_plate_1"/>
         <origin xyz="0.8096 -0.839 0.5168"/>
+    </joint>
+    <joint name="leg_servo_mount_top_plate_1" type="fixed">
+        <parent link="leg_top_plate_1" />
+        <child link="leg_servo_mount_1"/>
+        <origin xyz="0.5168 -0.839 0.8096"/>
     </joint>
     <joint name="leg_parallel_plate_top_plate_2" type="fixed">
         <parent link="leg_top_plate_2" />
