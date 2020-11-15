@@ -1,7 +1,7 @@
 import numpy as np
 
 class SupportPlane:
-    def __init__(self, tb):
+    def __init__(self, tb = None):
         self.A = np.zeros(3)
         self.AL = np.zeros(3)
         self.AF = np.zeros(3)
@@ -9,6 +9,9 @@ class SupportPlane:
         self.BL = np.zeros(3)
         self.BF = np.zeros(3)
         self.AB = self.B - self.A
+        self.Tb = tb
+
+    def set_tb(self, tb):
         self.Tb = tb
 
     def get_n11(self):
@@ -73,7 +76,7 @@ class SupportPlane:
         zs = self.get_zs()
         ys = self.get_ys(t, xs, zs)
         plane = np.zeros((3, 3))
-        plane[0, :] = xs
-        plane[1, :] = ys
-        plane[2, :] = zs
+        plane[0, :] = xs/np.norm(xs)
+        plane[1, :] = ys/np.norm(ys)
+        plane[2, :] = zs/np.norm(zs)
         return plane

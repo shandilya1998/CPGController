@@ -106,8 +106,13 @@ class KneeFourBarDynamics:
 
 
 class QuadrupedDynamics:
-    def __init__(self, M, m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3):
+    def __init__(self, M, g, T, B, fr, mu, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3):
         self.M = M
+        self.g = g
+        self.mu = mu
+        self.T = T
+        self.B = B
+        self.fr = fr
         self.gamma = np.zeros(4)
         self.theta = np.zeros(4)
         self.knee1 = KneeFourBarDynamics(m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3)
@@ -130,9 +135,10 @@ class QuadrupedDynamics:
                 [0, 14) : knee 1 variables   [14, 28) : knee 2 variables
                 [28, 42) : knee 3 variables  [42, 56) : knee 4 variables
                 56 : Ffr1   57 : Ffr2   58 : Ffr3   59 : Ffr3
-                60 : Fx   61 : Fy   62 : Nx    63 : Ny   64 : Nz
+                60 : Fx   61 : Fy   62 : Nx    63 : Ny   
+                64 : Nz   62 : Th1   63 : Th2   64 : Th3   65 : Th4
         """
-        A = np.zeros((65, 65))
+        A = np.zeros((69, 69))
         A1 = self.knee1.A()
         A2 = self.knee2.A()
         A3 = self.knee3.A()
@@ -143,7 +149,91 @@ class QuadrupedDynamics:
         A[26:39][28:42] = A3
         A[39:52][42:56] = A4
         
+        A[52][56] = np.cos(self.theta[0])
+        A[52][57] = np.cos(np.pi - self.theta[1])
+        A[52][58] = np.cos(3*np.pi/2 - self.theta[2])
+        A[52][59] = np.cos(self.theta[3] - 3*np.pi/2) 
+        A[52][61] = -1
+
+        A[53][56] = np.sin(self.theta[0])
+        A[53][57] = -np.sin(np.pi - self.theta[1])
+        A[53][58] = np.sin(3*np.pi/2 - self.theta[2])
+        A[53][59] = -np.sin(self.theta[3] - 3*np.pi/2)
+        A[53][60] = -1
+
+        A[54][13] = self.gamma[0]
+        A[54][27] = self.gamma[1]
+        A[54][41] = self.gamma[2]
+        A[54][55] = self.gamma[3]
+
+        A[55][56] = 1
+        A[55][13] = -self.mu
+
+        A[56][57] = 1
+        A[56][27] = -self.mu
         
+        A[57][58] = -1
+        A[57][41] = -self.mu
+
+        A[58][59] = -1
+        A[58][55] = -self.mu
+
+        lst = []
+        lst _ = []
+        for i in range(4):
+            if self.gamma[i] == 1:
+                lst.append(i)
+            else:
+                lst_.append(i)
+        
+        if len(lst) == 3:
+            A[59][14*lst[0] - 1] = 1
+            A[59][14*lst[1] - 1] = -1
+
+            A[60][14*lst[0] - 1] = 1
+            A[60][14*lst[2] - 1] = -1
+        
+            A[61][14*lst_[0] - 1] = 1
+
+        elif len(lst) == 2:
+            A[59][14*lst[0] - 1] = 1 
+            A[59][14*lst[1] - 1] = -1 
+
+            A[60][14*lst_[0] - 1] = 1
+            
+            A[61][14*lst_[1] - 1] = 1
+
+        A[62][56] = self.gamma[0]*(np.cos(self.theta[0] - np.pi/2)*(self.B + self.T*np.cos(self.theta[0])) - np.sin(self.theta[0] - np.pi/2)*(self.B + self.T*np.sin(self.theta[0])))
+        A[62][57] = self.gamma[1]*(np.cos(self.theta[1] + np.pi/2)*(-self.B + self.T*np.cos(self.theta[1])) - np.sin(self.theta[1] - np.pi/2)*(self.B + self.T*np.sin(self.theta[1])))
+        A[62][58] = self.gamma[2]*(np.cos(self.theta[2] + np.pi/2)*(-self.B + self.T*np.cos(self.theta[2])) - np.sin(self.theta[2] - np.pi/2)*(-self.B + self.T*np.sin(self.theta[2])))
+        A[62][59] = self.gamma[3]*(np.cos(self.theta[3] - np.pi/2)*(self.B + self.T*np.cos(self.theta[3])) - np.sin(self.theta[3] - np.pi/2)*(-self.B + self.T*np.sin(self.theta[3])))
+        A[62][64] = -1
+
+        A[63][13] = self.gamma[0]*(self.B + self.T*np.cos(theta[0]))
+        A[63][27] = self.gamma[1]*(-self.B + self.T*np.cos(theta[1]))
+        A[63][41] = self.gamma[2]*(-self.B + self.T*np.cos(theta[2]))
+        A[63][55] = self.gamma[3]*(self.B + self.T*np.cos(theta[3]))
+        A[63][63] = -1
+
+        A[64][13] = self.gamma[0]*(self.B + self.T*np.sin(theta[0]))
+        A[64][27] = self.gamma[1]*(self.B + self.T*np.sin(theta[1]))
+        A[64][41] = self.gamma[2]*(-self.B + self.T*np.sin(theta[2]))
+        A[64][55] = self.gamma[3]*(-self.B + self.T*np.sin(theta[3]))
+        A[64][62] = -1
+
+        A[65][65] = 1
+        A[65][56] = self.gamma[0]*self.T
+
+        A[66][66] = 1
+        A[66][57] = self.gamma[1]*self.T
+
+        A[67][67] = 1
+        A[67][58] = self.gamma[2]*self.T
+
+        A[68][68] = 1
+        A[68][59] = self.gamma[3]*self.T
+
+        return A
 
     def B(self):
         B = np.zeros(65)
@@ -157,6 +247,11 @@ class QuadrupedDynamics:
         B[26:39] = B3
         B[39:52] = B4
 
-        
-    
-        
+        B[54] = self.M*self.g
+
+        B[65] = (1 - self.gamma[0])*self.fr
+        B[66] = (1 - self.gamma[1])*self.fr
+        B[67] = (1 - self.gamma[2])*self.fr
+        B[68] = (1 - self.gamma[3])*self.fr
+
+        return B 
