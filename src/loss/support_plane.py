@@ -11,6 +11,15 @@ class SupportPlane:
         self.AB = self.B - self.A
         self.Tb = tb
 
+    def setup(self, A, B, AL, AF, BF, BL):
+        self.A = A
+        self.AL = AL
+        self.AF = AF
+        self.B = B
+        self.BL = BL
+        self.BF = BF
+        self.AB = self.B - self.A        
+
     def set_tb(self, tb):
         self.Tb = tb
 
