@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadruped.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadruped_description.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/quadruped/cmake" TYPE FILE FILES
-    "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadrupedConfig.cmake"
-    "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadrupedConfig-version.cmake"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/quadruped_description/cmake" TYPE FILE FILES
+    "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadruped_descriptionConfig.cmake"
+    "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/build/quadruped/catkin_generated/installspace/quadruped_descriptionConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/quadruped" TYPE FILE FILES "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/quadruped_description" TYPE FILE FILES "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/package.xml")
 endif()
 
