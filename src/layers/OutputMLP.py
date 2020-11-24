@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import tensorflow as tf
 
 class OutputMLP(object):
     def __init__(self):# num_osc, num_h, num_out, init = 'random'):
