@@ -1,119 +1,103 @@
-quadruped_urdf_controller:
+quadruped_controller:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50
 
   # Position Controllers --------------------------------------
-  Rev14_position_controller:
+  leg_drive_1_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev14
+    joint: leg_drive_1
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev15_position_controller:
+  leg_drive_2_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev15
+    joint: leg_drive_2
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev16_position_controller:
+  leg_drive_3_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev16
+    joint: leg_drive_3
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev17_position_controller:
+  leg_drive_4_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev17
+    joint: leg_drive_4
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev26_position_controller:
+  knee_drive_1_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev26
+    joint: knee_drive_1
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev27_position_controller:
+  knee_drive_2_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev27
+    joint: knee_drive_2
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev28_position_controller:
+  knee_drive_3_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev28
+    joint: knee_drive_3
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev29_position_controller:
+  knee_drive_4_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev29
+    joint: knee_drive_4
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev34_position_controller:
+  leg_rev_free_1_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev34
+    joint: leg_rev_free_1
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev35_position_controller:
+  leg_rev_free_2_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev35
+    joint: leg_rev_free_2
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev36_position_controller:
+  leg_rev_free_3_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev36
+    joint: leg_rev_free_3
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev37_position_controller:
+  leg_rev_free_4_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev37
+    joint: leg_rev_free_4
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev38_position_controller:
+  leg_rev_free_5_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev38
+    joint: leg_rev_free_5
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev39_position_controller:
+  leg_rev_free_6_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev39
+    joint: leg_rev_free_6
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev40_position_controller:
+  leg_rev_free_7_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev40
+    joint: leg_rev_free_7
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev41_position_controller:
+  leg_rev_free_8_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev41
+    joint: leg_rev_free_8
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev42_position_controller:
+  body_leg_free_1_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev42
+    joint: body_leg_free_1
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev43_position_controller:
+  body_leg_free_2_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev43
+    joint: body_leg_free_2
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev44_position_controller:
+  body_leg_free_3_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev44
+    joint: body_leg_free_3
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev45_position_controller:
+  body_leg_free_4_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev45
+    joint: body_leg_free_4
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev46_position_controller:
+  leg_rev_free_9_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev46
+    joint: leg_rev_free_9
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev47_position_controller:
+  leg_rev_free_10_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev47
+    joint: leg_rev_free_10
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev48_position_controller:
+  leg_rev_free_11_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev48
+    joint: leg_rev_free_11
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev49_position_controller:
+  leg_rev_free_12_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev49
-    pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev50_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: Rev50
-    pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev51_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: Rev51
-    pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev52_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: Rev52
-    pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev53_position_controller:
-    type: effort_controllers/JointPositionController
-    joint: Rev53
+    joint: leg_rev_free_12
     pid: {p: 100.0, i: 0.01, d: 10.0}
