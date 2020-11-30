@@ -1,0 +1,1492 @@
+<?xml version="1.0" ?>
+<robot name="quadruped_urdf_temp" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find quadruped_urdf_temp_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find quadruped_urdf_temp_description)/urdf/quadruped_urdf_temp.trans" />
+<xacro:include filename="$(find quadruped_urdf_temp_description)/urdf/quadruped_urdf_temp.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-2.2541064242885885e-06 0.0006253376002996955 0.0001409205762577119"/>
+    <mass value="0.010011445945907962"/>
+    <inertia ixx="2e-06" ixy="0.0" ixz="0.0" iyy="2e-06" iyz="-0.0" izz="5e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="1.7473690974327072e-08 3.547028182039613e-07 -0.0007504977283561672"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="2e-06 0.016249 -0.005264"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="2e-06 0.016249 -0.005264"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="1.7820308798620398e-08 3.543562020411062e-07 0.0007503392741870312"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="2e-06 -0.017501 -0.003768"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="2e-06 -0.017501 -0.003768"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="1.7473698710190888e-08 3.5470281049127233e-07 0.0007495023199359605"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016873 -0.000626 -0.003764"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016873 -0.000626 -0.003764"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="1.7820309602956108e-08 3.5435620121440203e-07 0.0007503392854995481"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016877 -0.000626 -0.003768"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016877 -0.000626 -0.003768"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_spacer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_top_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-2.713860467358246e-06 6.293583012682499e-08 0.0006249219290458113"/>
+    <mass value="0.01473051492933994"/>
+    <inertia ixx="2e-06" ixy="0.0" ixz="0.0" iyy="2e-06" iyz="-0.0" izz="4e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="5e-06 -0.000628 -0.008266"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_top_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="5e-06 -0.000628 -0.008266"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/body_top_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0013522686908765263 0.0013516397484648196 -0.006780743559168818"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017806 0.017181 -0.015061"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017806 0.017181 -0.015061"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0013522684235364804 -0.001350010618069393 -0.006781026952198699"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017806 -0.018431 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017806 -0.018431 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0013503745867918387 -0.0013502530690687777 -0.0067813172360290195"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017807 -0.018383 -0.015071"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017807 -0.018383 -0.015071"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0013503743199586825 0.0013517551248973282 -0.0067810267691918065"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017807 0.01718 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017807 0.01718 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-7.408031004827939e-05 7.325536395622056e-05 0.0006252705595807886"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016295 0.015672 -0.010811"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016295 0.015672 -0.010811"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-7.357849532152808e-05 -7.488611484173305e-05 0.0006249213851772552"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016295 -0.016928 -0.010816"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016295 -0.016928 -0.010816"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="7.456298348990781e-05 -7.438496666998737e-05 0.0006245723762703798"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016305 -0.016928 -0.010821"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016305 -0.016928 -0.010821"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="7.40611687630871e-05 7.375651212796451e-05 0.0006249215506738508"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016305 0.015672 -0.010816"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016305 0.015672 -0.010816"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_retainer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0041475967232637925 -0.00417619584623868 -0.0006263762547244322"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017806 0.017181 -0.015061"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017806 0.017181 -0.015061"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0041755672882413004 0.004148090403692305 -0.0006250834540955305"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017806 -0.018431 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017806 -0.018431 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.004147726317319966 0.004175818023859759 -0.0006237895196605451"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017807 -0.018383 -0.015071"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017807 -0.018383 -0.015071"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.004175696881790612 -0.004148110398639292 -0.0006250752464821169"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017807 0.01718 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017807 0.01718 -0.015066"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_top_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0003164421861741977 -0.00031649320052540633 -0.003050662034350957"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.023858 0.026161 -0.010559"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.023858 0.026161 -0.010559"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0003168646835212084 0.00031692098143745046 -0.003050732382104615"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.026785 -0.024485 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.026785 -0.024485 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0003175567945170703 0.00031710038314822567 -0.0030499705086922497"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02386 -0.027364 -0.010573"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02386 -0.027364 -0.010573"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00031697929135719727 -0.000316955971382718 -0.00304989308713128"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026788 0.023232 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026788 0.023232 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.002519462503545674 -0.002519847000917435 -0.0036680943709238205"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.026464 0.022233 -0.010559"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.026464 0.022233 -0.010559"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0025202185822779492 0.0025211181139797832 -0.0036667862618691843"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.022857 -0.02709 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.022857 -0.02709 -0.010566"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0025207539628946257 0.0025206310337190993 -0.0036665187026791576"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026466 -0.023436 -0.010573"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026466 -0.023436 -0.010573"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0025205100411200172 -0.002519976253746184 -0.003666819737926503"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02286 0.025838 -0.010565"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02286 0.025838 -0.010565"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_mount_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003940297600864999 -0.003924333256302596 -0.0006263100517919421"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017803 0.017179 0.000489"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017803 0.017179 0.000489"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003924704683607248 0.00394024843989409 -0.0006250768911533389"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017803 -0.018433 0.000484"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017803 -0.018433 0.000484"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003939884369114608 0.003924412587268545 -0.0006238550838049829"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017809 -0.018385 0.000479"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017809 -0.018385 0.000479"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003924291451349968 -0.0039398112814962374 -0.000625081170636266"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017809 0.017178 0.000484"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017809 0.017178 0.000484"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/bottom_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_5">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.002209324326178385 0.0022110487223212724 -0.004789634602149969"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.029844 0.025613 -0.010728"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_5.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.029844 0.025613 -0.010728"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_5.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_6">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0022106770785420594 0.0022112528657645784 -0.004788446526772602"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.026237 -0.03047 -0.010736"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_6.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.026237 -0.03047 -0.010736"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_6.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_7">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.002210888743061825 -0.0022099917300511564 -0.004789566139484824"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.029846 -0.026816 -0.010744"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_7.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.029846 -0.026816 -0.010744"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_7.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_8">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0022101126589545127 -0.0022098380460622846 -0.00478974714253619"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02624 0.029218 -0.010735"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_8.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02624 0.029218 -0.010735"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/servo_motor_v1_8.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0035723348347072165 -0.002687786423497207 -1.994771347014427e-05"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.027258 0.028197 -0.004028"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.027258 0.028197 -0.004028"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003977209796217952 -0.0030934938552733167 -1.1677897789573455e-07"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.027018 0.028437 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.027018 0.028437 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.002843557813825802 0.001959506799474594 -0.003474662034350956"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.027018 0.028437 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.027018 0.028437 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00014763200405208676 -0.000686921538344272 -0.0027696041116140697"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.034089 0.035508 -0.003983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.034089 0.035508 -0.003983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0030937902037820493 0.003977506144726681 -1.1677897789573455e-07"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.034089 0.035508 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.034089 0.035508 -0.010983"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0026881551344744153 0.003571813914319471 -2.0007344107927753e-05"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.028821 -0.027887 -0.004036"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.028821 -0.027887 -0.004036"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0006872841824670448 -0.00014635806464882717 -0.0027699019792147466"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.036132 -0.034717 -0.003991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.036132 -0.034717 -0.003991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003093865478451554 0.003977692431044472 -2.456121526751842e-07"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.029061 -0.027644 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.029061 -0.027644 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0006872841824670448 -0.0001443580646488321 -0.009769901979214748"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.036132 -0.034715 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.036132 -0.034715 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.001959135316478792 -0.002842079018562548 -0.003475732382104615"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.029061 -0.027644 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.029061 -0.027644 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0035724496392087954 0.0026883938020920185 -1.8982041859497492e-05"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.027262 -0.029401 -0.004044"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.027262 -0.029401 -0.004044"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003977328208401413 0.003093104846396813 9.644865419083243e-07"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02702 -0.02964 -0.010999"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02702 -0.02964 -0.010999"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.00014672237657840925 0.0006873237382095179 -0.002769354494703423"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.034093 -0.036713 -0.004001"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.034093 -0.036713 -0.004001"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0030936717915985915 -0.003977895153603188 -1.0355134580919412e-06"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.034091 -0.036711 -0.011001"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.034091 -0.036711 -0.011001"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0028424432054829293 -0.0019588996168517746 -0.003475970508692249"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.02702 -0.02964 -0.010999"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.02702 -0.02964 -0.010999"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0026882728493677656 -0.003571845801899433 -1.9812567497791075e-05"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.028825 0.026633 -0.004036"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.028825 0.026633 -0.004036"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_servo_arm_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0030939838923626367 -0.003977723610255363 8.698811075624757e-08"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.029063 0.026392 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.029063 0.026392 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0006882028512661675 0.0001471271272279473 -0.0027690768588325204"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.036136 0.033463 -0.003991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.036136 0.033463 -0.003991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003977016107637364 0.0030932763897446383 8.698811075624757e-08"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.036134 0.033463 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.036134 0.033463 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.001958020708642802 0.0028430440286172816 -0.0034748930871312802"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.029063 0.026392 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.029063 0.026392 -0.010991"/>
+    <geometry>
+      <mesh filename="package://quadruped_urdf_temp_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Rigid1" type="fixed">
+  <origin rpy="0 0 0" xyz="-2e-06 -0.016249 0.005264"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_1"/>
+</joint>
+
+<joint name="Rigid2" type="fixed">
+  <origin rpy="0 0 0" xyz="-2e-06 0.017501 0.003768"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_2"/>
+</joint>
+
+<joint name="Rigid3" type="fixed">
+  <origin rpy="0 0 0" xyz="0.016873 0.000626 0.003764"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_3"/>
+</joint>
+
+<joint name="Rigid4" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.016877 0.000626 0.003768"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_4"/>
+</joint>
+
+<joint name="Rigid5" type="fixed">
+  <origin rpy="0 0 0" xyz="-5e-06 0.000628 0.008266"/>
+  <parent link="base_link"/>
+  <child link="body_top_plate_v1_1"/>
+</joint>
+
+<joint name="Rigid6" type="fixed">
+  <origin rpy="0 0 0" xyz="0.017806 -0.017181 0.015061"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_1"/>
+</joint>
+
+<joint name="Rigid7" type="fixed">
+  <origin rpy="0 0 0" xyz="0.017806 0.018431 0.015066"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_2"/>
+</joint>
+
+<joint name="Rigid8" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.017807 0.018383 0.015071"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_3"/>
+</joint>
+
+<joint name="Rigid9" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.017807 -0.01718 0.015066"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_4"/>
+</joint>
+
+<joint name="Rigid10" type="fixed">
+  <origin rpy="0 0 0" xyz="0.0163 -0.0163 0.002545"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_1"/>
+</joint>
+
+<joint name="Rigid11" type="fixed">
+  <origin rpy="0 0 0" xyz="0.0163 0.0163 0.00255"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_2"/>
+</joint>
+
+<joint name="Rigid12" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.0163 0.0163 0.002555"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_3"/>
+</joint>
+
+<joint name="Rigid13" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.0163 -0.0163 0.00255"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_4"/>
+</joint>
+
+<joint name="Rev14" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_1"/>
+  <child link="leg_top_pivot_plate_v1_1"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rev15" type="revolute">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_2"/>
+  <child link="leg_top_pivot_plate_v1_2"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+  <limit effort="100" lower="-1.308997" upper="1.308997" velocity="100"/>
+</joint>
+
+<joint name="Rev16" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_3"/>
+  <child link="leg_top_pivot_plate_v1_3"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rev17" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_4"/>
+  <child link="leg_top_pivot_plate_v1_4"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rigid18" type="fixed">
+  <origin rpy="0 0 0" xyz="0.009212 -0.011256 -0.004078"/>
+  <parent link="leg_top_pivot_plate_v1_1"/>
+  <child link="leg_parallel_plate_v1_1"/>
+</joint>
+
+<joint name="Rigid19" type="fixed">
+  <origin rpy="0 0 0" xyz="0.011255 0.009213 -0.004075"/>
+  <parent link="leg_top_pivot_plate_v1_2"/>
+  <child link="leg_parallel_plate_v1_2"/>
+</joint>
+
+<joint name="Rigid20" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.009213 0.011257 -0.004072"/>
+  <parent link="leg_top_pivot_plate_v1_3"/>
+  <child link="leg_parallel_plate_v1_3"/>
+</joint>
+
+<joint name="Rigid21" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.011256 -0.009212 -0.004075"/>
+  <parent link="leg_top_pivot_plate_v1_4"/>
+  <child link="leg_parallel_plate_v1_4"/>
+</joint>
+
+<joint name="Rigid22" type="fixed">
+  <origin rpy="0 0 0" xyz="0.008658 -0.005052 -0.004502"/>
+  <parent link="leg_top_pivot_plate_v1_1"/>
+  <child link="leg_servo_mount_v1_1"/>
+</joint>
+
+<joint name="Rigid23" type="fixed">
+  <origin rpy="0 0 0" xyz="0.005051 0.008659 -0.0045"/>
+  <parent link="leg_top_pivot_plate_v1_2"/>
+  <child link="leg_servo_mount_v1_2"/>
+</joint>
+
+<joint name="Rigid24" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.008659 0.005053 -0.004498"/>
+  <parent link="leg_top_pivot_plate_v1_3"/>
+  <child link="leg_servo_mount_v1_3"/>
+</joint>
+
+<joint name="Rigid25" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.005053 -0.008658 -0.004501"/>
+  <parent link="leg_top_pivot_plate_v1_4"/>
+  <child link="leg_servo_mount_v1_4"/>
+</joint>
+
+<joint name="Rev26" type="continuous">
+  <origin rpy="0 0 0" xyz="0.017803 -0.017179 -0.000489"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_1"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rev27" type="continuous">
+  <origin rpy="0 0 0" xyz="0.017803 0.018433 -0.000484"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_2"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rev28" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.017809 0.018385 -0.000479"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_3"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rev29" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.017809 -0.017178 -0.000484"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_4"/>
+  <axis xyz="0.000143 -0.000143 1.0"/>
+</joint>
+
+<joint name="Rigid30" type="fixed">
+  <origin rpy="0 0 0" xyz="0.00338 -0.00338 0.000169"/>
+  <parent link="leg_servo_mount_v1_1"/>
+  <child link="servo_motor_v1_5"/>
+</joint>
+
+<joint name="Rigid31" type="fixed">
+  <origin rpy="0 0 0" xyz="0.00338 0.00338 0.00017"/>
+  <parent link="leg_servo_mount_v1_2"/>
+  <child link="servo_motor_v1_6"/>
+</joint>
+
+<joint name="Rigid32" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.00338 0.00338 0.000171"/>
+  <parent link="leg_servo_mount_v1_3"/>
+  <child link="servo_motor_v1_7"/>
+</joint>
+
+<joint name="Rigid33" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.00338 -0.00338 0.00017"/>
+  <parent link="leg_servo_mount_v1_4"/>
+  <child link="servo_motor_v1_8"/>
+</joint>
+
+<joint name="Rev34" type="revolute">
+  <origin rpy="0 0 0" xyz="-0.002586 -0.002584 -0.0067"/>
+  <parent link="servo_motor_v1_5"/>
+  <child link="leg_servo_arm_v1_1"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+</joint>
+
+<joint name="Rev35" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007071 -0.007071 0.0"/>
+  <parent link="leg_parallel_plate_v1_1"/>
+  <child link="leg_parallel_linkage_v1_1"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+</joint>
+
+<joint name="Rev36" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007071 0.007071 0.0"/>
+  <parent link="leg_parallel_linkage_v1_1"/>
+  <child link="leg_parallel_plate_v1_1"/>
+  <axis xyz="0.707107 0.707107 -0.0"/>
+</joint>
+
+<joint name="Rev37" type="continuous">
+  <origin rpy="0 0 0" xyz="0.006831 -0.007311 -4.5e-05"/>
+  <parent link="leg_servo_arm_v1_1"/>
+  <child link="leg_rev_v1_1"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+</joint>
+
+<joint name="Rev38" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.007"/>
+  <parent link="leg_rev_v1_1"/>
+  <child link="leg_parallel_linkage_v1_1"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+</joint>
+
+<joint name="Rev39" type="revolute">
+  <origin rpy="0 0 0" xyz="0.002584 -0.002583 -0.0067"/>
+  <parent link="servo_motor_v1_6"/>
+  <child link="leg_servo_arm_v1_2"/>
+  <axis xyz="0.707107 -0.707107 -0.000203"/>
+  <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+</joint>
+
+<joint name="Rev40" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007311 0.006828 0.006955"/>
+  <parent link="leg_servo_arm_v1_2"/>
+  <child link="leg_rev_v1_2"/>
+  <axis xyz="0.707107 -0.707107 -0.000203"/>
+</joint>
+
+<joint name="Rev41" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="leg_parallel_plate_v1_2"/>
+  <child link="leg_parallel_linkage_v1_2"/>
+  <axis xyz="0.707107 -0.707107 -0.000203"/>
+</joint>
+
+<joint name="Rev42" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007071 0.007071 0.0"/>
+  <parent link="leg_parallel_linkage_v1_2"/>
+  <child link="leg_rev_v1_2"/>
+  <axis xyz="0.707107 -0.707107 -0.000203"/>
+</joint>
+
+<joint name="Rev43" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="leg_parallel_linkage_v1_2"/>
+  <child link="leg_parallel_plate_v1_2"/>
+  <axis xyz="-0.707107 0.707107 0.000203"/>
+</joint>
+
+<joint name="Rev44" type="revolute">
+  <origin rpy="0 0 0" xyz="0.002584 0.002585 -0.0067"/>
+  <parent link="servo_motor_v1_7"/>
+  <child link="leg_servo_arm_v1_3"/>
+  <axis xyz="0.707107 0.707107 -0.0"/>
+  <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+</joint>
+
+<joint name="Rev45" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007071 0.007071 2e-06"/>
+  <parent link="leg_parallel_plate_v1_3"/>
+  <child link="leg_parallel_linkage_v1_3"/>
+  <axis xyz="0.707107 0.707107 -0.0"/>
+</joint>
+
+<joint name="Rev46" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.006831 0.007312 -4.3e-05"/>
+  <parent link="leg_servo_arm_v1_3"/>
+  <child link="leg_rev_v1_3"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+</joint>
+
+<joint name="Rev47" type="continuous">
+  <origin rpy="0 0 0" xyz="2e-06 -2e-06 0.007"/>
+  <parent link="leg_rev_v1_3"/>
+  <child link="leg_parallel_linkage_v1_3"/>
+  <axis xyz="0.707107 0.707107 -0.0"/>
+</joint>
+
+<joint name="Rev48" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007071 -0.007071 -2e-06"/>
+  <parent link="leg_parallel_linkage_v1_3"/>
+  <child link="leg_parallel_plate_v1_3"/>
+  <axis xyz="-0.707107 -0.707107 0.0"/>
+</joint>
+
+<joint name="Rev49" type="revolute">
+  <origin rpy="0 0 0" xyz="-0.002585 0.002585 -0.006699"/>
+  <parent link="servo_motor_v1_8"/>
+  <child link="leg_servo_arm_v1_4"/>
+  <axis xyz="-0.707107 0.707107 0.000203"/>
+  <limit effort="100" lower="-1.047198" upper="1.047198" velocity="100"/>
+</joint>
+
+<joint name="Rev50" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007071 -0.007071 0.0"/>
+  <parent link="leg_parallel_plate_v1_4"/>
+  <child link="leg_parallel_linkage_v1_4"/>
+  <axis xyz="-0.707107 0.707107 0.000203"/>
+</joint>
+
+<joint name="Rev51" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007311 -0.00683 -4.5e-05"/>
+  <parent link="leg_servo_arm_v1_4"/>
+  <child link="leg_rev_v1_4"/>
+  <axis xyz="-0.707107 0.707107 0.000203"/>
+</joint>
+
+<joint name="Rev52" type="continuous">
+  <origin rpy="0 0 0" xyz="2e-06 0.0 0.007"/>
+  <parent link="leg_rev_v1_4"/>
+  <child link="leg_parallel_linkage_v1_4"/>
+  <axis xyz="-0.707107 0.707107 0.000203"/>
+</joint>
+
+<joint name="Rev53" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007071 0.007071 0.0"/>
+  <parent link="leg_parallel_linkage_v1_4"/>
+  <child link="leg_parallel_plate_v1_4"/>
+  <axis xyz="0.707107 -0.707107 -0.000203"/>
+</joint>
+
+</robot>
