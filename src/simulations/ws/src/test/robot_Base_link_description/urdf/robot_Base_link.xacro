@@ -1,0 +1,1455 @@
+<?xml version="1.0" ?>
+<robot name="robot_Base_link" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find robot_Base_link_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find robot_Base_link_description)/urdf/robot_Base_link.trans" />
+<xacro:include filename="$(find robot_Base_link_description)/urdf/robot_Base_link.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-2.8636160650658044e-05 0.008061163874986666 -4.14466226948286e-05"/>
+    <mass value="0.010011445945907986"/>
+    <inertia ixx="2e-06" ixy="-0.0" ixz="0.0" iyy="5e-06" iyz="-0.0" izz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_1_1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="5.738691823835096e-06 -0.000750352222302365 5.880592996467676e-06"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.0 -0.004305 0.016886"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_1_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.0 -0.004305 0.016886"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_1_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_2_1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="5.658478169717762e-06 -0.0007497815520507785 5.902388222109107e-06"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016874 -0.004568 1.2e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_2_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016874 -0.004568 1.2e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_2_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_3_1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="5.607351531826752e-06 -0.0007497662936270591 5.851261422475107e-06"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="1e-06 -0.004568 -0.016863"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_3_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="1e-06 -0.004568 -0.016863"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_3_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_spacer_v1_4_1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="5.6875651859439325e-06 -0.0007503369638786478 5.8294661968421765e-06"/>
+    <mass value="0.001198596877164021"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016875 -0.004305 1.1e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_4_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016875 -0.004305 1.1e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_spacer_v1_4_1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="body_top_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-4.1690456291076634e-06 0.0006247166382103641 -1.802593393744007e-06"/>
+    <mass value="0.01473051492933994"/>
+    <inertia ixx="2e-06" ixy="-0.0" ixz="-0.0" iyy="4e-06" iyz="-0.0" izz="2e-06"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-4e-05 0.001313 -3.5e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_top_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-4e-05 0.001313 -3.5e-05"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/body_top_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0014041706684728705 0.006780603396259327 0.001297677043992581"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017894 0.006863 0.017729"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017894 0.006863 0.017729"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0014042739333374708 0.006759631696752213 -0.0014039767078836245"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017893 0.006585 -0.017882"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017893 0.006585 -0.017882"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0012983738417109425 0.006780256327239513 -0.0014043133362204203"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017719 0.006863 -0.017835"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017719 0.006863 -0.017835"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0012974754520422363 0.0068016135090848365 0.0012976967382443763"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017717 0.007141 0.017727"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017717 0.007141 0.017727"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-6.852309781431656e-05 -0.0006251627182572526 7.965943241006537e-05"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016375 0.002583 0.01628"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016375 0.002583 0.01628"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-6.911406508854079e-05 -0.0006263286299112167 -6.84729642170083e-05"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.016374 0.002328 -0.016369"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.016374 0.002328 -0.016369"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="7.901812661039592e-05 -0.0006251411626228272 -6.908163756269223e-05"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016275 0.002583 -0.01637"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016275 0.002583 -0.01637"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="7.960749356809502e-05 -0.0006235847759018215 7.904930987225403e-05"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.016249 0.002838 0.016254"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.016249 0.002838 0.016254"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.004167247972683925 0.0006251879094795743 -0.00415685636974638"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017894 0.006863 0.017729"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017894 0.006863 0.017729"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.004146146109207657 0.0006901667579308308 0.0041670388138806"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017893 0.006585 -0.017882"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017893 0.006585 -0.017882"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.004180682112193156 0.0006244682079435179 0.004142572134556641"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017719 0.006863 -0.017835"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017719 0.006863 -0.017835"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_top_pivot_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.004153082996101697 0.0005599342442201994 -0.004180859221834449"/>
+    <mass value="0.0012497785111649892"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017717 0.007141 0.017727"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017717 0.007141 0.017727"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_top_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0024855888744864524 0.004113021894890805 -0.0025550365496469774"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.022904 0.002391 0.026427"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.022904 0.002391 0.026427"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0024904026835597184 0.004152865956151861 0.0024858188553371456"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.02652 0.001978 -0.022891"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.02652 0.001978 -0.022891"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0025520861449444404 0.004073792096051418 -0.002552686858617665"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026411 0.002748 0.022814"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026411 0.002748 0.022814"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_mount_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0025522000154183794 0.004113142392277107 0.0024878756783925926"/>
+    <mass value="0.001144548758330191"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.022807 0.002335 -0.026458"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.022807 0.002335 -0.026458"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_mount_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.00029243555744195085 0.0030495889470673796 -0.0003413229495583363"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.026834 0.00234 0.023825"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.026834 0.00234 0.023825"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0002932256533260992 0.003055345533135383 0.0002930446650724165"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.023918 0.001968 -0.026821"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.023918 0.001968 -0.026821"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00034076094864287504 0.0030453979209796814 -0.0003410178447376677"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.023805 0.002759 0.026742"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.023805 0.002759 0.026742"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00034105470401457616 0.0030496372151071114 0.00029320121878101055"/>
+    <mass value="0.000869495656702597"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026734 0.002386 -0.023852"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026734 0.002386 -0.023852"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003916366027174309 0.0006249026452806034 -0.003948010828526291"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017772 -0.008686 0.017851"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017772 -0.008686 0.017851"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.00393494231151317 0.0006866281123008456 0.003919669100533627"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.017771 -0.008964 -0.01776"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.017771 -0.008964 -0.01776"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003944457583682167 0.0005635759301137883 -0.0039286837373482125"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.017839 -0.008408 0.017849"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.017839 -0.008408 0.017849"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="bottom_pivot_plate_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003929320427632558 0.0006248622994852598 0.003935215674770318"/>
+    <mass value="0.00131675130911231"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.01784 -0.008686 -0.017713"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.01784 -0.008686 -0.017713"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/bottom_pivot_plate_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1__1__1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0021772291211381613 -0.004444738278836129 -0.0021742466190709624"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.026218 -0.005559 0.029872"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.026218 -0.005559 0.029872"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1__1__2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.002242625148350545 -0.0044099641751090555 -0.002178239953494438"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.029841 -0.006025 -0.026206"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.029841 -0.006025 -0.026206"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1__1__3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0021755595473108742 -0.0044098560839398605 0.002244592631356908"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.029853 -0.005149 0.026256"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.029853 -0.005149 0.026256"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="servo_motor_v1__1__4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.002244774228788042 -0.004375557209558903 0.0022452720915190592"/>
+    <mass value="0.0004848665871049835"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026249 -0.005615 -0.029775"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026249 -0.005615 -0.029775"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/servo_motor_v1__1__4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1__1__1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0004433481678411781 9.741428145571647e-05 -0.00044162602980353863"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.024923 -0.000939 0.031157"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.024923 -0.000939 0.031157"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1__1__2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.000440132797540245 0.00010521994035189025 -0.0004437342470343872"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.030314 -0.001435 -0.025795"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.030314 -0.001435 -0.025795"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1__1__3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00044260801436953046 0.00010445651060112557 0.00044132062681623285"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.031138 -0.00056 0.02489"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.031138 -0.00056 0.02489"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_retainer_v1__1__4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0004410450494183246 0.00011176836252767123 0.00044099974112894735"/>
+    <mass value="0.0007120198480863978"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.024883 -0.001046 -0.031133"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.024883 -0.001046 -0.031133"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_retainer_v1__1__4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0030681343683352617 -0.0006227942752621207 -0.003948068135433084"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.02911 0.002772 0.026984"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.02911 0.002772 0.026984"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003960631019107489 -0.0005221428554769577 0.0030711911233473922"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.027083 0.00235 -0.029097"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.027083 0.00235 -0.029097"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003977515032945699 -5.534324945623758e-05 -0.0030930375547851136"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.026961 0.003226 0.029015"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.026961 0.003226 0.029015"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_parallel_linkage_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.003061922558389548 -0.0006104441015511615 0.003955155168230539"/>
+    <mass value="0.00046200899599845404"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.029007 0.002804 -0.027015"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.029007 0.002804 -0.027015"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_parallel_linkage_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.0026849787262271767 -5.507877018733065e-05 -0.0035737052959688917"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.028825 -0.0031 0.027271"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.028825 -0.0031 0.027271"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.003574563517814669 3.598068990151018e-05 0.0026849609882067145"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.027278 -0.003525 -0.028812"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.027278 -0.003525 -0.028812"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0035715807831594136 -4.938508214343039e-05 -0.002688273981641724"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.027249 -0.00265 0.028821"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.027249 -0.00265 0.028821"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_servo_arm_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0026873965528218455 -4.2065520644664085e-05 0.0035718145014788164"/>
+    <mass value="0.0006066560485475096"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.028814 -0.003075 -0.027211"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.028814 -0.003075 -0.027211"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_servo_arm_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.000686529875859522 0.009770202906179349 -5.906609796671458e-06"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.036131 0.004003 0.033997"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.036131 0.004003 0.033997"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.000686529875859522 0.0027712029061793494 0.00010409339020332753"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.036131 -0.002996 0.034107"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.036131 -0.002996 0.034107"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.00015529887048482127 0.009769890782876267 0.0006776885751076309"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.034121 0.003394 -0.036124"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.034121 0.003394 -0.036124"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_2">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0001492988704848222 0.002769890782876267 0.0006846885751076309"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="-0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.034115 -0.003606 -0.036117"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.034115 -0.003606 -0.036117"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_2.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_3">
+  <inertial>
+    <origin rpy="0 0 0" xyz="7.128278046595465e-05 0.009765112583282266 -0.0007635415229558448"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.034032 0.003337 0.036085"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.034032 0.003337 0.036085"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_3.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0008391199519162118 0.009757353967175305 -0.00014700955616967631"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.036015 0.004038 -0.034041"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.036015 0.004038 -0.034041"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="leg_rev_v1_4">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.0007301199519162069 0.002758353967175305 -0.00014700955616967631"/>
+    <mass value="0.001572468577271628"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.036124 -0.002961 -0.034041"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.036124 -0.002961 -0.034041"/>
+    <geometry>
+      <mesh filename="package://robot_Base_link_description/meshes/leg_rev_v1_4.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="Rigid10" type="fixed">
+  <origin rpy="0 0 0" xyz="0.0 0.004305 -0.016886"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_1_1_1"/>
+</joint>
+
+<joint name="Rigid11" type="fixed">
+  <origin rpy="0 0 0" xyz="0.016874 0.004568 -1.2e-05"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_2_1_1"/>
+</joint>
+
+<joint name="Rigid12" type="fixed">
+  <origin rpy="0 0 0" xyz="-1e-06 0.004568 0.016863"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_3_1_1"/>
+</joint>
+
+<joint name="Rigid17" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.016875 0.004305 -1.1e-05"/>
+  <parent link="base_link"/>
+  <child link="body_spacer_v1_4_1_1"/>
+</joint>
+
+<joint name="Rigid63" type="fixed">
+  <origin rpy="0 0 0" xyz="4e-05 -0.001313 3.5e-05"/>
+  <parent link="base_link"/>
+  <child link="body_top_plate_v1_1"/>
+</joint>
+
+<joint name="Rigid64" type="fixed">
+  <origin rpy="0 0 0" xyz="0.017894 -0.006863 -0.017729"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_1"/>
+</joint>
+
+<joint name="Rigid65" type="fixed">
+  <origin rpy="0 0 0" xyz="0.017893 -0.006585 0.017882"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_2"/>
+</joint>
+
+<joint name="Rigid66" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.017719 -0.006863 0.017835"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_3"/>
+</joint>
+
+<joint name="Rigid67" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.017717 -0.007141 -0.017727"/>
+  <parent link="base_link"/>
+  <child link="servo_motor_v1_4"/>
+</joint>
+
+<joint name="Rigid68" type="fixed">
+  <origin rpy="0 0 0" xyz="0.016335 -0.00127 -0.016315"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_1"/>
+</joint>
+
+<joint name="Rigid69" type="fixed">
+  <origin rpy="0 0 0" xyz="0.016334 -0.001015 0.016334"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_2"/>
+</joint>
+
+<joint name="Rigid70" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.016315 -0.00127 0.016335"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_3"/>
+</joint>
+
+<joint name="Rigid71" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.016289 -0.001525 -0.016289"/>
+  <parent link="body_top_plate_v1_1"/>
+  <child link="leg_servo_retainer_v1_4"/>
+</joint>
+
+<joint name="Rev72" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_1"/>
+  <child link="leg_top_pivot_plate_v1_1"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev73" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_2"/>
+  <child link="leg_top_pivot_plate_v1_2"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev74" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_3"/>
+  <child link="leg_top_pivot_plate_v1_3"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev75" type="continuous">
+  <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+  <parent link="servo_motor_v1_4"/>
+  <child link="leg_top_pivot_plate_v1_4"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rigid76" type="fixed">
+  <origin rpy="0 0 0" xyz="0.00501 0.004472 -0.008698"/>
+  <parent link="leg_top_pivot_plate_v1_1"/>
+  <child link="leg_servo_mount_v1_1"/>
+</joint>
+
+<joint name="Rigid77" type="fixed">
+  <origin rpy="0 0 0" xyz="0.008627 0.004607 0.005009"/>
+  <parent link="leg_top_pivot_plate_v1_2"/>
+  <child link="leg_servo_mount_v1_2"/>
+</joint>
+
+<joint name="Rigid78" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.008694 0.004393 -0.005087"/>
+  <parent link="leg_top_pivot_plate_v1_4"/>
+  <child link="leg_servo_mount_v1_3"/>
+</joint>
+
+<joint name="Rigid79" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.005088 0.004528 0.008623"/>
+  <parent link="leg_top_pivot_plate_v1_3"/>
+  <child link="leg_servo_mount_v1_4"/>
+</joint>
+
+<joint name="Rigid80" type="fixed">
+  <origin rpy="0 0 0" xyz="0.00894 0.004523 -0.006096"/>
+  <parent link="leg_top_pivot_plate_v1_1"/>
+  <child link="leg_parallel_plate_v1_1"/>
+</joint>
+
+<joint name="Rigid81" type="fixed">
+  <origin rpy="0 0 0" xyz="0.006025 0.004617 0.008939"/>
+  <parent link="leg_top_pivot_plate_v1_2"/>
+  <child link="leg_parallel_plate_v1_2"/>
+</joint>
+
+<joint name="Rigid82" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.006088 0.004382 -0.009015"/>
+  <parent link="leg_top_pivot_plate_v1_4"/>
+  <child link="leg_parallel_plate_v1_3"/>
+</joint>
+
+<joint name="Rigid83" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.009015 0.004477 0.006017"/>
+  <parent link="leg_top_pivot_plate_v1_3"/>
+  <child link="leg_parallel_plate_v1_4"/>
+</joint>
+
+<joint name="Rev84" type="continuous">
+  <origin rpy="0 0 0" xyz="0.017772 0.008686 -0.017851"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_1"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev86" type="continuous">
+  <origin rpy="0 0 0" xyz="0.017771 0.008964 0.01776"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_2"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev87" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.017839 0.008408 -0.017849"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_3"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rev88" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.01784 0.008686 0.017713"/>
+  <parent link="base_link"/>
+  <child link="bottom_pivot_plate_v1_4"/>
+  <axis xyz="0.007809 -0.999939 0.00781"/>
+</joint>
+
+<joint name="Rigid89" type="fixed">
+  <origin rpy="0 0 0" xyz="0.003314 0.00795 -0.003445"/>
+  <parent link="leg_servo_mount_v1_1"/>
+  <child link="servo_motor_v1__1__1"/>
+</joint>
+
+<joint name="Rigid90" type="fixed">
+  <origin rpy="0 0 0" xyz="0.003321 0.008003 0.003315"/>
+  <parent link="leg_servo_mount_v1_2"/>
+  <child link="servo_motor_v1__1__2"/>
+</joint>
+
+<joint name="Rigid91" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.003442 0.007897 -0.003442"/>
+  <parent link="leg_servo_mount_v1_3"/>
+  <child link="servo_motor_v1__1__3"/>
+</joint>
+
+<joint name="Rigid92" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.003442 0.00795 0.003317"/>
+  <parent link="leg_servo_mount_v1_4"/>
+  <child link="servo_motor_v1__1__4"/>
+</joint>
+
+<joint name="Rigid93" type="fixed">
+  <origin rpy="0 0 0" xyz="0.002019 0.00333 -0.00473"/>
+  <parent link="leg_servo_mount_v1_1"/>
+  <child link="leg_servo_retainer_v1__1__1"/>
+</joint>
+
+<joint name="Rigid94" type="fixed">
+  <origin rpy="0 0 0" xyz="0.003794 0.003413 0.002904"/>
+  <parent link="leg_servo_mount_v1_2"/>
+  <child link="leg_servo_retainer_v1__1__2"/>
+</joint>
+
+<joint name="Rigid95" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.004727 0.003308 -0.002076"/>
+  <parent link="leg_servo_mount_v1_3"/>
+  <child link="leg_servo_retainer_v1__1__3"/>
+</joint>
+
+<joint name="Rigid96" type="fixed">
+  <origin rpy="0 0 0" xyz="-0.002076 0.003381 0.004675"/>
+  <parent link="leg_servo_mount_v1_4"/>
+  <child link="leg_servo_retainer_v1__1__4"/>
+</joint>
+
+<joint name="Rev97" type="continuous">
+  <origin rpy="0 0 0" xyz="0.002276 -0.000432 -0.003159"/>
+  <parent link="leg_parallel_plate_v1_1"/>
+  <child link="leg_parallel_linkage_v1_1"/>
+  <axis xyz="0.707679 0.011044 0.706448"/>
+</joint>
+
+<joint name="Rev98" type="continuous">
+  <origin rpy="0 0 0" xyz="0.003165 -0.000382 0.002276"/>
+  <parent link="leg_parallel_plate_v1_2"/>
+  <child link="leg_parallel_linkage_v1_2"/>
+  <axis xyz="-0.706479 1e-05 0.707734"/>
+</joint>
+
+<joint name="Rev99" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.003156 -0.000467 -0.002273"/>
+  <parent link="leg_parallel_plate_v1_3"/>
+  <child link="leg_parallel_linkage_v1_3"/>
+  <axis xyz="0.707109 -1e-06 -0.707105"/>
+</joint>
+
+<joint name="Rev100" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.002273 -0.000418 0.003163"/>
+  <parent link="leg_parallel_plate_v1_4"/>
+  <child link="leg_parallel_linkage_v1_4"/>
+  <axis xyz="-0.707034 -0.011044 -0.707093"/>
+</joint>
+
+<joint name="Rev101" type="continuous">
+  <origin rpy="0 0 0" xyz="0.002607 -0.002459 0.002601"/>
+  <parent link="servo_motor_v1__1__1"/>
+  <child link="leg_servo_arm_v1_1"/>
+  <axis xyz="0.707679 0.011044 0.706448"/>
+</joint>
+
+<joint name="Rev102" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.002563 -0.0025 0.002606"/>
+  <parent link="servo_motor_v1__1__2"/>
+  <child link="leg_servo_arm_v1_2"/>
+  <axis xyz="-0.706479 1e-05 0.707734"/>
+</joint>
+
+<joint name="Rev103" type="continuous">
+  <origin rpy="0 0 0" xyz="0.002604 -0.002499 -0.002565"/>
+  <parent link="servo_motor_v1__1__3"/>
+  <child link="leg_servo_arm_v1_3"/>
+  <axis xyz="0.707109 -1e-06 -0.707105"/>
+</joint>
+
+<joint name="Rev104" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.002565 -0.00254 -0.002564"/>
+  <parent link="servo_motor_v1__1__4"/>
+  <child link="leg_servo_arm_v1_4"/>
+  <axis xyz="-0.707034 -0.011044 -0.707093"/>
+</joint>
+
+<joint name="Rev105" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007021 0.005768 -0.007123"/>
+  <parent link="leg_parallel_linkage_v1_1"/>
+  <child link="leg_rev_v1_1"/>
+  <axis xyz="-0.707679 -0.011044 -0.706448"/>
+</joint>
+
+<joint name="Rev106" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007306 -0.000104 -0.006836"/>
+  <parent link="leg_servo_arm_v1_1"/>
+  <child link="leg_rev_v1_1"/>
+  <axis xyz="0.707679 0.011044 0.706448"/>
+</joint>
+
+<joint name="Rev107" type="continuous">
+  <origin rpy="0 0 0" xyz="0.007032 0.005956 0.00702"/>
+  <parent link="leg_parallel_linkage_v1_2"/>
+  <child link="leg_rev_v1_2"/>
+  <axis xyz="0.706479 -1e-05 -0.707734"/>
+</joint>
+
+<joint name="Rev108" type="continuous">
+  <origin rpy="0 0 0" xyz="0.006837 8.1e-05 0.007305"/>
+  <parent link="leg_servo_arm_v1_2"/>
+  <child link="leg_rev_v1_2"/>
+  <axis xyz="-0.706479 1e-05 0.707734"/>
+</joint>
+
+<joint name="Rev109" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007071 -0.000111 -0.00707"/>
+  <parent link="leg_parallel_linkage_v1_3"/>
+  <child link="leg_rev_v1_3"/>
+  <axis xyz="-0.707109 1e-06 0.707105"/>
+</joint>
+
+<joint name="Rev110" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.007117 0.005765 0.007026"/>
+  <parent link="leg_parallel_linkage_v1_4"/>
+  <child link="leg_rev_v1_4"/>
+  <axis xyz="0.707034 0.011044 0.707093"/>
+</joint>
+
+<joint name="Rev111" type="continuous">
+  <origin rpy="0 0 0" xyz="-0.00731 -0.000114 0.00683"/>
+  <parent link="leg_servo_arm_v1_4"/>
+  <child link="leg_rev_v1_4"/>
+  <axis xyz="0.707034 0.011044 0.707093"/>
+</joint>
+
+</robot>
