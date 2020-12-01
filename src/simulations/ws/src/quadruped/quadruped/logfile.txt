@@ -1,0 +1,175 @@
+Body: quadruped_body
+COM: quadruped_body 0.9054617693526444 1.0954550696905674 -5.424821339808461
+exporting stl of quadruped_body
+Body: hip_servo_servo_mount_1
+COM: hip_servo_servo_mount_1 1.2890375611817766 1.4871195556350914 0.5375114470529468
+exporting stl of hip_servo_servo_mount_1
+Body: hip_servo_servo_mount_2
+COM: hip_servo_servo_mount_2 -2.620632332338188 5.923657325657128 -5.36860746134408
+exporting stl of hip_servo_servo_mount_2
+Body: hip_servo_servo_mount_3
+COM: hip_servo_servo_mount_3 1.8095238187563276 1.9844180002299152 -11.277707275426495
+exporting stl of hip_servo_servo_mount_3
+Body: hip_servo_servo_mount_4
+COM: hip_servo_servo_mount_4 5.7250815017906245 -2.458800995861374 -5.36269405918244
+exporting stl of hip_servo_servo_mount_4
+Body: thigh_1
+COM: thigh_1 0.4842947358440601 0.40254165385316076 3.352698125834973
+exporting stl of thigh_1
+Body: thigh_2
+COM: thigh_2 -5.491058613342284 7.145614961108687 -5.2393391524586095
+exporting stl of thigh_2
+Body: thigh_3
+COM: thigh_3 0.970961671144424 1.4320953108746983 -14.234224145240564
+exporting stl of thigh_3
+Body: thigh_4
+COM: thigh_4 6.951831849474113 -5.317188152467103 -5.6344335188734735
+exporting stl of thigh_4
+Body: servo_arm_1
+COM: servo_arm_1 -0.38155932955904476 -0.015953975397873948 5.732753486642517
+exporting stl of servo_arm_1
+Body: leg_parallel_linkage_1
+COM: leg_parallel_linkage_1 0.8722875425727018 1.2470639676602246 5.837807287962005
+exporting stl of leg_parallel_linkage_1
+Body: rev_1
+COM: rev_1 -1.4956736523691296 -0.6505495167599255 6.774557776623815
+exporting stl of rev_1
+Body: leg_parallel_linkage_2
+COM: leg_parallel_linkage_2 -6.13832306482158 10.207701283128443 -5.4617153894306085
+exporting stl of leg_parallel_linkage_2
+Body: servo_arm_2
+COM: servo_arm_2 -7.403096483651968 8.959456706172894 -5.559605947690758
+exporting stl of servo_arm_2
+Body: rev_2
+COM: rev_2 -8.7048114238072 9.502142118027308 -5.929945349265844
+exporting stl of rev_2
+Body: leg_parallel_linkage_3
+COM: leg_parallel_linkage_3 2.5313599222881775 2.526480371269189 -16.751755105470572
+exporting stl of leg_parallel_linkage_3
+Body: servo_arm_3
+COM: servo_arm_3 1.2657356645934716 1.280910745801404 -16.867939764379017
+exporting stl of servo_arm_3
+Body: rev_3
+COM: rev_3 1.1862439649475385 0.7264037751315852 -18.201299683605736
+exporting stl of rev_3
+Body: leg_parallel_linkage_4
+COM: leg_parallel_linkage_4 10.008155633799799 -5.981501205053355 -5.2063302584425895
+exporting stl of leg_parallel_linkage_4
+Body: servo_arm_4
+COM: servo_arm_4 8.755557564706509 -7.239962553009151 -5.324834673514424
+exporting stl of servo_arm_4
+Body: rev_4
+COM: rev_4 9.286785429371303 -8.550958091810767 -5.021434066417976
+exporting stl of rev_4
+Joint: EXPORT_servo_body_1
+	parent: quadruped_body
+	child: hip_servo_servo_mount_1
+	pos: -1.467974375814511	-1.460774458569326	0.3774286589272561
+Joint: EXPORT_servo_body_2
+	parent: quadruped_body
+	child: hip_servo_servo_mount_2
+	pos: -1.8005185791200113	-1.0834195148664847	-0.12489267097010348
+Joint: EXPORT_servo_body_3
+	parent: quadruped_body
+	child: hip_servo_servo_mount_3
+	pos: -1.4238059151254219	-1.4185050759453997	-0.6260057866255124
+Joint: EXPORT_servo_body_4
+	parent: quadruped_body
+	child: hip_servo_servo_mount_4
+	pos: -1.0912617101154964	-1.7958600205517428	-0.12368445672089479
+Joint: EXPORT_hip_drive_1
+	parent: hip_servo_servo_mount_1
+	child: thigh_1
+	pos: 1.9124243226562436	2.1883251233004386	-2.216354913384417
+Joint: EXPORT_hip_drive_2
+	parent: hip_servo_servo_mount_2
+	child: thigh_2
+	pos: 3.6455635750171185	0.25914452976979163	-0.032757873385219405
+Joint: EXPORT_hip_drive_3
+	parent: hip_servo_servo_mount_3
+	child: thigh_3
+	pos: 1.9904121056195212	1.6983392934976518	2.5519141896589073
+Joint: EXPORT_hip_drive_4
+	parent: hip_servo_servo_mount_4
+	child: thigh_4
+	pos: 0.2576438153340588	3.62704881614182	0.3694581094404912
+Joint: EXPORT_knee_drive_1
+	parent: thigh_1
+	child: servo_arm_1
+	pos: 0.4282932026331999	0.6699960549899786	-1.0833691639676024
+Joint: EXPORT_knee_drive_2
+	parent: thigh_2
+	child: servo_arm_2
+	pos: 0.9763300248291369	-0.9078184525388107	-0.16930412630308567
+Joint: EXPORT_knee_drive_3
+	parent: thigh_3
+	child: servo_arm_3
+	pos: 0.06724167217587618	-0.1759158136976331	1.330620432525139
+Joint: EXPORT_knee_drive_4
+	parent: thigh_4
+	child: servo_arm_4
+	pos: -0.9435511265804912	0.94120354732717	0.17281736851306473
+Joint: EXPORT_body_leg_free_1
+	parent: quadruped_body
+	child: thigh_1
+	pos: -0.8886916234051068	-0.6006819979715552	-2.4571385438805358
+Joint: EXPORT_body_leg_free_2
+	parent: quadruped_body
+	child: thigh_2
+	pos: 0.8444476289557725	-2.5298625915022033	-0.27354150388134
+Joint: EXPORT_body_leg_free_3
+	parent: quadruped_body
+	child: thigh_3
+	pos: -0.8107038404418305	-1.0906678277743422	2.3111305591627893
+Joint: EXPORT_body_leg_free_4
+	parent: quadruped_body
+	child: thigh_4
+	pos: -2.543472130727297	0.8380416948698262	0.12867447894437234
+Joint: EXPORT_servo_arm_rev_1
+	parent: servo_arm_1
+	child: rev_1
+	pos: 0.4882308253811547	0.2581851749461532	-0.05243485909997503
+Joint: EXPORT_rev_leg_parallel_linkage_1
+	parent: rev_1
+	child: leg_parallel_linkage_1
+	pos: -0.6174305137620013	-0.38257745135149035	0.9981803698455964
+Joint: EXPORT_linkage_plate_1
+	parent: leg_parallel_linkage_1
+	child: thigh_1
+	pos: 0.8169693682831993	1.5006203732608294	1.4027401784915625
+Joint: EXPORT_servo_arm_rev_2
+	parent: servo_arm_2
+	child: rev_2
+	pos: 0.42440614661406073	0.3006272238304657	0.19308296889008236
+Joint: EXPORT_rev_leg_parallel_linkage_2
+	parent: rev_2
+	child: leg_parallel_linkage_2
+	pos: -0.8785148619814365	0.8511170526218983	-0.16661745320500554
+Joint: EXPORT_linkage_plate_2
+	parent: leg_parallel_linkage_2
+	child: thigh_2
+	pos: 0.3200102057944765	2.153797579300435	-0.3817484008838887
+Joint: EXPORT_servo_arm_rev_3
+	parent: servo_arm_3
+	child: rev_3
+	pos: 0.25267631515324873	0.47954748868331654	0.11818300943742344
+Joint: EXPORT_rev_leg_parallel_linkage_3
+	parent: rev_3
+	child: leg_parallel_linkage_3
+	pos: 0.1700217720225674	-0.06352205400598532	-1.221068188095039
+Joint: EXPORT_linkage_plate_3
+	parent: leg_parallel_linkage_3
+	child: thigh_3
+	pos: 1.6164062982985863	0.9218525555525421	-1.1934826896065118
+Joint: EXPORT_servo_arm_rev_4
+	parent: servo_arm_4
+	child: rev_4
+	pos: 0.316252813871694	0.4370671959217045	-0.1293629074534346
+Joint: EXPORT_rev_leg_parallel_linkage_4
+	parent: rev_4
+	child: leg_parallel_linkage_4
+	pos: 0.8561821792450548	-0.8740631872575424	0.1640597338954981
+Joint: EXPORT_linkage_plate_4
+	parent: leg_parallel_linkage_4
+	child: thigh_4
+	pos: 2.113376793771936	0.2687293907144417	0.5902481383657197
