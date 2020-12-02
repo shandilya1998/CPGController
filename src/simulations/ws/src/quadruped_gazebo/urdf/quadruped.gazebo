@@ -1,0 +1,578 @@
+<?xml version="1.0" ?>
+<robot name="quadruped" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="body_color" value="Gazebo/Silver" />
+
+<gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+        <robotNamespace>/quadruped</robotNamespace>
+    </plugin>
+</gazebo>
+
+<gazebo reference="dummy_link">
+</gazebo>
+
+<gazebo reference="base_link">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="body_spacer_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="body_spacer_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="body_spacer_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="body_spacer_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="body_top_plate_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_retainer_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_retainer_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_retainer_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_retainer_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_top_pivot_plate_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_top_pivot_plate_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_top_pivot_plate_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_top_pivot_plate_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_mount_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_mount_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_mount_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_mount_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_5">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_6">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_7">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="servo_motor_v1_8">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_arm_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_arm_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_arm_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_servo_arm_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_rev_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_rev_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_rev_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_rev_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bottom_pivot_plate_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bottom_pivot_plate_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bottom_pivot_plate_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="bottom_pivot_plate_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_linkage_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_plate_v1_1">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_linkage_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_plate_v1_2">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_linkage_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_plate_v1_3">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_linkage_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="leg_parallel_plate_v1_4">
+  <material>${body_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="Rigid1">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid2">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid3">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid4">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid5">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid6">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid7">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid7">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid8">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid9">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid10">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid11">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid12">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid13">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid14">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid15">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid16">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid17">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid18">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid19">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid19">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid20">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid21">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid22">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid23">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid24">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rigid25">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev26">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev27">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev28">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev28">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev29">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev30">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev31">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev32">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev33">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev34">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev35">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev36">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev37">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev42">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev43">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev44">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev45">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev46">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev47">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev48">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+<gazebo reference="Rev49">
+  <provideFeedback>true</provideFeedback>
+  <disableFixedJointLumping>true</disableFixedJointLumping>
+</gazebo>
+
+</robot>
