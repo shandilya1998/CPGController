@@ -1,9 +1,0 @@
-<launch>
-
-<rosparam file="$(find robot_Base_link_description)/launch/controller.yaml" command="load"/>
-<node args="Rev72_position_controller Rev73_position_controller Rev74_position_controller Rev75_position_controller Rev84_position_controller Rev86_position_controller Rev87_position_controller Rev88_position_controller Rev97_position_controller Rev98_position_controller Rev99_position_controller Rev100_position_controller Rev101_position_controller Rev102_position_controller Rev103_position_controller Rev104_position_controller Rev105_position_controller Rev106_position_controller Rev107_position_controller Rev108_position_controller Rev109_position_controller Rev110_position_controller Rev111_position_controller joint_state_controller " name="controller_spawner" ns="robot_Base_link" output="screen" pkg="controller_manager" respawn="false" type="spawner"/>
-<node name="robot_state_publisher" output="screen" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
-  <remap from="/joint_states" to="/robot_Base_link/joint_states"/>
-</node>
-
-</launch>
