@@ -26,21 +26,3 @@ class OscLayer(object):
             #Zi[:, i+1] = r[:, i+1]*np.exp(1j*phi[:, i+1]).imag
         return Z#r* 1j*Zi
 
-class HopfOscillator:
-    def __init__(self, connected = True):
-
-class TFOscLayer(tf.keras.layers.Layer):
-    def __init__(self,
-        num_units
-    ):    
-        super(TFOscLayer, self).__init__()
-        self.num_units = num_units
-        self.osc = [HopfOscillator() for i in range(self.num_units)]
-    
-    def call(self, omega, mu, phi):
-        """
-            omega : (batch_size, num_units)
-            mu : (batch_size, num_units)
-            phi : batch_size, num_units)
-        """
-        
