@@ -1,5 +1,18 @@
 import tensorflow as tf
 
+class ComplexInitializer(tf.keras.initializers.Initializer):
+    def __init__(self, initializer, name = 'complex_initializer'):
+        self.initializer = initializer
+        self.name = name
+    
+    def __call__(self, shape, dtype=tf.dtypes.complex64):
+        return tf.complex(self.initializer(shape), self.initializer(shape))
+
+    def get_config(self):  # To support serialization
+        return {
+            "initializer": tf.keras.initializer.serialize(self.initializer), 
+            "name": self.name
+        }
 
 def relu(x):
     return tf.complex(tf.nn.relu(tf.math.real(x)), tf.nn.relu(tf.math.imag(x)))
@@ -13,11 +26,6 @@ class ComplexDense(tf.keras.layers.Layer):
         use_bias=True,
         kernel_initializer='glorot_uniform',     
         bias_initializer='zeros',
-        kernel_regularizer=None,
-        bias_regularizer=None,
-        activity_regularizer=None,
-        kernel_constraint=None,
-        bias_constraint=None,
         dtype = 'complex64',
         **kwargs
     ):
@@ -26,21 +34,40 @@ class ComplexDense(tf.keras.layers.Layer):
             self
         ).__init__(
             name = name,
-            activity_regularizer=activity_regularizer, 
             **kwargs
         )
+
         self.name = name
         self.dtype = dtype
         self.units = int(units) if not isinstance(units, int) else units
-        self.activation = activations.get(activation)
-        self.use_bias = use_bias
-        self.kernel_initializer = tf.keras.initializers.get(kernel_initializer)
-        self.bias_initializer = tf.keras.initializers.get(bias_initializer)
-        self.kernel_regularizer = tf.keras.regularizers.get(kernel_regularizer)
-        self.bias_regularizer = tf.keras.regularizers.get(bias_regularizer)
-        self.kernel_constraint = tf.keras.constraints.get(kernel_constraint)
-        self.bias_constraint = tf.keras.constraints.get(bias_constraint)
 
+        if isinstance(activation, str):
+            self.activation = activations.get(activation)
+        else:
+            self.activation = activation
+
+        self.use_bias = use_bias
+
+        if isinstance(kernel_initializer, str):
+            self.kernel_initializer = ComplexInitializer(
+                tf.keras.initializers.get(kernel_initializer),
+                kernel_initializer
+            )
+        else:
+            self.kernel_initializer = ComplexInitializer(
+                kernel_initializer
+            )
+
+        if isinstance(bias_initializer, str):
+            self.bias_initializer = ComplexInitializer(
+                tf.keras.initializers.get(kernel_initializer),
+                bias_initializer
+            )
+        else:
+            self.bias_initializer = ComplexInitializer(
+                bias_initializer
+            ) 
+        
         self.input_spec = tf.keras.layers.InputSpec(min_ndim=2)
         self.supports_masking = True
 
@@ -56,8 +83,6 @@ class ComplexDense(tf.keras.layers.Layer):
             self.name + '_kernel',
             shape=[last_dim, self.units],
             initializer=self.kernel_initializer,
-            regularizer=self.kernel_regularizer,
-            constraint=self.kernel_constraint,
             dtype=self.dtype,
             trainable=True
         )
@@ -66,8 +91,6 @@ class ComplexDense(tf.keras.layers.Layer):
                 self.name + '_bias',
                 shape=[self.units,],
                 initializer=self.bias_initializer,
-                regularizer=self.bias_regularizer,
-                constraint=self.bias_constraint,
                 dtype=self.dtype,
                 trainable=True
             )
@@ -102,17 +125,7 @@ class ComplexDense(tf.keras.layers.Layer):
             'kernel_initializer':
                 tf.keras.initializers.serialize(self.kernel_initializer),
             'bias_initializer':
-                tf.keras.initializers.serialize(self.bias_initializer),
-            'kernel_regularizer':
-                tf.keras.regularizers.serialize(self.kernel_regularizer),
-            'bias_regularizer':
-                tf.keras.regularizers.serialize(self.bias_regularizer),
-            'activity_regularizer':
-                tf.keras.regularizers.serialize(self.activity_regularizer),
-            'kernel_constraint':
-                tf.keras.constraints.serialize(self.kernel_constraint),
-            'bias_constraint':
-                tf.keras.constraints.serialize(self.bias_constraint)
+                tf.keras.initializers.serialize(self.bias_initializer)
         })
         return config
 
