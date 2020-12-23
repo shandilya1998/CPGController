@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-class HopfOscillator(tf.keras.layers.Layer):
+class HopfOscillator(tf.keras.Model):
     def __init__(
         self,
         units,
@@ -20,8 +20,7 @@ class HopfOscillator(tf.keras.layers.Layer):
  
         self.units = int(units) if not isinstance(units, int) else units
         self.dt = tf.constant(float(dt) if not isinstance(dt, float) else dt)*tf.ones((self.units,), dtype = tf.dtypes.float32)
-        self.input_spec = tf.keras.layers.InputSpec(min_ndim=2)
-        self.range = tf.range(start = 1, limit = self.units+1, delta = 1)
+        self.range = tf.range(start = 1, limit = self.units+1, delta = 1, dtype = 'float32')
 
     def build(self, input_shape):
         
@@ -30,10 +29,10 @@ class HopfOscillator(tf.keras.layers.Layer):
         self.mu_input_shape = input_shape[2]
         self.bias_input_shape = input_shape[3]
         
-        last_dim_state = tf.compat.dimension_value(state_input_shape[-1])
-        last_dim_omega = tf.compat.dimension_value(omega_input_shape[-1])
-        last_dim_mu = tf.compat.dimension_value(mu_input_shape[-1])
-        last_dim_bias = tf.compat.dimension_value(bias_input_shape[-1])
+        last_dim_state = tf.compat.dimension_value(self.state_input_shape[-1])
+        last_dim_omega = tf.compat.dimension_value(self.omega_input_shape[-1])
+        last_dim_mu = tf.compat.dimension_value(self.mu_input_shape[-1])
+        last_dim_bias = tf.compat.dimension_value(self.bias_input_shape[-1])
         
         if last_dim_state is None or last_dim_omega is None or last_dim_mu is None or last_dim_bias is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
@@ -72,6 +71,6 @@ class HopfOscillator(tf.keras.layers.Layer):
         phi = tf.math.angle(inputs[0])
         r = r + (inputs[2] - r*r)*r*self.dt + inputs[3]
         phi = phi + inputs[1]*self.range*self.dt
-        Z = r*tf.math.exp(1j*phi)
+        Z = tf.complex(r, 0.0)*tf.math.exp(1j*tf.complex(phi, 0.0))
         return Z
  
