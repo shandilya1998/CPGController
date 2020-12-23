@@ -97,7 +97,7 @@ class Actor(tf.keras.Model):
 def get_actor_net(params):
     inp1 = tf.keras.Input((params['motion_state_size']), dtype = 'float32')
     inp2 = tf.keras.Input((params['robot_state_size']), dtype = 'float32')
-    inp3 = tf.keras.Input((params['units_osc']))
+    inp3 = tf.keras.Input((params['units_osc']), dtype = 'complex64' )
     out, z = Actor(
         dt = params['dt'],
         units_output_mlp = params['units_output_mlp'],
@@ -109,15 +109,3 @@ def get_actor_net(params):
     model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out, z])
     return model
 
-params = {
-    'motion_state_size' : 10,
-    'robot_state_size' : 10,
-    'dt' : 0.0001,
-    'units_output_mlp' : [10, 20, 12, 8], # a list of units in all layers in output MLP
-    'units_osc' : 10,
-    'units_combine' : 10,
-    'units_robot_state' : 10,
-    'units_motion_state' : 10,    
-}
-
-model = get_actor_net(params)   
