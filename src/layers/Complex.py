@@ -99,9 +99,9 @@ class ComplexDense(tf.keras.layers.Layer):
 
     def call(self, inputs):
         if self.use_bias:
-            return tf.add(tf.matmul(self.kernel, inputs), self.bias) 
+            return tf.add(tf.matmul(inputs, self.kernel), self.bias) 
         else: 
-            return tf.matmul(self.kernel, inputs)
+            return tf.matmul(inputs, self.kernel)
 
     def compute_output_shape(self, input_shape):
         input_shape = tensor_shape.TensorShape(input_shape)
