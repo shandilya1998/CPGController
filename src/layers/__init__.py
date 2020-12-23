@@ -1,4 +1,5 @@
 from . import OscLayer
 from . import OutputMLP
-from . import Complex
-from . import Oscillator
+from . import complex
+from . import oscillator
+from . import actor

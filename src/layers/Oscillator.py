@@ -1,7 +1,8 @@
 import tensorflow as tf
 
 class HopfOscillator(tf.keras.layers.Layer):
-    def __init__(self
+    def __init__(
+        self,
         units,
         dt, 
         name = 'hopf_oscillator',
@@ -13,12 +14,10 @@ class HopfOscillator(tf.keras.layers.Layer):
             self
         ).__init__(
             name = name,
+            dtype = dtype,
             **kwargs
         )
-
-        self.name = name
-        self.dtype = dtype
-        
+ 
         self.units = int(units) if not isinstance(units, int) else units
         self.dt = tf.constant(float(dt) if not isinstance(dt, float) else dt)*tf.ones((self.units,), dtype = tf.dtypes.float32)
         self.input_spec = tf.keras.layers.InputSpec(min_ndim=2)
@@ -72,7 +71,7 @@ class HopfOscillator(tf.keras.layers.Layer):
         r = tf.math.abs(inputs[0])
         phi = tf.math.angle(inputs[0])
         r = r + (inputs[2] - r*r)*r*self.dt + inputs[3]
-        phi = phi + inputs[1]*self.dt
+        phi = phi + inputs[1]*self.range*self.dt
         Z = r*tf.math.exp(1j*phi)
         return Z
  
