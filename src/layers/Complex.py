@@ -34,11 +34,10 @@ class ComplexDense(tf.keras.layers.Layer):
             self
         ).__init__(
             name = name,
+            dtype = dtype,
             **kwargs
         )
 
-        self.name = name
-        self.dtype = dtype
         self.units = int(units) if not isinstance(units, int) else units
 
         if isinstance(activation, str):
