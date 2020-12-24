@@ -28,9 +28,13 @@ class ActorNetwork(object):
 
     def create_actor_network(self, params):
         log('[DDPG] Building the actor model')
-        actor_cell = actor.get_actor_net(params)
-        model = actor.TimeDistributed(actor_cell, params)
-        return model, model.trainable_weights, model.inputs[:2]
+        ac_cell = actor.get_actor_cell(params)
+        inp1 = tf.keras.Input((params['rnn_steps'], params['motion_state_size']), dtype = 'float32')
+        inp2 = tf.keras.Input((params['rnn_steps'], params['robot_state_size']), dtype = 'float32')
+        inp3 = tf.keras.Input((params['units_osc'],), dtype = 'complex64')
+        out, z = actor.TimeDistributed(ac_cell, params)
+        model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out, z])
+        return model, model.trainable_weights, model.inputs
 
 
 class CriticNetwork(object):
@@ -41,8 +45,8 @@ class CriticNetwork(object):
         self.action_size = params['action_dim']
 
         # Now create the model
-        self.model, self.action, self.state = self.create_critic_network(state_size, action_size)
-        self.target_model, self.target_action, self.target_state = self.create_critic_network(state_size, action_size)
+        self.model, self.action, self.state = self.create_critic_network(params)
+        self.target_model, self.target_action, self.target_state = self.create_critic_network(params)
         self.action_grads = tf.gradients(self.model.output, self.action)  # GRADIENTS for policy update
 
     def gradients(self, states, actions):
@@ -57,33 +61,24 @@ class CriticNetwork(object):
 
     def create_critic_network(self, params):
         log('[DDPG] Building the critic model')
-        S = tf.keras.layers.Input(shape=[state_size])
-        A = tf.keras.layers.Input(shape=[action_dim], name='action2')
-        w1 = tf.keras.layers.Dense(HIDDEN1_UNITS, activation='relu',
-                   kernel_regularizer=tf.keras.regularizers.l2(0.01),
-                   kernel_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(state_size), maxval=1.0 / np.sqrt(state_size)),
-                   bias_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(state_size), maxval=1.0 / np.sqrt(state_size))
-                   )(S)
-        a1 = tf.keras.layers.Dense(HIDDEN2_UNITS, activation='relu',
-                   kernel_regularizer=tf.keras.regularizers.l2(0.01),
-                   kernel_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(action_dim), maxval=1.0 / np.sqrt(action_dim)),
-                   bias_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(action_dim), maxval=1.0 / np.sqrt(action_dim))
-                   )(A)
-        h1 = tf.keras.layers.Dense(HIDDEN2_UNITS, activation='relu',
-                   kernel_regularizer=tf.keras.regularizers.l2(0.01),
-                   kernel_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(HIDDEN1_UNITS), maxval=1.0 / np.sqrt(HIDDEN1_UNITS)),
-                   bias_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(HIDDEN1_UNITS), maxval=1.0 / np.sqrt(HIDDEN1_UNITS))
-                   )(w1)
-        h2 = tf.keras.layers.merge([h1, a1], mode='sum')
-        h3 = tf.keras.layers.Dense(HIDDEN2_UNITS, activation='relu',
-                   kernel_regularizer=tf.keras.regularizers.l2(0.01),
-                   kernel_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(HIDDEN2_UNITS), maxval=1.0 / np.sqrt(HIDDEN2_UNITS)),
-                   bias_initializer=tf.keras.initializers(minval=-1.0 / np.sqrt(HIDDEN2_UNITS), maxval=1.0 / np.sqrt(HIDDEN2_UNITS))
-                   )(h2)
-        V = tf.keras.layers.Dense(action_dim, activation='linear',  # Linear activation function
-                  kernel_initializer=tf.keras.initializers(minval=-0.003, maxval=0.003),
-                  bias_initializer=tf.keras.initializers(minval=-0.003, maxval=0.003))(h3)
-        model = tf.keras.Model(input=[S, A], output=V)
-        adam = tf.keras.optimizers.Adam(lr=self.LEARNING_RATE)
-        model.compile(loss='mse', optimizer=adam)
-        return model, A, S
+        cr_cell = critic.get_critic_cell(params)
+        inp1 = tf.keras.Input((params['rnn_steps'], params['motion_state_size']), dtype = 'float32')
+        inp2 = tf.keras.Input((params['rnn_steps'], params['robot_state_size']), dtype = 'float32')
+        inp3 = tf.keras.Input((params['units_osc'],), dtype = 'complex64') 
+        S = [inp1, inp2, inp3]
+        inp4 = tf.keras.Input((params['rnn_steps'], params['action_dim'],), dtype = 'float32')      
+        l1 = critic.TimeDistributed(cr_cell, params)([inp1, inp2, inp4])
+        real = tf.math.real(inp3)
+        imag = tf.math.imag(inp3)
+        x = tf.concat([real, imag], axis = -1)
+        lstm_state = tf.keras.layers.Dense(
+            units = params['lstm_units'],
+            activation = params['lstm_state_dense_activation']
+        )(x)
+        hidden = [lstm_state for i in range(4)]
+        out = tf.keras.layers.LSTM(
+            units = params['lstm_units']
+            return_sequences = True
+        )(x, hidden)
+        
+        return model, inp4, S

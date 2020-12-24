@@ -58,19 +58,15 @@ class Critic(tf.keras.Model):
         return x
 
 
-def get_critic_net(params):
-    inp1 = tf.keras.Input((params['motion_state_size']), dtype = 'float32')
-    inp2 = tf.keras.Input((params['robot_state_size']), dtype = 'float32')
-    inp3 = tf.keras.Input((params['action_dim']), dtype = 'float32')
-    out = Critic(
+def get_critic_cell(params):
+    cell = Critic(
         units_combine = params['units_combine'],
         units_robot_state = params['units_robot_state'],
         units_motion_state = params['units_motion_state'],
         units_action_input = params['action_input_units'],
         units_hidden1 = params['critic_hidden_units'], 
-    )([inp1, inp2, inp3])
-    model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out])
-    return model
+    )
+    return cell
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
