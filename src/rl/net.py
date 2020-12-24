@@ -1,5 +1,5 @@
 import tensorflow as tf
-from src.layers.actor import get_actor_net
+from src.layers import actor, critic
 from constants import params
 
 class ActorNetwork(object):
@@ -28,8 +28,9 @@ class ActorNetwork(object):
 
     def create_actor_network(self, params):
         log('[DDPG] Building the actor model')
-        actor_cell = get_actor_net(params)
-        return model, model.trainable_weights, model.inputs
+        actor_cell = actor.get_actor_net(params)
+        model = actor.TimeDistributed(actor_cell, params)
+        return model, model.trainable_weights, model.inputs[:2]
 
 
 class CriticNetwork(object):

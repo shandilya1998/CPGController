@@ -12,8 +12,7 @@ class Critic(tf.keras.Model):
         activation_robot_state = 'relu',
         activation_motion_state = 'relu',
         activation_action_input = 'relu',
-        activation_hidden1 = 'relu',
-        activation_hidden2 = 'relu',
+        activation_h1 = 'relu',
     ):
         super(Critic, self).__init__()
 
@@ -43,7 +42,7 @@ class Critic(tf.keras.Model):
         )
         self.h1_dense = tf.keras.layers.Dense(
             units = units_hidden1,
-            activation = activation_mu,
+            activation = activation_h1,
             dtype = 'float32',
             name = 'h1_dense'
         )
@@ -56,7 +55,7 @@ class Critic(tf.keras.Model):
         x = tf.concat([x1, x2, x3], axis = -1)
         x = self.combine_dense(x)
         x = self.h1_dense(x)
-        return out
+        return x
 
 
 def get_critic_net(params):
@@ -67,7 +66,7 @@ def get_critic_net(params):
         units_combine = params['units_combine'],
         units_robot_state = params['units_robot_state'],
         units_motion_state = params['units_motion_state'],
-        units_action_input = params['action_input_units']
+        units_action_input = params['action_input_units'],
         units_hidden1 = params['critic_hidden_units'], 
     )([inp1, inp2, inp3])
     model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out])
