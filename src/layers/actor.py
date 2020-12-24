@@ -94,20 +94,16 @@ class Actor(tf.keras.Model):
         return [out, z]
 
 
-def get_actor_net(params):
-    inp1 = tf.keras.Input((params['motion_state_size']), dtype = 'float32')
-    inp2 = tf.keras.Input((params['robot_state_size']), dtype = 'float32')
-    inp3 = tf.keras.Input((params['units_osc']), dtype = 'complex64' )
-    out, z = Actor(
+def get_actor_cell(params):
+    cell = Actor(
         dt = params['dt'],
         units_output_mlp = params['units_output_mlp'],
         units_osc = params['units_osc'],
         units_combine = params['units_combine'],
         units_robot_state = params['units_robot_state'],
         units_motion_state = params['units_motion_state']
-    )([inp1, inp2, inp3])
-    model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out, z])
-    return model
+    )
+    return cell
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
