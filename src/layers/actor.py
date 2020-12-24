@@ -109,3 +109,63 @@ def get_actor_net(params):
     model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out, z])
     return model
 
+def swap_batch_timestep(input_t):
+    # Swap the batch and timestep dim for the incoming tensor.
+    axes = list(range(len(input_t.shape)))
+    axes[0], axes[1] = 1, 0
+    return tf.transpose(input_t, axes)
+
+class TimeDistributed(tf.keras.Model):
+    def __init__(self, layer, params, name = 'TimeDistributedActor'):
+        super(TimeDistributed, self).__init__(name = name)
+        self.layer = layer
+        self.steps = params['rnn_steps']
+        self.out_dim = params['action_dim']
+
+    def call(self, inputs):
+        ta_inp1 = tf.TensorArray('float32', size = 0, dynamic_size = True)
+        ta_inp2 = tf.TensorArray('float32', size = 0, dynamic_size = True)
+        out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
+
+        inp1 = swap_batch_timestep(inputs[0])
+        inp2 = swap_batch_timestep(inputs[1])
+        z = inputs[2]
+
+        ta_inp1.unstack(inp1)
+        ta_inp2.unstack(inp2)
+
+        step = tf.constant(0)
+
+        def cond(out, step, z):
+            return tf.math.less(
+                step,
+                tf.constant(
+                    self.steps,
+                    dtype = tf.int32
+                )
+            )
+
+        def body(out, step, z):
+            inputs = [
+                ta_inp1.read(step),
+                ta_inp2.read(step),
+                z
+            ]
+
+            o, z = self.layer(inputs)
+
+            out = out.write(
+                step,
+                o
+            )
+
+            step = tf.math.add(step, tf.constant(1))
+            return out, step, z
+
+        out, step, z = tf.while_loop(cond, body, [out, step, z])
+
+        out = out.stack()
+        out = swap_batch_timestep(out)
+
+        out = tf.ensure_shape(out, tf.TensorShape((None, self.steps, self.out_dim)), name='ensure_shape_critic_time_distributed_out')
+        return [out, z]
