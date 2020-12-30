@@ -28,3 +28,75 @@ params = {
     'lstm_state_dense_activation' : 'relu' 
 }
 
+observation_spec = [
+    tf.TensorSpec(
+        shape = (
+            None,
+            params['rnn_steps'],
+            params['motion_state_size']
+        ),
+        dtype = tf.dtypes.float32,
+        name = 'motion state'
+    ),
+    tf.TensorSpec(
+        shape = (
+            None,
+            params['rnn_steps'],
+            params['robot_state_size'],
+        ),
+        dtype = tf.dtypes.float32,
+        name = 'robot state'
+    ),
+    tf.TensorSpec(
+        shape = (
+            None,
+            params['units_osc']
+        ),
+        dtype = tf.dtypes.complex64,
+        name = 'oscillator state'
+    ),
+]
+
+action_spec = [
+    tf.TensorSpec(
+           shape = (
+               None,
+               params['rnn_steps'],
+               params['action_dim']
+           )
+       ),
+   tf.TensorSpec(
+       shape = (
+           None,
+           params['units_osc']
+       ),
+       dtype = tf.dtypes.complex64,
+       name = 'oscillator action'
+   )
+]
+
+reward_spec = [
+    tf.TensorSpec(
+        shape = (
+            None,
+            params['rnn_steps']
+        ),
+        dtype = tf.dtypes.float32,
+        name = 'reward'
+    )
+]
+
+data_spec = []
+data_spec.extend(observation_spec)
+data_spec.extend(action_spec)
+data_spec.extend(observation_spec)
+
+data_spec.extend([
+    tf.TensorSpec(
+        shape = (
+            None,
+        ),
+        dtype = tf.dtypes.bool,
+        name = 'done'
+    )
+])
