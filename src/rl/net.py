@@ -67,9 +67,22 @@ class CriticNetwork(object):
         inp3 = tf.keras.Input((params['units_osc'],), dtype = 'complex64') 
         S = [inp1, inp2, inp3]
         inp4 = tf.keras.Input((params['rnn_steps'], params['action_dim'],), dtype = 'float32')      
+        inp5 = tf.keras.Input((params['units_osc'],), dtype = 'complex64')
         l1 = critic.TimeDistributed(cr_cell, params)([inp1, inp2, inp4])
-        real = tf.math.real(inp3)
-        imag = tf.math.imag(inp3)
+        real_1 = tf.math.real(inp3)
+        imag_1 = tf.math.imag(inp3)
+        real_2 = tf.math.real(inp5)
+        imag_2 = tf.math.imag(inp5)
+        real = tf.concat([real_1, real_2], axis = -1)
+        imag = tf.concat([imag_1, imag_2], axis = -1)
+        real = tf.keras.layers.Dense(
+            units = params['units_osc'],
+            activation = params['lstm_state_dense_activation']
+        )(real)
+        imag = tf.keras.layers.Dense(
+            units = params['units_osc'],
+            activation = params['lstm_state_dense_activation']
+        )(imag)
         x = tf.concat([real, imag], axis = -1)
         lstm_state = tf.keras.layers.Dense(
             units = params['lstm_units'],
