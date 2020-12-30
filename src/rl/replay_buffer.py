@@ -10,37 +10,159 @@ class OU(object):
         return theta * (mu - x) + sigma * np.random.randn(1)
 
 
-class ReplayBuffer(object):
+class Data(tf.keras.utils.Sequence):
+    def __init__(self, buff, data_spec, batch_size = None):
+        if batch_size == None:
+            self.bs = 1 
+        self.buffer = buff
+        self.data_spec = data_spec
+        self.num_experiences = len(self.buffer)
+        if self.num_experiences < self.bs:
+            raise ValueError('Expected Batch Size to be less than number of experiences(`{n}`), got `{b}`'.format(n = self.num_expriences, b = self.bs))
 
-    def __init__(self, buffer_size):
-        self.buffer_size = buffer_size
+    def on_epoch_end(self):
+        random.shuffle(self.buffer)
+
+    def get_batch(self, index):
+        index = index*self.bs
+        # Randomly sample batch_size examples
+        return self.buffer[index : index + self.bs]
+
+    def __len__(self):
+        return len(self.buffer)
+
+    def __iter__(self):
+        for item in (self[i] for i in range(len(self))):
+            yield item
+
+    def __getitem__(self, index):
+        batch = self.get_batch(index)
+        out = []
+        for i in range(self.bs):
+            if i == 0:
+                out.extend(batch[i])
+            else:
+                for i, tensor in enumerate(out):
+                    out[i] = tf.concat([tensor, batch[i]], axis = 0)
+        return out
+
+class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
+
+    def __init__(self, buffer_size, params):
+        data_spec = [
+            tf.TensorSpec(
+                shape = (
+                    None, 
+                    params['rnn_steps'], 
+                    params['motion_state_size']
+                ),
+                dtype = tf.dtypes.float32,
+                name = 'motion state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None, 
+                    params['rnn_steps'],
+                    params['robot_state_size'],
+                ),
+                dtype = tf.dtypes.float32,
+                name = 'robot state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None, 
+                    params['units_osc']
+                ),
+                dtype = tf.dtypes.complex64,
+                name = 'oscillator state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                    params['rnn_steps'],
+                    params['action_dim']
+                )
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                    params['units_osc']
+                ),
+                dtype = tf.dtypes.complex64,
+                name = 'oscillator action'
+            )
+            tf.TensorSpec(
+                shape = (
+                    None, 
+                    params['rnn_steps']
+                ),
+                dtype = tf.dtypes.float32,
+                name = 'reward'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                    params['rnn_steps'],
+                    params['motion_state_size']
+                ),
+                dtype = tf.dtypes.float32,
+                name = 'motion state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                    params['rnn_steps'],
+                    params['robot_state_size'],
+                ),
+                dtype = tf.dtypes.float32,
+                name = 'robot state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                    params['units_osc']
+                ),
+                dtype = tf.dtypes.complex64,
+                name = 'oscillator state'
+            ),
+            tf.TensorSpec(
+                shape = (
+                    None,
+                ),
+                dtype = tf.dtypes.bool,
+                name = 'done'
+            )
+        ]
+        super(ReplayBuffer, self).__init__(data_spec, capacity)
         self.num_experiences = 0
         self.buffer = deque()
 
-    def getBatch(self, batch_size):
+    def gather_all(self):
+        return self.buffer
+
+    def get_next(self, batch_size = 1):
         # Randomly sample batch_size examples
         if self.num_experiences < batch_size:
             return random.sample(self.buffer, self.num_experiences)
         else:
             return random.sample(self.buffer, batch_size)
 
-    def size(self):
-        return self.buffer_size
-
-    def add(self, state, action, reward, new_state, done):
-        experience = (state, action, reward, new_state, done)
-        if self.num_experiences < self.buffer_size:
+    def add_batch(self, experience):
+        if self.num_experiences < self.capacity:
             self.buffer.append(experience)
             self.num_experiences += 1
         else:
             self.buffer.popleft()
             self.buffer.append(experience)
 
-    def count(self):
+    def __len__(self):
         # if buffer is full, return buffer size
         # otherwise, return experience counter
         return self.num_experiences
 
-    def erase(self):
+    def clear(self):
         self.buffer = deque()
         self.num_experiences = 0
+
+    def as_dataset(self, sample_batch_size):
+        return tf.data.Dataset.from_generator(Data(self.buffer, self.data_spec, sample_batch_size)) 
