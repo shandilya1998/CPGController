@@ -81,4 +81,10 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
         self.num_experiences = 0
 
     def as_dataset(self, sample_batch_size):
-        return tf.data.Dataset.from_generator(Data(self.buffer, self.data_spec, sample_batch_size)) 
+        return tf.data.Dataset.from_generator(
+            Data(
+                self.buffer, 
+                self.data_spec, 
+                sample_batch_size
+            )
+        ) 
