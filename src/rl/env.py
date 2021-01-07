@@ -39,9 +39,10 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self._state = self.initial_state
         self._episode_ended = True
         self.current_time_step = self._create_initial_time_step()
+        self.quadruped.reset()
         return self.current_time_step
      
-    def step(self, action, last_episode = False):
+    def step(self, action, last_step = False):
         if self._episode_ended:
             return self.reset()
         else:
@@ -51,23 +52,21 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             ] + [action[-1]]
 
             step_type = tfa.trajectories.time_step.StepType.MID
-            if last_episode:
+            self._episode_ended = last_step
+            if last_step:
                 step_type = tfa.trajectories.time_step.StepType.LAST        
             step_type = tf.stack([step_type for i in range self.batch_size])
 
             discount = tf.ones((self.batch_size,), dtype = tf.dtypes.float32)
 
             self.current_time_step = tfa.trajectories.time_step.TimeStep(
-                step_type.
+                step_type,
                 reward,
                 discount, 
                 observation
             )
 
             return self.current_time_step
-
-        
-
 
 if __name__ == '__main__':
     time_step_spec = tfa.trajectories.time_step.time_step_spec(
