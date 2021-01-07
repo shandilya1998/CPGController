@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 action_dim = 8
 params = { 
     'motion_state_size'           : 10, 
@@ -31,7 +33,7 @@ params = {
 observation_spec = [
     tf.TensorSpec(
         shape = (
-            None,
+            params['BATCH_SIZE'],
             params['rnn_steps'],
             params['motion_state_size']
         ),
@@ -40,7 +42,7 @@ observation_spec = [
     ),
     tf.TensorSpec(
         shape = (
-            None,
+            params['BATCH_SIZE'],
             params['rnn_steps'],
             params['robot_state_size'],
         ),
@@ -49,7 +51,7 @@ observation_spec = [
     ),
     tf.TensorSpec(
         shape = (
-            None,
+            params['BATCH_SIZE'],
             params['units_osc']
         ),
         dtype = tf.dtypes.complex64,
@@ -60,14 +62,14 @@ observation_spec = [
 action_spec = [
     tf.TensorSpec(
            shape = (
-               None,
+               params['BATCH_SIZE'],
                params['rnn_steps'],
                params['action_dim']
            )
        ),
    tf.TensorSpec(
        shape = (
-           None,
+           params['BATCH_SIZE'],
            params['units_osc']
        ),
        dtype = tf.dtypes.complex64,
@@ -78,7 +80,7 @@ action_spec = [
 reward_spec = [
     tf.TensorSpec(
         shape = (
-            None,
+            params['BATCH_SIZE'],
             params['rnn_steps']
         ),
         dtype = tf.dtypes.float32,
@@ -94,7 +96,7 @@ data_spec.extend(observation_spec)
 data_spec.extend([
     tf.TensorSpec(
         shape = (
-            None,
+            params['BATCH_SIZE'],
         ),
         dtype = tf.dtypes.bool,
         name = 'done'
