@@ -28,6 +28,11 @@ params = {
     'critic_hidden_units'         : 10,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu' 
+
+    'L0'                          : 0.01738,
+    'L1'                          : 0.025677,
+    'L2'                          : 0.017849,
+    'L3'                          : 0.02550,
 }
 
 observation_spec = [
