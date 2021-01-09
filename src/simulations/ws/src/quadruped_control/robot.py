@@ -4,7 +4,7 @@ import time
 import pybullet_data
 import tensorflow as tf
 from rl.constants import *
-
+from loss import loss.FitnessFunction as loss
 """
     Refer to the following link for pybullet related information
     https://github.com/moribots/plen_ml_walk/blob/master/plen_bullet/src/plen_bullet/plen_env.py
@@ -48,6 +48,9 @@ class Quadruped:
             p.stepSimulation()
             
         return [tf.zeros(spec.shape, spec.dtype) for spec in observation_spec[:-1]]
+
+    def _calculate_reward(self):
+        
 
     def _compute_observations(self):
         com = self._compute_com()
@@ -138,7 +141,7 @@ class Quadruped:
         self.physicsClient = p.connect(flag)
         p.resetSimulation()
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.setGravity(0,0,-10)
+        p.setGravity(0, 0, self.params['g'])
         self.planeID = p.loadURDF("plane.urdf")
         self.cubeStartPos = [0, 0 ,0] 
         self.cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
@@ -212,8 +215,13 @@ class Quadruped:
 
         return self.robotID
 
-    def render(self, urdf_path, period = 250):
+    def build(self, urdf_path, period = 250):
         self.robotID = self._load_urdf(urdf_path)
+        self.loss = loss(
+            self.total_mass,
+            self.params['g'],
+                     
+        )
         if self.GUI:
             for i in range (period):
                 p.stepSimulation()
