@@ -27,7 +27,7 @@ params = {
     'rnn_steps'                   : 1000,
     'critic_hidden_units'         : 10,
     'lstm_units'                  : action_dim,
-    'lstm_state_dense_activation' : 'relu' 
+    'lstm_state_dense_activation' : 'relu',
 
     'L0'                          : 0.01738,
     'L1'                          : 0.025677,

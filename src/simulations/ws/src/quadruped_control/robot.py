@@ -14,29 +14,18 @@ from rl.constants import *
 class Quadruped:
     def __init__(self, params, GUI = False):
         self.params = params
-        flag = p.DIRECT
-        if GUI:
-             flag = p.GUI
-        
+        self.GUI = GUI 
         self.driven_joints = [
-            'Rev17', # Leg 1
-            'Rev16', # Leg 2
-            'Rev15', # Leg 3
-            'Rev14', # Leg 4
-            'Rev29', # Leg 1
-            'Rev28', # Leg 2
-            'Rev27', # Leg 3
-            'Rev26'  # Leg 4
+            'Leg1Hip',
+            'Leg2Hip',
+            'Leg3Hip',
+            'Leg4Hip',
+            'Leg1Knee',
+            'Leg2Knee',
+            'Leg3Knee',
+            'Leg4Knee'
         ]
  
-        self.physicsClient = p.connect(flag)
-        p.resetSimulation()
-        p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.setGravity(0,0,-10)
-        self.planeId = p.loadURDF("plane.urdf")
-        self.cubeStartPos = [0, 0 ,0]
-        self.cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
-
     def reset(self):
         p.resetBasePositionAndOrientation(
             self.robotID,
@@ -55,22 +44,30 @@ class Quadruped:
         for step in range(self.params['rnn_steps']):
             angles = joint_angles[step, :].tolist()
             self.set_angles(angles)
+            contacts = self._get_plane_contacts()
             p.stepSimulation()
             
         return [tf.zeros(spec.shape, spec.dtype) for spec in observation_spec[:-1]]
 
-    def compute_observations(self):
-        com = self.compute_com()
-        linear_vel, angular_vel = p.getBaseVelocity(self.robotID, self.physicsClient)  
-    
-    def compute_com(self):
+    def _compute_observations(self):
+        com = self._compute_com()
+        linear_vel, angular_vel = p.getBaseVelocity(self.robotID, self.physicsClient)
 
-        COM = {
-            link_name : p.getLinkState(
-                self.robotID,
-                self._link_name_to_index[link_name]
-            )[0] for link_name in self._link_name_to_index.keys()
-        }
+    def _compute_com(self):
+        COM = {}
+        for link_name in self._link_name_to_index.keys():
+            if self._link_name_to_index[link_name] == -1:
+                com, _ = p.getBasePositionAndOrientation(
+                    self.robotID,
+                    self.physicsClient
+                )
+                COM['base_link'] = com
+            else:
+                COM[link_name] = p.getLinkState(
+                    bodyUniqueId = self.robotID,
+                    linkIndex = self._link_name_to_index[link_name],
+                    physicsClientId = self.physicsClient
+                )[0]
 
         com = [0, 0, 0]
         for link in COM.keys():
@@ -82,6 +79,22 @@ class Quadruped:
         com[2] = com[2]/self.total_mass
         
         return com
+
+    def _get_plane_contacts(self):
+        contacts = p.getContactPoints(
+            bodyA = self.robotID, 
+            bodyB = self.planeID,
+            physicsClientId = self.physicsClient
+        )
+        out = []
+        for contact in contacts:
+            out.append({
+                'position' : contact[5],
+                'linkIndex' : contact[3],
+                'normalForce' : contact[9],
+                'contactNormalOnB' : contact[7],
+            })
+        return out
 
     def set_angles(self, targetPositions, duration=None, joint_velocities=None):
         """
@@ -118,12 +131,25 @@ class Quadruped:
         angles = states[0]
         return angles
 
-    def load_urdf(self, urdf_path):
+    def _load_urdf(self, urdf_path):
+        flag = p.DIRECT
+        if self.GUI:
+             flag = p.GUI
+        self.physicsClient = p.connect(flag)
+        p.resetSimulation()
+        p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        p.setGravity(0,0,-10)
+        self.planeID = p.loadURDF("plane.urdf")
+        self.cubeStartPos = [0, 0 ,0] 
+        self.cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
         self.robotID = p.loadURDF(
             urdf_path,
             self.cubeStartPos, 
             self.cubeStartOrientation,
-            flags=p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT | p.URDF_MERGE_FIXED_LINKS
+            flags=p.URDF_USE_INERTIA_FROM_FILE | \
+                p.URDF_USE_SELF_COLLISION | \
+                p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT | \
+                p.URDF_MERGE_FIXED_LINKS
         )
         self.j2i = {}
         self.i2j = {}
@@ -141,7 +167,16 @@ class Quadruped:
                         i
                     )[0]
                 ] = p.getJointInfo(self.robotID, i)[1].decode('UTF-8')
-        
+
+        print('------------------')
+        print('Joint     |Index')
+        print('------------------')
+        for key in self.j2i.keys():
+            space = 10-len(key)
+            space = ''.join([' ' for i in range(space)])
+            print('{j}{s}'.format(j = key, s = space), end = '|')
+            print('{i}'.format(i = self.j2i[key]))
+        print('------------------')
         self.driven_joint_indices=[self.j2i[j] for j in self.driven_joints]
         
         self._link_name_to_index = {
@@ -151,11 +186,20 @@ class Quadruped:
         self._index_to_link_name = {
             -1 : p.getBodyInfo(self.robotID)[0].decode('UTF-8')
         }
-        
-        for _id in range(p.getNumJoints(self.robotID)):
-            _name = p.getJointInfo(self.robotID, _id)[12].decode('UTF-8')
+
+        print('-------------------------------------')
+        print('Link                          |Index')
+        print('-------------------------------------') 
+        for i in range(p.getNumJoints(self.robotID)):
+            _name = p.getJointInfo(self.robotID, i)[12].decode('UTF-8')
+            _id = p.getJointInfo(self.robotID, i)[0]
+            space = 30-len(_name)
+            space = ''.join([' ' for i in range(space)])
             self._index_to_link_name[_id] = _name
             self._link_name_to_index[_name] = _id
+            print('{j}{s}'.format(j = _name, s = space), end = '|')
+            print('{i}'.format(i = _id))
+        print('-------------------------------------')
  
         self.masses = { 
             link_name : p.getDynamicsInfo(
@@ -168,14 +212,15 @@ class Quadruped:
 
         return self.robotID
 
+    def render(self, urdf_path, period = 250):
+        self.robotID = self._load_urdf(urdf_path)
+        if self.GUI:
+            for i in range (period):
+                p.stepSimulation()
+                time.sleep(1./240.)
+            cubePos, cubeOrn = p.getBasePositionAndOrientation(self.robotID)
+            print(cubePos,cubeOrn)
 
-    def render(self, urdf_path):
-        self.robotID = self.load_urdf(urdf_path)
-        for i in range (10000):
-            p.stepSimulation()
-            time.sleep(1./240.)
-        cubePos, cubeOrn = p.getBasePositionAndOrientation(self.robotID)
-        print(cubePos,cubeOrn)
+    def disconnect(self):
         p.disconnect()
 
-q = Quadruped(params)
