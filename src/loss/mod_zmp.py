@@ -25,7 +25,7 @@ class AxisTransformation:
         return np.matmul(np.inverse(self.support_planee), vec)
 
 class ZMP:
-    def __init__(self, M, g, T, B, fr, mu, m, g, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L = None):
+    def __init__(self, M, g, T, B, fr, mu, m, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L = None):
         self.dynamic_model = QuadrupedDynamics(M, g, T, B, fr, mu, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3)
         self.transformation = AxisTransformation(L = L, M = M, m = m, Tb = Tb)
         self.G = np.array([0, 0, g])
@@ -56,8 +56,8 @@ class ZMP:
         return zmp_s
 
 class ModZMP:
-    def __init__(self, M, g, T, B, fr, mu, m, g, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L = None):
-        self.zmp = ZMP(M, g, T, B, fr, mu, m, g, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L)
+    def __init__(self, M, g, T, B, fr, mu, m, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L = None):
+        self.zmp = ZMP(M, g, T, B, fr, mu, m, Tb, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3, L)
         
     def setup(self, t, A, B, AL, AF, BF, BL):
         self.zmp.setup(t, A, B, AL, AF, BF, BL)

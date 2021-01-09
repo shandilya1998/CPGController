@@ -21,7 +21,7 @@ class KneeFourBarDynamics:
        
     def setup(self, t1, phi, o1z, a1z, gamma)
         self.theta = self.kinematics.theta(t1, phi)
-        self.r = self.kinematics.r(theta)
+        self.r = self.kinematics.r(self.theta)
         self.omega = self.kinematics.omega(r, o1z)
         self.alpha = self.kinematics.alpha(r, omega, a1z)
         self.a = self.kinematics.a(r, omega, alpha)
@@ -71,8 +71,8 @@ class KneeFourBarDynamics:
         A[7][9] = 1
 
         A[8][10] = self.L3 * np.sin(self.theta[3] - self.theta[0] + np.pi) / 2
-        A[8][8] = - self.L3 * np.sin(self.theta[3] - self.theta[0] + np.pi) / 2
-        A[8][11] = - self.L3 * np.cos(self.theta[3] - self.theta[0] + np.pi) / 2
+        A[8][8] = -self.L3 * np.sin(self.theta[3] - self.theta[0] + np.pi) / 2
+        A[8][11] = -self.L3 * np.cos(self.theta[3] - self.theta[0] + np.pi) / 2
         A[8][9] = self.L3 * np.cos(self.theta[3] - self.theta[0] + np.pi) / 2
 
         A[9][4] = 1
@@ -209,16 +209,16 @@ class QuadrupedDynamics:
         A[62][59] = self.gamma[3]*(np.cos(self.theta[3] - np.pi/2)*(self.B + self.T*np.cos(self.theta[3])) - np.sin(self.theta[3] - np.pi/2)*(-self.B + self.T*np.sin(self.theta[3])))
         A[62][64] = -1
 
-        A[63][13] = self.gamma[0]*(self.B + self.T*np.cos(theta[0]))
-        A[63][27] = self.gamma[1]*(-self.B + self.T*np.cos(theta[1]))
-        A[63][41] = self.gamma[2]*(-self.B + self.T*np.cos(theta[2]))
-        A[63][55] = self.gamma[3]*(self.B + self.T*np.cos(theta[3]))
+        A[63][13] = self.gamma[0]*(self.B + self.T*np.cos(self.theta[0]))
+        A[63][27] = self.gamma[1]*(-self.B + self.T*np.cos(self.theta[1]))
+        A[63][41] = self.gamma[2]*(-self.B + self.T*np.cos(self.theta[2]))
+        A[63][55] = self.gamma[3]*(self.B + self.T*np.cos(self.theta[3]))
         A[63][63] = -1
 
-        A[64][13] = self.gamma[0]*(self.B + self.T*np.sin(theta[0]))
-        A[64][27] = self.gamma[1]*(self.B + self.T*np.sin(theta[1]))
-        A[64][41] = self.gamma[2]*(-self.B + self.T*np.sin(theta[2]))
-        A[64][55] = self.gamma[3]*(-self.B + self.T*np.sin(theta[3]))
+        A[64][13] = self.gamma[0]*(self.B + self.T*np.sin(self.theta[0]))
+        A[64][27] = self.gamma[1]*(self.B + self.T*np.sin(self.theta[1]))
+        A[64][41] = self.gamma[2]*(-self.B + self.T*np.sin(self.theta[2]))
+        A[64][55] = self.gamma[3]*(-self.B + self.T*np.sin(self.theta[3]))
         A[64][62] = -1
 
         A[65][65] = 1
