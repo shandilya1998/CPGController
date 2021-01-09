@@ -10,7 +10,10 @@ cubeStartPos = [0,0,0]
 cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
 robotId = p.loadURDF("../quadruped_description/urdf/quadruped.urdf",cubeStartPos, cubeStartOrientation, 
                    # useMaximalCoordinates=1, ## New feature in Pybullet
-                   flags=p.URDF_USE_INERTIA_FROM_FILE | p.URDF_USE_SELF_COLLISION | p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT | p.URDF_MERGE_FIXED_LINKS)
+                   flags=p.URDF_USE_INERTIA_FROM_FILE | \
+                        p.URDF_USE_SELF_COLLISION | \
+                        p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT |\
+                        p.URDF_MERGE_FIXED_LINKS)
 
 def get_joint_index(robotId):
     print('Robot ID:')
@@ -19,7 +22,7 @@ def get_joint_index(robotId):
     num_j = p.getNumJoints(robotId)
     print(num_j)
 
-    joints = ['Rev14', 'Rev15', 'Rev16', 'Rev17', 'Rev26', 'Rev27', 'Rev28', 'Rev29']
+    joints = ['Leg1Hip', 'Leg2Hip', 'Leg3Hip', 'Leg4Hip', 'Leg1Knee', 'Leg2Knee', 'Leg3Knee', 'Leg4Knee']
 
     joint_dct = {}
 
@@ -30,11 +33,16 @@ def get_joint_index(robotId):
 
     return joint_dct
 
+print(get_joint_index(robotId))
+print(p.getContactPoints(robotId))
+
 for i in range (10000):
     p.stepSimulation()
     time.sleep(1./240.)
+    print(p.getContactPoints(robotId, planeId))
 cubePos, cubeOrn = p.getBasePositionAndOrientation(robotId)
 print(cubePos,cubeOrn)
+
 
 p.disconnect()
 
