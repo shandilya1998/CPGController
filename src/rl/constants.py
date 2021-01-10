@@ -34,6 +34,8 @@ params = {
     'L2'                          : 0.017849,
     'L3'                          : 0.02550,
     'g'                           : -9.81,
+    'thigh'                       : 0.06200,
+    'base_breadth'                : 0.04540,
 }
 
 observation_spec = [
