@@ -4,7 +4,9 @@ import time
 import pybullet_data
 import tensorflow as tf
 from rl.constants import *
-from loss import loss.FitnessFunction as loss
+from reward.reward import FitnessFunction
+import numpy as np
+
 """
     Refer to the following link for pybullet related information
     https://github.com/moribots/plen_ml_walk/blob/master/plen_bullet/src/plen_bullet/plen_env.py
@@ -25,6 +27,30 @@ class Quadruped:
             'Leg3Knee',
             'Leg4Knee'
         ]
+
+        self.legs = [
+            'leg_rev_v14', # Leg 1
+            'leg_rev_v13', # Leg 2
+            'leg_rev_v12', # Leg 3
+            'leg_rev_v11'  # Leg 4
+        ]
+
+    def build(self, urdf_path, period = 250):
+        self.robotID = self._load_urdf(urdf_path)
+        self.gamma = np.zeros((4, ))
+        self.loss = FitnessFunction(
+            self.total_mass,
+            self.params['g'],
+            self.params['thigh'],
+            self.params['base_breadth'],
+            
+        )   
+        if self.GUI:
+            for i in range (period):
+                p.stepSimulation()
+                time.sleep(1./240.)
+            cubePos, cubeOrn = p.getBasePositionAndOrientation(self.robotID)
+            print(cubePos,cubeOrn)
  
     def reset(self):
         p.resetBasePositionAndOrientation(
@@ -45,11 +71,25 @@ class Quadruped:
             angles = joint_angles[step, :].tolist()
             self.set_angles(angles)
             contacts = self._get_plane_contacts()
+            for contact in contacts:
+                if contact['linkIndex'] in self._index_to_leg_name.keys():
+                   self.gamma[self.legs.index(
+                        self._index_to_link_name(contact['linkIndex'])
+                    )] = 1
+            reward = self._calculate_reward(
+                contacts,
+                self.gamma
+            )
             p.stepSimulation()
             
         return [tf.zeros(spec.shape, spec.dtype) for spec in observation_spec[:-1]]
 
-    def _calculate_reward(self):
+    def _calculate_reward(self, contacts, self.gamma):
+        if len(contacts)<2:
+            raise NotImplementedError(
+                'Need to plan implementation'
+            )
+        raise NotImplementedError
         
 
     def _compute_observations(self):
@@ -190,6 +230,9 @@ class Quadruped:
             -1 : p.getBodyInfo(self.robotID)[0].decode('UTF-8')
         }
 
+        self._leg_name_to_index = {}
+        self._index_to_leg_name = {}
+
         print('-------------------------------------')
         print('Link                          |Index')
         print('-------------------------------------') 
@@ -200,6 +243,10 @@ class Quadruped:
             space = ''.join([' ' for i in range(space)])
             self._index_to_link_name[_id] = _name
             self._link_name_to_index[_name] = _id
+            self._leg_name_to_index 
+            if _name in self.legs:
+                self._leg_name_to_index[_name] = _id
+                self._index_to_leg_name[_id] = _name
             print('{j}{s}'.format(j = _name, s = space), end = '|')
             print('{i}'.format(i = _id))
         print('-------------------------------------')
@@ -214,20 +261,6 @@ class Quadruped:
         self.total_mass = sum(list(self.masses.values()))
 
         return self.robotID
-
-    def build(self, urdf_path, period = 250):
-        self.robotID = self._load_urdf(urdf_path)
-        self.loss = loss(
-            self.total_mass,
-            self.params['g'],
-                     
-        )
-        if self.GUI:
-            for i in range (period):
-                p.stepSimulation()
-                time.sleep(1./240.)
-            cubePos, cubeOrn = p.getBasePositionAndOrientation(self.robotID)
-            print(cubePos,cubeOrn)
 
     def disconnect(self):
         p.disconnect()

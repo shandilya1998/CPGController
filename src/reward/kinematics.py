@@ -8,6 +8,11 @@ class KneeFourBarKinematics:
         self.L2 = L2
         self.L3 = L3
 
+        self.built = False
+
+    def build(self):
+        self.built = True
+
     def theta(self, t1, phi):
         theta = np.zeros(4)
         theta[0] = phi
