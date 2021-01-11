@@ -1,15 +1,12 @@
 import numpy as np
-from kinematics import KneeFourBarKinematics
+from reward.kinematics import KneeFourBarKinematics
 
 class KneeFourBarDynamics:
-    def __init__(self, m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3):
+    def __init__(self, m1, m2, m3, L0, L1, L2, L3, g):
         self.m1 = m1
         self.m2 = m2
         self.m3 = m3
         self.g = g
-        self.I1 = I1
-        self.I2 = I2
-        self.I3 = I3
         self.kinematics = KneeFourBarKinematics(L0, L1, L2, L3)
         self.theta = np.zeros(4)
         self.r = np.zeros(4)
@@ -19,7 +16,10 @@ class KneeFourBarDynamics:
         self.gamma = 0
         
        
-    def build(self, t1, phi, o1z, a1z, gamma)
+    def build(self, t1, phi, o1z, a1z, gamma, I1, I2, I3):
+        self.I1 = I1
+        self.I2 = I2
+        self.I3 = I3
         self.theta = self.kinematics.theta(t1, phi)
         self.r = self.kinematics.r(self.theta)
         self.omega = self.kinematics.omega(r, o1z)
@@ -112,7 +112,7 @@ class KneeFourBarDynamics:
 
 
 class QuadrupedDynamics:
-    def __init__(self, M, g, T, Bt, fr, mu, m1, m2, m3, L0, L2, L2, L3, I1, I2, I3):
+    def __init__(self, M, g, T, Bt, fr, mu, m1, m2, m3, L0, L1, L2, L3):
         self.M = M
         self.g = g
         self.mu = mu
@@ -121,18 +121,32 @@ class QuadrupedDynamics:
         self.fr = fr
         self.gamma = np.zeros(4)
         self.theta = np.zeros(4)
-        self.knee1 = KneeFourBarDynamics(m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3)
-        self.knee2 = KneeFourBarDynamics(m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3)
-        self.knee3 = KneeFourBarDynamics(m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3)
-        self.knee4 = KneeFourBarDynamics(m1, m2, m3, L0, L2, L2, L3, g, I1, I2, I3)  
+        self.knee1 = KneeFourBarDynamics(m1, m2, m3, L0, L1, L2, L3, g)
+        self.knee2 = KneeFourBarDynamics(m1, m2, m3, L0, L1, L2, L3, g)
+        self.knee3 = KneeFourBarDynamics(m1, m2, m3, L0, L1, L2, L3, g)
+        self.knee4 = KneeFourBarDynamics(m1, m2, m3, L0, L1, L2, L3, g)  
 
-    def build(self, gamma, theta, t11, phi1, o11z, a11z,  t21, phi2, o21z, a21z,  t31, phi3, o31z, a31z,  t41, phi4, o41z, a41z):
+    def build(
+            self, gamma, theta, 
+            t11, phi1, o11z, a11z,  
+            t21, phi2, o21z, a21z,  
+            t31, phi3, o31z, a31z,  
+            t41, phi4, o41z, a41z,
+            I1, I2, I3
+        ):
+        self.I1 = I1
+        self.I2 = I2
+        self.I3 = I3
         self.gamma = gamma
         self.theta = theta
-        self.knee1.build(t11, phi1, o11z, a11z, gamma[0])
-        self.knee2.build(t21, phi2, o21z, a21z, gamma[1])
-        self.knee3.build(t31, phi3, o31z, a31z, gamma[2])
-        self.knee4.build(t41, phi4, o41z, a41z, gamma[3])
+        self.knee1.build(t11, phi1, o11z, a11z, gamma[0], \
+                        I1[0], I2[0], I3[0])
+        self.knee2.build(t21, phi2, o21z, a21z, gamma[1], \
+                        I1[1], I2[1], I3[1])
+        self.knee3.build(t31, phi3, o31z, a31z, gamma[2], \
+                        I1[2], I2[2], I3[2])
+        self.knee4.build(t41, phi4, o41z, a41z, gamma[3], \
+                        I1[3], I2[3], I3[3])
 
     def A(self):
         """
@@ -185,7 +199,7 @@ class QuadrupedDynamics:
         A[58][55] = -self.mu
 
         lst = []
-        lst _ = []
+        lst_ = []
         for i in range(4):
             if self.gamma[i] == 1:
                 lst.append(i)

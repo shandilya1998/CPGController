@@ -1,7 +1,7 @@
 import numpy as np
 
 class SupportPlane:
-    def __init__(self, tb = None):
+    def __init__(self, tb = 1000):
         self.A = np.zeros(3)
         self.AL = np.zeros(3)
         self.AF = np.zeros(3)

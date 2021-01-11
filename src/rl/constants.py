@@ -36,6 +36,11 @@ params = {
     'g'                           : -9.81,
     'thigh'                       : 0.06200,
     'base_breadth'                : 0.04540,
+    'friction_constant'           : 1e-4,
+    'mu'                          : 0.001,
+    'm1'                          : 0.010059,
+    'm2'                          : 0.026074,
+    'm3'                          : 0.007661,
 }
 
 observation_spec = [
