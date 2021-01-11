@@ -35,15 +35,46 @@ class Quadruped:
             'leg_rev_v11'  # Leg 4
         ]
 
+        self.knee_links = [
+            [
+                'leg_servo_arm_v14',
+                'leg_rev_v14',
+                'leg_parallel_linkage_v14'
+            ], # Leg 1
+            [   
+                'leg_servo_arm_v13',
+                'leg_rev_v13',
+                'leg_parallel_linkage_v13'
+            ], # Leg 2
+            [   
+                'leg_servo_arm_v12',
+                'leg_rev_v12',
+                'leg_parallel_linkage_v12'
+            ], # Leg 3
+            [   
+                'leg_servo_arm_v11',
+                'leg_rev_v11',
+                'leg_parallel_linkage_v11'
+            ], # Leg 4
+        ]
+
     def build(self, urdf_path, period = 250):
         self.robotID = self._load_urdf(urdf_path)
         self.gamma = np.zeros((4, ))
-        self.loss = FitnessFunction(
+        self.reward = FitnessFunction(
             self.total_mass,
             self.params['g'],
             self.params['thigh'],
             self.params['base_breadth'],
-            
+            self.params['friction_constant'],
+            self.params['mu'],
+            self.params['m1'],
+            self.params['m2'],
+            self.params['m3'],
+            self.params['L0'],
+            self.params['L1'],
+            self.params['L2'],
+            self.params['L3']
         )   
         if self.GUI:
             for i in range (period):
@@ -78,19 +109,55 @@ class Quadruped:
                     )] = 1
             reward = self._calculate_reward(
                 contacts,
-                self.gamma
+                self.gamma,
+                angles
             )
             p.stepSimulation()
             
         return [tf.zeros(spec.shape, spec.dtype) for spec in observation_spec[:-1]]
 
-    def _calculate_reward(self, contacts, self.gamma):
+    def _calculate_reward(self, contacts, gamma, angles):
+        inertia = [
+            [
+                self._get_inertia(
+                    self._link_name_to_index[name]
+                ) for name in knee
+            ] for knee in self.knee_links
+        ]
+
+        theta = np.array([angle + np.pi/2 for angle in angles[:4]])
+
+        vec = []
+
+        for i in range(len(inertia)):
+            vec.append(np.array([
+                np.cos(theta[i]),
+                np.sin(theta[i]),
+                0
+            ]))
+
+        for i in range(len(inertia)):
+            for j in range(len(inertia[i])):
+                mat = np.zeros((3,3))
+                for k in range(3):
+                    mat[k][k] = inertia[i][j][k]
+
+                Inn = np.matmul(np.matmul(vec[i], mat), vec[i].T)
+                inertia[i][j] = sum(inertia[i][j]) - np.sum(Inn)
+        
+    
         if len(contacts)<2:
             raise NotImplementedError(
                 'Need to plan implementation'
             )
         raise NotImplementedError
         
+        self.reward.build(
+            t, A, B, AL, AF, BF, BL, 
+            inertia[:][0],
+            inertia[:][1],
+            inertia[:][2]
+        )
 
     def _compute_observations(self):
         com = self._compute_com()
@@ -123,6 +190,14 @@ class Quadruped:
         
         return com
 
+    def _get_inertia(self, link_index):
+        dyn = p.getDynamicsInfo(
+            self.robotID,
+            linkIndex,
+            self.physicsClient
+        )
+        return dyn[2]
+        
     def _get_plane_contacts(self):
         contacts = p.getContactPoints(
             bodyA = self.robotID, 
