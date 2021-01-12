@@ -29,11 +29,14 @@ class ActorNetwork(object):
     def create_actor_network(self, params):
         log('[DDPG] Building the actor model')
         ac_cell = actor.get_actor_cell(params)
-        inp1 = tf.keras.Input((params['rnn_steps'], params['motion_state_size']), dtype = 'float32')
-        inp2 = tf.keras.Input((params['rnn_steps'], params['robot_state_size']), dtype = 'float32')
-        inp3 = tf.keras.Input((params['units_osc'],), dtype = 'complex64')
-        out, z = actor.TimeDistributed(ac_cell, params)
-        model = tf.keras.Model(inputs = [inp1, inp2, inp3], outputs = [out, z])
+        inputs = [
+            tf.keras.Input(
+                spec.shape, 
+                spec.dtype
+            ) for spec in params['observation_spec']
+        ]
+        outputs = actor.TimeDistributed(ac_cell, params)(inputs)
+        model = tf.keras.Model(inputs = inputs, outputs = outputs)
         return model, model.trainable_weights, model.inputs
 
 
@@ -62,17 +65,26 @@ class CriticNetwork(object):
     def create_critic_network(self, params):
         log('[DDPG] Building the critic model')
         cr_cell = critic.get_critic_cell(params)
-        inp1 = tf.keras.Input((params['rnn_steps'], params['motion_state_size']), dtype = 'float32')
-        inp2 = tf.keras.Input((params['rnn_steps'], params['robot_state_size']), dtype = 'float32')
-        inp3 = tf.keras.Input((params['units_osc'],), dtype = 'complex64') 
-        S = [inp1, inp2, inp3]
-        inp4 = tf.keras.Input((params['rnn_steps'], params['action_dim'],), dtype = 'float32')      
-        inp5 = tf.keras.Input((params['units_osc'],), dtype = 'complex64')
-        l1 = critic.TimeDistributed(cr_cell, params)([inp1, inp2, inp4])
-        real_1 = tf.math.real(inp3)
-        imag_1 = tf.math.imag(inp3)
-        real_2 = tf.math.real(inp5)
-        imag_2 = tf.math.imag(inp5)
+
+        S = [ 
+            tf.keras.Input(
+                spec.shape, 
+                spec.dtype
+            ) for spec in params['observation_spec']
+        ]
+
+        A = [
+            tf.keras.Input(
+                spec.shape,
+                spec.dtype
+            ) for spec in params['action_spec']
+        ]
+
+        l1 = critic.TimeDistributed(cr_cell, params)([S[0], S[1], inp4])
+        real_1 = tf.math.real(S[2])
+        imag_1 = tf.math.imag(S[2])
+        real_2 = tf.math.real(A[1])
+        imag_2 = tf.math.imag(A[1])
         real = tf.concat([real_1, real_2], axis = -1)
         imag = tf.concat([imag_1, imag_2], axis = -1)
         real = tf.keras.layers.Dense(

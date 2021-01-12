@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 action_dim = 8
-params = { 
+params = {
     'motion_state_size'           : 10, 
     'robot_state_size'            : 10, 
     'dt'                          : 0.0001,
@@ -10,7 +10,7 @@ params = {
     'units_combine'               : 10, 
     'units_robot_state'           : 10, 
     'units_motion_state'          : 10,
-
+    'units_history'               : 10,
     'BATCH_SIZE'                  : 1,
     'BUFFER_SIZE'                 : 100000,
     'GAMMA'                       : 0.99,
@@ -23,9 +23,9 @@ params = {
     'max_steps'                   : 40,
     'action_dim'                  : action_dim,
 
-    'action_input_units'          : 10,
+    'units_action_input'          : 10,
     'rnn_steps'                   : 1000,
-    'critic_hidden_units'         : 10,
+    'units_critic_hidden'         : 10,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
 
@@ -70,16 +70,24 @@ observation_spec = [
         dtype = tf.dtypes.complex64,
         name = 'oscillator state'
     ),
+     tf.TensorSpec(
+        shape = (
+            params['BATCH_SIZE'],
+            params['rnn_steps'] - 1,
+            params['action_dim']
+        ),
+        dtype = tf.dtypes.float32
+    )
 ]
 
 action_spec = [
     tf.TensorSpec(
-           shape = (
-               params['BATCH_SIZE'],
-               params['rnn_steps'],
-               params['action_dim']
-           )
-       ),
+        shape = (
+            params['BATCH_SIZE'],
+            params['rnn_steps'],
+            params['action_dim']
+        )
+    ),
    tf.TensorSpec(
        shape = (
            params['BATCH_SIZE'],
@@ -105,6 +113,7 @@ data_spec = []
 data_spec.extend(observation_spec)
 data_spec.extend(action_spec)
 data_spec.extend(observation_spec)
+data_spec.extend(history_spec)
 
 data_spec.extend([
     tf.TensorSpec(
@@ -115,3 +124,12 @@ data_spec.extend([
         name = 'done'
     )
 ])
+
+specs = {
+    'observation_spec' : observation_spec,
+    'reward_spec' : reward_spec,
+    'action_spec' : action_spec,
+    'data_spec' : data_spec
+}
+
+params.update(specs)

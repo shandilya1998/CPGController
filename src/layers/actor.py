@@ -121,16 +121,52 @@ class TimeDistributed(tf.keras.Model):
     def call(self, inputs):
         ta_inp1 = tf.TensorArray('float32', size = 0, dynamic_size = True)
         ta_inp2 = tf.TensorArray('float32', size = 0, dynamic_size = True)
+        ta_history = tf.TensorArray('float32', size = 0, dynamic_size = True)
         out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
+        _history = tf.TensorArray('float32', size = 0, dynamic_size = True)
 
         inp1 = swap_batch_timestep(inputs[0])
         inp2 = swap_batch_timestep(inputs[1])
         z = inputs[2]
+        history = swap_batch_timestep(inputs[3])
 
         ta_inp1.unstack(inp1)
         ta_inp2.unstack(inp2)
+        ta_history.unstack(history)
 
         step = tf.constant(0)
+        def cond(_history, step):
+            return tf.math.less(
+                step,
+                tf.constant(
+                    self.steps - 2,
+                    dtype = tf.int32
+                )
+            )
+
+        def body(_history, step):
+            _history = _history.write(
+                step,
+                ta_history.read(step + 1)
+            )
+            step = tf.math.add(step, tf.constant(1))
+            return _history, step
+
+        _history, step = tf.while_loop(cond, body, [_history, step])
+        
+        step = tf.constant(0)
+        inputs = [
+            ta_inp1.read(step),
+            ta_inp2.read(step),
+            z
+        ]
+        o, z = self.layer(inputs)
+        _history.write(step, o)
+        out = out.write(
+            step,
+            o
+        )
+        step = tf.math.add(step, tf.constant(1))
 
         def cond(out, step, z):
             return tf.math.less(
@@ -141,14 +177,14 @@ class TimeDistributed(tf.keras.Model):
                 )
             )
 
-        def body(out, step, z):
+        def body(out, step, _):
             inputs = [
                 ta_inp1.read(step),
                 ta_inp2.read(step),
-                z
+                _
             ]
 
-            o, z = self.layer(inputs)
+            o, _ = self.layer(inputs)
 
             out = out.write(
                 step,
@@ -156,12 +192,14 @@ class TimeDistributed(tf.keras.Model):
             )
 
             step = tf.math.add(step, tf.constant(1))
-            return out, step, z
+            return out, step, _
 
-        out, step, z = tf.while_loop(cond, body, [out, step, z])
+        out, step, _ = tf.while_loop(cond, body, [out, step, z])
 
+        _history = _history.stack()
         out = out.stack()
         out = swap_batch_timestep(out)
-
+        _history = swap_batch_timestep(_history)
         out = tf.ensure_shape(out, tf.TensorShape((None, self.steps, self.out_dim)), name='ensure_shape_critic_time_distributed_out')
-        return [out, z]
+        _history = tf.ensure_shape(out, tf.TensorShape((None, self.steps - 1, self.out_dim)), name='ensure_shape_critic_time_distributed_out_history')
+        return [out, z, _history]

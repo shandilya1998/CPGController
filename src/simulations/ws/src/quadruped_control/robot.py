@@ -61,6 +61,7 @@ class Quadruped:
     def build(self, urdf_path, period = 250):
         self.robotID = self._load_urdf(urdf_path)
         self.gamma = np.zeros((4, ))
+        print('Building Reward Class........')
         self.reward = FitnessFunction(
             self.total_mass,
             self.params['g'],
@@ -143,8 +144,7 @@ class Quadruped:
                     mat[k][k] = inertia[i][j][k]
 
                 Inn = np.matmul(np.matmul(vec[i], mat), vec[i].T)
-                inertia[i][j] = sum(inertia[i][j]) - np.sum(Inn)
-        
+                inertia[i][j] = sum(inertia[i][j]) - np.sum(Inn) 
     
         if len(contacts)<2:
             raise NotImplementedError(
@@ -162,6 +162,7 @@ class Quadruped:
     def _compute_observations(self):
         com = self._compute_com()
         linear_vel, angular_vel = p.getBaseVelocity(self.robotID, self.physicsClient)
+        raise NotImplementedError
 
     def _compute_com(self):
         COM = {}
