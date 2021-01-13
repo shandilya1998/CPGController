@@ -47,7 +47,6 @@ observation_spec = [
     tf.TensorSpec(
         shape = (
             params['BATCH_SIZE'],
-            params['rnn_steps'],
             params['motion_state_size']
         ),
         dtype = tf.dtypes.float32,
@@ -56,7 +55,6 @@ observation_spec = [
     tf.TensorSpec(
         shape = (
             params['BATCH_SIZE'],
-            params['rnn_steps'],
             params['robot_state_size'],
         ),
         dtype = tf.dtypes.float32,
@@ -102,7 +100,6 @@ reward_spec = [
     tf.TensorSpec(
         shape = (
             params['BATCH_SIZE'],
-            params['rnn_steps']
         ),
         dtype = tf.dtypes.float32,
         name = 'reward'
