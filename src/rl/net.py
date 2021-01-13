@@ -28,13 +28,15 @@ class ActorNetwork(object):
 
     def create_actor_network(self, params):
         log('[DDPG] Building the actor model')
-        ac_cell = actor.get_actor_cell(params)
-        inputs = [
+        enc = actor.get_state_encoder(params)
+        S = [
             tf.keras.Input(
                 spec.shape, 
                 spec.dtype
             ) for spec in params['observation_spec']
         ]
+
+        
         outputs = actor.TimeDistributed(ac_cell, params)(inputs)
         model = tf.keras.Model(inputs = inputs, outputs = outputs)
         return model, model.trainable_weights, model.inputs
@@ -64,7 +66,7 @@ class CriticNetwork(object):
 
     def create_critic_network(self, params):
         log('[DDPG] Building the critic model')
-        cr_cell = critic.get_critic_cell(params)
+        cr = critic.get_critic(params)
 
         S = [ 
             tf.keras.Input(
@@ -80,30 +82,11 @@ class CriticNetwork(object):
             ) for spec in params['action_spec']
         ]
 
-        l1 = critic.TimeDistributed(cr_cell, params)([S[0], S[1], inp4])
-        real_1 = tf.math.real(S[2])
-        imag_1 = tf.math.imag(S[2])
-        real_2 = tf.math.real(A[1])
-        imag_2 = tf.math.imag(A[1])
-        real = tf.concat([real_1, real_2], axis = -1)
-        imag = tf.concat([imag_1, imag_2], axis = -1)
-        real = tf.keras.layers.Dense(
-            units = params['units_osc'],
-            activation = params['lstm_state_dense_activation']
-        )(real)
-        imag = tf.keras.layers.Dense(
-            units = params['units_osc'],
-            activation = params['lstm_state_dense_activation']
-        )(imag)
-        x = tf.concat([real, imag], axis = -1)
-        lstm_state = tf.keras.layers.Dense(
-            units = params['lstm_units'],
-            activation = params['lstm_state_dense_activation']
-        )(x)
-        hidden = [lstm_state for i in range(4)]
-        out = tf.keras.layers.LSTM(
-            units = params['lstm_units']
-            return_sequences = True
-        )(x, hidden)
-        
-        return model, inp4, S
+        out = cr([S, A])
+
+        model = tf.keras.Model(
+            inputs = [S, A],
+            outputs = [out]
+        )
+
+        return model, A, S
