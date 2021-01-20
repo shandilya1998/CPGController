@@ -5,7 +5,6 @@ from layers.complex import ComplexDense, relu
 class StateEncoder(tf.keras.Model):
     def __init__(
         self, 
-        dt,
         units_osc,
         units_combine,
         units_robot_state,
@@ -18,7 +17,7 @@ class StateEncoder(tf.keras.Model):
         activation_omega = 'relu',
         activation_b = 'relu',
     ):
-        super(Actor, self).__init__()
+        super(StateEncoder, self).__init__()
         self.combine_dense = tf.keras.layers.Dense(
             units = units_combine,
             activation = activation_combine,
@@ -67,17 +66,6 @@ class StateEncoder(tf.keras.Model):
         mu = self.mu_dense(state)
         return [omega, mu, b]
 
-
-def get_actor_cell(params):
-    cell = Actor(
-        dt = params['dt'],
-        units_output_mlp = params['units_output_mlp'],
-        units_osc = params['units_osc'],
-        units_combine = params['units_combine'],
-        units_robot_state = params['units_robot_state'],
-        units_motion_state = params['units_motion_state']
-    )
-    return cell
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -140,46 +128,13 @@ class Actor(tf.keras.Model):
 
     def call(self, S):
         omega, mu, b = self.encoder(S)
-        _, _, z, history = S
-        ta_inp1 = tf.TensorArray('float32', size = 0, dynamic_size = True)
-        ta_inp2 = tf.TensorArray('float32', size = 0, dynamic_size = True)
-        ta_history = tf.TensorArray('float32', size = 0, dynamic_size = True)
-        out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
-        _history = tf.TensorArray('float32', size = 0, dynamic_size = True)
-
-        inp1 = swap_batch_timestep(inputs[0])
-        inp2 = swap_batch_timestep(inputs[1])
-        z = inputs[2]
-        history = swap_batch_timestep(inputs[3])
-
-        ta_inp1.unstack(inp1)
-        ta_inp2.unstack(inp2)
-        ta_history.unstack(history)
-
-        step = tf.constant(0)
-        def cond(_history, step):
-            return tf.math.less(
-                step,
-                tf.constant(
-                    self.steps - 2,
-                    dtype = tf.int32
-                )
-            )
-
-        def body(_history, step):
-            _history = _history.write(
-                step,
-                ta_history.read(step + 1)
-            )
-            step = tf.math.add(step, tf.constant(1))
-            return _history, step
-
-        _history, step = tf.while_loop(cond, body, [_history, step])
+        _, _, z, _ = S
         
+        out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
+ 
         step = tf.constant(0)
         z_out = self.osc([z, omega, mu, b])
         o = self.output_mlp(z)
-        _history.write(step, o)
         out = out.write(
             step,
             o
@@ -195,14 +150,16 @@ class Actor(tf.keras.Model):
                 )
             )
 
-        def body(out, step, _):
+        def body(out, step, z):
             inputs = [
-                ta_inp1.read(step),
-                ta_inp2.read(step),
-                _
+                z, 
+                omega,
+                mu,
+                b
             ]
 
-            o, _ = self.layer(inputs)
+            z = self.osc(inputs)
+            o = self.output_mlp(z)
 
             out = out.write(
                 step,
@@ -210,14 +167,30 @@ class Actor(tf.keras.Model):
             )
 
             step = tf.math.add(step, tf.constant(1))
-            return out, step, _
+            return out, step, z
 
-        out, step, _ = tf.while_loop(cond, body, [out, step, z])
+        out, step, _ = tf.while_loop(cond, body, [out, step, z_out])
 
-        _history = _history.stack()
         out = out.stack()
         out = swap_batch_timestep(out)
-        _history = swap_batch_timestep(_history)
-        out = tf.ensure_shape(out, tf.TensorShape((None, self.steps, self.out_dim)), name='ensure_shape_critic_time_distributed_out')
-        _history = tf.ensure_shape(out, tf.TensorShape((None, self.steps - 1, self.out_dim)), name='ensure_shape_critic_time_distributed_out_history')
-        return [out, z_out, _history]
+        out = tf.ensure_shape(
+            out, 
+            tf.TensorShape(
+                (None, self.steps, self.out_dim)
+            ), 
+            name='ensure_shape_critic_time_distributed_out'
+        )
+        return [out, z_out]
+
+def get_actor(params):
+    cell = Actor(
+        dt = params['dt'],
+        steps = params['rnn_steps'],
+        action_dim = params['action_dim'],
+        units_output_mlp = params['units_output_mlp'],
+        units_osc = params['units_osc'],
+        units_combine = params['units_combine'],
+        units_robot_state = params['units_robot_state'],
+        units_motion_state = params['units_motion_state']
+    )
+    return cell

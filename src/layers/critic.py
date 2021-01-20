@@ -152,7 +152,7 @@ def get_critic(params):
         units_robot_state = params['units_robot_state'],
         units_motion_state = params['units_motion_state'],
         units_action_input = params['units_action_input'],
-        units_history = params['units_history']
+        units_history = params['units_history'],
         units_osc = params['units_osc'],
         units_lstm = params['units_combine'],
         units_out = params['action_dim'],
