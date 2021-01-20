@@ -94,14 +94,11 @@ class ComplexDense(tf.keras.layers.Layer):
                 trainable=True
             )
         else:
-            self.bias = None
+            self.bias = tf.zeros(shape = [self.units,], dtype = self.dtype)
         self.built = True
 
     def call(self, inputs):
-        if self.use_bias:
-            return tf.add(tf.matmul(inputs, self.kernel), self.bias) 
-        else: 
-            return tf.matmul(inputs, self.kernel)
+        return tf.add(tf.matmul(inputs, self.kernel), self.bias) 
 
     def compute_output_shape(self, input_shape):
         input_shape = tensor_shape.TensorShape(input_shape)
