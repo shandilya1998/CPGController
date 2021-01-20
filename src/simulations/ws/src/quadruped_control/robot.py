@@ -76,7 +76,7 @@ class Quadruped:
             self.params['L1'],
             self.params['L2'],
             self.params['L3']
-        )   
+        )
         if self.GUI:
             for i in range (period):
                 p.stepSimulation()
@@ -85,37 +85,119 @@ class Quadruped:
             print(cubePos,cubeOrn)
  
     def reset(self):
-        p.resetBasePositionAndOrientation(
-            self.robotID,
-            posObj=self.cubeStartPos,
-            ornObj=self.cubeStartOrientation
+        self._reset(
+            self.cubeStartPos,
+            self.cubeStartOrientation,
+            [0, 0 ,0],
+            [0, 0, 0],
+            {}
         )
 
-    def step(self, action):
-        action = [tf.make_ndarray(ac)[0] for ac in action]
-        """
-            The bullet physics engine can not be parallelised using pybullet, thus only a batch size of 1 is supported
-        """
-
-        joint_angles = action[0]
-
-        for step in range(self.params['rnn_steps']):
-            angles = joint_angles[step, :].tolist()
-            self.set_angles(angles)
-            contacts = self._get_plane_contacts()
-            for contact in contacts:
-                if contact['linkIndex'] in self._index_to_leg_name.keys():
-                   self.gamma[self.legs.index(
-                        self._index_to_link_name(contact['linkIndex'])
-                    )] = 1
-            reward = self._calculate_reward(
-                contacts,
-                self.gamma,
-                angles
+    def _reset(self, 
+        startPos, 
+        startOrientation, 
+        startLinearVelocity, 
+        startAngularVelocity,
+        jStates
+    ):
+        p.resetBasePositionAndOrientation(
+            self.robotID,
+            posObj=startPos,
+            ornObj=startOrientation
+        )
+        p.resetBaseVelocity(
+            self.robotID,
+            linearVelocity = startLinearVelocity
+            angularVelocity = startAngularVelocity,
+            physicsClientId = self.physicsClient
+        )
+        for index in jStates.keys():
+            p.resetJointState(
+                self.robotID,
+                index,
+                jStates[index]['targetValue'],
+                jStates[index]['targetVelocity'],
+                self.physicsClient
             )
-            p.stepSimulation()
-            
-        return [tf.zeros(spec.shape, spec.dtype) for spec in observation_spec[:-1]]
+
+    def step(self, action, history, startState):
+        action = [tf.make_ndarray(ac)[0] for ac in action]
+        history = tf.make_ndarray(history)[0]
+        """
+            startState is the kinematic state of the quadruped at timestep
+            t - T + 1, that is the first step in history
+        """
+        startPos, \
+        startOrientation, \
+        startLinearVelocity, \
+        startAngularVelocity,
+        jStates = startState
+
+        self._reset(
+            startPos,
+            startOrientation,
+            startLinearyVelocity,
+            startAngularVelocity,
+            jStates
+        )
+
+        self._step(history[0]) # get startState and AF and BF from here
+
+        for step in range(1, self.params['rnn_steps'] - 1):
+            self._step(history[step])
+
+        self._step(action[0]) # get A and B from here
+
+        for step in range(1, self.params['rnn_steps'] - 1):
+            self._step(action[step])
+
+        self._step(action[-1]) # get AL and BL from here
+
+        history = np.expand_dims(
+            np.concatenate([history[1:], action[0]], 0), 
+            0
+        )
+
+        return observation, reward, history, startState
+
+    
+    def _step(self, joint_angles):
+        """
+            This method must return all relevant information for reward
+            computation
+        """
+        angles = joint_angles.tolist()
+        self.set_angles(angles)
+        contacts = self._get_plane_contacts()
+        for contact in contacts:
+            if contact['linkIndex'] in self._index_to_leg_name.keys():
+                self.gamma[self.legs.index(
+                    self._index_to_link_name(contact['linkIndex'])
+                )] = 1
+        reward = self._calculate_reward(
+            contacts,
+            self.gamma,
+            angles
+        )
+        p.stepSimulation()
+
+        """
+            After every iteration the simulation has to be reset to the 
+            current state. Before resetting the state of the simulations the
+            current state should be stored so that the simulation may start
+            from the timestep t
+            The methods to be used to implement such a transition are:
+                resetJointState
+                resetBasePositionAndOrientation
+                resetBaseVelocity
+            The system must also keep track of joint and base velocities 
+            at the start of the simulation
+        """
+    
+        return [
+            tf.zeros(spec.shape, spec.dtype) \
+            for spec in observation_spec[:-1]
+        ]
 
     def _calculate_reward(self, contacts, gamma, angles):
         inertia = [

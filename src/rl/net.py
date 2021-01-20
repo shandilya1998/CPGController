@@ -9,12 +9,23 @@ class ActorNetwork(object):
         self.LEARNING_RATE = params['LEARNING_RATE']
         
         #Now create the model
-        self.model , self.weights, self.state = self.create_actor_network(params)
-        self.target_model, self.target_weights, self.target_state = self.create_actor_network(params)
-        self.action_gradient = tf.placeholder(tf.float32,[None, params['action_dim']])
-        self.params_grad = tf.gradients(self.model.output, self.weights, -self.action_gradient)
+        self.model , self.weights, self.state = \
+            self.create_actor_network(params)
+        self.target_model, self.target_weights, self.target_state = \
+            self.create_actor_network(params)
+        self.action_gradient = \
+            tf.placeholder(tf.float32,[None, params['action_dim']])
+        self.params_grad = \
+            tf.gradients(
+                self.model.output, 
+                self.weights, 
+                -self.action_gradient
+            )
         grads = zip(self.params_grad, self.weights)
-        self.optimize = tf.train.AdamOptimizer(params['LEARNING_RATE']).apply_gradients(grads)
+        self.optimize = \
+            tf.train.AdamOptimizer(
+                params['LEARNING_RATE']
+            ).apply_gradients(grads)
 
     def train(self, states, action_grads):
         return None
@@ -23,7 +34,8 @@ class ActorNetwork(object):
         actor_weights = self.model.get_weights()
         actor_target_weights = self.target_model.get_weights()
         for i in xrange(len(actor_weights)):
-            actor_target_weights[i] = self.TAU * actor_weights[i] + (1 - self.TAU)* actor_target_weights[i]
+            actor_target_weights[i] = self.TAU * actor_weights[i] + \
+                (1 - self.TAU)* actor_target_weights[i]
         self.target_model.set_weights(actor_target_weights)
 
     def create_actor_network(self, params):
@@ -50,9 +62,11 @@ class CriticNetwork(object):
         self.action_size = params['action_dim']
 
         # Now create the model
-        self.model, self.action, self.state = self.create_critic_network(params)
-        self.target_model, self.target_action, self.target_state = self.create_critic_network(params)
-        self.action_grads = tf.gradients(self.model.output, self.action)  # GRADIENTS for policy update
+        self.model, self.action, self.state = \
+            self.create_critic_network(params)
+        self.target_model, self.target_action, self.target_state = \
+            self.create_critic_network(params)
+        self.action_grads = tf.gradients(self.model.output, self.action)
 
     def gradients(self, states, actions):
         return None    
@@ -61,7 +75,8 @@ class CriticNetwork(object):
         critic_weights = self.model.get_weights()
         critic_target_weights = self.target_model.get_weights()
         for i in xrange(len(critic_weights)):
-            critic_target_weights[i] = self.TAU * critic_weights[i] + (1 - self.TAU) * critic_target_weights[i]
+            critic_target_weights[i] = self.TAU * critic_weights[i] + \
+                (1 - self.TAU) * critic_target_weights[i]
         self.target_model.set_weights(critic_target_weights)
 
     def create_critic_network(self, params):

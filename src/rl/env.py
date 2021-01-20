@@ -9,7 +9,9 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             time_step_spec, 
             action_spec,
             params,
-            initial_state = None):
+            initial_state = None,
+            GUI = False
+        ):
         super(Env, self).__init__(time_step_spec, action_spec, \
                                 params['BATCH_SIZE'])
         if initial_state is None:
@@ -26,7 +28,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self._episode_ended = False
         self._state = self.initial_state
         self.current_time_step = self._create_initial_time_step()
-        self.quadruped = Quadruped(params)
+        self.quadruped = Quadruped(params, GUI)
         self.params = params
 
     def _create_initial_time_step(self):
