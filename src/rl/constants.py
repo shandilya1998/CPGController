@@ -46,15 +46,13 @@ params = {
 observation_spec = [
     tf.TensorSpec(
         shape = (
-            params['BATCH_SIZE'],
-            params['motion_state_size']
+            params['motion_state_size'],
         ),
         dtype = tf.dtypes.float32,
         name = 'motion state'
     ),
     tf.TensorSpec(
         shape = (
-            params['BATCH_SIZE'],
             params['robot_state_size'],
         ),
         dtype = tf.dtypes.float32,
@@ -62,15 +60,13 @@ observation_spec = [
     ),
     tf.TensorSpec(
         shape = (
-            params['BATCH_SIZE'],
-            params['units_osc']
+            params['units_osc'],
         ),
         dtype = tf.dtypes.complex64,
         name = 'oscillator state'
     ),
      tf.TensorSpec(
         shape = (
-            params['BATCH_SIZE'],
             params['rnn_steps'] - 1,
             params['action_dim']
         ),
@@ -81,15 +77,13 @@ observation_spec = [
 action_spec = [
     tf.TensorSpec(
         shape = (
-            params['BATCH_SIZE'],
             params['rnn_steps'],
             params['action_dim']
         )
     ),
    tf.TensorSpec(
        shape = (
-           params['BATCH_SIZE'],
-           params['units_osc']
+           params['units_osc'],
        ),
        dtype = tf.dtypes.complex64,
        name = 'oscillator action'
@@ -98,9 +92,7 @@ action_spec = [
 
 reward_spec = [
     tf.TensorSpec(
-        shape = (
-            params['BATCH_SIZE'],
-        ),
+        shape = (),
         dtype = tf.dtypes.float32,
         name = 'reward'
     )
@@ -109,14 +101,11 @@ reward_spec = [
 data_spec = []
 data_spec.extend(observation_spec)
 data_spec.extend(action_spec)
-data_spec.extend(observation_spec)
-data_spec.extend(history_spec)
+data_spec.extend(reward_spec)
 
 data_spec.extend([
     tf.TensorSpec(
-        shape = (
-            params['BATCH_SIZE'],
-        ),
+        shape = (),
         dtype = tf.dtypes.bool,
         name = 'done'
     )
