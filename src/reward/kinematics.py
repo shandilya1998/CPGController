@@ -1,5 +1,16 @@
 import numpy as np
 
+class LegKinematics:
+    def __init__(self, thigh, leg):
+        self.t = thigh
+        self.leg = leg
+        self.built = False
+
+    def build(self):
+        self.built = True
+
+        
+
 class KneeFourBarKinematics:
 
     def __init__(self, L0, L1, L2, L3):

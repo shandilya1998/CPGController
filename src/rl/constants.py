@@ -4,7 +4,7 @@ action_dim = 8
 params = {
     'motion_state_size'           : 10, 
     'robot_state_size'            : 10, 
-    'dt'                          : 0.0001,
+    'dt'                          : 0.001,
     'units_output_mlp'            : [10, 20, 12, action_dim],
     'units_osc'                   : 10, 
     'units_combine'               : 10, 

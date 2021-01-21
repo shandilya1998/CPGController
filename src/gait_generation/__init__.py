@@ -1,2 +1,2 @@
-from . import gait_generator
+from gait_generation import gait_generator
 
