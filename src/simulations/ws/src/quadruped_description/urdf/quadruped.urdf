@@ -1095,11 +1095,12 @@
   <child link="leg_servo_retainer_v14"/>
 </joint>
 
-<joint name="Leg3Hip" type="continuous">
+<joint name="Leg3Hip" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
   <parent link="servo_motor_v11"/>
   <child link="leg_top_pivot_plate_v11"/>
   <axis xyz="0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg3Hip_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1112,11 +1113,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg4Hip" type="continuous">
+<joint name="Leg4Hip" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
   <parent link="servo_motor_v12"/>
   <child link="leg_top_pivot_plate_v12"/>
   <axis xyz="-0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg4Hip_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1129,11 +1131,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg2Hip" type="continuous">
+<joint name="Leg2Hip" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
   <parent link="servo_motor_v13"/>
   <child link="leg_top_pivot_plate_v13"/>
   <axis xyz="0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg2Hip_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1146,11 +1149,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg1Hip" type="continuous">
+<joint name="Leg1Hip" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
   <parent link="servo_motor_v14"/>
   <child link="leg_top_pivot_plate_v14"/>
   <axis xyz="0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg1Hip_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1211,11 +1215,12 @@
   <child link="servo_motor_v18"/>
 </joint>
 
-<joint name="Leg3Knee" type="continuous">
+<joint name="Leg3Knee" type="revolute">
   <origin rpy="0 0 0" xyz="0.040174 0.036189 -0.018807"/>
   <parent link="servo_motor_v15"/>
   <child link="leg_servo_arm_v11"/>
   <axis xyz="0.707107 -0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg3Knee_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1228,11 +1233,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg4Knee" type="continuous">
+<joint name="Leg4Knee" type="revolute">
   <origin rpy="0 0 0" xyz="0.03792 0.038443 -0.018807"/>
   <parent link="servo_motor_v16"/>
   <child link="leg_servo_arm_v12"/>
   <axis xyz="-0.707107 0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg4Knee_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1245,11 +1251,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg2Knee" type="continuous">
+<joint name="Leg2Knee" type="revolute">
   <origin rpy="0 0 0" xyz="0.03792 0.038443 -0.018807"/>
   <parent link="servo_motor_v17"/>
   <child link="leg_servo_arm_v13"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg2Knee_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1262,11 +1269,12 @@
   </actuator>
 </transmission>
 
-<joint name="Leg1Knee" type="continuous">
+<joint name="Leg1Knee" type="revolute">
   <origin rpy="0 0 0" xyz="0.040174 0.036189 -0.018807"/>
   <parent link="servo_motor_v18"/>
   <child link="leg_servo_arm_v14"/>
   <axis xyz="0.707107 0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Leg1Knee_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1279,11 +1287,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev30" type="continuous">
+<joint name="Rev30" type="revolute">
   <origin rpy="0 0 0" xyz="0.018031 0.018031 0.0"/>
   <parent link="leg_servo_arm_v11"/>
   <child link="leg_rev_v11"/>
   <axis xyz="-0.707107 0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev30_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1296,11 +1305,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev31" type="continuous">
+<joint name="Rev31" type="revolute">
   <origin rpy="0 0 0" xyz="0.020285 0.015777 0.0"/>
   <parent link="leg_servo_arm_v12"/>
   <child link="leg_rev_v12"/>
   <axis xyz="-0.707107 0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev31_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1313,11 +1323,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev32" type="continuous">
+<joint name="Rev32" type="revolute">
   <origin rpy="0 0 0" xyz="0.020285 0.015777 0.0"/>
   <parent link="leg_servo_arm_v13"/>
   <child link="leg_rev_v13"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev32_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1330,11 +1341,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev33" type="continuous">
+<joint name="Rev33" type="revolute">
   <origin rpy="0 0 0" xyz="0.018031 0.018031 0.0"/>
   <parent link="leg_servo_arm_v14"/>
   <child link="leg_rev_v14"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev33_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1347,11 +1359,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev34" type="continuous">
+<joint name="Rev34" type="revolute">
   <origin rpy="0 0 0" xyz="0.045406 0.047003 0.048402"/>
   <parent link="base_link"/>
   <child link="bottom_pivot_plate_v11"/>
   <axis xyz="-0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev34_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1364,11 +1377,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev35" type="continuous">
+<joint name="Rev35" type="revolute">
   <origin rpy="0 0 0" xyz="0.045406 0.047003 0.048402"/>
   <parent link="base_link"/>
   <child link="bottom_pivot_plate_v12"/>
   <axis xyz="-0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev35_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1381,11 +1395,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev36" type="continuous">
+<joint name="Rev36" type="revolute">
   <origin rpy="0 0 0" xyz="0.045406 0.047003 0.048402"/>
   <parent link="base_link"/>
   <child link="bottom_pivot_plate_v13"/>
   <axis xyz="-0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev36_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1398,11 +1413,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev37" type="continuous">
+<joint name="Rev37" type="revolute">
   <origin rpy="0 0 0" xyz="0.045406 0.047003 0.048402"/>
   <parent link="base_link"/>
   <child link="bottom_pivot_plate_v14"/>
   <axis xyz="-0.0 -0.0 1.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev37_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1415,11 +1431,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev42" type="continuous">
+<joint name="Rev42" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 1e-06 0.01785"/>
   <parent link="leg_rev_v11"/>
   <child link="leg_parallel_linkage_v11"/>
   <axis xyz="0.707107 -0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev42_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1432,11 +1449,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev43" type="continuous">
+<joint name="Rev43" type="revolute">
   <origin rpy="0 0 0" xyz="-0.017418 -0.018645 -0.000111"/>
   <parent link="leg_parallel_linkage_v11"/>
   <child link="leg_parallel_plate_v11"/>
   <axis xyz="0.707107 -0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev43_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1449,11 +1467,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev44" type="continuous">
+<joint name="Rev44" type="revolute">
   <origin rpy="0 0 0" xyz="-0.002254 0.002254 0.01785"/>
   <parent link="leg_rev_v12"/>
   <child link="leg_parallel_linkage_v12"/>
   <axis xyz="-0.707107 0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev44_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1466,11 +1485,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev45" type="continuous">
+<joint name="Rev45" type="revolute">
   <origin rpy="0 0 0" xyz="-0.015164 -0.020898 -0.000111"/>
   <parent link="leg_parallel_linkage_v12"/>
   <child link="leg_parallel_plate_v12"/>
   <axis xyz="0.707107 -0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev45_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1483,11 +1503,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev46" type="continuous">
+<joint name="Rev46" type="revolute">
   <origin rpy="0 0 0" xyz="0.0 1e-06 0.01785"/>
   <parent link="leg_rev_v13"/>
   <child link="leg_parallel_linkage_v13"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev46_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1500,11 +1521,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev47" type="continuous">
+<joint name="Rev47" type="revolute">
   <origin rpy="0 0 0" xyz="-0.017418 -0.018645 -0.000111"/>
   <parent link="leg_parallel_linkage_v13"/>
   <child link="leg_parallel_plate_v13"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev47_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1517,11 +1539,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev48" type="continuous">
+<joint name="Rev48" type="revolute">
   <origin rpy="0 0 0" xyz="-0.002254 0.002254 0.01785"/>
   <parent link="leg_rev_v14"/>
   <child link="leg_parallel_linkage_v14"/>
   <axis xyz="0.707107 0.707107 -0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev48_tran">
   <type>transmission_interface/SimpleTransmission</type>
@@ -1534,11 +1557,12 @@
   </actuator>
 </transmission>
 
-<joint name="Rev49" type="continuous">
+<joint name="Rev49" type="revolute">
   <origin rpy="0 0 0" xyz="-0.015164 -0.020898 -0.000111"/>
   <parent link="leg_parallel_linkage_v14"/>
   <child link="leg_parallel_plate_v14"/>
   <axis xyz="-0.707107 -0.707107 0.0"/>
+  <limit lower="-1.5707" upper="1.5707" effort="100" velocity="3" />
 </joint>
 <transmission name="Rev49_tran">
   <type>transmission_interface/SimpleTransmission</type>

@@ -1,8 +1,8 @@
 import tensorflow as tf
 import tf_agents as tfa
-from src.rl.constants import params
-from src.simulations.ws.src.quadruped_control.robot import Quadruped
-from tfa.trajectories.time_step import TimeStep, time_step_spec
+from rl.constants import params
+from simulations.ws.src.quadruped_control import robot
+from tf_agents.trajectories.time_step import TimeStep, time_step_spec
 
 class Env(tfa.environments.tf_environment.TFEnvironment):
     def __init__(self, 
@@ -28,7 +28,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self._episode_ended = False
         self._state = self.initial_state
         self.current_time_step = self._create_initial_time_step()
-        self.quadruped = Quadruped(params, GUI)
+        self.quadruped = robot.Quadruped(params, GUI)
         self.params = params
 
     def _create_initial_time_step(self):
@@ -37,7 +37,8 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             self.reward_spec
         )
         discount = tf.ones((self.batch_size,), dtype = tf.dtypes.float32)
-        step_type = tf.stack([tfa.trajectories.StepType.FIRST for i in range self.batch_size])
+        step_type = tf.stack([tfa.trajectories.StepType.FIRST \
+                        for i in range(self.batch_size)], 0)
         return TimeStep(step_type, reward, discount, self._state)
 
     def reset(self):
@@ -60,7 +61,8 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             self._episode_ended = last_step
             if last_step:
                 step_type = tfa.trajectories.time_step.StepType.LAST        
-            step_type = tf.stack([step_type for i in range self.batch_size])
+            step_type = tf.stack([step_type \
+                for i in range(self.batch_size)])
 
             discount = tf.ones((self.batch_size,), dtype = tf.dtypes.float32)
 
@@ -75,11 +77,12 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
 
 if __name__ == '__main__':
     time_step_spec = _time_step_spec(
-        params['observation_spec',
-        params'reward_spec',
+        params['observation_spec'],
+        params['reward_spec'],
     ) 
     
-    initial_state = [tf.zeros(spec.shape, spec.dtype) for spec in params['observation_spec']
+    initial_state = [tf.zeros(spec.shape, spec.dtype) \
+        for spec in params['observation_spec']]
 
     env = Env(
         time_step_spec,
