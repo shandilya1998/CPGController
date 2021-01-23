@@ -38,8 +38,10 @@ class WalkingSpider:
             urdf_path,
             self.cubeStartPos, 
             self.cubeStartOrientation,
-            flags = p.URDF_USE_SELF_COLLISION | \
-                p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT
+            flags=p.URDF_USE_INERTIA_FROM_FILE | \ 
+                p.URDF_USE_SELF_COLLISION | \ 
+                p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT | \ 
+                p.URDF_MERGE_FIXED_LINKS
         )
         self.movingJoints = [0, 2, 3, 5, 6, 8, 9, 11]
 
@@ -123,6 +125,7 @@ class WalkingSpider:
         # applied to the CoM of each link 
         # (Ant has 14 links: ground+torso+12(3links for 4legs) for legs 
         # -> (3+3)*(14)=84
+      external_forces = np.array([np.array(joint[2])
         external_forces = np.array([np.array(joint[2])
                                   for joint in JointStates])
         obs = np.append(obs, external_forces.ravel())

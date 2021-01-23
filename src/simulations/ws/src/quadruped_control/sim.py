@@ -10,12 +10,12 @@ p.setGravity(0,0,-10)
 planeId = p.loadURDF("plane.urdf")
 cubeStartPos = [0,0,0]
 cubeStartOrientation = p.getQuaternionFromEuler([0,0,0])
-robotID = p.loadURDF("simulations/ws/src/quadruped_description/urdf/quadruped.urdf",cubeStartPos, cubeStartOrientation, 
+robotID = p.loadURDF("simulations/ws/src/quadruped_description/urdf/spider_simple.urdf",cubeStartPos, cubeStartOrientation, 
                    # useMaximalCoordinates=1, ## New feature in Pybullet
                    flags=p.URDF_USE_INERTIA_FROM_FILE | \
                         p.URDF_USE_SELF_COLLISION | \
-                        p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT |\
-                        p.URDF_MERGE_FIXED_LINKS)
+                        p.URDF_MERGE_FIXED_LINKS | \
+                        p.URDF_USE_SELF_COLLISION_INCLUDE_PARENT)
 
 def get_joint_index(robotID):
     print('Robot ID:')
