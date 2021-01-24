@@ -11,9 +11,9 @@
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam command="load" file="$(find quadruped)/config/quadruped_control.yaml"/>
 
-  <!-- load the controllers joint_trajectory_controller-->
+  <!-- load the controllers joint_state_controller-->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/quadruped" args="joint_trajectory_controller"/>
+    output="screen" ns="/quadruped" args="front_right_leg1_joint_position_controller front_right_leg2_joint_position_controller front_right_leg3_joint_position_controller front_left_leg1_joint_position_controller front_left_leg2_joint_position_controller front_left_leg3_joint_position_controller back_right_leg1_joint_position_controller back_right_leg2_joint_position_controller back_right_leg3_joint_position_controller back_left_leg1_joint_position_controller back_left_leg2_joint_position_controller back_left_leg3_joint_position_controller joint_state_controller"/>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher"
     respawn="false" output="screen">
