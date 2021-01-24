@@ -7,6 +7,9 @@
     </plugin>
   </gazebo>
 
+
+  <xacro:property name="damping_value" value="10" />
+  <xacro:property name="friction_value" value="0.5" />
   <xacro:property name="scaling_factor" value="2.2" />
   <!--height:z width:y width:x -->
   <xacro:property name="body_width" value="${scaling_factor*0.108}" />
@@ -41,8 +44,8 @@
 
   <xacro:property name="leg_tip_mass" value="${(scaling_factor**3)*0.02}" />
 
-  <xacro:property name="servo_vel" value="4.0" />
-  <xacro:property name="servo_effort_limit" value="50.0" />
+  <xacro:property name="servo_vel" value="10.0" />
+  <xacro:property name="servo_effort_limit" value="100.0" />
 
   <!-- Import Rviz colors -->
   <xacro:include filename="$(find quadruped)/urdf/materials.xacro" />
@@ -95,7 +98,7 @@
   <joint name="dummy_base_joint" type="fixed">
     <parent link="dummy_link"/>
     <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 ${leg1_height}" rpy="0 0 0"/>
   </joint>
   <gazebo reference="base_link">
     <mu1>100000.0</mu1>
@@ -125,6 +128,7 @@
     <parent link="base_link"/>
     <child link="imu_link"/>
     <origin xyz="0 0 ${(body_height/2.0)+(imu_size/2.0)}" rpy="0 0 0"/>
+    <dynamics damping="${damping_value}" friction="${friction_value}" />
   </joint>
   <gazebo reference="imu_link">
     <material>Gazebo/White</material>
@@ -173,6 +177,7 @@
       <parent link="${prefix}_${suffix}_leg1"/>
       <child link="${prefix}_${suffix}_leg_tip"/>
       <origin xyz="0 ${-reflect_right*leg1_width/2.0} ${-leg1_height-leg1_depth*1.41/4.0}" rpy="0 0 0"/>
+      <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg_tip">
       <minDepth>0.0002</minDepth>
@@ -228,7 +233,7 @@
       <child link="${prefix}_${suffix}_leg1"/>
       <origin xyz="${leg2_depth*cos(pi-leg2_init_pitch)} 0 ${leg2_depth*sin(pi-leg2_init_pitch)}" rpy="0 ${-pi+leg2_init_pitch} 0"/>
       <limit lower="${leg1_joint_low}" upper="${leg1_joint_high}" effort="${servo_effort_limit}" velocity="${servo_vel}"/>
-      <dynamics friction="0.0" />
+      <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg1">
       <mu1>100000.0</mu1>
@@ -260,7 +265,7 @@
       <child link="${prefix}_${suffix}_leg2"/>
       <origin xyz="${leg3_depth/2.0} ${reflect_right*leg3_width/2.0} 0" />
       <limit lower="${leg2_joint_low}" upper="${leg2_joint_high}" effort="${servo_effort_limit}" velocity="${servo_vel}"/>
-      <dynamics friction="0.0" />
+      <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg2">
       <mu1>100000.0</mu1>
@@ -292,7 +297,7 @@
       <child link="${prefix}_${suffix}_leg3"/>
       <origin xyz="${reflect_right*body_width/2.0} ${reflect_front*body_width/2.0} 0" rpy="0 0 ${reflect_front*pi/2.0 - reflect_front*reflect_right*pi/4.0}"/>
       <limit lower="${leg3_joint_low}" upper="${leg3_joint_high}" effort="${servo_effort_limit}" velocity="${servo_vel}"/>
-      <dynamics friction="0.0" />
+      <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg3">
       <mu1>100000.0</mu1>
@@ -327,11 +332,11 @@
   <xacro:macro name="trans" params="num front_back right_left leg">
     <transmission name="tran${num}">
       <joint name="${front_back}_${right_left}_${leg}_joint">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="servo${num}">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
