@@ -1,9 +1,9 @@
 import tensorflow as tf
 
-action_dim = 8
+action_dim = 12
 params = {
-    'motion_state_size'           : 10, 
-    'robot_state_size'            : 10, 
+    'motion_state_size'           : 6, 
+    'robot_state_size'            : action_dim + 2 + 4 + 3 + 3,
     'dt'                          : 0.001,
     'units_output_mlp'            : [10, 20, 12, action_dim],
     'units_osc'                   : 10, 
