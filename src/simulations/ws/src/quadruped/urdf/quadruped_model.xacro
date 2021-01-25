@@ -165,7 +165,7 @@
         </geometry>
         <material name="black"/>
       </visual>
-      <collision>
+      <collision name="${prefix}_${suffix}_leg_tip">
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <sphere radius="${leg1_depth/2.0}"/>
@@ -181,7 +181,7 @@
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg_tip">
       <minDepth>0.0002</minDepth>
-      <collision name="${prefix}_${suffix}_leg_tip_collision_1">
+      <collision name="${prefix}_${suffix}_leg_tip_collision">
         <geometry>
           <sphere>
             <radius>${leg1_depth/2.0}</radius>
@@ -202,6 +202,20 @@
           </friction>
         </surface>
       </collision>
+      <sensor name="${prefix}_${suffix}_leg_tip_contact_sensor" type="contact">
+        <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
+          <robotNamespace>/quadruped</robotNamespace>
+          <bumperTopicName>${prefix}_${suffix}_leg_tip_contact_sensor</bumperTopicName>
+          <frameName>${prefix}_${suffix}_leg_tip</frameName>
+          <alwayson>true</alwayson>
+          <updaterate>100</updaterate>
+        </plugin>
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <collision>${prefix}_${suffix}_leg_tip_collision</collision>
+        </contact>
+      </sensor>
       <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="${prefix}_${suffix}_leg_tip_joint">

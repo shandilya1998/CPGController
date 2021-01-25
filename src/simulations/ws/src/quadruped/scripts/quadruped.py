@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 import rospy
-from rl.constants import *
-from reward.reward import FitnessFunction
+#from rl.constants import *
+#from reward.reward import FitnessFunction
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
 from control_msgs.msg import FollowJointTrajectoryAction, \
     FollowJointTrajectoryActionGoal, \
     FollowJointTrajectoryGoal
 from trajectory_msgs.msg import JointTrajectory, \
     JointTrajectoryPoint
 from std_srvs.srv import Empty
+from std_msgs.msg import Float64
 from sensor_msgs.msg import JointState
 from gazebo_msgs.srv import SetModelState, \
     SetModelStateRequest, \
@@ -57,6 +58,14 @@ class Quadruped:
             'back_left_leg1_joint',
             'back_left_leg2_joint',
             'back_left_leg3_joint'
+        ]
+
+        self.joint_pos_pub_lst = [
+            rospy.Publisher(
+                '/quadruped/{joint}/command'.format(joint = j), 
+                Float64,
+                queue_size = 10
+            ) for j in self.joint_name_lst
         ]
 
         self.pause_proxy = rospy.ServiceProxy('/gazebo/pause_physics', Empty)
@@ -109,8 +118,26 @@ class Quadruped:
             self.imu_subscriber_callback
         )
 
+    def set_all_joint_pos(self, pos):
+        """
+            param: 
+                name: pos
+                type: list
+                description: list of joint positions in the same order as the joints in 
+                    self.joint_name_lst
+        """
+        for i in range(len(self.joint_name_lst)):
+            self._set_joint_pos(i, pos[i])
+
+    def _set_joint_pos(self, joint_index, pos):
+        self.joint_pos_pub_lst[joint_index].publish(pos)
+
     def joint_state_subscriber_callback(self, joint_state):
-        self.joint_state = np.array(joint_state.position)
+        state = [st for st in joint_state.position]
+        for i, name in enumerate(joint_state.name):
+            index = self.joint_name_list.index(name)
+            state[index] = joint_state.position[i]
+        self.joint_state = np.array(state)
 
     def imu_subscriber_callback(self,imu):
         self.orientation = np.array(
@@ -141,23 +168,25 @@ class Quadruped:
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
             self.pause_proxy()
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/pause_physics service call failed')
         #set models pos from world
         rospy.wait_for_service('/gazebo/set_model_state')
         try:
             self.model_state_proxy(self.model_state_req)
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/set_model_state call failed')
         #set model's joint config
         rospy.wait_for_service('/gazebo/set_model_configuration')
         try:
             self.model_config_proxy(self.model_config_req)
-        except rospy.ServiceExcself.imu_subscriber = rospy.Subscriber('/quadruped/imu',Imu,
-                                                       self.imu_subscriber_callback)eption, e:
+        except rospy.ServiceException:
             print('/gazebo/set_model_configuration call failed')
 
     def step(self, action, history):
+        action = [tf.make_ndarray(ac)[0] for ac in action]
+        history = tf.make_ndarray(history)[0]
+        joint_pos = action[0]
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
         pos = np.array(
@@ -167,6 +196,7 @@ class Quadruped:
                 model_state.pose.position.z
             ]
         )
+
 
     def stop(self, reason):
         rospy.signal_shutdown(reason)
