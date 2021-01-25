@@ -1,1 +1,1 @@
-from . import quadruped_control, quadruped_description
+from . import quadruped, mebot
