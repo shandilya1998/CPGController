@@ -1,6 +1,8 @@
 <launch>
   <arg name="model" default="$(find quadruped)/urdf/quadruped_model.xacro" />
   <arg name="rvizconfig" default="$(find quadruped)/rviz/urdf.rviz" />
+  <arg name="db" default="false" />
+  <arg name="pipeline" default="ompl" />
 
   <include file="$(find quadruped)/launch/quadruped_gazebo.launch">
     <arg name="model" value="$(arg model)" />
