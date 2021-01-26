@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="quadruped">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="front_right_leg">
+        <joint name="front_right_leg2_joint"/>
+        <joint name="front_right_leg1_joint"/>
+        <joint name="front_right_leg3_joint"/>
+        <joint name="front_right_leg_tip_joint"/>
+    </group>
+    <group name="front_left_leg">
+        <joint name="front_left_leg3_joint"/>
+        <joint name="front_left_leg2_joint"/>
+        <joint name="front_left_leg1_joint"/>
+        <joint name="front_left_leg_tip_joint"/>
+    </group>
+    <group name="back_right_leg">
+        <joint name="back_right_leg3_joint"/>
+        <joint name="back_right_leg2_joint"/>
+        <joint name="back_right_leg1_joint"/>
+        <joint name="back_right_leg_tip_joint"/>
+    </group>
+    <group name="back_left_leg">
+        <joint name="back_left_leg3_joint"/>
+        <joint name="back_left_leg2_joint"/>
+        <joint name="back_left_leg1_joint"/>
+        <joint name="back_left_leg_tip_joint"/>
+    </group>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="front_right" parent_link="base_link" group="front_right_leg"/>
+    <end_effector name="front_left" parent_link="base_link" group="front_left_leg"/>
+    <end_effector name="back_right" parent_link="base_link" group="back_right_leg"/>
+    <end_effector name="back_left" parent_link="base_link" group="back_left_leg"/>
+</robot>

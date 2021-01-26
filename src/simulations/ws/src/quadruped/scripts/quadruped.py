@@ -18,8 +18,8 @@ from gazebo_msgs.srv import SetModelState, \
     SetModelConfigurationRequest
 from gazebo_msgs.srv import GetModelState, \
     GetModelStateRequest
-from gazebo_msgs.msg import ModelState
-from sensor_msgs.msg import Imu
+from gazebo_msgs.msg import ModelState, ContactState
+from , ContactStatesensor_msgs.msg import Imu
 
 class Quadruped:
     def __init__(self, params):
@@ -109,6 +109,31 @@ class Quadruped:
             self.joint_state_subscriber_callback
         )
 
+        self._front_right_contact_state = None
+        self._front_left_contact_state = None
+        self._back_right_contact_state = None
+        self._back_left_contact_state = None
+        self._front_right_contact_state_subscriber = rospy.Subscriber(
+            '/quadruped/front_right_leg_tip_contact_sensor',
+            ContactState,
+            self._front_right_contact_callback
+        )
+        self._front_left_contact_state_subscriber = rospy.Subscriber(
+            '/quadruped/front_left_leg_tip_contact_sensor',
+            ContactState,
+            self._front_left_contact_callback
+        )
+        self._back_right_contact_state_subscriber = rospy.Subscriber(
+            '/quadruped/back_right_leg_tip_contact_sensor',
+            ContactState,
+            self._back_right_contact_callback
+        )
+        self._back_left_contact_state_subscriber = rospy.Subscriber(
+            '/quadruped/back_left_leg_tip_contact_sensor',
+            ContactState,
+            self._back_left_contact_callback
+        )
+
         self.orientation = np.zeros(4)
         self.angular_vel = np.zeros(3)
         self.linear_acc = np.zeros(3)
@@ -117,6 +142,22 @@ class Quadruped:
             Imu,
             self.imu_subscriber_callback
         )
+
+    def _front_right_contact_callback(self, contact_state):
+        self._front_right_contact_state = contact_state
+        print(contact_state)
+
+    def _front_left_contact_callback(self, contact_state):
+        self._front_left_contact_state = contact_state
+        print(contact_state)
+
+    def _back_right_contact_callback(self, contact_state):
+        self._back_right_contact_state = contact_state
+        print(contact_state)
+
+    def _back_left_contact_callback(self, contact_state):
+        self._back_left_contact_state = contact_state
+        print(contact_state)
 
     def set_all_joint_pos(self, pos):
         """
@@ -196,7 +237,6 @@ class Quadruped:
                 model_state.pose.position.z
             ]
         )
-
 
     def stop(self, reason):
         rospy.signal_shutdown(reason)
