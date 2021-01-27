@@ -34,6 +34,8 @@
     <material name="white">
         <color rgba="1.0 1.0 1.0 1.0" />
     </material>
+    <!-- Dummmy -->
+    <link name="dummy" />
     <!-- Quadruped -->
     <link name="dummy_link">
         <visual>
@@ -50,6 +52,10 @@
 
         <gazebo reference="dummy_link" />
     </link>
+    <joint name="dummy_joint" type="fixed">
+        <parent link="dummy" />
+        <child link="dummy_link" />
+    </joint>
     <link name="base_link">
         <visual>
             <geometry>
@@ -954,120 +960,120 @@
     <transmission name="trans_front_right_leg3_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_right_leg3_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_right_leg3_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_front_right_leg2_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_right_leg2_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_right_leg2_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_front_right_leg1_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_right_leg1_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_right_leg1_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_front_left_leg3_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_left_leg3_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_left_leg3_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_front_left_leg2_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_left_leg2_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_left_leg2_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_front_left_leg1_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_left_leg1_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="front_left_leg1_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_right_leg3_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_right_leg3_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_right_leg3_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_right_leg2_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_right_leg2_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_right_leg2_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_right_leg1_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_right_leg1_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_right_leg1_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_left_leg3_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_left_leg3_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_left_leg3_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_left_leg2_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_left_leg2_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_left_leg2_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
     <transmission name="trans_back_left_leg1_joint">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="back_left_leg1_joint">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="back_left_leg1_joint_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
     </transmission>
