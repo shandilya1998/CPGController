@@ -4,11 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1
         - /Global Options1
         - /Status1
         - /RobotModel1
         - /TF1
+        - /MotionPlanning1
       Splitter Ratio: 0.74256
     Tree Height: 664
   - Class: rviz/Selection
@@ -20,7 +20,6 @@ Panels:
       - /Publish Point1
     Name: Tool Properties
     Splitter Ratio: 0.588679016
-
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -54,7 +53,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    Alpha: 0.5
+    - Alpha: 0.5 
       Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
@@ -160,7 +159,7 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    Class: rviz/TF
+    - Class: rviz/TF
       Enabled: false
       Frame Timeout: 15
       Frames:
@@ -787,7 +786,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: dummy
+    Fixed Frame: dummy_link
   Name: root
   Tools:
     - Class: rviz/Interact
@@ -815,7 +814,7 @@ Visualization Manager:
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.509797
-      Target Frame: /dummy
+      Target Frame: /dummy_link
       Value: XYOrbit (rviz)
       Yaw: 5.65995
     Saved: ~

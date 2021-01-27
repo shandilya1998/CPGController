@@ -6,7 +6,7 @@
   <arg name="debug" value="true"/>
   <arg name="use_rviz" default="true" />
 
-  <include file="$(find robot)/launch/planning_context.launch">
+  <include file="$(find quadruped)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
   </include>
 
@@ -42,7 +42,7 @@
     <param name="publish_frequency" type="double" value="60.0" />
   </node>
 
-  <include file="$(find robot)/launch/move_group.launch">
+  <include file="$(find quadruped)/launch/move_group.launch">
     <arg name="allow_trajectory_execution" value="true"/>
     <arg name="fake_execution" value="true"/>
     <arg name="info" value="true"/>
@@ -50,7 +50,7 @@
     <arg name="pipeline" value="$(arg pipeline)"/>
   </include>
 
-  <include file="$(find robot)/launch/default_warehouse_db.launch" if="$(arg db)">
+  <include file="$(find quadruped)/launch/default_warehouse_db.launch" if="$(arg db)">
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
