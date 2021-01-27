@@ -21,6 +21,27 @@ from gazebo_msgs.srv import GetModelState, \
 from gazebo_msgs.msg import ModelState, ContactState
 from , ContactStatesensor_msgs.msg import Imu
 
+class Joint:
+    def __init__(self, params):
+        self.params = params
+
+
+class FrontRightLeg(Joint):
+    def __init__(self, params):
+        super(FrontRightLeg, self).__init__(params)
+
+class FrontLeftLeg(Joint):
+    def __init__(self, params):
+        super(FrontRightLeg, self).__init__(params)
+
+class BackLeftLeg(Joint):
+    def __init__(self, params):
+        super(FrontRightLeg, self).__init__(params)
+
+class BackRightLeg(Joint):
+    def __init__(self, params):
+        super(FrontRightLeg, self).__init__(params)
+
 class Quadruped:
     def __init__(self, params):
         rospy.init_node('joint_position_node')
