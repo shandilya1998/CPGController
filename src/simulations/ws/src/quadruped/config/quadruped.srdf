@@ -33,11 +33,16 @@
         <joint name="back_left_leg1_joint"/>
         <joint name="back_left_leg_tip_joint"/>
     </group>
+    <group name="base">
+        <joint name="dummy_joint"/>
+        <joint name="dummy_base_joint"/>
+        <joint name="base_imu_joint"/>
+    </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="front_right_leg" parent_link="base_link" group="front_right_leg"/>
-    <end_effector name="front_left_leg" parent_link="base_link" group="front_left_leg"/>
-    <end_effector name="back_right_leg" parent_link="base_link" group="back_right_leg"/>
-    <end_effector name="back_left_leg" parent_link="base_link" group="back_left_leg"/>
+    <end_effector name="front_right_leg" parent_link="base_link" group="front_right_leg" parent_group="base"/>
+    <end_effector name="front_left_leg" parent_link="base_link" group="front_left_leg" parent_group="base"/>
+    <end_effector name="back_right_leg" parent_link="base_link" group="back_right_leg" parent_group="base"/>
+    <end_effector name="back_left_leg" parent_link="base_link" group="back_left_leg" parent_group="base"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="back_left_leg1" link2="back_left_leg2" reason="Adjacent"/>
     <disable_collisions link1="back_left_leg1" link2="back_left_leg3" reason="Never"/>
