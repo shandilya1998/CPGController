@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 action_dim = 12
 params = {
@@ -119,3 +120,43 @@ specs = {
 }
 
 params.update(specs)
+
+robot_data = {
+    'link_name_lst' :  [ 
+        'quadruped::base_link',
+        'quadruped::front_right_leg1',
+        'quadruped::front_right_leg2',
+        'quadruped::front_right_leg3',
+        'quadruped::front_left_leg1',
+        'quadruped::front_left_leg2',
+        'quadruped::front_left_leg3',
+        'quadruped::back_right_leg1',
+        'quadruped::back_right_leg2',
+        'quadruped::back_right_leg3',
+        'quadruped::back_left_leg1',
+        'quadruped::back_left_leg2',
+        'quadruped::back_left_leg3'
+    ],
+    'joint_name_lst' : [ 
+        'front_right_leg1_joint',
+        'front_right_leg2_joint',
+        'front_right_leg3_joint',
+        'front_left_leg1_joint',
+        'front_left_leg2_joint',
+        'front_left_leg3_joint',
+        'back_right_leg1_joint',
+        'back_right_leg2_joint',
+        'back_right_leg3_joint',
+        'back_left_leg1_joint',
+        'back_left_leg2_joint',
+        'back_left_leg3_joint'
+    ],
+    'starting_pos' : np.array([
+        -0.01, 0.01, 0.01,
+        -0.01, 0.01, -0.01,
+        -0.01, 0.01, -0.01,
+        -0.01, 0.01, 0.01
+    ]), 
+}
+
+params.update(robot_data)
