@@ -14,7 +14,7 @@ class Kinematics:
         self.joint_name_lst = joint_name_lst
         self.quadruped = moveit_commander.RobotCommander()
         self.group_names = self.quadruped.get_group_names()
-        
+
         self.end_effector_link_name_lst = []
         self.front_right_leg = moveit_commander.MoveGroupCommander(
             'front_right_leg'
@@ -40,7 +40,7 @@ class Kinematics:
         self.end_effector_link_name_lst.append(
             self.back_left_leg.get_end_effector_link()
         )
-        
+
         self.compute_fk_proxy = rospy.ServiceProxy(
             'compute_fk', 
             GetPositionFK
