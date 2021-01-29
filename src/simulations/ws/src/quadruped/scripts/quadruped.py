@@ -116,26 +116,38 @@ class Quadruped:
         rospy.init_node('joint_position_node')
         self.nb_joints = params['action_dim']
         self.nb_links = params['action_dim'] + 1
+
         self.motion_state_shape = tuple(
             params['observation_spec'][0].shape
         )
-        self.motion_state = tf.zeros(
+        self.motion_state_dtype = params[
+            'observation_spec'
+        ][0].dtype.as_numpy_dtype
+        self.motion_state = np.zeros(
             shape = self.motion_state_shape,
-            dtype = params['observation_spec'][0].dtype.as_numpy_dtype
+            dtype = self.motion_state_dtype
         )
+
         self.robot_state_shape = tuple(
             params['observation_spec'][1].shape
         )
-        self.robot_state = tf.zeros(
+        self.robot_state_dtype = params[
+            'observation_spec'
+        ][1].dtype.as_numpy_dtype
+        self.robot_state = np.zeros(
             shape = self.robot_state_shape
-            dtype = params['observation_spec'][1].dtype.as_numpy_dtype
+            dtype = self.robot_state_dtype
         )
+
         self.osc_state_shape = tuple(
             params['observation_spec'][2].shape
         )
-        self.osc_state = .zeros(
+        self.osc_state_dtype = params[
+            'observation_spec'
+        ][2].dtype.as_numpy_dtype
+        self.osc_state = np.zeros(
             shape = self.osc_state_shape,
-            dtype = params['observation_spec'][2].dtype.as_numpy_dtype
+            dtype = self.osc_state_dtype
         )
         self.history_shape = tuple(
             params['observation_spec'][3].shape
@@ -157,6 +169,11 @@ class Quadruped:
         )
 
         self.starting_pos = self.params['starting_pos']
+        self.history = np.repeat(
+            np.expand_dims(self.starting_pos, 0),
+            self.params['rnn_steps'] - 1,
+            0
+        )
 
         self.pause_proxy = rospy.ServiceProxy(
             '/gazebo/pause_physics', 
@@ -221,6 +238,12 @@ class Quadruped:
             self.imu_subscriber_callback
         )
 
+        self.reward = 0.0
+        self.done = False
+        self.episode_start_time = 0.0
+        self.max_sim_time = 15.0
+        self.pos_z_limit = 0.18
+
     def joint_state_subscriber_callback(self, joint_state):
         state = [st for st in joint_state.position]
         for i, name in enumerate(joint_state.name):
@@ -283,62 +306,116 @@ class Quadruped:
 
         rospy.sleep(0.5)
         self.reward = 0.0
-        self.state = np.zeros(self.state_shape)
+        
+        self.osc_state = np.zeros(
+            shape = self.osc_state_shape,
+            dtype = self.osc_state_dtype
+        )
+        self.history = np.repeat(
+            np.expand_dims(self.starting_pos, 0),
+            self.params['rnn_steps'] - 1,
+            0
+        )
+
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        pos = np.array([model_state.pose.position.x, model_state.pose.position.y, model_state.pose.position.z])
+        pos = np.array([
+            model_state.pose.position.x, 
+            model_state.pose.position.y, 
+            model_state.pose.position.z
+        ])
         done = False
         self.last_joint = self.joint_state
         self.last_pos = pos
         diff_joint = np.zeros(self.nb_joints)
-        normed_js = self.normalize_joint_state(self.joint_state)
-        self.state = np.concatenate((normed_js,diff_joint,self.orientation,self.angular_vel,self.linear_acc_coeff*self.linear_acc)).reshape(1,-1)
+        self.robot_state = np.concatenate([
+            self.joint_state,
+            diff_joint,
+            self.orientation,
+            self.angular_vel,
+            self.linear_acc
+        ]).reshape(self.robot_state_shape)
+        self.motion_state = np.append(
+            pos,
+            [0],
+            0
+        )
         self.episode_start_time = rospy.get_time()
         self.last_action = np.zeros(self.nb_joints)
-        return self.state, done
+        self.reward = 0.0
+        return [
+            self.motion_state,
+            self.robot_state,
+            self.osc_state,
+            self.history
+        ], self.reward, done
 
-    def step(self, action):
-        print('action:',action)
-        action = action * self.joint_pos_range * self.action_coeff
-        self.joint_pos = np.clip(self.joint_pos + action,a_min=self.joint_pos_low,a_max=self.joint_pos_high)
+    def step(self, action, desired_heading):
+        action = [
+            tf.make_ndarray(
+                tf.make_tensor_proto(a)
+            ) for a in action
+        ]
+        print('action:', action)
+        self.joint_pos = action[0][0][0]
+        self.osc_state = action[1][0]
         self.all_joints.move(self.joint_pos)
-        print('joint pos:',self.joint_pos)
+        print('joint pos:', self.joint_pos)
 
-        rospy.sleep(15.0/60.0)
+        #rospy.sleep(15.0/60.0)
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        pos = np.array([model_state.pose.position.x, model_state.pose.position.y, model_state.pose.position.z])
+        pos = np.array([
+            model_state.pose.position.x, 
+            model_state.pose.position.y, 
+            model_state.pose.position.z]
+        )
 
-        self.reward = self.reward_coeff * (pos[1] - self.last_pos[1] - np.sqrt((pos[0]-self.last_pos[0])**2))
-        print('pos reward:', self.reward)
-        self.reward -=  0.75 * np.sqrt(np.sum((self.orientation)**2))
+        diff_joint = self.joint_state - self.last_joint
 
-        normed_js = self.normalize_joint_state(self.joint_state)
-        #self.reward -= 0.25 * np.sqrt(np.sum((self.normed_sp - normed_js)**2))
+        self.robot_state = np.concatenate([
+            self.joint_state, 
+            diff_joint,
+            self.orientation,
+            self.angular_vel,
+            self.linear_acc
+        ]).reshape(self.robot_state_shape)
 
-        diff_joint = self.diff_state_coeff * (normed_js - self.last_joint)
+        self.motion_state = np.append(
+            pos,
+            [desired_heading],
+            0
+        )
 
-        self.state = np.concatenate((normed_js,diff_joint,self.orientation,self.angular_vel,self.linear_acc_coeff*self.linear_acc)).reshape(1,-1)
+        self.history = np.concatenate(
+            [
+                self.history[1:, :],
+                self.joint_pos
+            ],
+            0
+        )
 
-        self.last_joint = normed_js
+        self.last_joint = self.joint_state
         self.last_pos = pos
-        self.last_action = action
 
         curr_time = rospy.get_time()
         print('time:',curr_time - self.episode_start_time)
+
         if (curr_time - self.episode_start_time) > self.max_sim_time:
             done = True
             self.reset()
         elif(model_state.pose.position.z < self.pos_z_limit):
             done = False
-            self.reward += -1.0
         else:
             done = False
-        print('state',self.state)
 
-        self.reward = np.clip(self.reward,a_min=-10.0,a_max=10.0)
-        return self.state, self.reward, done
+        return [
+            self.motion_state,
+            self.robot_state,
+            self.osc_state,
+            self.history
+        ], self.reward, done
 
 
     def stop(self, reason):
