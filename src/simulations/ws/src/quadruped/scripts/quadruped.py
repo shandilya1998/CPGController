@@ -20,6 +20,7 @@ from gazebo_msgs.srv import GetModelState, \
     GetModelStateRequest
 from gazebo_msgs.msg import ModelState, ContactState
 from sensor_msgs.msg import Imu
+from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -243,6 +244,11 @@ class Quadruped:
         self.episode_start_time = 0.0
         self.max_sim_time = 15.0
         self.pos_z_limit = 0.18
+
+        self.kinematics = Kinematics(
+            self.params,
+            self.joint_name_lst
+        )
 
     def joint_state_subscriber_callback(self, joint_state):
         state = [st for st in joint_state.position]
