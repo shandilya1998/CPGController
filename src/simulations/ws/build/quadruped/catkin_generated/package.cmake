@@ -1,6 +1,6 @@
 set(_CATKIN_CURRENT_PACKAGE "quadruped")
 set(quadruped_VERSION "0.0.0")
-set(quadruped_MAINTAINER "yjchoi <yjchoi@todo.todo>")
+set(quadruped_MAINTAINER "shandilya <shandilya.shreyas@gmail.com>")
 set(quadruped_PACKAGE_FORMAT "2")
 set(quadruped_BUILD_DEPENDS "rospy")
 set(quadruped_BUILD_EXPORT_DEPENDS "rospy")
