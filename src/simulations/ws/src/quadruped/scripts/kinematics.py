@@ -46,7 +46,7 @@ class Kinematics:
             GetPositionFK
         )
 
-    def get_current_end_effeector_fk(self):
+    def get_current_end_effector_fk(self):
         msg = []
         msg.append(self.front_right_leg.get_current_pose())
         msg.append(self.front_left_leg.get_current_pose())

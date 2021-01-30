@@ -46,10 +46,10 @@ class Leg:
 
     def _contact_callback(self, contact_state):
         self.contact_state = contact_state
- 
+
     def move(self, pos):
-        msg = FollowJointTrajectoryActionGoal()
-        msg.goal.trajectory.joint_names = self.joint_name_lst
+        jtp_msg = JointTrajectory()
+        jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
         point.positions = pos
         point.velocities = self.jtp_zeros
@@ -72,7 +72,6 @@ class Leg:
         point.time_from_start = rospy.Duration(0.0001)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
-
 
 class AllJoints:
     def __init__(self, params, joint_name_lst):
@@ -114,7 +113,7 @@ class AllJoints:
 
 class Quadruped:
     def __init__(self, params):
-        rospy.init_node('joint_position_node')
+        #rospy.init_node('joint_position_node')
         self.nb_joints = params['action_dim']
         self.nb_links = params['action_dim'] + 1
 
@@ -253,7 +252,7 @@ class Quadruped:
     def joint_state_subscriber_callback(self, joint_state):
         state = [st for st in joint_state.position]
         for i, name in enumerate(joint_state.name):
-            index = self.joint_name_list.index(name)
+            index = self.joint_name_lst.index(name)
             state[index] = joint_state.position[i]
         self.joint_state = np.array(state)
 
