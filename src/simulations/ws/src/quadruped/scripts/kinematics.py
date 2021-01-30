@@ -10,7 +10,6 @@ from std_msgs.msg import Header
 class Kinematics:
     def __init__(self, params, joint_name_lst):
         self.params = params
-        rospy.init_node('get_fk', anonymous = True)
         self.joint_name_lst = joint_name_lst
         self.quadruped = moveit_commander.RobotCommander()
         self.group_names = self.quadruped.get_group_names()

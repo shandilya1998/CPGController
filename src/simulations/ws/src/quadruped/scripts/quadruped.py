@@ -18,7 +18,7 @@ from gazebo_msgs.srv import SetModelState, \
     SetModelConfigurationRequest
 from gazebo_msgs.srv import GetModelState, \
     GetModelStateRequest
-from gazebo_msgs.msg import ModelState, ContactState
+from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 
@@ -40,12 +40,68 @@ class Leg:
             '/quadruped/{leg_name}_tip_contact_sensor'.format(
                 leg_name = leg_name
             ),
-            ContactState,
-            self._contact_callback
+            ContactsState,
+            self.contact_callback
         )
 
-    def _contact_callback(self, contact_state):
-        self.contact_state = contact_state
+    def contact_callback(self, contact_state):
+        frame = contact_state.header.frame_id
+        states = contact_state.states
+        force = np.mean(
+            [[
+                state.total_wrench.force.x,
+                state.total_wrench.force.y,
+                state.total_wrench.force.z
+            ] for state in states],
+            0
+        )
+        torque = np.mean(
+            [[
+                state.total_wrench.torque.x,
+                state.total_wrench.torque.y,
+                state.total_wrench.torque.z
+            ] for state in states],
+            0
+        )
+        position = np.mean(
+            [[
+                state.contact_positions[0].x,
+                state.contact_positions[0].y,
+                state.contact_positions[0].z
+            ] for state in states],
+            0
+        )
+        normal = np.mean(
+            [[
+                state.contact_normals[0].x,
+                state.contact_normals[0].y,
+                state.contact_normals[0].z
+            ] for state in states],
+            0
+        )
+        self.contact_state = {
+            'frame' : frame,
+            'force' : {
+                'x' : force[0],
+                'y' : force[1],
+                'z' : force[2]
+            },
+            'torque' : {
+                'x' : torque[0],
+                'y' : torque[1],
+                'z' : torque[2],
+            },
+            'position' : {
+                'x' : position[0],
+                'y' : position[1],
+                'z' : position[2]
+            },
+            'normal' : {
+                'x' : normal[0],
+                'y' : normal[1],
+                'z' : normal[2]
+            }
+        }
 
     def move(self, pos):
         jtp_msg = JointTrajectory()
@@ -74,29 +130,47 @@ class Leg:
         self.jtp.publish(jtp_msg)
 
 class AllJoints:
-    def __init__(self, params, joint_name_lst):
+    def __init__(self, params):
         self.params = params
-        self.joint_name_lst = joint_name_lst
+        self.joint_name_lst = self.params['joint_name_lst']
+        self.leg_name_lst = self.params['leg_name_lst']
         self.front_right = Leg(
             self.params,
-            'front_right_leg',
+            self.leg_name_lst[0],
             self.joint_name_lst[:3]
         )
         self.front_left = Leg(
             self.params,
-            'front_left_leg',
+            self.leg_name_lst[1],
             self.joint_name_lst[3:6]
         )
         self.back_right = Leg(
             self.params,
-            'back_right_leg',
+            self.leg_name_lst[2],
             self.joint_name_lst[6:9]
         )
         self.back_left = Leg(
             self.params,
-            'back_left_leg',
+            self.leg_name_lst[3],
             self.joint_name_lst[9:]
         )
+
+    def get_leg_handle(self, leg):
+        if leg == self.leg_name_lst[0]:
+            return self.front_right
+        elif leg == self.leg_name_lst[1]:
+            return self.front_left
+        elif leg == self.leg_name_lst[2]:
+            return self.back_right
+        elif leg == self.leg_name_lst[3]:
+            return self.back_left
+        else:
+            raise ValueError('Leg can be one of `front_right_leg, \
+                front_left_leg, \
+                back_right_leg, \
+                back_left_leg`, \
+                but got {leg}'.format(leg = leg)
+            )
 
     def reset_move(self, pos):
         self.front_right.reset_move(pos[:3])
@@ -113,7 +187,7 @@ class AllJoints:
 
 class Quadruped:
     def __init__(self, params):
-        #rospy.init_node('joint_position_node')
+        rospy.init_node('joint_position_node')
         self.nb_joints = params['action_dim']
         self.nb_links = params['action_dim'] + 1
 
@@ -160,12 +234,12 @@ class Quadruped:
         )
         self.params = params
         self.link_name_lst = self.params['link_name_lst']
+        self.leg_name_lst = self.params['leg_name_lst']
         self.leg_link_name_lst = self.link_name_lst[1:]
         self.joint_name_lst = self.params['joint_name_lst']
 
         self.all_joints = AllJoints(
             self.params,
-            self.joint_name_lst
         )
 
         self.starting_pos = self.params['starting_pos']
@@ -222,7 +296,7 @@ class Quadruped:
         self.get_model_state_req.model_name = 'quadruped'
         self.get_model_state_req.relative_entity_name = 'world'
 
-        
+
         self.joint_state_subscriber = rospy.Subscriber(
             '/quadruped/joint_states',
             JointState,
@@ -249,6 +323,14 @@ class Quadruped:
             self.joint_name_lst
         )
 
+    def get_contact(self):
+        contacts = {
+            leg : {
+                self.all_joints.get_leg_handle(leg).contact_state
+            } for i, leg in enumerate(self.leg_name_lst)
+        }
+        return contacts
+
     def joint_state_subscriber_callback(self, joint_state):
         state = [st for st in joint_state.position]
         for i, name in enumerate(joint_state.name):
@@ -256,7 +338,8 @@ class Quadruped:
             state[index] = joint_state.position[i]
         self.joint_state = np.array(state)
 
-    def imu_subscriber_callback(self,imu):
+
+    def imu_subscriber_callback(self, imu):
         self.orientation = np.array(
             [
                 imu.orientation.x,
@@ -311,7 +394,7 @@ class Quadruped:
 
         rospy.sleep(0.5)
         self.reward = 0.0
-        
+
         self.osc_state = np.zeros(
             shape = self.osc_state_shape,
             dtype = self.osc_state_dtype
@@ -366,7 +449,7 @@ class Quadruped:
         self.osc_state = action[1][0].tolist()
         self.all_joints.move(self.joint_pos)
         print('joint pos:', self.joint_pos)
-        
+
         #rospy.sleep(15.0/60.0)
 
         rospy.wait_for_service('/gazebo/get_model_state')
@@ -422,6 +505,8 @@ class Quadruped:
             self.history
         ], self.reward, done
 
+    def start(self, count):
+        rospy.spin()
 
     def stop(self, reason):
         rospy.signal_shutdown(reason)

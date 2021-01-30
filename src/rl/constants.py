@@ -122,6 +122,12 @@ specs = {
 params.update(specs)
 
 robot_data = {
+    'leg_name_lst' : [
+        'front_right_leg',
+        'front_left_leg',
+        'back_right_leg',
+        'back_left_leg'
+    ],
     'link_name_lst' :  [ 
         'quadruped::base_link',
         'quadruped::front_right_leg1',
