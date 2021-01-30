@@ -136,7 +136,7 @@ class Quadruped:
             'observation_spec'
         ][1].dtype.as_numpy_dtype
         self.robot_state = np.zeros(
-            shape = self.robot_state_shape
+            shape = self.robot_state_shape,
             dtype = self.robot_state_dtype
         )
 
@@ -286,19 +286,19 @@ class Quadruped:
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
             self.pause_proxy()
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/pause_physics service call failed')
         #set models pos from world
         rospy.wait_for_service('/gazebo/set_model_state')
         try:
             self.model_state_proxy(self.model_state_req)
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/set_model_state call failed')
         #set model's joint config
         rospy.wait_for_service('/gazebo/set_model_configuration')
         try:
             self.model_config_proxy(self.model_config_req)
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/set_model_configuration call failed')
 
         self.joint_pos = self.starting_pos
@@ -307,7 +307,7 @@ class Quadruped:
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
             self.unpause_proxy()
-        except rospy.ServiceException, e:
+        except rospy.ServiceException:
             print('/gazebo/unpause_physics service call failed')
 
         rospy.sleep(0.5)
@@ -363,11 +363,11 @@ class Quadruped:
             ) for a in action
         ]
         print('action:', action)
-        self.joint_pos = action[0][0][0]
-        self.osc_state = action[1][0]
+        self.joint_pos = action[0][0][0].tolist()
+        self.osc_state = action[1][0].tolist()
         self.all_joints.move(self.joint_pos)
         print('joint pos:', self.joint_pos)
-
+        
         #rospy.sleep(15.0/60.0)
 
         rospy.wait_for_service('/gazebo/get_model_state')

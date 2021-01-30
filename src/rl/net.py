@@ -1,6 +1,5 @@
 import tensorflow as tf
 from layers import actor, critic
-from rl.constants import params
 
 class ActorNetwork(object):
     def __init__(self, params):
