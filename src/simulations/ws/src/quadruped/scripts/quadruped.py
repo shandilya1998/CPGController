@@ -391,8 +391,14 @@ class Quadruped:
         )
 
         self._counter_1 = 0
-        self.counter_1 = 0
+        self.counter_1 = 0 # Counter for support line change
         self.dt = self.params['dt']
+        self.A = {'leg_name' : None}
+        self.B = {'leg_name' : None}
+        self.AF = {'leg_name' : None}
+        self.BF = {'leg_name' : None}
+        self.AL = {'leg_name' : None}
+        self.BL = {'leg_name' : None}
 
     def get_contact(self):
         contacts = {
@@ -509,22 +515,20 @@ class Quadruped:
             self.history
         ], self.reward, done
 
-    def get_reward(self, action, history):
-        """
-            Need to complete A, B, AF, BF, AL and BL computation
-        """
+    def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
         if AB:
             self._counter_1 += 1
-            if self.AF.leg_name != AB[0].leg_name:
-                self.AF = self.A
+            if self.A.leg_name != AB[0].leg_name:
+                self.AF.update(self.A)
                 self.counter_1 = copy.deepcopy(self._counter_1)
                 self_counter_1 = 0
-            if self.BF.leg_name != AB[1].leg_name:
-                self.BF = self.B
+            if self.B.leg_name != AB[1].leg_name:
+                self.BF.update(self.B)
                 self.counter_1 = copy.deepcopy(self._counter_1)
                 self_counter_1 = 0
-            self.A, self.B = AB
+            self.A.update(AB[0])•
+            self.B.update(AB[1])
             A_name = self.A.leg_name
             B_name = self.B.leg_name
             _A_name = None
@@ -561,8 +565,41 @@ class Quadruped:
                         current_pose[leg]['position']['z']
                 }
             }
-            self.AL = 
-            self.BL = self.all_legs.get_leg_handle(B_name)
+            m = {
+                0 : 'x',
+                1 : 'y',
+                2 : 'z'
+            }
+            self.AL.update({
+                'torque' : None,
+                'force' : None,
+                'position' : np.array(
+                    [
+                        self.A['position'][i] + \
+                            pose[A_name]['position'][m[i]] - \
+                            current_pose[A_name]['position'][m[i]] \
+                            for i in range(3)
+                    ]
+                ),
+                'normal' : self.A['normal'],
+                'flag' : True,
+                'leg_name' : A_name
+            })
+            self.BL.update({
+                'torque' : None,
+                'force' : None,
+                'position' : np.array(
+                    [
+                        self.B['position'][i] + \
+                            pose[B_name]['position'][m[i]] - \
+                            current_pose[B_name]['position'][m[i]] \
+                            for i in range(3)
+                    ]
+                ),
+                'normal' : self.B['normal'],
+                'flag' : True,
+                'leg_name' : B_name
+            })
             self.compute_reward.build(
                 self.counter_1 * self.dt,
                 self.A,
@@ -573,7 +610,22 @@ class Quadruped:
                 self.BL
             )
         else:
-            return -10
+            raise NotImplementedError
+
+    def get_reward(self, action, history):
+        """
+            Need to complete A, B, AF, BF, AL and BL computation
+        """
+        self.set_support_lines(action)
+        self.compute_reward.build(
+            self.counter_1 * self.dt,
+            self.A,
+            self.B,
+            self.AF,
+            self.BF,
+            self.AL,
+            self.BL
+        )
 
     def step(self, action, desired_heading):
         action = [
