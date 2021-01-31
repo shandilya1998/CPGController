@@ -8,33 +8,34 @@ from std_msgs.msg import Header
 # https://groups.google.com/g/moveit-users/c/Wb7TqHuf-ig
 
 class Kinematics:
-    def __init__(self, params, joint_name_lst):
+    def __init__(self, params):
         self.params = params
-        self.joint_name_lst = joint_name_lst
+        self.joint_name_lst = self.params['joint_name_lst']
+        self.leg_name_lst = self.params['leg_name_lst']
         self.quadruped = moveit_commander.RobotCommander()
         self.group_names = self.quadruped.get_group_names()
 
         self.end_effector_link_name_lst = []
         self.front_right_leg = moveit_commander.MoveGroupCommander(
-            'front_right_leg'
+            self.leg_name_lst[0]
         )
         self.end_effector_link_name_lst.append(
             self.front_right_leg.get_end_effector_link()
         )
         self.front_left_leg = moveit_commander.MoveGroupCommander(
-            'front_left_leg'
+            self.leg_name_lst[1]
         )
         self.end_effector_link_name_lst.append(
             self.front_left_leg.get_end_effector_link()
         )
         self.back_right_leg = moveit_commander.MoveGroupCommander(
-            'back_right_leg'
+            self.leg_name_lst[2]
         )
         self.end_effector_link_name_lst.append(
             self.back_right_leg.get_end_effector_link()
         )
         self.back_left_leg = moveit_commander.MoveGroupCommander(
-            'back_left_leg'
+            self.leg_name_lst[3]
         )
         self.end_effector_link_name_lst.append(
             self.back_left_leg.get_end_effector_link()
@@ -52,13 +53,13 @@ class Kinematics:
         msg.append(self.back_right_leg.get_current_pose())
         msg.append(self.back_left_leg.get_current_pose())
         pose = {
-            self.end_effector_link_name_lst[i] : {
-                'position' : { 
+            self.leg_name_lst[i] : {
+                'position' : {
                     'x' : item.pose.position.x,
                     'y' : item.pose.position.y,
                     'z' : item.pose.position.z
-                },  
-                'orientation' : { 
+                },
+                'orientation' : {
                     'x' : item.pose.orientation.x,
                     'y' : item.pose.orientation.y,
                     'z' : item.pose.orientation.z,
@@ -79,7 +80,7 @@ class Kinematics:
             rs
         )
         pose = {
-            end_effector : {
+            leg : {
                 'position' : {
                     'x' : msg.pose_stamped[i].pose.position.x,
                     'y' : msg.pose_stamped[i].pose.position.y,
@@ -91,8 +92,8 @@ class Kinematics:
                     'z' : msg.pose_stamped[i].pose.orientation.z,
                     'w' : msg.pose_stamped[i].pose.orientation.w
                 }
-            } for i, end_effector in enumerate(
-                self.end_effector_link_name_lst
+            } for i, leg in enumerate(
+                self.leg_name_lst
             )
         }
         return pose

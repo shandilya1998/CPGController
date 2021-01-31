@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import copy
 #from rl.constants import *
 #from reward.reward import FitnessFunction
 import numpy as np
@@ -21,6 +22,18 @@ from gazebo_msgs.srv import GetModelState, \
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
+from reward.mod_zmp import ModZMP
+
+class FitnessFunction:
+    def __init__(self, params):
+        self.params = params
+
+    def build(self, t, A, B, AL, BL, AF, BF):
+        self.A = A
+        self.B = B
+
+    def __call__(self):
+        return None
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -44,64 +57,61 @@ class Leg:
             self.contact_callback
         )
 
-    def contact_callback(self, contact_state):
-        frame = contact_state.header.frame_id
+    def get_processed_contact_state(self):
+        contact_state = self.contact_state
         states = contact_state.states
-        force = np.mean(
-            [[
-                state.total_wrench.force.x,
-                state.total_wrench.force.y,
-                state.total_wrench.force.z
-            ] for state in states],
-            0
-        )
-        torque = np.mean(
-            [[
-                state.total_wrench.torque.x,
-                state.total_wrench.torque.y,
-                state.total_wrench.torque.z
-            ] for state in states],
-            0
-        )
-        position = np.mean(
-            [[
-                state.contact_positions[0].x,
-                state.contact_positions[0].y,
-                state.contact_positions[0].z
-            ] for state in states],
-            0
-        )
-        normal = np.mean(
-            [[
-                state.contact_normals[0].x,
-                state.contact_normals[0].y,
-                state.contact_normals[0].z
-            ] for state in states],
-            0
-        )
-        self.contact_state = {
-            'frame' : frame,
-            'force' : {
-                'x' : force[0],
-                'y' : force[1],
-                'z' : force[2]
-            },
-            'torque' : {
-                'x' : torque[0],
-                'y' : torque[1],
-                'z' : torque[2],
-            },
-            'position' : {
-                'x' : position[0],
-                'y' : position[1],
-                'z' : position[2]
-            },
-            'normal' : {
-                'x' : normal[0],
-                'y' : normal[1],
-                'z' : normal[2]
-            }
+        force = None
+        position = None
+        torque = None
+        normal = None
+        flag = False
+        if states:
+            flag = True
+            force = np.mean(
+                [[
+                    state.total_wrench.force.x,
+                    state.total_wrench.force.y,
+                    state.total_wrench.force.z
+                ] for state in states],
+                0
+            )
+            torque = np.mean(
+                [[
+                    state.total_wrench.torque.x,
+                    state.total_wrench.torque.y,
+                    state.total_wrench.torque.z
+                ] for state in states],
+                0
+            )
+            position = np.mean(
+                [[
+                    state.contact_positions[0].x,
+                    state.contact_positions[0].y,
+                    state.contact_positions[0].z
+                ] for state in states],
+                0
+            )
+            normal = np.mean(
+                [[
+                    state.contact_normals[0].x,
+                    state.contact_normals[0].y,
+                    state.contact_normals[0].z
+                ] for state in states],
+                0
+            )
+
+        contact_state = {
+            'force' : force,
+            'torque' : torque,
+            'position' : position,
+            'normal' : normal,
+            'flag' : flag,
+            'leg_name' : self.leg_name
         }
+        return contact_state
+
+    def contact_callback(self, contact_state):
+        self.contact_state = contact_state
 
     def move(self, pos):
         jtp_msg = JointTrajectory()
@@ -129,7 +139,7 @@ class Leg:
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
 
-class AllJoints:
+class AllLegs:
     def __init__(self, params):
         self.params = params
         self.joint_name_lst = self.params['joint_name_lst']
@@ -154,6 +164,60 @@ class AllJoints:
             self.leg_name_lst[3],
             self.joint_name_lst[9:]
         )
+        self.A = np.zeros((3,))
+        self.B = np.zeros((3,))
+
+    def get_AB(self):
+        fr_contact = self.front_right.get_processed_contact_state()
+        fl_contact = self.front_left.get_processed_contact_state()
+        br_contact = self.back_right.get_processed_contact_state()
+        bl_contact = self.back_left.get_processed_contact_state()
+        contacts = []
+        if fr_contact['flag']:
+            contacts.append(fr_contact)
+        if fl_contact['flag']:
+            contacts.append(fl_contact)
+        if br_contact['flag']:
+            contacts.append(br_contact)
+        if bl_contact['flag']:
+            contacts.append(bl_contact)
+        if len(contatcs) == 1:
+            return [contacts[0], contacts[0]]
+        elif len(contacts) == 2:
+            return contacts
+        elif len(contacts) == 3:
+            """
+                Assumption being made that the two support legs will always 
+                be parrallel to the forward direction or diagonal
+            """
+            A = None
+            B = None
+            names = [contact.leg_name for contact in contacts]
+            if 'front' in names[0] and 'front' in names[1]:
+                B = contacts[2]
+                if 'right' in names[2]:
+                    A = contacts[1]
+                elif 'left' in names[2]:
+                    A = contacts[0]
+            elif 'front' in names[0] and 'back' in names[1]:
+                A = contacts[0]
+                if 'right' in names[0]:
+                    B = contacts[2]
+                elif 'left' in names[0]:
+                    B = contacts[1]
+            return A, B
+        elif len(contacts) == 4:
+            A = None
+            B = None
+            for contact in contacts
+                if contact.leg_name == self.leg_name_lst[0]
+                    A = contact
+                elif contact.leg_name == self.leg_name_lst[-1]
+                    B = contact
+            return A, B
+        else:
+            return []
+
 
     def get_leg_handle(self, leg):
         if leg == self.leg_name_lst[0]:
@@ -238,7 +302,7 @@ class Quadruped:
         self.leg_link_name_lst = self.link_name_lst[1:]
         self.joint_name_lst = self.params['joint_name_lst']
 
-        self.all_joints = AllJoints(
+        self.all_legs = AllLegs(
             self.params,
         )
 
@@ -319,14 +383,21 @@ class Quadruped:
         self.pos_z_limit = 0.18
 
         self.kinematics = Kinematics(
-            self.params,
-            self.joint_name_lst
+            self.params
         )
+
+        self.compute_reward = FitnessFunction(
+            self.params
+        )
+
+        self._counter_1 = 0
+        self.counter_1 = 0
+        self.dt = self.params['dt']
 
     def get_contact(self):
         contacts = {
             leg : {
-                self.all_joints.get_leg_handle(leg).contact_state
+                self.all_legs.get_leg_handle(leg).contact_state
             } for i, leg in enumerate(self.leg_name_lst)
         }
         return contacts
@@ -384,7 +455,7 @@ class Quadruped:
             print('/gazebo/set_model_configuration call failed')
 
         self.joint_pos = self.starting_pos
-        self.all_joints.reset_move(self.starting_pos)
+        self.all_legs.reset_move(self.starting_pos)
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
@@ -438,6 +509,72 @@ class Quadruped:
             self.history
         ], self.reward, done
 
+    def get_reward(self, action, history):
+        """
+            Need to complete A, B, AF, BF, AL and BL computation
+        """
+        AB = self.all_legs.get_AB()
+        if AB:
+            self._counter_1 += 1
+            if self.AF.leg_name != AB[0].leg_name:
+                self.AF = self.A
+                self.counter_1 = copy.deepcopy(self._counter_1)
+                self_counter_1 = 0
+            if self.BF.leg_name != AB[1].leg_name:
+                self.BF = self.B
+                self.counter_1 = copy.deepcopy(self._counter_1)
+                self_counter_1 = 0
+            self.A, self.B = AB
+            A_name = self.A.leg_name
+            B_name = self.B.leg_name
+            _A_name = None
+            _B_name = None
+            if 'right' in A_name:
+                _A_name = self.leg_name_lst[1]
+            else:
+                _A_name = self.leg_name_lst[0]
+            if 'right' in B_name:
+                _B_name = self.leg_name_lst[3]
+            else:
+                _B_name = self.leg_name_lst[2]
+            current_pose = self.kinematics.get_current_end_effector_fk()
+            pose = None
+            for step in range(self.params['rnn_steps']):
+                pose=self.kinematics.get_end_effector_fk(action[step].tolist())
+                if pose[A_name]['position']['z'] - \
+                        current_pose[A_name]['position']['z'] > 0:
+                    temp = A_name
+                    A_name = _A_name
+                    _A_name = temp
+                if pose[B_name]['position']['z'] - \
+                        current_pose[B_name]['position']['z'] > 0:
+                    temp = B_name
+                    B_name = _B_name
+                    _B_name = temp
+            delta = {
+                leg : {
+                    'x' : pose[leg]['position']['x'] - \
+                        current_pose[leg]['position']['x'],
+                    'y' : pose[leg]['position']['y'] - \
+                        current_pose[leg]['position']['y'],
+                    'z' : pose[leg]['position']['z'] - \
+                        current_pose[leg]['position']['z']
+                }
+            }
+            self.AL = 
+            self.BL = self.all_legs.get_leg_handle(B_name)
+            self.compute_reward.build(
+                self.counter_1 * self.dt,
+                self.A,
+                self.B,
+                self.AF,
+                self.BF,
+                self.AL,
+                self.BL
+            )
+        else:
+            return -10
+
     def step(self, action, desired_heading):
         action = [
             tf.make_ndarray(
@@ -447,10 +584,11 @@ class Quadruped:
         print('action:', action)
         self.joint_pos = action[0][0][0].tolist()
         self.osc_state = action[1][0].tolist()
-        self.all_joints.move(self.joint_pos)
+        self.all_legs.move(self.joint_pos)
         print('joint pos:', self.joint_pos)
-
         #rospy.sleep(15.0/60.0)
+
+        self.reward = self.get_reward(action[0][0], self.history)
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
