@@ -16,6 +16,8 @@ class ZMP:
             g.y,
             g.z
         ])
+        self.zmp_s = np.zeros((3,))
+        self.zmp = np.zeros((3,))
 
     def update_g(self):
         g = self.get_physics_prop_proxy().gravity
@@ -28,7 +30,7 @@ class ZMP:
     def build(self, t, Tb, A, B, AL, BL, AF, BF):
         self.support_plane.build(t, Tb, A, B, AL, BL, AF, BF)
 
-    def __call__(self, com, force, torque):
+    def get_ZMP_s(self, com, force, torque):
         plane = self.support_plane()
         inertial_plane = np.eye(N = 3, k = 1)
         com_s = transform(com, plane, inertial_plane)
@@ -47,3 +49,9 @@ class ZMP:
             ) - torque_s[1]
         ) / (force_s[0] + g_s[0])
         return zmp_s
+
+    def __call__(self, com, force, torque, v_real, v_exp, eta):
+        self.zmp_s = self.get_ZMP_s(com, force, torque)
+        self.zmp = self.zmp_s + eta*(v_real - v_exp)
+        self.zmp[0] = 0
+        return self.zmp
