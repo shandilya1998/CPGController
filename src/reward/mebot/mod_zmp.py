@@ -13,7 +13,7 @@ class AxisTransformation:
         self.support_plane_obj = SupportPlane(self.Tb)
         self.support_plane_obj.build(A, B, AL, AF, BF, BL)
         self.support_plane = self.support_plane_obj.get_support_plane(t).T
-        
+
     def com_s(self, com):
         return np.matmul(self.support_plane, com)
 

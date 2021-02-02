@@ -1,19 +1,27 @@
 import numpy as np
 
 class SupportPlane:
-    def __init__(self, params):
-        self.params = params
+    def __init__(self, tb = 1000):
+        self.A = np.zeros(3)
+        self.AL = np.zeros(3)
+        self.AF = np.zeros(3)
+        self.B = np.zeros(3)
+        self.BL = np.zeros(3)
+        self.BF = np.zeros(3)
+        self.AB = self.B - self.A
+        self.Tb = tb
 
-    def build(self, t, Tb, A, B, AL, BL, AF, BF):
-        self.t = t
-        self.Tb = Tb
+    def build(self, A, B, AL, AF, BF, BL):
         self.A = A
         self.AL = AL
         self.AF = AF
         self.B = B
         self.BL = BL
         self.BF = BF
-        self.AB = self.B - self.A
+        self.AB = self.B - self.A        
+
+    def set_tb(self, tb):
+        self.Tb = tb
 
     def get_n11(self):
         AAf = self.AF-self.A
@@ -72,21 +80,10 @@ class SupportPlane:
             zs = self.get_zs()
             return np.cross(zs, xs)
 
-    def transform(self, vec, cs1, cs2):
-        """
-            Transform a vector vec from cs1 to cs2
-        """
-        transform = np.array([
-            [
-               np.dot(cs1[i], cs2[j]) for j in range(3)
-            ] for i in range(3)
-        ])
-        return np.matmul(transform, vec)
-
-    def __call__(self):
-        xs = self.get_xs(self.t)
+    def get_support_plane(self, t):
+        xs = self.get_xs(t)
         zs = self.get_zs()
-        ys = self.get_ys(self.t, xs, zs)
+        ys = self.get_ys(t, xs, zs)
         plane = np.zeros((3, 3))
         plane[0, :] = xs/np.norm(xs)
         plane[1, :] = ys/np.norm(ys)
