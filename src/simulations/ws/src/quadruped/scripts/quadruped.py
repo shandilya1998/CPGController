@@ -18,22 +18,17 @@ from gazebo_msgs.srv import SetModelState, \
     SetModelConfiguration, \
     SetModelConfigurationRequest
 from gazebo_msgs.srv import GetModelState, \
-    GetModelStateRequest
+    GetModelStateRequest, \
+    GetLinkProperties, \
+    GetLinkState, \
+    GetPhysicsProperties
+from geometry_msgs.mssg import PoseStamped
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 from reward.mod_zmp import ModZMP
-
-class FitnessFunction:
-    def __init__(self, params):
-        self.params = params
-
-    def build(self, t, A, B, AL, BL, AF, BF):
-        self.A = A
-        self.B = B
-
-    def __call__(self):
-        return None
+from tf import TransformListener
+from reward import FitnessFunction
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -167,11 +162,15 @@ class AllLegs:
         self.A = np.zeros((3,))
         self.B = np.zeros((3,))
 
+    def get_all_contacts(self):
+        self.fr_contact = self.front_right.get_processed_contact_state()
+        self.fl_contact = self.front_left.get_processed_contact_state()
+        self.br_contact = self.back_right.get_processed_contact_state()
+        self.bl_contact = self.back_left.get_processed_contact_state()
+        return self.fr_contact, self.fl_contact, self.br_contact, self.bl_contact
+
     def get_AB(self):
-        fr_contact = self.front_right.get_processed_contact_state()
-        fl_contact = self.front_left.get_processed_contact_state()
-        br_contact = self.back_right.get_processed_contact_state()
-        bl_contact = self.back_left.get_processed_contact_state()
+        fr_contact, fl_contact, br_contact, bl_contact = self.get_all_contacts()
         contacts = []
         if fr_contact['flag']:
             contacts.append(fr_contact)
@@ -313,6 +312,11 @@ class Quadruped:
             0
         )
 
+
+        self.link_prop_proxy = rospy.ServiceProxy(
+            '/gazebo/get_link_properties',
+            GetLinkProperties
+        )
         self.pause_proxy = rospy.ServiceProxy(
             '/gazebo/pause_physics', 
             Empty
@@ -399,6 +403,61 @@ class Quadruped:
         self.BF = {'leg_name' : None}
         self.AL = {'leg_name' : None}
         self.BL = {'leg_name' : None}
+        self.mass = self.get_total_mass()
+        self.tf_listener_ = TransformListener()
+
+    def get_total_mass(self):
+        mass = 0
+        for link in self.params['link_name_lst']:
+            msg = self.link_prop_proxy(link)
+            mass += msg.mass
+        return mass
+
+    def get_com(self):
+        reference = 'world'
+        x, y, z = 0,0,0
+        for link in self.params['link_name_lst']:
+            prop = self.link_prop_proxy(link)
+            mass = prop.mass
+            pose = PoseStamped()
+            pose.header.frame_id = link[11:]
+            pose.position.x = prop.pose.position.x
+            pose.position.y = prop.pose.position.y
+            pose.position.z = prop.pose.position.z
+            pose.orientation.x = prop.pose.orientation.x
+            pose.orientation.y = prop.pose.orientation.y
+            pose.orientation.z = prop.pose.orientation.z
+            pose.orientation.w = prop.pose.orientation.w
+            t_pose = self.tf_listener_.transformPose("world", pose)
+            x += t_pose.position.x * mass
+            y += t_pose.position.y * mass
+            z += t_pose.position.z * mass
+        x = x / self.mass
+        y = y / self.mass
+        z = z / self.mass
+        return np.array([x, y, z])
+
+    def get_moment(self):
+        contacts = [
+            self.all_legs.fr_contact,
+            self.all_legs.fl_contact,
+            self.all_legs.br_contact,
+            self.all_legs.bl_contact
+        ]
+        positions = [contact['position'] for contact in contacts]
+        forces = [contact['force'] \
+                if contact['force'] is not None \
+                else np.zeros((3,)) \
+                for contact in contacts
+        ]
+        r = [position - self.com \
+                if position is not None \
+                else np.zeros((3)) \
+                for position in positions
+        ]
+        torque = [np.cross(r, f) for r, f in zip(r, forces)]
+        torque = np.sum(np.array(torque), 0)
+        return torque
 
     def get_contact(self):
         contacts = {
@@ -519,18 +578,18 @@ class Quadruped:
         AB = self.all_legs.get_AB()
         if AB:
             self._counter_1 += 1
-            if self.A.leg_name != AB[0].leg_name:
+            if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF.update(self.A)
                 self.counter_1 = copy.deepcopy(self._counter_1)
                 self_counter_1 = 0
-            if self.B.leg_name != AB[1].leg_name:
+            if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF.update(self.B)
                 self.counter_1 = copy.deepcopy(self._counter_1)
                 self_counter_1 = 0
             self.A.update(AB[0])•
             self.B.update(AB[1])
-            A_name = self.A.leg_name
-            B_name = self.B.leg_name
+            A_name = self.A['leg_name']
+            B_name = self.B['leg_name']
             _A_name = None
             _B_name = None
             if 'right' in A_name:
@@ -543,6 +602,8 @@ class Quadruped:
                 _B_name = self.leg_name_lst[2]
             current_pose = self.kinematics.get_current_end_effector_fk()
             pose = None
+            c = 0
+            t = 0
             for step in range(self.params['rnn_steps']):
                 pose=self.kinematics.get_end_effector_fk(action[step].tolist())
                 if pose[A_name]['position']['z'] - \
@@ -550,11 +611,18 @@ class Quadruped:
                     temp = A_name
                     A_name = _A_name
                     _A_name = temp
+                    t = copy.deepcopy(c)
+                    c = 0
+                    break
                 if pose[B_name]['position']['z'] - \
                         current_pose[B_name]['position']['z'] > 0:
                     temp = B_name
                     B_name = _B_name
                     _B_name = temp
+                    t = copy.deepcopy(c)
+                    c = 0
+                    break
+            """
             delta = {
                 leg : {
                     'x' : pose[leg]['position']['x'] - \
@@ -565,11 +633,13 @@ class Quadruped:
                         current_pose[leg]['position']['z']
                 }
             }
+            """
             m = {
                 0 : 'x',
                 1 : 'y',
                 2 : 'z'
             }
+            self.Tb = (self.counter_1 + t) * self.dt
             self.AL.update({
                 'torque' : None,
                 'force' : None,
@@ -600,15 +670,6 @@ class Quadruped:
                 'flag' : True,
                 'leg_name' : B_name
             })
-            self.compute_reward.build(
-                self.counter_1 * self.dt,
-                self.A,
-                self.B,
-                self.AF,
-                self.BF,
-                self.AL,
-                self.BL
-            )
         else:
             raise NotImplementedError
 
@@ -619,6 +680,7 @@ class Quadruped:
         self.set_support_lines(action)
         self.compute_reward.build(
             self.counter_1 * self.dt,
+            self.Tb,
             self.A,
             self.B,
             self.AF,
@@ -626,6 +688,9 @@ class Quadruped:
             self.AL,
             self.BL
         )
+        self.com = self.get_com()
+        self.moment = self.get_moment
+        self.force = self.mass * self.linear_acc
 
     def step(self, action, desired_heading):
         action = [
