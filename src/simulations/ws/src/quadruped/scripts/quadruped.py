@@ -161,6 +161,7 @@ class AllLegs:
         )
         self.A = np.zeros((3,))
         self.B = np.zeros((3,))
+        self.w = 1
 
     def get_all_contacts(self):
         self.fr_contact = self.front_right.get_processed_contact_state()
@@ -180,9 +181,11 @@ class AllLegs:
             contacts.append(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
-        if len(contatcs) == 1:
+        if len(contacts) == 1:
+            self.w = 0.5
             return [contacts[0], contacts[0]]
         elif len(contacts) == 2:
+            self.w = 1
             return contacts
         elif len(contacts) == 3:
             """
@@ -191,6 +194,7 @@ class AllLegs:
             """
             A = None
             B = None
+            self.w = 1
             names = [contact.leg_name for contact in contacts]
             if 'front' in names[0] and 'front' in names[1]:
                 B = contacts[2]
@@ -208,6 +212,7 @@ class AllLegs:
         elif len(contacts) == 4:
             A = None
             B = None
+            self.w = 1
             for contact in contacts
                 if contact.leg_name == self.leg_name_lst[0]
                     A = contact
@@ -215,6 +220,7 @@ class AllLegs:
                     B = contact
             return A, B
         else:
+            self.w = 0.2
             return []
 
 
@@ -405,6 +411,12 @@ class Quadruped:
         self.BL = {'leg_name' : None}
         self.mass = self.get_total_mass()
         self.tf_listener_ = TransformListener()
+        self.force = np.zeros((3,))
+        self.torque = np.zeros((3,))
+        self.com = np.zeros((3,))
+        self.v_exp = np.zeros((3,))
+        self.v_real = np.zeros((3,))
+        self.eta = 1e8
 
     def get_total_mass(self):
         mass = 0
@@ -673,11 +685,14 @@ class Quadruped:
         else:
             raise NotImplementedError
 
-    def get_reward(self, action, history):
+    def get_reward(self, action):
         """
             Need to complete A, B, AF, BF, AL and BL computation
         """
         self.set_support_lines(action)
+        self.com = self.get_com()
+        self.moment = self.get_moment()
+        self.force = self.mass * self.linear_acc
         self.compute_reward.build(
             self.counter_1 * self.dt,
             self.Tb,
@@ -686,13 +701,23 @@ class Quadruped:
             self.AF,
             self.BF,
             self.AL,
-            self.BL
+            self.BL,
         )
-        self.com = self.get_com()
-        self.moment = self.get_moment
-        self.force = self.mass * self.linear_acc
+        vd = np.norm(self.v_exp)
+        if vd == 0:
+            vd = 1e-8
+        self.eta = (self.params['L'] + self.params['W'])/(2*vd)
+        return self.compute_reward(
+            self.com,
+            self.force,
+            self.torque,
+            self.v_real,
+            self.v_exp,:
+            self.eta,
+            self.all_legs.w
+        )
 
-    def step(self, action, desired_heading):
+    def step(self, action, desired_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
@@ -704,9 +729,6 @@ class Quadruped:
         self.all_legs.move(self.joint_pos)
         print('joint pos:', self.joint_pos)
         #rospy.sleep(15.0/60.0)
-
-        self.reward = self.get_reward(action[0][0], self.history)
-
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
         pos = np.array([
@@ -714,6 +736,15 @@ class Quadruped:
             model_state.pose.position.y, 
             model_state.pose.position.z]
         )
+
+        self.v_real = np.array([
+            model_state.twist.linear.x,
+            model_state.twist.linear.y,
+            model_state.twist.linear.z
+        ])
+        self.v_exp = desired_motion[3:6]
+        vself.action = action[0][0]
+        self.reward = self.get_reward(action[0][0])
 
         diff_joint = self.joint_state - self.last_joint
 
@@ -725,9 +756,11 @@ class Quadruped:
             self.linear_acc
         ]).reshape(self.robot_state_shape)
 
-        self.motion_state = np.append(
-            pos,
-            [desired_heading],
+        self.motion_state = np.concatenate(
+            [
+                pos,
+                desired_motion
+            ],
             0
         )
 
