@@ -22,7 +22,7 @@ from gazebo_msgs.srv import GetModelState, \
     GetLinkProperties, \
     GetLinkState, \
     GetPhysicsProperties
-from geometry_msgs.mssg import PoseStamped
+from geometry_msgs.mssg import PoseStamped, WrenchStamped
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
@@ -51,6 +51,82 @@ class Leg:
             ContactsState,
             self.contact_callback
         )
+
+        self.leg1_joint_force_torque_subscriber = rospy(
+            '/quadruped/{leg_name}1_joint_force_torque'.format(
+                leg_name = leg_name
+            ),
+            WrenchStamped,
+            self._leg1_joint_force_torque_callback
+        )
+
+        self.leg2_joint_force_torque_subscriber = rospy(
+            '/quadruped/{leg_name}2_joint_force_torque'.format(
+                leg_name = leg_name
+            ),
+            WrenchStamped,
+            self._leg2_joint_force_torque_callback
+        )
+
+        self.leg3_joint_force_torque_subscriber = rospy(
+            '/quadruped/{leg_name}3_joint_force_torque'.format(
+                leg_name = leg_name
+            ),
+            WrenchStamped,
+            self._leg3_joint_force_torque_callback
+        )
+
+    def get_processed_joint_force_troque(self):
+        return {
+            'leg1' : {
+                'frame_id' : self.leg1_joint_force_torque.header.frame_id,
+                'force' : np.array([
+                    self.leg1_joint_force_torque.wrench.force.x,
+                    self.leg1_joint_force_torque.wrench.force.y,
+                    self.leg1_joint_force_torque.wrench.force.z
+                ]),
+                'torque' : np.array([
+                    self.leg1_joint_force_torque.wrench.torque.x,
+                    self.leg1_joint_force_torque.wrench.torque.y,
+                    self.leg1_joint_force_torque.wrench.torque.z
+                ])
+            },
+            'leg2' : {
+                'frame_id' : self.leg2_joint_force_torque.header.frame_id,
+                'force' : np.array([
+                    self.leg2_joint_force_torque.wrench.force.x,
+                    self.leg2_joint_force_torque.wrench.force.y,
+                    self.leg2_joint_force_torque.wrench.force.z
+                ]),
+                'torque' : np.array([
+                    self.leg2_joint_force_torque.wrench.torque.x,
+                    self.leg2_joint_force_torque.wrench.torque.y,
+                    self.leg2_joint_force_torque.wrench.torque.z
+                ])
+            },
+            'leg3' : {
+                'frame_id' : self.leg3_joint_force_torque.header.frame_id,
+                'force' : np.array([
+                    self.leg3_joint_force_torque.wrench.force.x,
+                    self.leg3_joint_force_torque.wrench.force.y,
+                    self.leg3_joint_force_torque.wrench.force.z
+                ]),
+                'torque' : np.array([
+                    self.leg3_joint_force_torque.wrench.torque.x,
+                    self.leg3_joint_force_torque.wrench.torque.y,
+                    self.leg3_joint_force_torque.wrench.torque.z
+                ])
+            }
+        }
+
+    def _leg1_joint_force_torque_callback(self, wrench):
+        self.leg1_joint_force_torque = wrench
+
+    def _leg2_joint_force_torque_callback(self, wrench):
+        self.leg2_joint_force_torque = wrench
+
+    def _leg3_joint_force_torque_callback(self, wrench):
+        self.leg2_joint_force_torque = wrench
 
     def get_processed_contact_state(self):
         contact_state = self.contact_state
@@ -162,6 +238,17 @@ class AllLegs:
         self.A = np.zeros((3,))
         self.B = np.zeros((3,))
         self.w = 1
+
+    def get_all_torques(self):
+        regex = r'leg\d{1,3}'
+        torque = []
+        for joint in self.joint_name_lst:
+            leg = self.get_leg_handle(joint[:-7])
+            out = leg.get_processed_joint_force_troque()
+            joint = re.search(regex, joint).group()
+            out = out[joint]
+            torque.append(np.norm(out['torque']))
+        return np.array(torque)
 
     def get_all_contacts(self):
         self.fr_contact = self.front_right.get_processed_contact_state()
@@ -481,11 +568,13 @@ class Quadruped:
 
     def joint_state_subscriber_callback(self, joint_state):
         state = [st for st in joint_state.position]
+        vel = [st for st in joint_state.velocity]
         for i, name in enumerate(joint_state.name):
             index = self.joint_name_lst.index(name)
             state[index] = joint_state.position[i]
-        self.joint_state = np.array(state)
-
+            vel[index] = joint_state.velocity[i]
+        self.joint_position = np.array(state)
+        self.joint_velocity = np.array(vel)
 
     def imu_subscriber_callback(self, imu):
         self.orientation = np.array(
@@ -561,11 +650,11 @@ class Quadruped:
             model_state.pose.position.z
         ])
         done = False
-        self.last_joint = self.joint_state
+        self.last_joint = self.joint_position
         self.last_pos = pos
         diff_joint = np.zeros(self.nb_joints)
         self.robot_state = np.concatenate([
-            self.joint_state,
+            self.joint_position,
             diff_joint,
             self.orientation,
             self.angular_vel,
@@ -685,6 +774,7 @@ class Quadruped:
         else:
             raise NotImplementedError
 
+
     def get_reward(self, action):
         """
             Need to complete A, B, AF, BF, AL and BL computation
@@ -715,6 +805,8 @@ class Quadruped:
             self.v_exp,:
             self.eta,
             self.all_legs.w
+            self.joint_velocity,
+            self.all_legs.get_all_torques()
         )
 
     def step(self, action, desired_motion):
@@ -746,10 +838,10 @@ class Quadruped:
         vself.action = action[0][0]
         self.reward = self.get_reward(action[0][0])
 
-        diff_joint = self.joint_state - self.last_joint
+        diff_joint = self.joint_position - self.last_joint
 
         self.robot_state = np.concatenate([
-            self.joint_state, 
+            self.joint_position,
             diff_joint,
             self.orientation,
             self.angular_vel,
@@ -772,7 +864,7 @@ class Quadruped:
             0
         )
 
-        self.last_joint = self.joint_state
+        self.last_joint = self.joint_position
         self.last_pos = pos
 
         curr_time = rospy.get_time()
