@@ -17,7 +17,8 @@ class FitnessFunction:
         self.BF = BF
         self.zmp.build(t, Tb, A, B, AL, BL, AF, BF)
 
-    def __call__(self, com, force, torque, v_real, v_exp, eta, omega):
+    def __call__(self, com, force, torque, v_real, v_exp, eta, omega, \
+            joint_vel, joint_torque):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
         dc = np.abs(np.cross(
             (self.A - zmp),
@@ -66,6 +67,6 @@ class FitnessFunction:
             ((self.params['L'] + self.params['W']) * \
                 0.9 / (self.params['W'] * 4 )) * d_spt
 
-
+        
 
         return 0

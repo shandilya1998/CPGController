@@ -265,11 +265,15 @@
       <mu2>${friction_value}</mu2>
       <material>Gazebo/White</material>
     </gazebo>
-    <gazebo reference="${prefix}_${suffix}_leg2_joint">
+    <gazebo reference="${prefix}_${suffix}_leg1_joint">
       <provideFeedback>true</provideFeedback>
       <sensor name="${prefix}_${suffix}_leg1_joint_force_torque" type="force_torque">
         <always_on>true</always_on>
         <update_rate>100.0</update_rate>
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
       </sensor>
     </gazebo>
     <gazebo>
@@ -320,9 +324,13 @@
     </gazebo>
     <gazebo reference="${prefix}_${suffix}_leg2_joint">
       <provideFeedback>true</provideFeedback>
-      <sensor name="${prefix}_${suffix}_leg1_joint_force_torque" type="force_torque">
+      <sensor name="${prefix}_${suffix}_leg2_joint_force_torque" type="force_torque">
         <always_on>true</always_on>
         <update_rate>100.0</update_rate>
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
       </sensor>
     </gazebo>
     <gazebo>
@@ -370,6 +378,30 @@
       <mu1>${friction_value}</mu1>
       <mu2>${friction_value}</mu2>
       <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="${prefix}_${suffix}_leg3_joint">
+      <provideFeedback>true</provideFeedback>
+      <sensor name="${prefix}_${suffix}_leg3_joint_force_torque" type="force_torque">
+        <always_on>true</always_on>
+        <update_rate>100.0</update_rate>
+        <force_torque>
+          <frame>child</frame>
+          <measure_direction>child_to_parent</measure_direction>
+        </force_torque>
+      </sensor>
+    </gazebo>
+    <gazebo>
+      <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <robotNamespace>/quadruped</robotNamespace>
+        <topicName>${prefix}_${suffix}_leg3_joint_force_torque</topicName>
+        <jointName>${prefix}_${suffix}_leg3_joint</jointName>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.003</stddev>
+          <!-- change this to simulate noise -->
+        </noise>
+      </plugin>
     </gazebo>
   </xacro:macro>
 
