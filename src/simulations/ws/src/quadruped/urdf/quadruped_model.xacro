@@ -8,8 +8,8 @@
   </gazebo>
 
 
-  <xacro:property name="damping_value" value="10" />
-  <xacro:property name="friction_value" value="0.5" />
+  <xacro:property name="damping_value" value="0.1" />
+  <xacro:property name="friction_value" value="0.05" />
   <xacro:property name="scaling_factor" value="2.2" />
   <!--height:z width:y width:x -->
   <xacro:property name="body_width" value="${scaling_factor*0.108}" />
@@ -44,7 +44,7 @@
 
   <xacro:property name="leg_tip_mass" value="${(scaling_factor**3)*0.02}" />
 
-  <xacro:property name="servo_vel" value="10.0" />
+  <xacro:property name="servo_vel" value="100.0" />
   <xacro:property name="servo_effort_limit" value="100.0" />
 
   <!-- Import Rviz colors -->
@@ -109,8 +109,9 @@
     <origin xyz="0 0 ${leg1_height}" rpy="0 0 0"/>
   </joint>
   <gazebo reference="base_link">
-    <mu1>100000.0</mu1>
-    <mu2>100000.0</mu2>
+    <gravity>true</gravity>
+    <mu1>${friction_value}</mu1>
+    <mu2>${friction_value}</mu2>
     <material>Gazebo/Black</material>
   </gazebo>
   <gazebo reference="dummy_base_joint">
@@ -188,6 +189,7 @@
       <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg_tip">
+      <gravity>true</gravity>
       <minDepth>0.0002</minDepth>
       <collision name="${prefix}_${suffix}_leg_tip_collision">
         <geometry>
@@ -198,11 +200,11 @@
         <surface>
           <friction>
             <ode>
-              <mu>100000.0</mu>
-              <mu2>100000.0</mu2>
+              <mu>${friction_value}</mu>
+              <mu2>${friction_value}</mu2>
             </ode>
             <torsional>
-              <coefficient>1000000</coefficient>
+              <coefficient>${friction_value}</coefficient>
               <use_patch_radius>true</use_patch_radius>
               <surface_radius>${leg1_depth/2.0}</surface_radius>
               <patch_radius>${leg1_depth/2.0}</patch_radius>
@@ -258,9 +260,30 @@
       <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg1">
-      <mu1>100000.0</mu1>
-      <mu2>100000.0</mu2>
+      <gravity>true</gravity>
+      <mu1>${friction_value}</mu1>
+      <mu2>${friction_value}</mu2>
       <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="${prefix}_${suffix}_leg2_joint">
+      <provideFeedback>true</provideFeedback>
+      <sensor name="${prefix}_${suffix}_leg1_joint_force_torque" type="force_torque">
+        <always_on>true</always_on>
+        <update_rate>100.0</update_rate>
+      </sensor>
+    </gazebo>
+    <gazebo>
+      <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <robotNamespace>/quadruped</robotNamespace>
+        <topicName>${prefix}_${suffix}_leg1_joint_force_torque</topicName>
+        <jointName>${prefix}_${suffix}_leg1_joint</jointName>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.003</stddev>
+          <!-- change this to simulate noise -->
+        </noise>
+      </plugin>
     </gazebo>
   </xacro:macro>
 
@@ -290,9 +313,30 @@
       <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg2">
-      <mu1>100000.0</mu1>
-      <mu2>100000.0</mu2>
+      <gravity>true</gravity>
+      <mu1>${friction_value}</mu1>
+      <mu2>${friction_value}</mu2>
       <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="${prefix}_${suffix}_leg2_joint">
+      <provideFeedback>true</provideFeedback>
+      <sensor name="${prefix}_${suffix}_leg1_joint_force_torque" type="force_torque">
+        <always_on>true</always_on>
+        <update_rate>100.0</update_rate>
+      </sensor>
+    </gazebo>
+    <gazebo>
+      <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+        <robotNamespace>/quadruped</robotNamespace>
+        <topicName>${prefix}_${suffix}_leg2_joint_force_torque</topicName>
+        <jointName>${prefix}_${suffix}_leg2_joint</jointName>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.003</stddev>
+          <!-- change this to simulate noise -->
+        </noise>
+      </plugin>
     </gazebo>
   </xacro:macro>
 
@@ -322,8 +366,9 @@
       <dynamics damping="${damping_value}" friction="${friction_value}" />
     </joint>
     <gazebo reference="${prefix}_${suffix}_leg3">
-      <mu1>100000.0</mu1>
-      <mu2>100000.0</mu2>
+      <gravity>true</gravity>
+      <mu1>${friction_value}</mu1>
+      <mu2>${friction_value}</mu2>
       <material>Gazebo/White</material>
     </gazebo>
   </xacro:macro>

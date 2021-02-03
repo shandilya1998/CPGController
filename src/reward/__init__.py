@@ -37,5 +37,35 @@ class FitnessFunction:
             wc = 2*self.t/self.Tb - 1.5
         elif 0 < self.t < 0.25 * self.Tb:
             wc = 0
-        d = wc * dc + wl * dl
+        d_spt = wc * dc + wl * dl
+
+        d11 = np.abs(np.cross(
+            (self.A - zmp),
+            (self.A - self.BL)
+        ) / np.norm((self.A - self.BL)))
+        d12 = np.abs(np.cross(
+            (self.AL - zmp),
+            (self.AL - self.B)
+        ) / np.norm((self.AL - self.B)))
+        d21 = np.abs(np.cross(
+            (self.A - zmp),
+            (self.A - self.AL)
+        ) / np.norm((self.A - self.AL)))
+        d22 = np.abs(np.cross(
+            (self.B - zmp),
+            (self.BL - self.B)
+        ) / np.norm((self.BL - self.B)))
+        d_edge = omega*(min(d11, d12) + min(d21, d22))
+
+        u = zmp - com
+        cosT = np.dot(u, self.plane[0])/(np.norm(u) * np.norm(self.plane[0]))
+        sinT = np.sqrt(1-cosT*cosT)
+
+        stability = d_edge - \
+            ((self.params['L'] + self.params['W']) / 8) * sinT - \
+            ((self.params['L'] + self.params['W']) * \
+                0.9 / (self.params['W'] * 4 )) * d_spt
+
+
+
         return 0
