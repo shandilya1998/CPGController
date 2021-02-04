@@ -18,7 +18,8 @@ class FitnessFunction:
         self.zmp.build(t, Tb, A, B, AL, BL, AF, BF)
 
     def __call__(self, com, force, torque, v_real, v_exp, eta, omega, \
-            joint_vel, joint_torque):
+            history_joint_vel, history_joint_torque, \
+            history_pos, history_vel, history_delta_motion):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
         dc = np.abs(np.cross(
             (self.A - zmp),
@@ -67,6 +68,37 @@ class FitnessFunction:
             ((self.params['L'] + self.params['W']) * \
                 0.9 / (self.params['W'] * 4 )) * d_spt
 
-        
+        P_av = np.sum(
+            np.abs(
+                self.history_joint_torque * self.history_joint_vel
+            )
+        ) / self.Tb
+        D_av = np.sqrt(
+            np.sum(
+                self.history_joint_torque * self.history_joint_vel - \
+                    P_av) / self.Tb
+        )
+        P_L = np.sum(
+            np.square(self.history_joint_torque)
+        ) / self.Tb
 
-        return 0
+        F_min = P_av + D_av + P_L
+
+        motion = np.sqrt(
+            np.sum(
+                np.square(
+                    history_pos[1:] - \
+                        history_pos[:-1] - history_delta_motion[:3]
+                )
+            )
+        ) + np.sqrt(
+            np.sum(
+                np.square(
+                    history_vel[1:] - \
+                            history_vel[:-1] - history_delta_motion[3:6]
+                )
+            )
+        )
+        reward = stability - F_min - motion
+
+        return reward

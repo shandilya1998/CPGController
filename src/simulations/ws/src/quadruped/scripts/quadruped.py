@@ -505,6 +505,22 @@ class Quadruped:
         self.v_real = np.zeros((3,))
         self.eta = 1e8
 
+        self.history_joint_torque = np.zeros(history_shape)
+        self.history_joint_vel = np.zeros(history_shape)
+        self.history_pos = np.zeros((
+            self.params['rnn_steps'] - 1,
+            3
+        ))
+        self.history_pos[:, 2] = 0.25
+        self.history_vel = np.zeros((
+            self.params['rnn_steps'] - 1,
+            3
+        ))
+        self.history_delta_motion = np.zeros((
+            self.params['rnn_steps'] - 2,
+            6
+        ))
+
     def get_total_mass(self):
         mass = 0
         for link in self.params['link_name_lst']:
@@ -575,6 +591,7 @@ class Quadruped:
             vel[index] = joint_state.velocity[i]
         self.joint_position = np.array(state)
         self.joint_velocity = np.array(vel)
+        self.history_joint_vel
 
     def imu_subscriber_callback(self, imu):
         self.orientation = np.array(
@@ -797,6 +814,21 @@ class Quadruped:
         if vd == 0:
             vd = 1e-8
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)
+        self.joint_torque = self.all_legs.get_all_torques()
+        self.history_joint_torque = np.concatenate(
+            [
+                self.history_joint_torque[1:],
+                self.joint_torque
+            ],
+            0
+        )
+        self.history_joint_vel = np.concatenate(
+            [
+                self.history_joint_vel[1:],
+                self.joint_velocity
+            ],
+            0
+        )
         return self.compute_reward(
             self.com,
             self.force,
@@ -805,11 +837,14 @@ class Quadruped:
             self.v_exp,:
             self.eta,
             self.all_legs.w
-            self.joint_velocity,
-            self.all_legs.get_all_torques()
+            self.history_joint_vel,
+            self.history_joint_torque
+            self.history_pos,
+            self.history_vel,
+            self.history_delta_motion
         )
 
-    def step(self, action, desired_motion):
+    def step(self, action, delta_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
@@ -824,17 +859,28 @@ class Quadruped:
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
         pos = np.array([
-            model_state.pose.position.x, 
-            model_state.pose.position.y, 
-            model_state.pose.position.z]
-        )
-
+            model_state.pose.position.x,
+            model_state.pose.position.y,
+            model_state.pose.position.z
+        ])
+        self.history_pos = np.concatenate([
+            self.history_pos[1:],
+            pos
+        ])
         self.v_real = np.array([
             model_state.twist.linear.x,
             model_state.twist.linear.y,
             model_state.twist.linear.z
         ])
-        self.v_exp = desired_motion[3:6]
+        self.history_vel = np.concatenate([
+            self.history_vel[1:],
+            self.v_real
+        ])
+        self.history_delta_motion = np.concatenate([
+            self.history_delta_motion[1:],
+            delta_motion
+        ])
+        self.v_exp = delta_motion[3:6]
         vself.action = action[0][0]
         self.reward = self.get_reward(action[0][0])
 
@@ -851,7 +897,7 @@ class Quadruped:
         self.motion_state = np.concatenate(
             [
                 pos,
-                desired_motion
+                delta_motion
             ],
             0
         )
