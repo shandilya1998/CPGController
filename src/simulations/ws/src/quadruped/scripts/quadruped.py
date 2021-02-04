@@ -474,7 +474,6 @@ class Quadruped:
         )
 
         self.reward = 0.0
-        self.done = False
         self.episode_start_time = 0.0
         self.max_sim_time = 15.0
         self.pos_z_limit = 0.18
@@ -666,7 +665,6 @@ class Quadruped:
             model_state.pose.position.y, 
             model_state.pose.position.z
         ])
-        done = False
         self.last_joint = self.joint_position
         self.last_pos = pos
         diff_joint = np.zeros(self.nb_joints)
@@ -690,7 +688,7 @@ class Quadruped:
             self.robot_state,
             self.osc_state,
             self.history
-        ], self.reward, done
+        ], self.reward
 
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
@@ -880,7 +878,7 @@ class Quadruped:
             self.history_delta_motion[1:],
             delta_motion
         ])
-        self.v_exp = delta_motion[3:6]
+        self.v_exp = self.v_exp + delta_motion[3:6]
         vself.action = action[0][0]
         self.reward = self.get_reward(action[0][0])
 
@@ -914,22 +912,14 @@ class Quadruped:
         self.last_pos = pos
 
         curr_time = rospy.get_time()
-        print('time:',curr_time - self.episode_start_time)
-
-        if (curr_time - self.episode_start_time) > self.max_sim_time:
-            done = True
-            self.reset()
-        elif(model_state.pose.position.z < self.pos_z_limit):
-            done = False
-        else:
-            done = False
+        print('time:', curr_time - self.episode_start_time)
 
         return [
             self.motion_state,
             self.robot_state,
             self.osc_state,
             self.history
-        ], self.reward, done
+        ], self.reward
 
     def start(self, count):
         rospy.spin()
