@@ -48,8 +48,12 @@ class Data(tf.keras.utils.Sequence):
 
 class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
 
-    def __init__(self, data_spec, buffer_size, params):
-        super(ReplayBuffer, self).__init__(data_spec, capacity)
+    def __init__(self, params):
+        super(ReplayBuffer, self).__init__(
+            params['data_spec'],
+            params['buffer_size']
+        )
+        self.params = params
         self.num_experiences = 0
         self.buffer = deque()
 

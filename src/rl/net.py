@@ -6,7 +6,7 @@ class ActorNetwork(object):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
-        
+
         #Now create the model
         self.model , self.weights, self.state = \
             self.create_actor_network(params)
@@ -51,7 +51,7 @@ class CriticNetwork(object):
             self.create_critic_network(params)
 
     def gradients(self, states, actions):
-        return None    
+        return None
 
     def target_train(self):
         critic_weights = self.model.get_weights()
