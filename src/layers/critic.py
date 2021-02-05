@@ -78,22 +78,21 @@ class Critic(tf.keras.Model):
 
     def call(self, inputs):
         S, A = inputs
-        
         motion_state, robot_state, osc_state, history = S
         action, osc = A
-        
+
         real_1 = tf.math.real(osc_state)
         imag_1 = tf.math.imag(osc_state)
         real_2 = tf.math.real(osc)
         imag_2 = tf.math.imag(osc)
         real = tf.concat([real_1, real_2], axis = -1)
         imag = tf.concat([imag_1, imag_2], axis = -1)
-        
+
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
         real = self.real_osc_dense(real)
         imag = self.imag_osc_dense(imag)
-        
+
         state = tf.concat([
             motion_state,
             robot_state,
@@ -103,7 +102,7 @@ class Critic(tf.keras.Model):
         state = self.combine_dense(state)
 
         ta_history = tf.TensorArray('float32', size = 0, dynamic_size = True)
-        history = swap_batch_timestep(histoty)
+        history = swap_batch_timestep(history)
         ta_history.unstack(history)
 
         ta_action = tf.TensorArray('float32', size = 0, dynamic_size = True)

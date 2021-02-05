@@ -1,13 +1,14 @@
 from reward.support_plane import SupportPlane
 import numpy as np
 import rospy
+from gazebo_msgs.srv import GetPhysicsProperties
 
 class ZMP:
     def __init__(self, params):
         self.params = params
         self.support_plane = SupportPlane(params)
         self.get_physics_prop_proxy = rospy.ServiceProxy(
-            '/gazebo/get_world_properties',
+            '/gazebo/get_physics_properties',
             GetPhysicsProperties
         )
         g = self.get_physics_prop_proxy().gravity

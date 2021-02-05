@@ -2,10 +2,9 @@ import tensorflow as tf
 from collections import deque
 import numpy as np
 import random
-
+import tf_agents as tfa
 
 class OU(object):
-
     def function(self, x, mu, theta, sigma):
         return theta * (mu - x) + sigma * np.random.randn(1)
 
@@ -51,7 +50,7 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
     def __init__(self, params):
         super(ReplayBuffer, self).__init__(
             params['data_spec'],
-            params['buffer_size']
+            params['BUFFER_SIZE']
         )
         self.params = params
         self.num_experiences = 0
@@ -67,7 +66,7 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
         else:
             return random.sample(self.buffer, batch_size)
 
-    def add_batch(self, experience):
+    def add(self, experience):
         if self.num_experiences < self.capacity:
             self.buffer.append(experience)
             self.num_experiences += 1

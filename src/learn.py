@@ -1,15 +1,15 @@
-from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
 from rl.constants import params
 from rl.net import ActorNetwork, CriticNetwork
 from rl.env import Env
+from rl.replay_buffer import ReplayBuffer, OU
 import tf_agents as tfa
+import tensorflow as tf
 
 class Learner():
-    def __init__(self):
+    def __init__(self, params):
         self.params = params
-        self.quadruped = Quadruped(params)
         self.actor = ActorNetwork(params)
-        self.critic = CrticNetwork(params)
+        self.critic = CriticNetwork(params)
         self.replay_buffer = ReplayBuffer(params)
         self.time_step_spec = tfa.trajectories.time_step.time_step_spec(
             observation_spec = self.params['observation_spec'],
@@ -28,37 +28,37 @@ class Learner():
             ), 0) for spec in self.env.action_spec()
         ]
         self._noise = self._noise_init
+        self.OU = OU()
 
     def learn(self, model_dir, identifier=''):
         i = 0
         epsilon = 1
-        self._noise_init = [•
+        self._noise_init = [
                     tf.expand_dims(tf.zeros(
                         spec.shape,
                         spec.dtype
                     ), 0) for spec in self.env.action_spec()
                 ]
-        print('DDPG training start')
+        print('[DDPG] training start')
         while i < self.params['train_episode_count']:
             self.current_time_step = self.env.reset()
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             self._action = self.env._action_init
-            self._noise = self._noise_init
-            for j in range(self.parmas['max_steps']):
+            for j in range(self.params['max_steps']):
                 loss = 0.0
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
                 action_original = self.actor.model.predict(self._state)
-                self._noise[0] = max(epsilon, 0) * OU.function(
+                self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
                     0.15,
                     0.2
                 )
-                self._action[0] = action_original + self._noise
-                self._action[1] = action_original
+                self._action[0] = action_original[0] + self._noise[0]
+                self._action[1] = action_original[1] + self._noise[1]
                 self.current_time_step = self.env.step(self._action)
                 experience = [
                     self._state,
@@ -98,19 +98,40 @@ class Learner():
                 self._state = self.current_time_step.observation
 
                 step += 1
-                if done:
+                if self.current_time_step.step_type == tfa.trajectories.time_step.StepType.LAST:
                     break
 
                 # Save the model after every n episodes
-                if i > 0 and np.mod(i, TEST_AFTER_N_EPISODES) == 0:
-                    actor.model.save_weights(os.path.join(model_dir, 'actormodel_'+identifier+'_{}'.format(i)+'.h5'), overwrite=True)
-                    with open(os.path.join(model_dir, 'actormodel_'+identifier+'_{}'.format(i)+'.json'), "w") as outfile:
+                if i > 0 and \
+                    np.mod(i, self.params['TEST_AFTER_N_EPISODES']) == 0:
+                    actor.model.save_weights(
+                        os.path.join(
+                            model_dir, 
+                            'actormodel_'+identifier+'_{}'.format(i)+'.h5'
+                        ), 
+                        overwrite=True)
+                    with open(
+                        os.path.join(
+                            model_dir, 
+                            'actormodel_'+identifier+'_{}'.format(i)+'.json'
+                        ), "w") as outfile:
                         json.dump(actor.model.to_json(), outfile)
 
-                    critic.model.save_weights(os.path.join(model_dir, 'criticmodel_'+identifier+'_{}'.format(i)+'.h5'), overwrite=True)
-                    with open(os.path.join(model_dir, 'criticmodel_'+identifier+'_{}'.format(i)+'.json'), "w") as outfile:
+                    critic.model.save_weights(
+                        os.path.join(
+                            model_dir, 
+                            'criticmodel_'+identifier+'_{}'.format(i)+'.h5'
+                        ), overwrite=True)
+                    with open(
+                        os.path.join(
+                            model_dir, 
+                            'criticmodel_'+identifier+'_{}'.format(i)+'.json'
+                        ), "w") as outfile:
                         json.dump(critic.model.to_json(), outfile)
 
             step = 0
             i += 1
 
+if __name__ == '__main__':
+    learner = Learner(params)
+    learner.learn('rl/out_dir/models')

@@ -99,11 +99,12 @@ class Actor(tf.keras.Model):
 
         self.output_mlp = tf.keras.Sequential()
         if isinstance(units_output_mlp, list):
-            for num in units_output_mlp:
+            for i, num in enumerate(units_output_mlp):
                 self.output_mlp.add(
                     ComplexDense(
                         units = num,
-                        activation = activation_output_mlp
+                        activation = activation_output_mlp,
+                        name = 'complex_dense{i}'.format(i=i)
                     )
                 )
         else:

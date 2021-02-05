@@ -22,11 +22,10 @@ from gazebo_msgs.srv import GetModelState, \
     GetLinkProperties, \
     GetLinkState, \
     GetPhysicsProperties
-from geometry_msgs.mssg import PoseStamped, WrenchStamped
+from geometry_msgs.msg import PoseStamped, WrenchStamped
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
-from reward.mod_zmp import ModZMP
 from tf import TransformListener
 from reward import FitnessFunction
 
@@ -52,7 +51,7 @@ class Leg:
             self.contact_callback
         )
 
-        self.leg1_joint_force_torque_subscriber = rospy(
+        self.leg1_joint_force_torque_subscriber = rospy.Subscriber(
             '/quadruped/{leg_name}1_joint_force_torque'.format(
                 leg_name = leg_name
             ),
@@ -60,7 +59,7 @@ class Leg:
             self._leg1_joint_force_torque_callback
         )
 
-        self.leg2_joint_force_torque_subscriber = rospy(
+        self.leg2_joint_force_torque_subscriber = rospy.Subscriber(
             '/quadruped/{leg_name}2_joint_force_torque'.format(
                 leg_name = leg_name
             ),
@@ -68,7 +67,7 @@ class Leg:
             self._leg2_joint_force_torque_callback
         )
 
-        self.leg3_joint_force_torque_subscriber = rospy(
+        self.leg3_joint_force_torque_subscriber = rospy.Subscriber(
             '/quadruped/{leg_name}3_joint_force_torque'.format(
                 leg_name = leg_name
             ),
@@ -300,10 +299,10 @@ class AllLegs:
             A = None
             B = None
             self.w = 1
-            for contact in contacts
-                if contact.leg_name == self.leg_name_lst[0]
+            for contact in contacts:
+                if contact.leg_name == self.leg_name_lst[0]:
                     A = contact
-                elif contact.leg_name == self.leg_name_lst[-1]
+                elif contact.leg_name == self.leg_name_lst[-1]:
                     B = contact
             return A, B
         else:
@@ -504,8 +503,8 @@ class Quadruped:
         self.v_real = np.zeros((3,))
         self.eta = 1e8
 
-        self.history_joint_torque = np.zeros(history_shape)
-        self.history_joint_vel = np.zeros(history_shape)
+        self.history_joint_torque = np.zeros(self.history_shape)
+        self.history_joint_vel = np.zeros(self.history_shape)
         self.history_pos = np.zeros((
             self.params['rnn_steps'] - 1,
             3
@@ -590,7 +589,6 @@ class Quadruped:
             vel[index] = joint_state.velocity[i]
         self.joint_position = np.array(state)
         self.joint_velocity = np.array(vel)
-        self.history_joint_vel
 
     def imu_subscriber_callback(self, imu):
         self.orientation = np.array(
@@ -668,6 +666,11 @@ class Quadruped:
         self.last_joint = self.joint_position
         self.last_pos = pos
         diff_joint = np.zeros(self.nb_joints)
+        #print(self.joint_position.shape)
+        #print(diff_joint.shape)
+        #print(self.orientation.shape)
+        #print(self.angular_vel.shape)
+        #print(self.linear_acc.shape)
         self.robot_state = np.concatenate([
             self.joint_position,
             diff_joint,
@@ -702,7 +705,7 @@ class Quadruped:
                 self.BF.update(self.B)
                 self.counter_1 = copy.deepcopy(self._counter_1)
                 self_counter_1 = 0
-            self.A.update(AB[0])•
+            self.A.update(AB[0])
             self.B.update(AB[1])
             A_name = self.A['leg_name']
             B_name = self.B['leg_name']
@@ -832,11 +835,11 @@ class Quadruped:
             self.force,
             self.torque,
             self.v_real,
-            self.v_exp,:
+            self.v_exp,
             self.eta,
-            self.all_legs.w
+            self.all_legs.w,
             self.history_joint_vel,
-            self.history_joint_torque
+            self.history_joint_torque,
             self.history_pos,
             self.history_vel,
             self.history_delta_motion
