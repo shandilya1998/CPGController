@@ -12,7 +12,7 @@ params = {
     'units_robot_state'           : 10,
     'units_motion_state'          : 10,
     'units_history'               : 10,
-    'BATCH_SIZE'                  : 1,
+    'BATCH_SIZE'                  : 10,
     'BUFFER_SIZE'                 : 100000,
     'GAMMA'                       : 0.99,
     'TEST_AFTER_N_EPISODES'       : 10,
