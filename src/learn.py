@@ -87,21 +87,15 @@ class Learner():
                         y[k] = rewards[k] + \
                             self.params['GAMMA'] * target_q_values[k]
 
-                with tf.GradientTape() as tape:
-                    loss += self.critic.model.train_on_batch(
-                        [states, actions],
-                        y
-                    )
-                    a_for_grad = self.actor.model.predict(states)
-                """
-                    Need to implement gradient calculation and update code here
-                """
+                loss += self.critic.train(states, actions)
+                a_for_grad = self.actor.model(states)
+                q_grads = self.critic.q_grads(states, a_for_grad)
+                self.actor.train(states, q_grads)
                 self.actor.target_train()
                 self.critic.target_train()
 
                 self.total_reward += self.current_time_step.reward
                 self._state = self.current_time_step.observation
-
 
                 step += 1
                 if done:

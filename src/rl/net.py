@@ -12,9 +12,24 @@ class ActorNetwork(object):
             self.create_actor_network(params)
         self.target_model, self.target_weights, self.target_state = \
             self.create_actor_network(params)
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate = self.LEARNING_RATE
+        )
 
-    def train(self, states, action_grads):
-        return None
+    def train(self, states, q_grads):
+        with tf.GradientTape as tape:
+            out = self.model(states)
+        grads = tape.gradient(
+            out, 
+            self.model.trainable_variables,
+            [-grad for grad in q_grads]
+        )
+        self.optimizer.apply_gradients(
+            zip(
+                grads,
+                self.model.trainable_variables
+            )
+        )
 
     def target_train(self):
         actor_weights = self.model.get_weights()
@@ -49,9 +64,31 @@ class CriticNetwork(object):
             self.create_critic_network(params)
         self.target_model, self.target_action, self.target_state = \
             self.create_critic_network(params)
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate = self.LEARNING_RATE
+        )
 
-    def gradients(self, states, actions):
-        return None
+
+    def q_grads(self, states, actions):
+        with tf.GradientTape() as tape:
+            tape.watch(actions)
+            q_values = self.model(states, actions)
+            q_values = tf.squeeze(q_values)
+        return tape.gradient(q_values, actions)
+
+    def train(self, states, actions):
+        with tf.GradientTape() as tape:
+            y_pred = self.critic.model(states, actions)
+            loss = self.crtic.loss(y, y_pred)
+        critic_grads = tape.gradient(
+            loss,
+            self.model.trainable_variables
+        )
+        self.optimizer.apply_gradients(zip(
+            critic_grads,
+            self.model.trainable_variables
+        ))
+        return loss
 
     def target_train(self):
         critic_weights = self.model.get_weights()
@@ -60,6 +97,9 @@ class CriticNetwork(object):
             critic_target_weights[i] = self.TAU * critic_weights[i] + \
                 (1 - self.TAU) * critic_target_weights[i]
         self.target_model.set_weights(critic_target_weights)
+
+    def loss(self, y_true, y_pred):
+        return tf.keras.losses.mean_squared_error(y_true, y_pred)
 
     def create_critic_network(self, params):
         log('[DDPG] Building the critic model')
