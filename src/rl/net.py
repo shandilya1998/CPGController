@@ -102,20 +102,20 @@ class CriticNetwork(object):
         return tf.keras.losses.mean_squared_error(y_true, y_pred)
 
     def create_critic_network(self, params):
-        log('[DDPG] Building the critic model')
+        print('[DDPG] Building the critic model')
         cr = critic.get_critic(params)
 
-        S = [ 
+        S = [
             tf.keras.Input(
-                spec.shape, 
-                spec.dtype
+                shape = spec.shape, 
+                dtype = spec.dtype
             ) for spec in params['observation_spec']
         ]
 
         A = [
             tf.keras.Input(
-                spec.shape,
-                spec.dtype
+                shape = spec.shape,
+                dtype = spec.dtype
             ) for spec in params['action_spec']
         ]
 
