@@ -66,7 +66,7 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
         else:
             return random.sample(self.buffer, batch_size)
 
-    def add(self, experience):
+    def add_batch(self, experience):
         if self.num_experiences < self.capacity:
             self.buffer.append(experience)
             self.num_experiences += 1

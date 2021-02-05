@@ -20,7 +20,7 @@ class ActorNetwork(object):
         with tf.GradientTape as tape:
             out = self.model(states)
         grads = tape.gradient(
-            out, 
+            out,
             self.model.trainable_variables,
             [-grad for grad in q_grads]
         )
@@ -72,14 +72,16 @@ class CriticNetwork(object):
     def q_grads(self, states, actions):
         with tf.GradientTape() as tape:
             tape.watch(actions)
-            q_values = self.model(states, actions)
+            inputs = states + actions
+            q_values = self.model(inputs)
             q_values = tf.squeeze(q_values)
         return tape.gradient(q_values, actions)
 
-    def train(self, states, actions):
+    def train(self, states, actions, y):
         with tf.GradientTape() as tape:
-            y_pred = self.critic.model(states, actions)
-            loss = self.crtic.loss(y, y_pred)
+            inputs = states + actions
+            y_pred = self.model(inputs)
+            loss = self.loss(y, y_pred)
         critic_grads = tape.gradient(
             loss,
             self.model.trainable_variables

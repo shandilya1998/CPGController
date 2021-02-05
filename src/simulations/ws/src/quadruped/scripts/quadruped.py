@@ -435,7 +435,7 @@ class Quadruped:
         self.model_state_req.model_state.model_name = 'quadruped'
         self.model_state_req.model_state.pose.position.x = 0.0
         self.model_state_req.model_state.pose.position.y = 0.0
-        self.model_state_req.model_state.pose.position.z = 0.25
+        self.model_state_req.model_state.pose.position.z = 0.0
         self.model_state_req.model_state.pose.orientation.x = 0.0
         self.model_state_req.model_state.pose.orientation.y = 0.0
         self.model_state_req.model_state.pose.orientation.z = 0.0

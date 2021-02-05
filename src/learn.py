@@ -50,7 +50,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                action_original = self.actor.model.predict(self._state)
+                action_original = self.actor.model(self._state)
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
@@ -67,27 +67,56 @@ class Learner():
                     self.current_time_step.observation,
                     self.current_time_step.step_type
                 ]
-                self.replay_buffer.add(experience)
-                batch = self.replay_buffer.get_next(self.params['BATCH_SIZE'])
-                states = tf.concat([e[0] for e in batch], 0)
-                actions = tf.concat([e[1] for e in batch], 0)
-                rewards = tf.concat([e[2] for e in batch], 0)
-                next_states = tf.concat([e[3] for e in batch], 0)
-                step_types = [e[4] for e in batch]
-                target_q_values = self.critic.target_model.predict([
-                    new_states,
-                    self.actor.target_model.predict(new_states)
+                self.replay_buffer.add_batch(experience)
+                batch = self.replay_buffer.get_next(
+                    self.params['BATCH_SIZE']
+                )
+                states = [[] for i in range(
+                    len(
+                        self.params['observation_spec']
+                    )
+                )]
+                actions = [[] for i in range(
+                    len(
+                        self.params['action_spec']
+                    )
+                )]
+                next_states = [[] for i in range(
+                    len(
+                        self.params['observation_spec']
+                    )
+                )]
+                rewards = []
+                step_types = []
+                for item in batch:
+                    state = item[0]
+                    action = item[1]
+                    rewards.append(item[2])
+                    next_state = item[3]
+                    step_types.append(item[4])
+                    for i, s in enumerate(state):
+                        states[i].append(s)
+                    for i, a in enumerate(action):
+                        actions[i].append(a)
+                    for i, s in enumerate(next_state):
+                        next_states[i].append(s)
+                states = [tf.concat(state, 0) for state in states]
+                actions = [tf.concat(action, 0) for action in actions]
+                rewards = tf.concat(rewards, 0)
+                next_states = [tf.concat(state, 0) for state in next_states]
+
+                inputs = next_states + self.actor.target_model(next_states)
+                target_q_values = self.critic.target_model(inputs)
+
+                y = [tf.repeat(reward, self.params['action_dim']) \
+                        for reward in rewards]
+                y = tf.stack([
+                    y[k] + self.params['GAMMA'] * target_q_values[k] \
+                    if step_types[k]!=tfa.trajectories.time_step.StepType.LAST \
+                    else y[k] for k in range(len(y))
                 ])
-                y = tf.concat([e[2] for e in batch], 0)
 
-                for k in range(len(batch)):
-                    if step_types[k]==tfa.trajectories.time_step.StepType.LAST:
-                        y[k] = rewards[k]
-                    else:
-                        y[k] = rewards[k] + \
-                            self.params['GAMMA'] * target_q_values[k]
-
-                loss += self.critic.train(states, actions)
+                loss += self.critic.train(states, actions, y)
                 a_for_grad = self.actor.model(states)
                 q_grads = self.critic.q_grads(states, a_for_grad)
                 self.actor.train(states, q_grads)
