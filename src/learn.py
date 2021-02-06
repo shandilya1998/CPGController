@@ -4,6 +4,7 @@ from rl.env import Env
 from rl.replay_buffer import ReplayBuffer, OU
 import tf_agents as tfa
 import tensorflow as tf
+import numpy as np
 
 class Learner():
     def __init__(self, params):
@@ -29,6 +30,13 @@ class Learner():
         ]
         self._noise = self._noise_init
         self.OU = OU()
+        self.desired_motion = np.zeros((
+            self.params['max_steps'], 6
+        ))
+        self.desired_motion[:, 3] = 0.05
+
+    def set_desired_motion(self, motion):
+        self.desired_motion = motion
 
     def learn(self, model_dir, identifier=''):
         i = 0
@@ -39,12 +47,14 @@ class Learner():
                         spec.dtype
                     ), 0) for spec in self.env.action_spec()
                 ]
-        print('[DDPG] training start')
+        print('[DDPG] Training Start')
         while i < self.params['train_episode_count']:
             self.current_time_step = self.env.reset()
+            print('[DDPG] Starting Episode {i}'.format(i = i), end = '')
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             self._action = self.env._action_init
+            step = 0
             for j in range(self.params['max_steps']):
                 loss = 0.0
                 epsilon -= 1/self.params['EXPLORE']
@@ -59,7 +69,10 @@ class Learner():
                 )
                 self._action[0] = action_original[0] + self._noise[0]
                 self._action[1] = action_original[1] + self._noise[1]
-                self.current_time_step = self.env.step(self._action)
+                self.current_time_step = self.env.step(
+                    self._action,
+                    self.desired_motion[j]
+                )
                 experience = [
                     self._state,
                     self._action,
@@ -112,7 +125,8 @@ class Learner():
                         for reward in rewards]
                 y = tf.stack([
                     y[k] + self.params['GAMMA'] * target_q_values[k] \
-                    if step_types[k]!=tfa.trajectories.time_step.StepType.LAST \
+                    if step_types[k] != \
+                        tfa.trajectories.time_step.StepType.LAST \
                     else y[k] for k in range(len(y))
                 ])
 
@@ -125,7 +139,7 @@ class Learner():
 
                 self.total_reward += self.current_time_step.reward
                 self._state = self.current_time_step.observation
-
+                print('.', end = '')
                 step += 1
                 if self.current_time_step.step_type == tfa.trajectories.time_step.StepType.LAST:
                     break
@@ -153,13 +167,15 @@ class Learner():
                         ), overwrite=True)
                     with open(
                         os.path.join(
-                            model_dir, 
-                            'criticmodel_'+identifier+'_{}'.format(i)+'.json'
+                            model_dir,
+                            'criticmodel_'+identifier+'_{}'.format(
+                                i
+                            )+'.json'
                         ), "w") as outfile:
                         json.dump(critic.model.to_json(), outfile)
 
-            step = 0
             i += 1
+            print('\n')
 
 if __name__ == '__main__':
     learner = Learner(params)

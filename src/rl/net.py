@@ -17,7 +17,7 @@ class ActorNetwork(object):
         )
 
     def train(self, states, q_grads):
-        with tf.GradientTape as tape:
+        with tf.GradientTape() as tape:
             out = self.model(states)
         grads = tape.gradient(
             out,
@@ -34,7 +34,7 @@ class ActorNetwork(object):
     def target_train(self):
         actor_weights = self.model.get_weights()
         actor_target_weights = self.target_model.get_weights()
-        for i in xrange(len(actor_weights)):
+        for i in range(len(actor_weights)):
             actor_target_weights[i] = self.TAU * actor_weights[i] + \
                 (1 - self.TAU)* actor_target_weights[i]
         self.target_model.set_weights(actor_target_weights)
@@ -95,7 +95,7 @@ class CriticNetwork(object):
     def target_train(self):
         critic_weights = self.model.get_weights()
         critic_target_weights = self.target_model.get_weights()
-        for i in xrange(len(critic_weights)):
+        for i in range(len(critic_weights)):
             critic_target_weights[i] = self.TAU * critic_weights[i] + \
                 (1 - self.TAU) * critic_target_weights[i]
         self.target_model.set_weights(critic_target_weights)

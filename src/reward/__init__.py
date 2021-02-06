@@ -19,7 +19,7 @@ class FitnessFunction:
 
     def __call__(self, com, force, torque, v_real, v_exp, eta, omega, \
             history_joint_vel, history_joint_torque, \
-            history_pos, history_vel, history_delta_motion):
+            history_pos, history_vel, history_desired_motion):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
         dc = np.abs(np.cross(
             (self.A - zmp),
@@ -87,15 +87,18 @@ class FitnessFunction:
         motion = np.sqrt(
             np.sum(
                 np.square(
-                    history_pos[1:] - \
-                        history_pos[:-1] - history_delta_motion[:3]
+                    (
+                        history_pos[1:] - history_pos[:-1]
+                    ) / np.norm(
+                        history_pos[1:] - history_pos[:-1]
+                    )  - \
+                        history_desired_motion[1:, :3]
                 )
             )
         ) + np.sqrt(
             np.sum(
                 np.square(
-                    history_vel[1:] - \
-                            history_vel[:-1] - history_delta_motion[3:6]
+                    history_vel  - history_desired_motion[:, 3:6]
                 )
             )
         )
