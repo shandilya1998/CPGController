@@ -22,11 +22,11 @@ params = {
     'EXPLORE'                     : 100000,
     'train_episode_count'         : 100,
     'test_episode_count'          : 10,
-    'max_steps'                   : 1000,
+    'max_steps'                   : 10000,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 10,
-    'rnn_steps'                   : 1000,
+    'rnn_steps'                   : 100,
     'units_critic_hidden'         : 10,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',

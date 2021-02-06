@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 import rospy
 import copy
-#from rl.constants import *
-#from reward.reward import FitnessFunction
 import numpy as np
-#import tensorflow as tf
+import tensorflow as tf
 from control_msgs.msg import FollowJointTrajectoryAction, \
     FollowJointTrajectoryActionGoal, \
     FollowJointTrajectoryGoal
@@ -22,19 +20,39 @@ from gazebo_msgs.srv import GetModelState, \
     GetLinkProperties, \
     GetLinkState, \
     GetPhysicsProperties
-from geometry_msgs.msg import PoseStamped, WrenchStamped
+from geometry_msgs.msg import Pose, PoseStamped, WrenchStamped
+import tf2_geometry_msgs
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 from tf import TransformListener
 from reward import FitnessFunction
+import tf2_ros
+
+def transform_pose(input_pose, from_frame, to_frame):
+    # **Assuming /tf2 topic is being broadcasted
+    tf_buffer = tf2_ros.Buffer()
+    listener = tf2_ros.TransformListener(tf_buffer)
+
+    pose_stamped = tf2_geometry_msgs.PoseStamped()
+    pose_stamped.pose = input_pose
+    pose_stamped.header.frame_id = from_frame
+    pose_stamped.header.stamp = rospy.Time.now()
+
+    try:
+        # ** It is important to wait for the listener to start listening. Hence the rospy.Duration(1)
+        output_pose_stamped = tf_buffer.transform(pose_stamped, to_frame, rospy.Duration(1))
+        return output_pose_stamped.pose
+
+    except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+        raise
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
         self.params = params
         self.leg_name = leg_name
         self.joint_name_lst = joint_name_lst
-        self.jtp_zeros = np.zeros(len(joint_name_lst))
+        self.jtp_zeros = np.zeros(len(joint_name_lst)).tolist()
         self.jtp = rospy.Publisher(
             '/quadruped/{leg_name}_controller/command'.format(
                 leg_name = leg_name
@@ -188,9 +206,9 @@ class Leg:
         jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
         point.positions = pos
-        point.velocities = self.jtp_zeros
-        point.accelerations = self.jtp_zeros
-        point.effort = self.jtp_zeros
+        #point.velocities = self.jtp_zeros
+        #point.accelerations = self.jtp_zeros
+        #point.effort = self.jtp_zeros
         point.time_from_start = rospy.Duration(1.0/60.0)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
@@ -202,10 +220,10 @@ class Leg:
         jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
         point.positions = pos
-        point.velocities = self.jtp_zeros
-        point.accelerations = self.jtp_zeros
-        point.effort = self.jtp_zeros
-        point.time_from_start = rospy.Duration(0.0001)
+        #point.velocities = self.jtp_zeros
+        #point.accelerations = self.jtp_zeros
+        #point.effort = self.jtp_zeros
+        point.time_from_start = rospy.Duration(1.0/60.0)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
 
@@ -281,7 +299,7 @@ class AllLegs:
             A = None
             B = None
             self.w = 1
-            names = [contact.leg_name for contact in contacts]
+            names = [contact['leg_name'] for contact in contacts]
             if 'front' in names[0] and 'front' in names[1]:
                 B = contacts[2]
                 if 'right' in names[2]:
@@ -300,9 +318,9 @@ class AllLegs:
             B = None
             self.w = 1
             for contact in contacts:
-                if contact.leg_name == self.leg_name_lst[0]:
+                if contact['leg_name'] == self.leg_name_lst[0]:
                     A = contact
-                elif contact.leg_name == self.leg_name_lst[-1]:
+                elif contact['leg_name'] == self.leg_name_lst[-1]:
                     B = contact
             return A, B
         else:
@@ -495,7 +513,6 @@ class Quadruped:
         self.AL = {'leg_name' : None}
         self.BL = {'leg_name' : None}
         self.mass = self.get_total_mass()
-        self.tf_listener_ = TransformListener()
         self.force = np.zeros((3,))
         self.torque = np.zeros((3,))
         self.com = np.zeros((3,))
@@ -514,8 +531,8 @@ class Quadruped:
             self.params['rnn_steps'] - 1,
             3
         ))
-        self.history_delta_motion = np.zeros((
-            self.params['rnn_steps'] - 2,
+        self.history_desired_motion = np.zeros((
+            self.params['rnn_steps'] - 1,
             6
         ))
 
@@ -532,16 +549,15 @@ class Quadruped:
         for link in self.params['link_name_lst']:
             prop = self.link_prop_proxy(link)
             mass = prop.mass
-            pose = PoseStamped()
-            pose.header.frame_id = link[11:]
-            pose.position.x = prop.pose.position.x
-            pose.position.y = prop.pose.position.y
-            pose.position.z = prop.pose.position.z
-            pose.orientation.x = prop.pose.orientation.x
-            pose.orientation.y = prop.pose.orientation.y
-            pose.orientation.z = prop.pose.orientation.z
-            pose.orientation.w = prop.pose.orientation.w
-            t_pose = self.tf_listener_.transformPose("world", pose)
+            pose = Pose()
+            pose.position.x = prop.com.position.x
+            pose.position.y = prop.com.position.y
+            pose.position.z = prop.com.position.z
+            pose.orientation.x = prop.com.orientation.x
+            pose.orientation.y = prop.com.orientation.y
+            pose.orientation.z = prop.com.orientation.z
+            pose.orientation.w = prop.com.orientation.w
+            t_pose = transform_pose(pose, link[11:], reference)
             x += t_pose.position.x * mass
             y += t_pose.position.y * mass
             z += t_pose.position.z * mass
@@ -620,28 +636,27 @@ class Quadruped:
         try:
             self.pause_proxy()
         except rospy.ServiceException:
-            print('/gazebo/pause_physics service call failed')
+            print('[Gazebo] /gazebo/pause_physics service call failed')
         #set models pos from world
         rospy.wait_for_service('/gazebo/set_model_state')
         try:
             self.model_state_proxy(self.model_state_req)
         except rospy.ServiceException:
-            print('/gazebo/set_model_state call failed')
+            print('[Gazebo] /gazebo/set_model_state call failed')
         #set model's joint config
         rospy.wait_for_service('/gazebo/set_model_configuration')
         try:
             self.model_config_proxy(self.model_config_req)
         except rospy.ServiceException:
-            print('/gazebo/set_model_configuration call failed')
-
-        self.joint_pos = self.starting_pos
+            print('[Gazebo] /gazebo/set_model_configuration call failed')
+        self.action = self.starting_pos
         self.all_legs.reset_move(self.starting_pos)
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
             self.unpause_proxy()
         except rospy.ServiceException:
-            print('/gazebo/unpause_physics service call failed')
+            print('[Gazebo] /gazebo/unpause_physics service call failed')
 
         rospy.sleep(0.5)
         self.reward = 0.0
@@ -790,8 +805,8 @@ class Quadruped:
                 'leg_name' : B_name
             })
         else:
-            raise NotImplementedError
-
+            #raise NotImplementedError
+            print('[DDPG] No Support Line found')
 
     def get_reward(self, action):
         """
@@ -842,47 +857,46 @@ class Quadruped:
             self.history_joint_torque,
             self.history_pos,
             self.history_vel,
-            self.history_delta_motion
+            self.history_desired_motion
         )
 
-    def step(self, action, delta_motion):
+    def step(self, action, desired_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
             ) for a in action
         ]
-        print('action:', action)
-        self.joint_pos = action[0][0][0].tolist()
-        self.osc_state = action[1][0].tolist()
-        self.all_legs.move(self.joint_pos)
-        print('joint pos:', self.joint_pos)
+        #print('action:', action)
+        self.action = action[0][0][0]
+        self.osc_state = action[1][0]
+        self.all_legs.move(self.action.tolist())
+        #print('joint pos:', self.action)
         #rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        pos = np.array([
+        pos = np.expand_dims(np.array([
             model_state.pose.position.x,
             model_state.pose.position.y,
             model_state.pose.position.z
-        ])
+        ]), 0)
         self.history_pos = np.concatenate([
             self.history_pos[1:],
             pos
         ])
-        self.v_real = np.array([
+        self.v_real = np.expand_dims(np.array([
             model_state.twist.linear.x,
             model_state.twist.linear.y,
             model_state.twist.linear.z
-        ])
+        ]), 0)
         self.history_vel = np.concatenate([
             self.history_vel[1:],
             self.v_real
         ])
-        self.history_delta_motion = np.concatenate([
-            self.history_delta_motion[1:],
-            delta_motion
+        self.history_desired_motion = np.concatenate([
+            self.history_desired_motion[1:],
+            np.expand_dims(desired_motion, 0)
         ])
-        self.v_exp = self.v_exp + delta_motion[3:6]
-        vself.action = action[0][0]
+        self.v_exp =  desired_motion[3:6]
         self.reward = self.get_reward(action[0][0])
 
         diff_joint = self.joint_position - self.last_joint
@@ -898,7 +912,7 @@ class Quadruped:
         self.motion_state = np.concatenate(
             [
                 pos,
-                delta_motion
+                desired_motion
             ],
             0
         )
@@ -906,7 +920,7 @@ class Quadruped:
         self.history = np.concatenate(
             [
                 self.history[1:, :],
-                self.joint_pos
+                self.action
             ],
             0
         )
@@ -915,7 +929,7 @@ class Quadruped:
         self.last_pos = pos
 
         curr_time = rospy.get_time()
-        print('time:', curr_time - self.episode_start_time)
+        print('[DDPG] time:', curr_time - self.episode_start_time)
 
         return [
             self.motion_state,

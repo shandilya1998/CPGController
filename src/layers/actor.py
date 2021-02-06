@@ -181,6 +181,7 @@ class Actor(tf.keras.Model):
             ), 
             name='ensure_shape_critic_time_distributed_out'
         )
+        out = tf.math.real(out)
         return [out, z_out]
 
 def get_actor(params):
