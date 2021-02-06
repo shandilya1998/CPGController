@@ -29,24 +29,6 @@ from tf import TransformListener
 from reward import FitnessFunction
 import tf2_ros
 
-def transform_pose(input_pose, from_frame, to_frame):
-    # **Assuming /tf2 topic is being broadcasted
-    tf_buffer = tf2_ros.Buffer()
-    listener = tf2_ros.TransformListener(tf_buffer)
-
-    pose_stamped = tf2_geometry_msgs.PoseStamped()
-    pose_stamped.pose = input_pose
-    pose_stamped.header.frame_id = from_frame
-    pose_stamped.header.stamp = rospy.Time.now()
-
-    try:
-        # ** It is important to wait for the listener to start listening. Hence the rospy.Duration(1)
-        output_pose_stamped = tf_buffer.transform(pose_stamped, to_frame, rospy.Duration(1))
-        return output_pose_stamped.pose
-
-    except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-        raise
-
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
         self.params = params
@@ -536,6 +518,9 @@ class Quadruped:
             6
         ))
 
+        self.tf_buffer = tf2_ros.Buffer()
+        self.listener = tf2_ros.TransformListener(self.tf_buffer)
+
     def get_total_mass(self):
         mass = 0
         for link in self.params['link_name_lst']:
@@ -543,8 +528,32 @@ class Quadruped:
             mass += msg.mass
         return mass
 
+    def transform_pose(self, input_pose, from_frame, to_frame):
+        # **Assuming /tf2 topic is being broadcasted
+        pose_stamped = tf2_geometry_msgs.PoseStamped()
+        pose_stamped.pose = input_pose
+        pose_stamped.header.frame_id = from_frame
+        pose_stamped.header.stamp = rospy.Time.now()
+
+        try:
+            # ** It is important to wait for the listener to start listening. 
+            # Hence the rospy.Duration(1.0/60.0)
+            output_pose_stamped = self.tf_buffer.transform(
+                pose_stamped,
+                to_frame,
+                rospy.Duration(1.0/60.0)
+            )
+            return output_pose_stamped.pose
+
+        except (
+            tf2_ros.LookupException,
+            tf2_ros.ConnectivityException,
+            tf2_ros.ExtrapolationException
+        ):
+            raise
+
     def get_com(self):
-        reference = 'world'
+        reference = 'dummy_link'
         x, y, z = 0,0,0
         for link in self.params['link_name_lst']:
             prop = self.link_prop_proxy(link)
@@ -557,7 +566,7 @@ class Quadruped:
             pose.orientation.y = prop.com.orientation.y
             pose.orientation.z = prop.com.orientation.z
             pose.orientation.w = prop.com.orientation.w
-            t_pose = transform_pose(pose, link[11:], reference)
+            t_pose = self.transform_pose(pose, link[11:], reference)
             x += t_pose.position.x * mass
             y += t_pose.position.y * mass
             z += t_pose.position.z * mass

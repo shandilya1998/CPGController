@@ -65,9 +65,6 @@
     </inertial>
   </xacro:macro>
 
-  <!-- Dummmy -->
-  <link name="dummy">
-  </link>
   <!-- Quadruped -->
   <link name="dummy_link">
     <visual>
@@ -83,11 +80,6 @@
     <gazebo reference="dummy_link">
     </gazebo>
   </link>
-
-  <joint name="dummy_joint" type="fixed">
-     <parent link="dummy"/>
-     <child link="dummy_link"/>
-   </joint>
 
   <link name="base_link">
     <visual>
@@ -216,7 +208,7 @@
         <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
           <robotNamespace>/quadruped</robotNamespace>
           <bumperTopicName>${prefix}_${suffix}_leg_tip_contact_sensor</bumperTopicName>
-          <frameName>world</frameName>
+          <frameName>dummy_link</frameName>
           <alwayson>true</alwayson>
           <updaterate>100</updaterate>
         </plugin>
