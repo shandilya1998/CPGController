@@ -144,6 +144,8 @@ class Learner():
                 if self.current_time_step.step_type == tfa.trajectories.time_step.StepType.LAST:
                     break
 
+                if not self.quadruped.upright:
+                    break
                 # Save the model after every n episodes
                 if i > 0 and \
                     np.mod(i, self.params['TEST_AFTER_N_EPISODES']) == 0:
