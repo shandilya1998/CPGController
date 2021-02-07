@@ -14,8 +14,8 @@ from sensor_msgs.msg import JointState
 from gazebo_msgs.srv import SetModelState, \
     SetModelStateRequest, \
     SetModelConfiguration, \
-    SetModelConfigurationRequest
-from gazebo_msgs.srv import GetModelState, \
+    SetModelConfigurationRequest, \
+    GetModelState, \
     GetModelStateRequest, \
     GetLinkProperties, \
     GetLinkState, \
@@ -28,6 +28,7 @@ from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 from tf import TransformListener
 from reward import FitnessFunction
 import tf2_ros
+import time
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -42,7 +43,7 @@ class Leg:
             JointTrajectory,
             queue_size=1
         )
-        self.contact_state = None
+        self.contact_state = ContactsState()
         self.contact_state_subscriber = rospy.Subscriber(
             '/quadruped/{leg_name}_tip_contact_sensor'.format(
                 leg_name = leg_name
@@ -246,7 +247,7 @@ class AllLegs:
             out = leg.get_processed_joint_force_troque()
             joint = re.search(regex, joint).group()
             out = out[joint]
-            torque.append(np.norm(out['torque']))
+            torque.append(np.linalg.norm(out['torque']))
         return np.array(torque)
 
     def get_all_contacts(self):
@@ -393,10 +394,6 @@ class Quadruped:
         self.leg_link_name_lst = self.link_name_lst[1:]
         self.joint_name_lst = self.params['joint_name_lst']
 
-        self.all_legs = AllLegs(
-            self.params,
-        )
-
         self.starting_pos = self.params['starting_pos']
         self.history = np.repeat(
             np.expand_dims(self.starting_pos, 0),
@@ -404,6 +401,13 @@ class Quadruped:
             0
         )
 
+        self.all_legs = AllLegs(
+            self.params,
+        )
+
+        self.kinematics = Kinematics(
+            self.params
+        )
 
         self.link_prop_proxy = rospy.ServiceProxy(
             '/gazebo/get_link_properties',
@@ -463,6 +467,18 @@ class Quadruped:
             self.joint_state_subscriber_callback
         )
 
+        self._counter_1 = 0
+        self.counter_1 = 0 # Counter for support line change
+        self.dt = self.params['dt']
+        self.A = {'leg_name' : None}
+        self.B = {'leg_name' : None}
+        self.AF = {'leg_name' : None}
+        self.BF = {'leg_name' : None}
+        self.AL = {'leg_name' : None}
+        self.BL = {'leg_name' : None}
+        ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
+        self.set_support_lines(ac)
+
         self.orientation = np.zeros(4)
         self.angular_vel = np.zeros(3)
         self.linear_acc = np.zeros(3)
@@ -477,23 +493,10 @@ class Quadruped:
         self.max_sim_time = 15.0
         self.pos_z_limit = 0.18
 
-        self.kinematics = Kinematics(
-            self.params
-        )
-
         self.compute_reward = FitnessFunction(
             self.params
         )
 
-        self._counter_1 = 0
-        self.counter_1 = 0 # Counter for support line change
-        self.dt = self.params['dt']
-        self.A = {'leg_name' : None}
-        self.B = {'leg_name' : None}
-        self.AF = {'leg_name' : None}
-        self.BF = {'leg_name' : None}
-        self.AL = {'leg_name' : None}
-        self.BL = {'leg_name' : None}
         self.mass = self.get_total_mass()
         self.force = np.zeros((3,))
         self.torque = np.zeros((3,))
@@ -520,6 +523,8 @@ class Quadruped:
 
         self.tf_buffer = tf2_ros.Buffer()
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
+        self.Tb = self.params['rnn_steps']
+        self.upright = True
 
     def get_total_mass(self):
         mass = 0
@@ -710,6 +715,18 @@ class Quadruped:
         self.episode_start_time = rospy.get_time()
         self.last_action = np.zeros(self.nb_joints)
         self.reward = 0.0
+        time.sleep(1)
+        self._counter_1 = 0
+        self.counter_1 = 0 # Counter for support line change
+        ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
+        self.set_support_lines(ac)
+
+        self.starting_pos = self.params['starting_pos']
+        self.history = np.repeat(
+            np.expand_dims(self.starting_pos, 0),
+            self.params['rnn_steps'] - 1,
+            0
+        )
         return [
             self.motion_state,
             self.robot_state,
@@ -720,6 +737,7 @@ class Quadruped:
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
         if AB:
+            self.upright = True
             self._counter_1 += 1
             if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF.update(self.A)
@@ -744,7 +762,7 @@ class Quadruped:
             else:
                 _B_name = self.leg_name_lst[2]
             current_pose = self.kinematics.get_current_end_effector_fk()
-            pose = None
+            pose = current_pose
             c = 0
             t = 0
             for step in range(self.params['rnn_steps']):
@@ -765,18 +783,6 @@ class Quadruped:
                     t = copy.deepcopy(c)
                     c = 0
                     break
-            """
-            delta = {
-                leg : {
-                    'x' : pose[leg]['position']['x'] - \
-                        current_pose[leg]['position']['x'],
-                    'y' : pose[leg]['position']['y'] - \
-                        current_pose[leg]['position']['y'],
-                    'z' : pose[leg]['position']['z'] - \
-                        current_pose[leg]['position']['z']
-                }
-            }
-            """
             m = {
                 0 : 'x',
                 1 : 'y',
@@ -816,6 +822,7 @@ class Quadruped:
         else:
             #raise NotImplementedError
             print('[DDPG] No Support Line found')
+            self.upright = False
 
     def get_reward(self, action):
         """
@@ -825,49 +832,53 @@ class Quadruped:
         self.com = self.get_com()
         self.moment = self.get_moment()
         self.force = self.mass * self.linear_acc
-        self.compute_reward.build(
-            self.counter_1 * self.dt,
-            self.Tb,
-            self.A,
-            self.B,
-            self.AF,
-            self.BF,
-            self.AL,
-            self.BL,
-        )
-        vd = np.norm(self.v_exp)
-        if vd == 0:
-            vd = 1e-8
-        self.eta = (self.params['L'] + self.params['W'])/(2*vd)
-        self.joint_torque = self.all_legs.get_all_torques()
-        self.history_joint_torque = np.concatenate(
-            [
-                self.history_joint_torque[1:],
-                self.joint_torque
-            ],
-            0
-        )
-        self.history_joint_vel = np.concatenate(
-            [
-                self.history_joint_vel[1:],
-                self.joint_velocity
-            ],
-            0
-        )
-        return self.compute_reward(
-            self.com,
-            self.force,
-            self.torque,
-            self.v_real,
-            self.v_exp,
-            self.eta,
-            self.all_legs.w,
-            self.history_joint_vel,
-            self.history_joint_torque,
-            self.history_pos,
-            self.history_vel,
-            self.history_desired_motion
-        )
+        print(self.upright)
+        if self.upright:
+            self.compute_reward.build(
+                self.counter_1 * self.dt,
+                self.Tb,
+                self.A,
+                self.B,
+                self.AF,
+                self.BF,
+                self.AL,
+                self.BL,
+            )
+            vd = np.linalg.norm(self.v_exp)
+            if vd == 0:
+                vd = 1e-8
+            self.eta = (self.params['L'] + self.params['W'])/(2*vd)
+            self.joint_torque = self.all_legs.get_all_torques()
+            self.history_joint_torque = np.concatenate(
+                [
+                    self.history_joint_torque[1:],
+                    self.joint_torque
+                ],
+                0
+            )
+            self.history_joint_vel = np.concatenate(
+                [
+                    self.history_joint_vel[1:],
+                    self.joint_velocity
+                ],
+                0
+            )
+            return self.compute_reward(
+                self.com,
+                self.force,
+                self.torque,
+                self.v_real,
+                self.v_exp,
+                self.eta,
+                self.all_legs.w,
+                self.history_joint_vel,
+                self.history_joint_torque,
+                self.history_pos,
+                self.history_vel,
+                self.history_desired_motion
+            )
+        else:
+            return -100
 
     def step(self, action, desired_motion):
         action = [
@@ -876,7 +887,7 @@ class Quadruped:
             ) for a in action
         ]
         #print('action:', action)
-        self.action = action[0][0][0]
+        self.action = np.clip(action[0][0][0], -np.pi*2.0/18.0, np.pi*2.0/18.0)
         self.osc_state = action[1][0]
         self.all_legs.move(self.action.tolist())
         #print('joint pos:', self.action)

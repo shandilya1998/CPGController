@@ -5,14 +5,15 @@ class SupportPlane:
         self.params = params
 
     def build(self, t, Tb, A, B, AL, BL, AF, BF):
+        print(AL)
         self.t = t
         self.Tb = Tb
-        self.A = A
-        self.AL = AL
-        self.AF = AF
-        self.B = B
-        self.BL = BL
-        self.BF = BF
+        self.A = A['position']
+        self.AL = AL['position']
+        self.AF = AF['position']
+        self.B = B['position']
+        self.BL = BL['position']
+        self.BF = BF['position']
         self.AB = self.B - self.A
 
     def get_n11(self):

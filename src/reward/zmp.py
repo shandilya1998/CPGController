@@ -20,7 +20,7 @@ class ZMP:
         self.zmp_s = np.zeros((3,))
         self.zmp = np.zeros((3,))
         self.inertial_plane = np.eye(N = 3, k = 1)
-        self.support_plane = self.inertial_plane
+        self.plane = self.inertial_plane
 
     def update_g(self):
         g = self.get_physics_prop_proxy().gravity
