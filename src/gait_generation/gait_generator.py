@@ -3,6 +3,88 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from tqdm import tqdm
 
+class Signal:
+    def __init__(self, N, dt, pi = np.pi):
+        self.N = N
+        self.theta1 = 0
+        self.theta2 = 0
+        self.theta3 = 0
+        self.pi = np.pi
+        self.Tst = 60
+        self.Tsw = 20
+        self.theta_h = np.pi/6
+        self.theta_k = np.pi/6
+
+    def compute_v(self, Lt):
+        return (2 * self.theta_h) / (self.Tsw + self.Tst)
+
+    def build(self, Tsw, Tst, theta_h, theta_k):
+        self.theta_h = theta_h
+        self.theta_k = theta_k
+        self.Tsw = Tsw
+        self.Tst = Tst
+        self.T = self.Tsw + self.Tsw
+        self.beta = self.Tst / self.T
+
+    def _compute(self, t):
+        t = t % self.T
+        if 0 <=t <=self.beta * self.T/2:
+            self.theta1 = self.theta_h * np.sin(
+                np.pi * t / (
+                    self.T * self.beta
+                ) + np.pi
+            )
+        elif self.T * self.beta / 2 < t < self.T * (2 - beta) / 2:
+            self.theta1 = self.theta_h * np.sin(
+                np.pi * t / (
+                    self.T * (1 - self.beta)
+                ) + np.pi * (3 - 4 * self.beta)/(2 * (1 - self.beta))
+            )
+            self.theta2 = self.theta_k * np.sin(
+                np.pi * t/(
+                    self.T * (1 - self.beta)
+                ) - np.pi * self.beta/(2 * (1 - self.beta))
+            )
+            self.theta3 = - self.theta2
+        elif self.T * (2 - self.beta) / 2 <= t < self.T:
+            self.theta1 = self.theta_h * np.sin(
+                np.pi * t / (
+                    self.T * self.beta
+                ) + n p.pi * (self.beta - 1) / self.beta
+            )
+
+    def _get_base(self):
+        signal = np.zeros((self.N, 3))
+        for i in range(self.N + self.T):
+            self._compute(t)
+            signal[i, 0] = self.theta1
+            signal[i, 1] = self.theta2
+            signal[i, 2] = self.theta2
+        return signal
+
+    def get_signal(self):
+        signa; = self._get_base()
+        out = np.zeros((N, 13))
+        t = np.arange(0, self.N) * self.dt
+        out[:, 0] = t
+        phases = []
+        out[:, 1] = signal[:self.N, 0]
+        out[:, 2] = signal[:self.N, 1]
+        out[:, 3] = signal[:self.N, 2]
+        phases.append(0)
+        out[:, 4] = signal[int(self.T / 4) : self.N + int(self.T / 4), 0]
+        out[:, 5] = signal[int(self.T / 4) : self.N + int(self.T / 4), 1]
+        out[:, 6] = signal[int(self.T / 4) : self.N + int(self.T / 4), 2]
+        phases.append(-0.25)
+        out[:, 7] = -signal[int(self.T / 2) : self.N + int(self.T / 2), 0]
+        out[:, 8] = signal[int(self.T / 2) : self.N + int(self.T / 2), 1]
+        out[:, 9] = signal[int(self.T / 2) : self.N + int(self.T / 2), 2]
+        phases.append(-0.5)
+        out[:, 10] = -signal[int(3 * self.T / 4) : self.N+int(3*self.T / 4), 0]
+        out[:, 11] = signal[int(3 * self.T / 4) : self.N+int(3*self.T/4), 1]
+        out[:, 12] = signal[int(3 * self.T / 4) : self.N+int(3*self.T/4), 2]
+        return out, phases
+
 def get_base_signal(Tsw, Tst, theta, N):
     """
         Method to generate the common signal

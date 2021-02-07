@@ -503,6 +503,7 @@ class Quadruped:
         self.com = np.zeros((3,))
         self.v_exp = np.zeros((3,))
         self.v_real = np.zeros((3,))
+        self.pos = np.zeros((3,))
         self.eta = 1e8
 
         self.history_joint_torque = np.zeros(self.history_shape)
@@ -511,7 +512,7 @@ class Quadruped:
             self.params['rnn_steps'] - 1,
             3
         ))
-        self.history_pos[:, 2] = 0.25
+        self.history_pos[:, 2] = 2.2 * 0.13
         self.history_vel = np.zeros((
             self.params['rnn_steps'] - 1,
             3
@@ -824,7 +825,7 @@ class Quadruped:
             print('[DDPG] No Support Line found')
             self.upright = False
 
-    def get_reward(self, action):
+    def set_reward(self, action):
         """
             Need to complete A, B, AF, BF, AL and BL computation
         """
@@ -832,7 +833,6 @@ class Quadruped:
         self.com = self.get_com()
         self.moment = self.get_moment()
         self.force = self.mass * self.linear_acc
-        print(self.upright)
         if self.upright:
             self.compute_reward.build(
                 self.counter_1 * self.dt,
@@ -863,7 +863,7 @@ class Quadruped:
                 ],
                 0
             )
-            return self.compute_reward(
+            self.reward = self.compute_reward(
                 self.com,
                 self.force,
                 self.torque,
@@ -878,30 +878,23 @@ class Quadruped:
                 self.history_desired_motion
             )
         else:
-            return -100
+            self.reward = -100
 
-    def step(self, action, desired_motion):
-        action = [
-            tf.make_ndarray(
-                tf.make_tensor_proto(a)
-            ) for a in action
-        ]
-        #print('action:', action)
+    def set_observation(self, action, desired_motion):
         self.action = np.clip(action[0][0][0], -np.pi*2.0/18.0, np.pi*2.0/18.0)
         self.osc_state = action[1][0]
         self.all_legs.move(self.action.tolist())
-        #print('joint pos:', self.action)
-        #rospy.sleep(15.0/60.0)
+        rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        pos = np.expand_dims(np.array([
+        self.pos = np.expand_dims(np.array([
             model_state.pose.position.x,
             model_state.pose.position.y,
             model_state.pose.position.z
         ]), 0)
         self.history_pos = np.concatenate([
             self.history_pos[1:],
-            pos
+            self.pos
         ])
         self.v_real = np.expand_dims(np.array([
             model_state.twist.linear.x,
@@ -917,7 +910,6 @@ class Quadruped:
             np.expand_dims(desired_motion, 0)
         ])
         self.v_exp =  desired_motion[3:6]
-        self.reward = self.get_reward(action[0][0])
 
         diff_joint = self.joint_position - self.last_joint
 
@@ -937,6 +929,14 @@ class Quadruped:
             0
         )
 
+    def step(self, action, desired_motion)
+        action = [
+            tf.make_ndarray(
+                tf.make_tensor_proto(a)
+            ) for a in action
+        ]
+        self.set_observation([action[0][0][0], action[1][0]], desired_motion)
+        self.set_reward(action[0][0])
         self.history = np.concatenate(
             [
                 self.history[1:, :],
