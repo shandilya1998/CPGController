@@ -5,6 +5,7 @@ from rl.replay_buffer import ReplayBuffer, OU
 import tf_agents as tfa
 import tensorflow as tf
 import numpy as np
+from gait_generation.gait_generator import Signal
 
 class Learner():
     def __init__(self, params):
@@ -34,6 +35,10 @@ class Learner():
             self.params['max_steps'], 6
         ))
         self.desired_motion[:, 3] = 0.05
+        self.signal_gen = Signal(
+            self.params['rnn_steps'],
+            self.params['dt']
+        )
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion

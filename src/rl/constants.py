@@ -26,7 +26,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 10,
-    'rnn_steps'                   : 100,
+    'rnn_steps'                   : 10000,
     'units_critic_hidden'         : 10,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
