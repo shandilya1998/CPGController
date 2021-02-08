@@ -14,6 +14,7 @@ class Signal:
         self.Tsw = 20
         self.theta_h = np.pi/6
         self.theta_k = np.pi/6
+        self._get_base()
 
     def compute_v(self, Lt):
         return (2 * self.theta_h) / (self.Tsw + self.Tst)
@@ -54,13 +55,13 @@ class Signal:
             )
 
     def _get_base(self):
-        signal = np.zeros((self.N, 3))
+        self.base_signal = np.zeros((self.N, 3))
         for i in range(self.N + self.T):
             self._compute(t)
             signal[i, 0] = self.theta1
             signal[i, 1] = self.theta2
             signal[i, 2] = self.theta2
-        return signal
+        return self.base_signal
 
     def get_signal(self):
         signa; = self._get_base()
