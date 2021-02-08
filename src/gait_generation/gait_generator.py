@@ -51,7 +51,7 @@ class Signal:
             self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
                     self.T * self.beta
-                ) + n p.pi * (self.beta - 1) / self.beta
+                ) + np.pi * (self.beta - 1) / self.beta
             )
 
     def _get_base(self):
@@ -64,7 +64,7 @@ class Signal:
         return self.base_signal
 
     def get_signal(self):
-        signa; = self._get_base()
+        signal = self._get_base()
         out = np.zeros((N, 13))
         t = np.arange(0, self.N) * self.dt
         out[:, 0] = t
@@ -351,34 +351,35 @@ def _support_pos(signals, N):
     pos[:, 8] = 45.25 + (37.50 + 27.869*np.cos(np.pi*signals[:, 8]/180))*np.sin(np.pi*signals[:, 7]/180 + 3*np.pi/4)
     return pos
 
+
+def support_polygon(dt, Tsw, Tst, N, theta, version = 4, figname = 'support_polygon_trajectory.png'):
+    signals, phases = get_signal(dt, Tsw, Tst, N, theta, version)
+    pos = _support_pos(signals, N)
+    fig, axes = plt.subplots(1,1, figsize = (10,10))
+    axes.plot(pos[:, 0], np.sqrt(np.square((pos[:, 1]-pos[:,3])) + np.square((pos[:,2] - pos[:,4]))))
+    axes.set_xlabel('time')
+    axes.set_ylabel('end effector joining line length')
+    axes.set_title('Support Polygon')
+    plt.show()
+    fig.savefig('../../images/gait_activations/{fig}'.format(fig=figname))
+
 def support_lines(dt, Tsw, Tst, N, theta, version = 0, figname = 'support_pos_trajectory.png'):
     """
         All calculations are assuming that the robot body remains parallel to the ground while traversing
     """
     signals, phases = get_signal(dt, Tsw, Tst, N, theta, version)
     pos = _support_pos(signals, N)
-    """
-    fig, axes = plt.subplots(2, 2, figsize = (10, 10))
-    axes[0][1].plot(pos[: 5*(Tsw+Tst), 1], pos[: 5*(Tsw+Tst), 2])
-    axes[0][1].set_xlabel('x coordinate')
-    axes[0][1].set_ylabel('y coordinate')
-    axes[0][1].set_title('Support Trajectory Leg 1')
-    axes[1][1].plot(pos[: 5*(Tsw+Tst), 3], pos[: 5*(Tsw+Tst), 4])
-    axes[1][1].set_xlabel('x coordinate')
-    axes[1][1].set_ylabel('y coordinate')
-    axes[1][1].set_title('Support Trajectory Leg 2')
-    axes[1][0].plot(pos[: 5*(Tsw+Tst), 5], pos[: 5*(Tsw+Tst), 6])
-    axes[1][0].set_xlabel('x coordinate')
-    axes[1][0].set_ylabel('y coordinate')
-    axes[1][0].set_title('Support Trajectory Leg 3')
-    axes[0][0].plot(pos[: 5*(Tsw+Tst), 7], pos[: 5*(Tsw+Tst), 8])
-    axes[0][0].set_xlabel('x coordinate')
-    axes[0][0].set_ylabel('y coordinate')
-    axes[0][0].set_title('Support Trajectory Leg 4')
+    fig, axes = plt.subplots(1, 1, figsize = (10, 10))
+    axes.plot(pos[: 5*(Tsw+Tst), 1], pos[: 5*(Tsw+Tst), 2])
+    axes.plot(pos[: 5*(Tsw+Tst), 3], pos[: 5*(Tsw+Tst), 4])
+    axes.plot(pos[: 5*(Tsw+Tst), 5], pos[: 5*(Tsw+Tst), 6])
+    axes.plot(pos[: 5*(Tsw+Tst), 7], pos[: 5*(Tsw+Tst), 8])
+    axes.set_xlabel('x coordinate')
+    axes.set_ylabel('y coordinate')
+    axes.set_title('Support Trajectory Leg')
     fig.tight_layout(pad = 0.75)
     plt.show()
     fig.savefig('../../images/gait_activations/{fig}'.format(fig=figname))
-    """
     extremes = []
     for i in range(4):
         extremes.append(
@@ -400,15 +401,15 @@ These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
 """  
 dt = 0.001
-Tsw = 60
-Tst = 60
+Tsw = 80
+Tst = 200
 N = 5000
-theta = 30
-version = 8
-gait = 'transverse_gallop'
+theta = 75
+version = 4
+gait = 'creep'
 figname = 'support_pos_trajectory_{g}_gait.png'.format(g = gait)
 signal, phases = get_signal(dt, Tsw, Tsw, N, theta, version)
-support_lines(dt, Tsw, Tst, N, theta, version, figname)
+support_polygon(dt, Tsw, Tst, N, theta, version, figname)
 #save_signal(signal, 50000, 'rotary_gallop_gait_tst80_tsw80_dt10e-3_theta45.png', phases, False)
 
 """
