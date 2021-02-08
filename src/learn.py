@@ -7,6 +7,55 @@ import tensorflow as tf
 import numpy as np
 from gait_generation.gait_generator import Signal
 
+class SignalDataGen:
+    def __init__(self, Tst, Tsw, theta_h, theta_k, params):
+        self.Tst = Tst
+        self.Tsw = Tsw
+        self.theta_h = theta_h
+        self.theta_k = theta_k
+        self.params = params
+        self.signal_gen = Signal(
+            self.params['rnn_steps'],
+            self.params['dt']
+        )
+        self.data = []
+        self.motion = []
+        self.batch_size = self.params['BATCH_SIZE']
+        self._create_straight_line_data()
+
+    def _create_straight_line_data(self):
+        data = []
+        motion = []
+        for tst, tsw, theta_h, theta_k in zip(self.Tst, self.Tsw, self.theta_h, self.theta_k):
+            self.signal_gen.build(tst, tst, theta_h, theta_k)
+            signal, _ = self.signal_gen()
+            data.append(signal)
+            v = self.signal_gen.compute_v((.1+0.015)*2.2)
+            motion.append(
+                np.stack([
+                        np.array([1, 0, 0, v, 0 ,0]) for i in range(self.params['rnn_steps'])
+                ])
+            )
+        self.data.extend(data)
+        self.motion.extend(motion)
+
+    def _create_turning_data(self):
+        data = []
+        motion = []
+        for tst, tsw, theta_h, theta_k in zip(self.Tsw, self.Tst, self.theta_h, self.theta_k):
+
+
+    def generator(self):
+        for data, v in zip(self.data, self.v):
+            motion = [
+                np.ones((self.batch_size)),
+                np.zeros((self.batch_size)),
+                np.zeros((self.batch_size)),
+                v,
+                np.zeros((self.batch_size)),
+                np.zeros((self.batch_size))]
+            yield data, motion
+
 class Learner():
     def __init__(self, params):
         self.params = params
@@ -42,6 +91,9 @@ class Learner():
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
+
+    def pretrain_actor(self):
+        
 
     def learn(self, model_dir, identifier=''):
         i = 0

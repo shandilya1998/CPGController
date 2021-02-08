@@ -46,6 +46,11 @@ class Kinematics:
             GetPositionFK
         )
 
+        self.compute_ik_proxy = rospy.ServiceProxy(
+            'compute_ik',
+            GetPositionIK
+        )
+
     def get_current_end_effector_fk(self):
         msg = []
         msg.append(self.front_right_leg.get_current_pose())
