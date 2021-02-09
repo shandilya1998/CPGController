@@ -1,7 +1,9 @@
 import moveit_commander
 import rospy
 from moveit_msgs.msg import RobotState
-from moveit_msgs.srv import GetPositionFK, GetPositionFKRequest
+from moveit_msgs.srv import GetPositionFK, \
+    GetPositionFKRequest, \
+    GetPositionIK
 from std_msgs.msg import Header
 
 # refer to the following link for creation of a service to get fk

@@ -382,12 +382,18 @@ class Quadruped:
         self.history_shape = tuple(
             params['observation_spec'][3].shape
         )
-        self.robot_action_shape = tuple(
+        self.output_action_shape = tuple(
             params['action_spec'][0].shape
         )
+        self.output_action_dtype = params[
+            'action_spec'
+        ][0].dtype.as_numpy_dtype
         self.osc_action_shape = tuple(
             params['action_spec'][1].shape
         )
+        self.osc_action_dtype = params[
+            'action_spec'
+        ][1].dtype.as_numpy_dtype
         self.params = params
         self.link_name_lst = self.params['link_name_lst']
         self.leg_name_lst = self.params['leg_name_lst']
@@ -708,9 +714,14 @@ class Quadruped:
             self.angular_vel,
             self.linear_acc
         ]).reshape(self.robot_state_shape)
-        self.motion_state = np.append(
-            pos,
-            [0],
+        self.motion_state = np.concatenate(
+            [
+                pos,
+                np.zeros(
+                    shape = self.motion_state_shape,
+                    dtype = self.motion_state_dtype
+                )
+            ],
             0
         )
         self.episode_start_time = rospy.get_time()
@@ -732,7 +743,6 @@ class Quadruped:
             self.motion_state,
             self.robot_state,
             self.osc_state,
-            self.history
         ], self.reward
 
     def set_support_lines(self, action):
@@ -881,8 +891,8 @@ class Quadruped:
             self.reward = -100
 
     def set_observation(self, action, desired_motion):
-        self.action = np.clip(action[0][0][0], -np.pi*2.0/18.0, np.pi*2.0/18.0)
-        self.osc_state = action[1][0]
+        self.action = np.clip(action[0], -np.pi*2.0/18.0, np.pi*2.0/18.0)
+        self.osc_state = action[1]
         self.all_legs.move(self.action.tolist())
         rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
@@ -929,7 +939,7 @@ class Quadruped:
             0
         )
 
-    def step(self, action, desired_motion)
+    def step(self, action, desired_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
@@ -955,7 +965,6 @@ class Quadruped:
             self.motion_state,
             self.robot_state,
             self.osc_state,
-            self.history
         ], self.reward
 
     def start(self, count):

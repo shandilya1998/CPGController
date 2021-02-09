@@ -6,55 +6,48 @@ import tf_agents as tfa
 import tensorflow as tf
 import numpy as np
 from gait_generation.gait_generator import Signal
+from tf_agents.trajectories.time_step import TimeStep, time_step_spec
+from tqdm import tqdm
 
 class SignalDataGen:
-    def __init__(self, Tst, Tsw, theta_h, theta_k, params):
-        self.Tst = Tst
-        self.Tsw = Tsw
-        self.theta_h = theta_h
-        self.theta_k = theta_k
+    def __init__(self, params):
+        self.Tst = params['Tst']
+        self.Tsw = params['Tsw']
+        self.theta_h = params['theta_h']
+        self.theta_k = params['theta_k']
         self.params = params
         self.signal_gen = Signal(
             self.params['rnn_steps'],
             self.params['dt']
         )
         self.data = []
-        self.motion = []
-        self.batch_size = self.params['BATCH_SIZE']
-        self._create_straight_line_data()
+        self.num_batches = 0
+        self._create_data()
 
-    def _create_straight_line_data(self):
-        data = []
-        motion = []
+    def _create_data(self):
+        """
+            Turning Behaviour is to be learnt by RL
+        """
+        self.data = []
         for tst, tsw, theta_h, theta_k in zip(self.Tst, self.Tsw, self.theta_h, self.theta_k):
             self.signal_gen.build(tst, tst, theta_h, theta_k)
-            signal, _ = self.signal_gen()
-            data.append(signal)
-            v = self.signal_gen.compute_v((.1+0.015)*2.2)
-            motion.append(
-                np.stack([
-                        np.array([1, 0, 0, v, 0 ,0]) for i in range(self.params['rnn_steps'])
-                ])
+            signal, _ = self.signal_gen.get_signal()
+            v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+            motion = np.stack([
+                np.array([1, 0, 0, v, 0 ,0]) \
+                for i in range(self.params['rnn_steps'])
+            ])
+            self.data.append(
+                [signal, motion]
             )
-        self.data.extend(data)
-        self.motion.extend(motion)
-
-    def _create_turning_data(self):
-        data = []
-        motion = []
-        for tst, tsw, theta_h, theta_k in zip(self.Tsw, self.Tst, self.theta_h, self.theta_k):
-
+        self.num_batches = len(self.data)
 
     def generator(self):
-        for data, v in zip(self.data, self.v):
-            motion = [
-                np.ones((self.batch_size)),
-                np.zeros((self.batch_size)),
-                np.zeros((self.batch_size)),
-                v,
-                np.zeros((self.batch_size)),
-                np.zeros((self.batch_size))]
-            yield data, motion
+        for batch in range(self.num_batches):
+            y, x = self.data[batch]
+            y = tf.convert_to_tensor(np.expand_dims(y, 0))
+            x = x
+            yield y, x
 
 class Learner():
     def __init__(self, params):
@@ -84,16 +77,86 @@ class Learner():
             self.params['max_steps'], 6
         ))
         self.desired_motion[:, 3] = 0.05
-        self.signal_gen = Signal(
-            self.params['rnn_steps'],
-            self.params['dt']
+        self.signal_gen = SignalDataGen(params)
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
+            learning_rate = self.params['LRA']
         )
+        self._state = [
+            self.env.quadruped.motion_state,
+            self.env.quadruped.robot_state,
+            self.env.quadruped.osc_state
+        ]
+        self._action = None
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
 
-    def pretrain_actor(self):
-        
+    def _pretrain_actor(self, x, y):
+        self._state = [
+            self.env.quadruped.motion_state,
+            self.env.quadruped.robot_state,
+            self.env.quadruped.osc_state
+        ]
+        with tf.GradientTape() as tape:
+            self._action = self.actor.model(self._state)
+            y_pred = self._action[0][:, 0, :]
+            y_true = y[:, i, :]
+        loss = tf.keras.losses.mean_squared_error(y_true, y_pred)
+        self._action = [
+            tf.make_ndarray(
+                tf.make_tensor_proto(a)
+            ) for a in self._action
+        ]
+        self.env.quadruped.set_observation([
+            self._action[0][0][0],
+            self._action[1][0]
+        ], x[i, :])
+        grads = tape.gradient(
+            loss,
+            self.model.trainable_variables
+        )
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                self.model.trainable_variables
+            )
+        )
+        return loss
+
+    def pretrain_actor(self, checkpoint_path = 'weights/actor_pretrain'):
+        total_loss = 0.0
+        avg_loss = 0.0
+        prev_loss = 1e10
+        history_loss = []
+        print('[Actor] Starting Actor Pretraining')
+        for episode in range(self.params['train_episode_count']):
+            print('[Actor] Starting Episode {ep}'.format(ep = episode))
+            for y, x in tqdm(self.signal_gen.generator()):
+                self.env.quadruped.reset()
+                for i in range(self.params['rnn_steps']):
+                    self._pretrain_actor(x, y)
+                    total_loss += loss
+                total_loss = total_loss / self.params['rnn_steps']
+                avg_loss += total_loss
+            avg_loss = avg_loss / self.signal_gen.num_batches
+            print('[Actor] Episode {ep} Average Loss: {l}'.format(
+                ep = episode,
+                l = avg_loss
+            ))
+            history_loss.append(avg_loss)
+            if episode % 5 == 0:
+                if prev_loss < avg_loss:
+                    break
+                else:
+                    self.actor.model.save(
+                        os.path.join(
+                            checkpoint_path,
+                            'actor_pretrained.h5'
+                        ),
+                        overwrite = True
+                    )
+                prev_loss = avg_loss
+
 
     def learn(self, model_dir, identifier=''):
         i = 0
@@ -110,7 +173,6 @@ class Learner():
             print('[DDPG] Starting Episode {i}'.format(i = i), end = '')
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
-            self._action = self.env._action_init
             step = 0
             for j in range(self.params['max_steps']):
                 loss = 0.0
@@ -198,7 +260,8 @@ class Learner():
                 self._state = self.current_time_step.observation
                 print('.', end = '')
                 step += 1
-                if self.current_time_step.step_type == tfa.trajectories.time_step.StepType.LAST:
+                if self.current_time_step.step_type == \
+                    tfa.trajectories.time_step.StepType.LAST:
                     break
 
                 if not self.quadruped.upright:
@@ -238,4 +301,5 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params)
+    learner.pretrain_actor()
     learner.learn('rl/out_dir/models')
