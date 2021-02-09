@@ -6,6 +6,7 @@ from tqdm import tqdm
 class Signal:
     def __init__(self, N, dt, pi = np.pi):
         self.N = N
+        self.dt = dt
         self.theta1 = 0
         self.theta2 = 0
         self.theta3 = 0
@@ -14,6 +15,7 @@ class Signal:
         self.Tsw = 20
         self.theta_h = np.pi/6
         self.theta_k = np.pi/6
+        self.build(self.Tst, self.Tsw, self.theta_h, self.theta_k)
         self._get_base()
 
     def compute_v(self, Lt):
@@ -35,7 +37,7 @@ class Signal:
                     self.T * self.beta
                 ) + np.pi
             )
-        elif self.T * self.beta / 2 < t < self.T * (2 - beta) / 2:
+        elif self.T * self.beta / 2 < t < self.T * (2 - self.beta) / 2:
             self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
                     self.T * (1 - self.beta)
@@ -55,17 +57,17 @@ class Signal:
             )
 
     def _get_base(self):
-        self.base_signal = np.zeros((self.N, 3))
+        self.base_signal = np.zeros((self.N + self.T, 3))
         for i in range(self.N + self.T):
-            self._compute(t)
-            signal[i, 0] = self.theta1
-            signal[i, 1] = self.theta2
-            signal[i, 2] = self.theta2
+            self._compute(i)
+            self.base_signal[i, 0] = self.theta1
+            self.base_signal[i, 1] = self.theta2
+            self.base_signal[i, 2] = self.theta2
         return self.base_signal
 
     def get_signal(self):
         signal = self._get_base()
-        out = np.zeros((N, 13))
+        out = np.zeros((self.N, 13))
         t = np.arange(0, self.N) * self.dt
         out[:, 0] = t
         phases = []
@@ -400,6 +402,7 @@ def support_lines(dt, Tsw, Tst, N, theta, version = 0, figname = 'support_pos_tr
 These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
 """  
+"""
 dt = 0.001
 Tsw = 80
 Tst = 200
@@ -411,7 +414,7 @@ figname = 'support_pos_trajectory_{g}_gait.png'.format(g = gait)
 signal, phases = get_signal(dt, Tsw, Tsw, N, theta, version)
 support_polygon(dt, Tsw, Tst, N, theta, version, figname)
 #save_signal(signal, 50000, 'rotary_gallop_gait_tst80_tsw80_dt10e-3_theta45.png', phases, False)
-
+"""
 """
     Experiment 0
         Tsw = 15
