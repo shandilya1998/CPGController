@@ -77,8 +77,8 @@ class Critic(tf.keras.Model):
         )
 
     def call(self, inputs):
-        S, A = inputs
-        motion_state, robot_state, osc_state, history = S
+        S, A, history = inputs
+        motion_state, robot_state, osc_state = S
         action, osc = A
 
         real_1 = tf.math.real(osc_state)

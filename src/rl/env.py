@@ -71,7 +71,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
                 tf.convert_to_tensor(ob),
                 0
             ) for ob in observation
-        ] + [action[-1]]
+        ]
 
         step_type = tfa.trajectories.time_step.StepType.MID
         self._episode_ended = last_step

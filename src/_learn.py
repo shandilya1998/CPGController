@@ -15,9 +15,10 @@ class SignalDataGen:
         self.Tsw = params['Tsw']
         self.theta_h = params['theta_h']
         self.theta_k = params['theta_k']
+        self.N = params['rnn_steps']
         self.params = params
         self.signal_gen = Signal(
-            self.params['rnn_steps'],
+            self.N,
             self.params['dt']
         )
         self.data = []
@@ -33,12 +34,9 @@ class SignalDataGen:
             self.signal_gen.build(tst, tst, theta_h, theta_k)
             signal, _ = self.signal_gen.get_signal()
             v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-            motion = np.stack([
-                np.array([1, 0, 0, v, 0 ,0]) \
-                for i in range(self.params['rnn_steps'])
-            ])
+            motion = np.array([1, 0, 0, v, 0 ,0])
             self.data.append(
-                [signal, motion]
+                [signal[:, 1:], motion]
             )
         self.num_batches = len(self.data)
 
@@ -92,16 +90,10 @@ class Learner():
         self.desired_motion = motion
 
     def _pretrain_actor(self, x, y):
-        self._state = [
-            self.env.quadruped.motion_state,
-            self.env.quadruped.robot_state,
-            self.env.quadruped.osc_state
-        ]
         with tf.GradientTape() as tape:
             self._action = self.actor.model(self._state)
-            y_pred = self._action[0][:, 0, :]
-            y_true = y[:, i, :]
-        loss = tf.keras.losses.mean_squared_error(y_true, y_pred)
+            y_pred = self._action[0]
+        loss = self.actor._pretrain_loss(y, y_pred)
         self._action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
@@ -110,15 +102,16 @@ class Learner():
         self.env.quadruped.set_observation([
             self._action[0][0][0],
             self._action[1][0]
-        ], x[i, :])
+        ], x)
         grads = tape.gradient(
             loss,
-            self.model.trainable_variables
+            self.actor.model.trainable_variables
         )
+        print(grads)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads,
-                self.model.trainable_variables
+                self.actor.model.trainable_variables
             )
         )
         return loss
@@ -133,12 +126,11 @@ class Learner():
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             for y, x in tqdm(self.signal_gen.generator()):
                 self.env.quadruped.reset()
-                for i in range(self.params['rnn_steps']):
-                    self._pretrain_actor(x, y)
-                    total_loss += loss
-                total_loss = total_loss / self.params['rnn_steps']
-                avg_loss += total_loss
-            avg_loss = avg_loss / self.signal_gen.num_batches
+                self.env.quadruped.set_initial_motion_state(x)
+                self._state = self.env.quadruped.get_state_tensor()
+                loss = self._pretrain_actor(x, y)
+                total_loss += loss
+            avg_loss = total_loss / self.signal_gen.num_batches
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
                 l = avg_loss
