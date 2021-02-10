@@ -31,6 +31,9 @@ class ActorNetwork(object):
             )
         )
 
+    def _pretrain_loss(self, y_true, y_pred):
+        return tf.keras.losses.mean_squared_error(y_true, y_pred)
+
     def target_train(self):
         actor_weights = self.model.get_weights()
         actor_target_weights = self.target_model.get_weights()
@@ -60,10 +63,10 @@ class CriticNetwork(object):
         self.action_size = params['action_dim']
 
         # Now create the model
-        self.model, self.action, self.state = \
+        self.model, self.action, self.state, self.history = \
             self.create_critic_network(params)
-        self.target_model, self.target_action, self.target_state = \
-            self.create_critic_network(params)
+        self.target_model, self.target_action, self.target_state, \
+            self.target_history = self.create_critic_network(params)
         self.optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.LEARNING_RATE
         )
@@ -121,11 +124,16 @@ class CriticNetwork(object):
             ) for spec in params['action_spec']
         ]
 
-        out = cr([S, A])
+        history = tf.keras.Input(
+            shape = params['history_spec'].shape,
+            dtype = params['history_spec'].dtype
+        )
+
+        out = cr([S, A, history])
 
         model = tf.keras.Model(
-            inputs = [S, A],
+            inputs = [S, A, history],
             outputs = [out]
         )
 
-        return model, A, S
+        return model, A, S, history

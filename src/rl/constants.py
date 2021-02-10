@@ -3,7 +3,7 @@ import numpy as np
 
 action_dim = 12
 params = {
-    'motion_state_size'           : 4,
+    'motion_state_size'           : 6,
     'robot_state_size'            : 2*action_dim + 4 + 3 + 3,
     'dt'                          : 0.001,
     'units_output_mlp'            : [10, 20, 12, action_dim],
@@ -26,7 +26,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 10,
-    'rnn_steps'                   : 10000,
+    'rnn_steps'                   : 600,
     'units_critic_hidden'         : 10,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -67,13 +67,6 @@ observation_spec = [
         dtype = tf.dtypes.complex64,
         name = 'oscillator state'
     ),
-     tf.TensorSpec(
-        shape = (
-            params['rnn_steps'] - 1,
-            params['action_dim']
-        ),
-        dtype = tf.dtypes.float32
-    )
 ]
 
 action_spec = [
@@ -100,10 +93,19 @@ reward_spec = [
     )
 ]
 
+history_spec = tf.TensorSpec(
+    shape = (
+        params['rnn_steps'] - 1,
+        params['action_dim']
+    )
+)
+
+
 data_spec = []
 data_spec.extend(observation_spec)
 data_spec.extend(action_spec)
 data_spec.extend(reward_spec)
+data_spec.append(history_spec)
 
 data_spec.extend([
     tf.TensorSpec(
@@ -117,7 +119,8 @@ specs = {
     'observation_spec' : observation_spec,
     'reward_spec' : reward_spec,
     'action_spec' : action_spec,
-    'data_spec' : data_spec
+    'data_spec' : data_spec,
+    'history_spec' : history_spec
 }
 
 params.update(specs)

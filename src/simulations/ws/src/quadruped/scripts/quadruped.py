@@ -380,7 +380,7 @@ class Quadruped:
             dtype = self.osc_state_dtype
         )
         self.history_shape = tuple(
-            params['observation_spec'][3].shape
+            params['history_spec'].shape
         )
         self.output_action_shape = tuple(
             params['action_spec'][0].shape
@@ -532,6 +532,28 @@ class Quadruped:
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
         self.Tb = self.params['rnn_steps']
         self.upright = True
+
+    def set_initial_motion_state(self, desired_motion):
+        self.motion_state = desired_motion
+
+    def get_state_tensor(self):
+        return [
+            tf.expand_dims(
+                tf.convert_to_tensor(
+                    self.motion_state
+                ), 0
+            ),
+            tf.expand_dims(
+                tf.convert_to_tensor(
+                    self.robot_state
+                ), 0
+            ),
+            tf.expand_dims(
+                tf.convert_to_tensor(
+                    self.osc_state
+                ), 0
+            )
+        ]
 
     def get_total_mass(self):
         mass = 0
@@ -897,23 +919,23 @@ class Quadruped:
         rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        self.pos = np.expand_dims(np.array([
+        self.pos = np.array([
             model_state.pose.position.x,
             model_state.pose.position.y,
             model_state.pose.position.z
-        ]), 0)
+        ])
         self.history_pos = np.concatenate([
             self.history_pos[1:],
-            self.pos
+            np.expand_dims(self.pos, 0)
         ])
-        self.v_real = np.expand_dims(np.array([
+        self.v_real = np.array([
             model_state.twist.linear.x,
             model_state.twist.linear.y,
             model_state.twist.linear.z
-        ]), 0)
+        ])
         self.history_vel = np.concatenate([
             self.history_vel[1:],
-            self.v_real
+            np.expand_dims(self.v_real, 0)
         ])
         self.history_desired_motion = np.concatenate([
             self.history_desired_motion[1:],
@@ -933,7 +955,7 @@ class Quadruped:
 
         self.motion_state = np.concatenate(
             [
-                pos,
+                self.pos,
                 desired_motion
             ],
             0

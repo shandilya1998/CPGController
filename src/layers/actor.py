@@ -56,7 +56,7 @@ class StateEncoder(tf.keras.Model):
         )
 
     def call(self, S):
-        motion_state, robot_state, _, _ = S
+        motion_state, robot_state, _ = S
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
         state = tf.concat([motion_state, robot_state], axis = -1)
@@ -129,10 +129,10 @@ class Actor(tf.keras.Model):
 
     def call(self, S):
         omega, mu, b = self.encoder(S)
-        _, _, z, _ = S
-        
+        _, _, z = S
+
         out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
- 
+
         step = tf.constant(0)
         z_out = self.osc([z, omega, mu, b])
         o = self.output_mlp(z)
