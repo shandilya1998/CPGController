@@ -23,17 +23,21 @@ class HopfOscillator(tf.keras.Model):
         self.range = tf.range(start = 1, limit = self.units+1, delta = 1, dtype = 'float32')
 
     def build(self, input_shape):
-        
+
         self.state_input_shape = input_shape[0]
         self.omega_input_shape = input_shape[1]
         self.mu_input_shape = input_shape[2]
         self.bias_input_shape = input_shape[3]
-        
-        last_dim_state = tf.compat.dimension_value(self.state_input_shape[-1])
-        last_dim_omega = tf.compat.dimension_value(self.omega_input_shape[-1])
+
+        last_dim_state = tf.compat.dimension_value(
+            self.state_input_shape[-1]
+        )
+        last_dim_omega = tf.compat.dimension_value(
+            self.omega_input_shape[-1]
+        )
         last_dim_mu = tf.compat.dimension_value(self.mu_input_shape[-1])
         last_dim_bias = tf.compat.dimension_value(self.bias_input_shape[-1])
-        
+
         if last_dim_state is None or last_dim_omega is None or last_dim_mu is None or last_dim_bias is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
                 'should be defined. Found `None`.')
@@ -73,4 +77,4 @@ class HopfOscillator(tf.keras.Model):
         phi = phi + inputs[1]*self.range*self.dt
         Z = tf.complex(r, 0.0)*tf.math.exp(1j*tf.complex(phi, 0.0))
         return Z
- 
+

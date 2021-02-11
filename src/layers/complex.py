@@ -1,4 +1,5 @@
 import tensorflow as tf
+from tensorflow.keras import activations
 
 class ComplexInitializer(tf.keras.initializers.Initializer):
     def __init__(self, initializer, name = 'complex_initializer'):
@@ -143,21 +144,26 @@ class ComplexLSTMCell(tf.keras.layers.Layer):
         trainable = True,
         **kwargs
     ):
+        super(ComplexLSTMCell, self).__init__(
+            trainable = trainable,
+            dtype = dtype,
+            name = name
+        )
         self.units = units
-        self.activation = activations.get(activation),
-        self.recurrent_activation = activations.get(recurrent_activation),
+        self.activation = activations.get(activation)
+        self.recurrent_activation = activations.get(recurrent_activation)
         self.use_bias = use_bias
 
         self.kernel_initializer = ComplexInitializer(
-            initializers.get(kernel_initializer),
+            tf.keras.initializers.get(kernel_initializer),
             'complex_kernel_initializer'
         )
         self.recurrent_initializer = ComplexInitializer(
-            initializers.get(recurrent_initializer),
+            tf.keras.initializers.get(recurrent_initializer),
             'complex_recurrent_initializer'
         )
         self.bias_initializer = ComplexInitializer(
-            initializers.get(bias_initializer),
+            tf.keras.initializers.get(bias_initializer),
             'complex_bias_initializer'
         )
         self.unit_forget_bias = unit_forget_bias
@@ -182,9 +188,9 @@ class ComplexLSTMCell(tf.keras.layers.Layer):
         if self.use_bias:
             if self.unit_forget_bias:
                 def bias_initializer(_, *args, **kwargs):
-                    return K.concatenate([
+                    return tf.keras.backend.concatenate([
                         self.bias_initializer((self.units,), *args, **kwargs),
-                        initializers.get('ones')((self.units,),*args, **kwargs),
+                        tf.keras.initializers.get('ones')((self.units,),*args, **kwargs),
                         self.bias_initializer((self.units * 2,),*args,**kwargs),
                     ])
             else:
@@ -211,10 +217,10 @@ class ComplexLSTMCell(tf.keras.layers.Layer):
     def call(self, inputs, states):
         h_tm1 = states[0]  # previous memory state
         c_tm1 = states[1]  # previous carry state
-        z = K.dot(inputs, self.kernel)
-        z += K.dot(h_tm1, self.recurrent_kernel)
+        z = tf.keras.backend.dot(inputs, self.kernel)
+        z += tf.keras.backend.dot(h_tm1, self.recurrent_kernel)
         if self.use_bias:
-            z = K.bias_add(z, self.bias)
+            z = tf.keras.backend.bias_add(z, self.bias)
 
         z = tf.split(z, num_or_size_splits=4, axis=1)
         c, o = self._compute_carry_and_output_fused(z, c_tm1)
