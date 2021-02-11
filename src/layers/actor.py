@@ -4,54 +4,48 @@ from layers.complex import ComplexDense, relu
 
 class StateEncoder(tf.keras.Model):
     def __init__(
-        self, 
+        self,
         units_osc,
         units_combine,
         units_robot_state,
         units_motion_state,
         activation_output_mlp = relu,
-        activation_combine = 'relu',
-        activation_robot_state = 'relu',
-        activation_motion_state = 'relu',
-        activation_mu = 'relu',
-        activation_omega = 'relu',
-        activation_b = 'relu',
+        activation_combine = relu,
+        activation_robot_state = relu,
+        activation_motion_state = relu,
+        activation_mu = relu,
+        activation_omega = relu,
+        activation_b = relu,
     ):
         super(StateEncoder, self).__init__()
-        self.combine_dense = tf.keras.layers.Dense(
+        self.combine_dense = ComplexDense(
             units = units_combine,
             activation = activation_combine,
-            dtype = 'float32',
             name = 'combine_dense'
         )
-        self.robot_state_dense = tf.keras.layers.Dense(
+        self.robot_state_dense = ComplexDense(
             units = units_robot_state,
             activation = activation_robot_state,
-            dtype = 'float32',
             name = 'robot_state_dense'
         )
-        self.motion_state_dense = tf.keras.layers.Dense(
+        self.motion_state_dense = ComplexDense(
             units = units_motion_state,
             activation = activation_motion_state,
-            dtype = 'float32',
             name = 'motion_state_dense'
         )
-        self.mu_dense = tf.keras.layers.Dense(
+        self.mu_dense = ComplexDense(
             units = units_osc,
             activation = activation_mu,
-            dtype = 'float32',
             name = 'mu_dense'
         )
-        self.omega_dense = tf.keras.layers.Dense(
+        self.omega_dense = ComplexDense(
             units = 1,
             activation = activation_omega,
-            dtype = 'float32',
             name = 'omega_dense'
         )
-        self.b_dense = tf.keras.layers.Dense(
+        self.b_dense = ComplexDense(
             units = units_osc,
             activation = activation_b,
-            dtype = 'float32',
             name = 'b_dense'
         )
 
