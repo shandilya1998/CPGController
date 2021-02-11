@@ -55,9 +55,9 @@ class StateEncoder(tf.keras.Model):
         robot_state = self.robot_state_dense(robot_state)
         state = tf.concat([motion_state, robot_state], axis = -1)
         state = self.combine_dense(state)
-        omega = self.omega_dense(state)
-        b = self.b_dense(state)
-        mu = self.mu_dense(state)
+        omega = tf.math.abs(self.omega_dense(state))
+        b = tf.math.abs(self.b_dense(state))
+        mu = tf.math.abs(self.mu_dense(state))
         return [omega, mu, b]
 
 

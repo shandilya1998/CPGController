@@ -108,7 +108,6 @@ class CriticNetwork(object):
 
     def create_critic_network(self, params):
         print('[DDPG] Building the critic model')
-        cr = critic.get_critic(params)
 
         S = [
             tf.keras.Input(
@@ -129,6 +128,7 @@ class CriticNetwork(object):
             dtype = params['history_spec'].dtype
         )
 
+        cr = critic.get_critic(params)
         out = cr([S, A, history])
 
         model = tf.keras.Model(

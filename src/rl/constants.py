@@ -74,7 +74,9 @@ action_spec = [
         shape = (
             params['rnn_steps'],
             params['action_dim']
-        )
+        ),
+        dtype = tf.dtypes.complex64,
+        name = 'quadruped action'
     ),
    tf.TensorSpec(
        shape = (

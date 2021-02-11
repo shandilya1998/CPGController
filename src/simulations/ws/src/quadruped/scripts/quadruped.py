@@ -435,7 +435,7 @@ class Quadruped:
         self.model_config_req.model_name = 'quadruped'
         self.model_config_req.urdf_param_name = 'robot_description'
         self.model_config_req.joint_names = self.joint_name_lst
-        self.model_config_req.joint_positions = self.starting_pos
+        self.model_config_req.joint_positions = np.real(self.starting_pos)
         self.model_state_proxy = rospy.ServiceProxy(
             '/gazebo/set_model_state', 
             SetModelState
@@ -693,7 +693,7 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/set_model_configuration call failed')
         self.action = self.starting_pos
-        self.all_legs.reset_move(self.starting_pos)
+        self.all_legs.reset_move(np.real(self.starting_pos))
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
@@ -716,13 +716,13 @@ class Quadruped:
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        pos = np.array([
+        self.pos = np.array([
             model_state.pose.position.x, 
             model_state.pose.position.y, 
             model_state.pose.position.z
         ], dtype = np.complex64)
         self.last_joint = self.joint_position
-        self.last_pos = pos
+        self.last_pos = self.pos
         diff_joint = np.zeros(self.nb_joints, dtype = np.complex64)
         #print(self.joint_position.shape)
         #print(diff_joint.shape)
@@ -738,7 +738,7 @@ class Quadruped:
         ]).reshape(self.robot_state_shape)
         self.motion_state = np.concatenate(
             [
-                pos,
+                self.pos,
                 np.zeros(
                     shape = self.motion_state_shape,
                     dtype = self.motion_state_dtype
@@ -920,7 +920,7 @@ class Quadruped:
     def set_observation(self, action, desired_motion):
         self.action = action[0]
         self.osc_state = action[1]
-        self.all_legs.move(np.real(np.real(self.action).tolist())
+        self.all_legs.move(np.real(self.action).tolist())
         rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)

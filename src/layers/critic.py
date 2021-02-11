@@ -1,5 +1,5 @@
 import tensorflow as tf
-from layers.complex import ComplexDense, relu
+from layers.complex import ComplexDense, ComplexLSTMCell, relu
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -131,7 +131,7 @@ class Critic(tf.keras.Model):
         out, h, c, step = tf.while_loop(cond, body, [out, h, c, step])
 
         out = self.out_dense(out)
-`
+
         return out
 
 

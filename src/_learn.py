@@ -33,10 +33,11 @@ class SignalDataGen:
         for tst, tsw, theta_h, theta_k in zip(self.Tst, self.Tsw, self.theta_h, self.theta_k):
             self.signal_gen.build(tst, tst, theta_h, theta_k)
             signal, _ = self.signal_gen.get_signal()
+            signal = signal[:, 1:].astype(np.complex64)
             v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-            motion = np.array([1, 0, 0, v, 0 ,0])
+            motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.complex64)
             self.data.append(
-                [signal[:, 1:], motion]
+                [signal, motion]
             )
         self.num_batches = len(self.data)
 
@@ -73,7 +74,7 @@ class Learner():
         self.OU = OU()
         self.desired_motion = np.zeros((
             self.params['max_steps'], 6
-        ))
+        ), dtype = np.complex64)
         self.desired_motion[:, 3] = 0.05
         self.signal_gen = SignalDataGen(params)
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
