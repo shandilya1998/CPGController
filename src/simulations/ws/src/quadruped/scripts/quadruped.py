@@ -538,21 +538,9 @@ class Quadruped:
 
     def get_state_tensor(self):
         return [
-            tf.expand_dims(
-                tf.convert_to_tensor(
-                    self.motion_state
-                ), 0
-            ),
-            tf.expand_dims(
-                tf.convert_to_tensor(
-                    self.robot_state
-                ), 0
-            ),
-            tf.expand_dims(
-                tf.convert_to_tensor(
-                    self.osc_state
-                ), 0
-            )
+            np.expand_dims(self.motion_state, 0),
+            np.expand_dims(self.robot_state, 0),
+            np.expand_dims(self.osc_state, 0)
         ]
 
     def get_total_mass(self):
