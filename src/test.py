@@ -13,11 +13,7 @@ time_step_spec = tfa.trajectories.time_step.time_step_spec(
 )
 env = Env(time_step_spec, params)
 
-S = [
-    np.expand_dims(env.quadruped.motion_state, 0),
-    np.expand_dims(env.quadruped.robot_state, 0),
-    np.expand_dims(env.quadruped.osc_state, 0)
-]
+S = env.quadruped.get_state_tensor()
 
 optimizer = tf.keras.optimizers.Adam(
     learning_rate = params['LRA']
@@ -25,6 +21,9 @@ optimizer = tf.keras.optimizers.Adam(
 signal_gen = SignalDataGen(params)
 
 y, x = next(signal_gen.generator())
+env.quadruped.reset()
+env.quadruped.set_initial_motion_state(x)
+S = env.quadruped.get_state_tensor()
 with tf.GradientTape() as tape:
     y_pred = actor.model(S)
     loss = tf.keras.losses.mean_squared_error(y, y_pred[0])

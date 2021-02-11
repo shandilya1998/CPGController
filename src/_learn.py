@@ -8,6 +8,8 @@ import numpy as np
 from gait_generation.gait_generator import Signal
 from tf_agents.trajectories.time_step import TimeStep, time_step_spec
 from tqdm import tqdm
+import pickle
+import os
 
 class SignalDataGen:
     def __init__(self, params):
@@ -94,7 +96,7 @@ class Learner():
         with tf.GradientTape() as tape:
             self._action = self.actor.model(self._state)
             y_pred = self._action[0]
-        loss = self.actor._pretrain_loss(y, y_pred)
+            loss = self.actor._pretrain_loss(y, y_pred)
         self._action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
@@ -108,7 +110,6 @@ class Learner():
             loss,
             self.actor.model.trainable_variables
         )
-        print(grads)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads,
@@ -130,7 +131,7 @@ class Learner():
                 self.env.quadruped.set_initial_motion_state(x)
                 self._state = self.env.quadruped.get_state_tensor()
                 loss = self._pretrain_actor(x, y)
-                total_loss += loss
+                total_loss += loss.numpy()
             avg_loss = total_loss / self.signal_gen.num_batches
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
@@ -149,7 +150,9 @@ class Learner():
                         overwrite = True
                     )
                 prev_loss = avg_loss
-
+        pkl = open(os.path.join(checkpoint_dir, 'loss.pickle'), 'wb')
+        pickle.dump(history_loss, pkl)
+        pkl.close()
 
     def learn(self, model_dir, identifier=''):
         i = 0
