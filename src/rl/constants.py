@@ -50,14 +50,14 @@ observation_spec = [
         shape = (
             params['motion_state_size'],
         ),
-        dtype = tf.dtypes.float32,
+        dtype = tf.dtypes.complex64,
         name = 'motion state'
     ),
     tf.TensorSpec(
         shape = (
             params['robot_state_size'],
         ),
-        dtype = tf.dtypes.float32,
+        dtype = tf.dtypes.complex64,
         name = 'robot state'
     ),
     tf.TensorSpec(
@@ -88,7 +88,7 @@ action_spec = [
 reward_spec = [
     tf.TensorSpec(
         shape = (),
-        dtype = tf.dtypes.float32,
+        dtype = tf.dtypes.complex64,
         name = 'reward'
     )
 ]
@@ -97,7 +97,8 @@ history_spec = tf.TensorSpec(
     shape = (
         params['rnn_steps'] - 1,
         params['action_dim']
-    )
+    ),
+    dtype = tf.dtypes.complex64
 )
 
 
@@ -166,7 +167,7 @@ robot_data = {
         -0.01, 0.01, -0.01,
         -0.01, 0.01, -0.01,
         -0.01, 0.01, 0.01
-    ]),
+    ], dtype = np.complex64),
     'L' : 2.2*0.108,
     'W' : 2.2*0.108
 }
