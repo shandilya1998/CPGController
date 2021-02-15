@@ -21,7 +21,8 @@ printf -- 'source /opt/ros/melodic/setup.bash\n' >> ros_start.sh
 printf -- '/opt/ros/melodic/bin/roslaunch quadruped quadruped_control.launch' >> ros_start.sh
 chmod +x ros_start.sh
 #cat ros_start.sh
-
+export ROS_HOSTNAME=localhost
+export ROS_MASTER_URI=http://localhost:11311
 echo Setting up Quadruped package
 cd CPGController/src/simulations/ws
 sed -i 's#/home/shandilya/Desktop/CNS/DDP#/content/CPGController#g' build/CMakeCache.txt
