@@ -12,6 +12,7 @@ sudo apt install -y ros-melodic-rosmaster
 pip install --extra-index-url https://rospypi.github.io/simple/ rospy
 sudo apt install python-rosdep python-catkin-pkg python-rosinstall python-rosinstall-generator python-wstool build-essential
 sudo rosdep init
+sudo rosdep fix-permissions
 rosdep update
 
 echo ROS install done
