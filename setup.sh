@@ -1,4 +1,7 @@
-#!/bin/bash
+echo Setting up Python
+update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+update-alternatives --install /usr/local/bin/python python /usr/bin/python 1
+python -m pip install --upgrade --force pip
 echo Starting ROS install
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
@@ -17,7 +20,7 @@ rosdep update
 
 echo ROS install done
 
-printf -- '#!/bin/bash\n' > ros_start.sh
+printf -- '#/bin/bash\n' > ros_start.sh
 printf -- 'source /opt/ros/melodic/setup.bash\n' >> ros_start.sh
 printf -- '/opt/ros/melodic/bin/roslaunch quadruped quadruped_control.launch' >> ros_start.sh
 chmod +x ros_start.sh
@@ -25,7 +28,7 @@ chmod +x ros_start.sh
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311
 echo Setting up Quadruped package
-cd CPGController/src/simulations/ws
+cd /content/CPGController/src/simulations/ws
 sed -i 's#/home/shandilya/Desktop/CNS/DDP#/content/CPGController#g' build/CMakeCache.txt
 sed -i 's#/home/shandilya/Desktop/CNS/DDP#/content/CPGController#g' build/Makefile
 catkin_make
@@ -33,3 +36,4 @@ source devel/setup.bash
 cd ../../../
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/content/CPGController/src/simulations/ws/src
 echo Package setup done
+source CPGController/setup.sh
