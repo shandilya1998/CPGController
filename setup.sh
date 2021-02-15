@@ -18,7 +18,7 @@ echo ROS install done
 
 printf -- '#!/bin/bash\n' > ros_start.sh
 printf -- 'source /opt/ros/melodic/setup.bash\n' >> ros_start.sh
-printf -- '/opt/ros/melodic/bin/roscore' >> ros_start.sh
+printf -- '/opt/ros/melodic/bin/roslaunch quadruped quadruped_control.launch' >> ros_start.sh
 chmod +x ros_start.sh
 #cat ros_start.sh
 
