@@ -25,7 +25,6 @@ import tf2_geometry_msgs
 from gazebo_msgs.msg import ModelState, ContactsState
 from sensor_msgs.msg import Imu
 from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
-from tf import TransformListener
 from reward import FitnessFunction
 import tf2_ros
 import time
