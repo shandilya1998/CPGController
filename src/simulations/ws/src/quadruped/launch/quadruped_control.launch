@@ -14,11 +14,6 @@
     <arg name="model" value="$(arg model)" />
   </include>
 
-  <include file="$(find quadruped)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
-    <arg name="rviz_config" value="$(find quadruped)/rviz/moveit.rviz"/>
-    <arg name="debug" value="$(arg debug)"/>
-  </include>
-
   <rosparam command="load" file="$(find quadruped)/config/quadruped_control.yaml"/>
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
@@ -28,12 +23,6 @@
     name="joint_state_publisher"
     pkg="joint_state_publisher"
     type="joint_state_publisher">
-    <rosparam param="source_list">[quadruped/joint_states]</rosparam>
-  </node>
-  <node
-    name="joint_state_publisher_gui"
-    pkg="joint_state_publisher_gui"
-    type="joint_state_publisher_gui">
     <rosparam param="source_list">[quadruped/joint_states]</rosparam>
   </node>
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher"
