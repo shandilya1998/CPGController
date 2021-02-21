@@ -13,9 +13,13 @@ sudo apt update
 sudo apt -y install ros-noetic-desktop-full
 source /opt/ros/noetic/setup.bash
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src" >> ~/.bashrc
 source ~/.bashrc
 sudo apt -y install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 sudo apt -y install python3-rosdep
 sudo rosdep init
 rosdep update
 sudo apt -y install ros-noetic-moveit
+cd src/simulations/ws
+catkin_make
+cd ../../
