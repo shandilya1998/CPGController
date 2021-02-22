@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt install linux-headers-$(uname -r)
-udo apt install -y nvidia-cuda-toolkit
+sudo apt install -y nvidia-cuda-toolkit
 nvcc -V
 echo "Cuda Location>>>>>>>"
 whereis cuda
