@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt install -y ubuntu-drivers-common
 sudo apt install linux-headers-$(uname -r)
 sudo apt install -y nvidia-cuda-toolkit
 nvcc -V
@@ -10,6 +11,7 @@ sudo cp cuda/lib64/libcudnn* /usr/lib/cuda/lib64/
 sudo chmod a+r /usr/lib/cuda/include/cudnn.h /usr/lib/cuda/lib64/libcudnn*
 echo 'export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
 echo 'export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH' >> ~/.bashrc
+sudo apt install -y nvidia-driver-460
 sudo apt install -y gdb
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
@@ -31,5 +33,6 @@ cd src/simulations/ws
 catkin_make
 cd ../../../
 sudo apt install -y python3-pip
-pip3 install -y tqdm numpy pandas matplotlib pybullet  tensorflow tf_agents
+pip3 install tqdm numpy pandas matplotlib pybullet  tensorflow tf_agents
 cd src
+sudo reboot
