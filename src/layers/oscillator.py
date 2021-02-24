@@ -65,16 +65,20 @@ class HopfOscillator(tf.keras.Model):
     def call(self, inputs):
         """
             inputs : [
-                state : (None, units),
+                state : (None, 2 * units),
                 omega : (None, 1),
                 mu : (None, units),
                 b : (None, units)
             ]
         """
-        r = tf.math.abs(inputs[0])
-        phi = tf.math.angle(inputs[0])
+        input_dim inputs[0].shape // 2
+        real_state = inputs[0][:, :input_dim]
+        img_state = inputs[0][:, input_dim:]
+        r = tf.math.sqrt(tf.math.square(reat_state), tf.math.square(imag_state))
+        phi = tf.math.atan2(imag_state, real_state)
         r = r + (inputs[2] - r*r)*r*self.dt + inputs[3]
         phi = phi + inputs[1]*self.range*self.dt
-        Z = tf.complex(r, 0.0)*tf.math.exp(1j*tf.complex(phi, 0.0))
-        return Z
+        Z_real = tf.math.multiply*(r, tf.math.cos(phi))
+        Z_imag = tf.math.mmultiply(r, tf.math.sin(phi))
+        return tf.concat([Z_real, Z_imag], -1)
 
