@@ -76,7 +76,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         step_type = tfa.trajectories.time_step.StepType.MID
         self._episode_ended = last_step
         if last_step:
-            step_type = tfa.trajectories.time_step.StepType.LAST        
+            step_type = tfa.trajectories.time_step.StepType.LAST
         step_type = tf.stack([step_type \
             for i in range(self.batch_size)])
 
