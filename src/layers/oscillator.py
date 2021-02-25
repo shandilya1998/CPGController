@@ -41,7 +41,7 @@ class HopfOscillator(tf.keras.Model):
         if last_dim_state is None or last_dim_omega is None or last_dim_mu is None or last_dim_bias is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
                 'should be defined. Found `None`.')
-        if last_dim_state != self.units:
+        if last_dim_state != 2*self.units:
             raise ValueError('The last dimension of the state inputs to `HopfOscillator` '
                 'should be equal to number of units. Found `{dim}`.'.format(dim = last_dim_state))
 
@@ -71,14 +71,16 @@ class HopfOscillator(tf.keras.Model):
                 b : (None, units)
             ]
         """
-        input_dim inputs[0].shape // 2
+        input_dim = inputs[0].shape[-1] // 2
         real_state = inputs[0][:, :input_dim]
-        img_state = inputs[0][:, input_dim:]
-        r = tf.math.sqrt(tf.math.square(reat_state), tf.math.square(imag_state))
+        imag_state = inputs[0][:, input_dim:]
+        r = tf.math.sqrt(tf.math.add(
+            tf.math.square(real_state),
+            tf.math.square(imag_state)
+        ))
         phi = tf.math.atan2(imag_state, real_state)
         r = r + (inputs[2] - r*r)*r*self.dt + inputs[3]
         phi = phi + inputs[1]*self.range*self.dt
-        Z_real = tf.math.multiply*(r, tf.math.cos(phi))
-        Z_imag = tf.math.mmultiply(r, tf.math.sin(phi))
+        Z_real = tf.math.multiply(r, tf.math.cos(phi))
+        Z_imag = tf.math.multiply(r, tf.math.sin(phi))
         return tf.concat([Z_real, Z_imag], -1)
-

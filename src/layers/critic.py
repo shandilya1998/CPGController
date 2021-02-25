@@ -1,5 +1,5 @@
 import tensorflow as tf
-from layers.complex import ComplexDense, ComplexLSTMCell, relu
+from layers.complex import ComplexDense
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -61,12 +61,12 @@ class Critic(tf.keras.Model):
             activation = activation_osc,
             name = 'real_osc_dense'
         )
-        self.imag_osc_dense = tf.keras.layersDense(
+        self.imag_osc_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_osc,
             name = 'imag_osc_dense'
         )
-        self.lstm = ComplexLSTMCell(
+        self.lstm = tf.keras.layers.LSTMCell(
             units = units_lstm,
             activation = activation_lstm,
             recurrent_activation = recurrent_activation_lstm

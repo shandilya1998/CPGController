@@ -8,7 +8,7 @@ params = {
     'dt'                          : 0.001,
     'units_output_mlp'            : [10, 20, 12, action_dim],
     'units_osc'                   : 10,
-    'units_combine'               : 10,
+    'units_combine'               : action_dim,
     'units_robot_state'           : 10,
     'units_motion_state'          : 10,
     'units_history'               : 10,
