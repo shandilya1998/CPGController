@@ -94,18 +94,9 @@ class Learner():
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape() as tape:
-            self._action = self.actor.model(self._state)
-            y_pred = self._action[0]
+            _action = self.actor.model(x)
+            y_pred = _action[0]
             loss = self.actor._pretrain_loss(y, y_pred)
-        self._action = [
-            tf.make_ndarray(
-                tf.make_tensor_proto(a)
-            ) for a in self._action
-        ]
-        self.env.quadruped.set_observation([
-            self._action[0][0][0],
-            self._action[1][0]
-        ], x)
         grads = tape.gradient(
             loss,
             self.actor.model.trainable_variables
@@ -118,21 +109,40 @@ class Learner():
         )
         return loss
 
+    def create_dataset(self):
+        Y = []
+        X = [[] for i in range(len(self.params['observation_spec']))]
+        for y, x in tqdm(self.signal_gen.generator()):
+            self.env.quadruped.reset()
+            self.env.quadruped.set_initial_motion_state(x)
+            _state = self.env.quadruped.get_state_tensor()
+            for i, s in enumerate(_state):
+                X[i].append(s)
+            Y.append(y)
+        for i in range(len(X)):
+            X[i] = tf.concat(X[i], 0)
+            X[i] = tf.data.Dataset.from_tensor_slices(X[i])
+        Y = tf.concat(Y, 0)
+        Y = tf.data.Dataset.from_tensor_slices(Y)
+        X = tf.data.Dataset.zip(tuple(X))
+        dataset = tf.data.Dataset.zip((X, Y))
+        dataset = dataset.batch(self.params['pretrain_bs'])
+        self.num_batches = self.params['num_data'] // self.params['pretrain_bs']
+        return dataset
+
     def pretrain_actor(self, checkpoint_path = 'weights/actor_pretrain'):
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e10
         history_loss = []
+        dataset = self.create_dataset()
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
-            for y, x in tqdm(self.signal_gen.generator()):
-                self.env.quadruped.reset()
-                self.env.quadruped.set_initial_motion_state(x)
-                self._state = self.env.quadruped.get_state_tensor()
+            for step, (x, y) in tqdm(enumerate(dataset)):
                 loss = self._pretrain_actor(x, y)
                 total_loss += loss.numpy()
-            avg_loss = total_loss / self.signal_gen.num_batches
+            avg_loss = total_loss / self.num_batches
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
                 l = avg_loss
