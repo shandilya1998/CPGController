@@ -19,44 +19,49 @@ class Critic(tf.keras.Model):
         units_osc,
         units_lstm,
         units_out,
-        activation_combine = relu,
-        activation_robot_state = relu,
-        activation_motion_state = relu,
-        activation_action_input = relu,
-        activation_osc = relu,
+        activation_combine = 'relu',
+        activation_robot_state = 'relu',
+        activation_motion_state = 'relu',
+        activation_action_input = 'relu',
+        activation_osc = 'relu',
         activation_lstm = 'tanh',
         recurrent_activation_lstm = 'sigmoid',
-        activation_out = relu
+        activation_out = 'relu'
     ):
         super(Critic, self).__init__()
 
         self.steps = steps
-        self.combine_dense = ComplexDense(
+        self.combine_dense = tf.keras.layers.Dense(
             units = units_combine,
             activation = activation_combine,
             name = 'combine_dense'
         )
-        self.robot_state_dense = ComplexDense(
+        self.combine_osc_dense = tf.keras.layers.Dense(
+            units = units_osc,
+            activation = activation_combine,
+            name = 'combine_osc_dense'
+        )
+        self.robot_state_dense = tf.keras.layers.Dense(
             units = units_robot_state,
             activation = activation_robot_state,
             name = 'robot_state_dense'
         )
-        self.action_input_dense = ComplexDense(
+        self.action_input_dense = tf.keras.layers.Dense(
             units = units_action_input,
             activation = activation_action_input,
             name = 'action_input_dense'
         )
-        self.motion_state_dense = ComplexDense(
+        self.motion_state_dense = tf.keras.layers.Dense(
             units = units_motion_state,
             activation = activation_motion_state,
             name = 'motion_state_dense'
         )
-        self.real_osc_dense = ComplexDense(
+        self.real_osc_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_osc,
             name = 'real_osc_dense'
         )
-        self.imag_osc_dense = ComplexDense(
+        self.imag_osc_dense = tf.keras.layersDense(
             units = units_osc,
             activation = activation_osc,
             name = 'imag_osc_dense'
@@ -76,7 +81,20 @@ class Critic(tf.keras.Model):
         motion_state, robot_state, osc_state = S
         action, osc = A
 
-        osc_state = tf.concat([osc_state, osc], axis = -1)
+        osc_input_dim = osc.shape[-1] // 2
+        real_osc_state = tf.concat([
+            osc_state[:, :osc_input_dim],
+            osc[:, :osc_input_dim]
+        ], axis = -1)
+
+        imag_osc_state = tf.concat([
+            osc_state[:, osc_input_dim:],
+            osc[:, osc_input_dim:]
+        ], axis = -1)
+        real_osc_state = self.real_osc_dense(real_osc_state)
+        imag_osc_state = self.imag_osc_dense(imag_osc_state)
+        osc_state = tf.concat([real_osc_state, imag_osc_state], -1)
+        osc_state = self.combine_osc_dense(osc_state)
 
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
@@ -88,12 +106,12 @@ class Critic(tf.keras.Model):
         ], axis = -1)
         state = self.combine_dense(state)
 
-        ta_history = tf.TensorArray('complex64', size = 0, dynamic_size = True)
+        ta_history = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size = True)
         history = swap_batch_timestep(history)
         ta_history.unstack(history)
 
         ta_action = tf.TensorArray(
-            'complex64',
+            tf.dtypes.float32,
             size = 0,
             dynamic_size = True
         )
