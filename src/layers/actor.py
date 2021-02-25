@@ -9,41 +9,41 @@ class StateEncoder(tf.keras.Model):
         units_combine,
         units_robot_state,
         units_motion_state,
-        activation_output_mlp = relu,
-        activation_combine = relu,
-        activation_robot_state = relu,
-        activation_motion_state = relu,
-        activation_mu = relu,
-        activation_omega = relu,
-        activation_b = relu,
+        activation_output_mlp = 'relu',
+        activation_combine = 'relu',
+        activation_robot_state = 'relu',
+        activation_motion_state = 'relu',
+        activation_mu = 'relu',
+        activation_omega = 'relu',
+        activation_b = 'relu',
     ):
         super(StateEncoder, self).__init__()
-        self.combine_dense = ComplexDense(
+        self.combine_dense = tf.keras.layers.Dense(
             units = units_combine,
             activation = activation_combine,
             name = 'combine_dense'
         )
-        self.robot_state_dense = ComplexDense(
+        self.robot_state_dense = tf.keras.layers.Dense(
             units = units_robot_state,
             activation = activation_robot_state,
             name = 'robot_state_dense'
         )
-        self.motion_state_dense = ComplexDense(
+        self.motion_state_dense = tf.keras.layers.Dense(
             units = units_motion_state,
             activation = activation_motion_state,
             name = 'motion_state_dense'
         )
-        self.mu_dense = ComplexDense(
+        self.mu_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_mu,
             name = 'mu_dense'
         )
-        self.omega_dense = ComplexDense(
+        self.omega_dense = tf.keras.layers.Dense(
             units = 1,
             activation = activation_omega,
             name = 'omega_dense'
         )
-        self.b_dense = ComplexDense(
+        self.b_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_b,
             name = 'b_dense'
@@ -78,7 +78,7 @@ class Actor(tf.keras.Model):
         units_combine,
         units_robot_state,
         units_motion_state,
-        activation_output_mlp = relu,
+        activation_output_mlp = 'relu',
         activation_combine = 'relu',
         activation_robot_state = 'relu',
         activation_motion_state = 'relu',
@@ -125,11 +125,11 @@ class Actor(tf.keras.Model):
         omega, mu, b = self.encoder(S)
         _, _, z = S
 
-        out = tf.TensorArray('complex64', size = 0, dynamic_size=True)
+        out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
 
         step = tf.constant(0)
         z_out = self.osc([z, omega, mu, b])
-        o = self.output_mlp(z)
+        o = self.output_mlp(z_out)
         out = out.write(
             step,
             o
@@ -147,7 +147,7 @@ class Actor(tf.keras.Model):
 
         def body(out, step, z):
             inputs = [
-                z, 
+                z,
                 omega,
                 mu,
                 b
@@ -169,13 +169,13 @@ class Actor(tf.keras.Model):
         out = out.stack()
         out = swap_batch_timestep(out)
         out = tf.ensure_shape(
-            out, 
+            out,
             tf.TensorShape(
-                (None, self.steps, self.out_dim)
-            ), 
+                (None, self.steps, 2 * self.out_dim)
+            ),
             name='ensure_shape_critic_time_distributed_out'
         )
-        out = tf.math.real(out)
+        out = out[:, :, :self.out_dim]
         return [out, z_out]
 
 def get_actor(params):
