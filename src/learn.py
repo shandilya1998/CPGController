@@ -41,12 +41,13 @@ class SignalDataGen:
             self.data.append(
                 [signal, motion]
             )
+
         self.num_batches = len(self.data)
 
     def generator(self):
         for batch in range(self.num_batches):
             y, x = self.data[batch]
-            y = tf.convert_to_tensor(np.expand_dims(y, 0))
+            y = np.expand_dims(y, 0)
             x = x
             yield y, x
 
@@ -88,6 +89,15 @@ class Learner():
             self.env.quadruped.osc_state
         ]
         self._action = None
+        physical_devices = tf.config.list_physical_devices('GPU')
+        print('GPU>>>>>>>>>>>>')
+        print(physical_devices)
+        try:
+            print('Memory Growth Allowed')
+            tf.config.experimental.set_memory_growth(physical_devices[0], True)
+        except:
+             # Invalid device or cannot modify virtual devices once initialized.
+            pass
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
@@ -109,37 +119,53 @@ class Learner():
         )
         return loss
 
-    def create_dataset(self):
-        Y = []
-        X = [[] for i in range(len(self.params['observation_spec']))]
-        for y, x in tqdm(self.signal_gen.generator()):
-            self.env.quadruped.reset()
-            self.env.quadruped.set_initial_motion_state(x)
-            _state = self.env.quadruped.get_state_tensor()
-            for i, s in enumerate(_state):
-                X[i].append(s)
-            Y.append(y)
-        for i in range(len(X)):
-            X[i] = tf.concat(X[i], 0)
-            X[i] = tf.data.Dataset.from_tensor_slices(X[i])
-        Y = tf.concat(Y, 0)
+    def _dataset(self):
+        self.num_batches = self.params['num_data'] // self.params['pretrain_bs']
+        self.env.quadruped.reset()
+        _state = self.env.quadruped.get_state_tensor()
+        for i in range(self.num_batches):
+            Y = []
+            X = [[] for i in range(len(self.params['observation_spec']))]
+            c = 0 
+            for y, x in self.signal_gen.generator():
+                c += 1
+                _state[0] = np.expand_dims(x, 0)
+                for i, s in enumerate(_state):
+                    X[i].append(s)
+                Y.append(y)
+                if c == self.params['pretrain_bs']:
+                    break
+            for i in range(len(X)):
+                X[i] = tf.concat(X[i], 0)
+            Y = tf.concat(Y, 0)
+            yield X, Y
+        """
         Y = tf.data.Dataset.from_tensor_slices(Y)
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.batch(self.params['pretrain_bs'])
+        dataset = dataset.batch(self.params['pretrain_bs']).prefetch(2)
         self.num_batches = self.params['num_data'] // self.params['pretrain_bs']
         return dataset
+        """
 
-    def pretrain_actor(self, checkpoint_path = 'weights/actor_pretrain'):
+    def pretrain_actor(self, experiment, checkpoint_path = 'weights/actor_pretrain'):
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e10
         history_loss = []
-        dataset = self.create_dataset()
+        """
+        dataset = tf.data.Dataset.from_generator(
+            self._dataset,
+            output_types = [
+                [spec.dtype for spec in self.params['observation_spec']],
+                self.params['action_spec'][0].dtype
+            ]        
+        )
+        """
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
-            for step, (x, y) in tqdm(enumerate(dataset)):
+            for step, (x, y) in tqdm(enumerate(self._dataset())):
                 loss = self._pretrain_actor(x, y)
                 total_loss += loss.numpy()
             avg_loss = total_loss / self.num_batches
@@ -152,12 +178,11 @@ class Learner():
                 if prev_loss < avg_loss:
                     break
                 else:
-                    self.actor.model.save(
+                    self.actor.model.save_weights(
                         os.path.join(
                             checkpoint_path,
-                            'actor_pretrained.h5'
+                            'actor_pretrained_{ex}_{ep}.h5'.format(ep=episode, ex = experiment)
                         ),
-                        overwrite = True
                     )
                 prev_loss = avg_loss
         pkl = open(os.path.join(checkpoint_dir, 'loss.pickle'), 'wb')
@@ -307,5 +332,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params)
-    learner.pretrain_actor()
+    experiment = 1
+    learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
