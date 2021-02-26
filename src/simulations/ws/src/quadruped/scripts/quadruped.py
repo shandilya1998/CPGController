@@ -83,12 +83,12 @@ class Leg:
                     self.leg1_joint_force_torque.wrench.force.x,
                     self.leg1_joint_force_torque.wrench.force.y,
                     self.leg1_joint_force_torque.wrench.force.z
-                ], dtype = np.complex64),
+                ], dtype = np.float32),
                 'torque' : np.array([
                     self.leg1_joint_force_torque.wrench.torque.x,
                     self.leg1_joint_force_torque.wrench.torque.y,
                     self.leg1_joint_force_torque.wrench.torque.z
-                ], dtype = np.complex64)
+                ], dtype = np.float32)
             },
             'leg2' : {
                 'frame_id' : self.leg2_joint_force_torque.header.frame_id,
@@ -96,12 +96,12 @@ class Leg:
                     self.leg2_joint_force_torque.wrench.force.x,
                     self.leg2_joint_force_torque.wrench.force.y,
                     self.leg2_joint_force_torque.wrench.force.z
-                ], dtype = np.complex64),
+                ], dtype = np.float32),
                 'torque' : np.array([
                     self.leg2_joint_force_torque.wrench.torque.x,
                     self.leg2_joint_force_torque.wrench.torque.y,
                     self.leg2_joint_force_torque.wrench.torque.z
-                ], dtype = np.complex64)
+                ], dtype = np.float32)
             },
             'leg3' : {
                 'frame_id' : self.leg3_joint_force_torque.header.frame_id,
@@ -109,12 +109,12 @@ class Leg:
                     self.leg3_joint_force_torque.wrench.force.x,
                     self.leg3_joint_force_torque.wrench.force.y,
                     self.leg3_joint_force_torque.wrench.force.z
-                ], dtype = np.complex64),
+                ], dtype = np.float32),
                 'torque' : np.array([
                     self.leg3_joint_force_torque.wrench.torque.x,
                     self.leg3_joint_force_torque.wrench.torque.y,
                     self.leg3_joint_force_torque.wrench.torque.z
-                ], dtype = np.complex64)
+                ], dtype = np.float32)
             }
         }
 
@@ -143,7 +143,7 @@ class Leg:
                     state.total_wrench.force.y,
                     state.total_wrench.force.z
                 ] for state in states],
-                0, dtype = np.complex64
+                0, dtype = np.float32
             )
             torque = np.mean(
                 [[
@@ -151,7 +151,7 @@ class Leg:
                     state.total_wrench.torque.y,
                     state.total_wrench.torque.z
                 ] for state in states],
-                0, dtype = np.complex64
+                0, dtype = np.float32
             )
             position = np.mean(
                 [[
@@ -159,7 +159,7 @@ class Leg:
                     state.contact_positions[0].y,
                     state.contact_positions[0].z
                 ] for state in states],
-                0, dtype = np.complex64
+                0, dtype = np.float32
             )
             normal = np.mean(
                 [[
@@ -234,8 +234,8 @@ class AllLegs:
             self.leg_name_lst[3],
             self.joint_name_lst[9:]
         )
-        self.A = np.zeros((3,), dtype = np.complex64)
-        self.B = np.zeros((3,), dtype = np.complex64)
+        self.A = np.zeros((3,), dtype = np.float32)
+        self.B = np.zeros((3,), dtype = np.float32)
         self.w = 1
 
     def get_all_torques(self):
@@ -247,7 +247,7 @@ class AllLegs:
             joint = re.search(regex, joint).group()
             out = out[joint]
             torque.append(np.linalg.norm(out['torque']))
-        return np.array(torque, dtype = np.complex64)
+        return np.array(torque, dtype = np.float32)
 
     def get_all_contacts(self):
         self.fr_contact = self.front_right.get_processed_contact_state()
@@ -484,9 +484,9 @@ class Quadruped:
         ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
         self.set_support_lines(ac)
 
-        self.orientation = np.zeros(4, dtype = np.complex64)
-        self.angular_vel = np.zeros(3, dtype = np.complex64)
-        self.linear_acc = np.zeros(3, dtype = np.complex64)
+        self.orientation = np.zeros(4, dtype = np.float32)
+        self.angular_vel = np.zeros(3, dtype = np.float32)
+        self.linear_acc = np.zeros(3, dtype = np.float32)
         self.imu_subscriber = rospy.Subscriber(
             '/quadruped/imu',
             Imu,
@@ -633,8 +633,8 @@ class Quadruped:
             index = self.joint_name_lst.index(name)
             state[index] = joint_state.position[i]
             vel[index] = joint_state.velocity[i]
-        self.joint_position = np.array(state, dtype = np.complex64)
-        self.joint_velocity = np.array(vel, dtype = np.complex64)
+        self.joint_position = np.array(state, dtype = np.float32)
+        self.joint_velocity = np.array(vel, dtype = np.float32)
 
     def imu_subscriber_callback(self, imu):
         self.orientation = np.array(
@@ -643,21 +643,21 @@ class Quadruped:
                 imu.orientation.y,
                 imu.orientation.z,
                 imu.orientation.w
-            ], dtype = np.complex64
+            ], dtype = np.float32
         )
         self.angular_vel = np.array(
             [
                 imu.angular_velocity.x,
                 imu.angular_velocity.y,
                 imu.angular_velocity.z
-            ], dtype = np.complex64
+            ], dtype = np.float32
         )
         self.linear_acc = np.array(
             [
                 imu.linear_acceleration.x,
                 imu.linear_acceleration.y,
                 imu.linear_acceleration.z
-            ], dtype = np.complex64
+            ], dtype = np.float32
         )
 
     def reset(self):
@@ -707,10 +707,10 @@ class Quadruped:
             model_state.pose.position.x, 
             model_state.pose.position.y, 
             model_state.pose.position.z
-        ], dtype = np.complex64)
+        ], dtype = np.float32)
         self.last_joint = self.joint_position
         self.last_pos = self.pos
-        diff_joint = np.zeros(self.nb_joints, dtype = np.complex64)
+        diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
         #print(self.joint_position.shape)
         #print(diff_joint.shape)
         #print(self.orientation.shape)
@@ -734,14 +734,14 @@ class Quadruped:
             0
         )
         self.episode_start_time = rospy.get_time()
-        self.last_action = np.zeros(self.nb_joints, dtype = np.complex64)
+        self.last_action = np.zeros(self.nb_joints, dtype = np.float32)
         self.reward = 0.0
         time.sleep(1)
         self._counter_1 = 0
         self.counter_1 = 0 # Counter for support line change
         ac = np.zeros(
             (self.params['rnn_steps'], self.params['action_dim']),
-            dtype = np.complex64
+            dtype = np.float32
         )
         self.set_support_lines(ac)
 
@@ -823,7 +823,7 @@ class Quadruped:
                             pose[A_name]['position'][m[i]] - \
                             current_pose[A_name]['position'][m[i]] \
                             for i in range(3)
-                    ], dtype = np.complex64
+                    ], dtype = np.float32
                 ),
                 'normal' : self.A['normal'],
                 'flag' : True,
@@ -838,7 +838,7 @@ class Quadruped:
                             pose[B_name]['position'][m[i]] - \
                             current_pose[B_name]['position'][m[i]] \
                             for i in range(3)
-                    ], dtype = np.complex64
+                    ], dtype = np.float32
                 ),
                 'normal' : self.B['normal'],
                 'flag' : True,
@@ -915,7 +915,7 @@ class Quadruped:
             model_state.pose.position.x,
             model_state.pose.position.y,
             model_state.pose.position.z
-        ], dtype = np.complex64)
+        ], dtype = np.float32)
         self.history_pos = np.concatenate([
             self.history_pos[1:],
             np.expand_dims(self.pos, 0)
@@ -924,7 +924,7 @@ class Quadruped:
             model_state.twist.linear.x,
             model_state.twist.linear.y,
             model_state.twist.linear.z
-        ], dtype = np.complex64)
+        ], dtype = np.float32)
         self.history_vel = np.concatenate([
             self.history_vel[1:],
             np.expand_dims(self.v_real, 0)

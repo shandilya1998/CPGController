@@ -19,7 +19,7 @@ class Signal:
         self._get_base()
 
     def compute_v(self, Lt):
-        return (2 * self.theta_h) / (self.Tsw + self.Tst)
+        return (2 * self.theta_h * Lt) / (self.Tsw + self.Tst)
 
     def build(self, Tsw, Tst, theta_h, theta_k):
         self.theta_h = theta_h
