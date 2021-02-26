@@ -24,28 +24,47 @@ class SignalDataGen:
             self.params['dt']
         )
         self.data = []
-        self.num_batches = 0
+        self.num_data = 0
         self._create_data()
 
     def _create_data(self):
         """
             Turning Behaviour is to be learnt by RL
         """
-        self.data = []
-        for tst, tsw, theta_h, theta_k in zip(self.Tst, self.Tsw, self.theta_h, self.theta_k):
-            self.signal_gen.build(tst, tst, theta_h, theta_k)
-            signal, _ = self.signal_gen.get_signal()
-            signal = signal[:, 1:].astype(np.float32)
-            v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-            motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
-            self.data.append(
-                [signal, motion]
-            )
-
-        self.num_batches = len(self.data)
+        print('[Actor] Creating Data.')
+        self.data = [] 
+        deltas = [-3, 0, 3]
+        delta = []
+        for i in range(len(deltas)):
+            for j in range(len(deltas)):
+                delta.append([
+                    deltas[i], 
+                    deltas[j], 
+                ])
+        for d in tqdm(delta):
+            for tst, tsw, theta_h, theta_k in zip(
+                self.Tst, 
+                self.Tsw, 
+                self.theta_h, 
+                self.theta_k
+            ):
+                tsw = tsw + d[0]
+                tst = tst + d[1]
+                self.signal_gen.build(tsw, tst, theta_h, theta_k)
+                signal, _ = self.signal_gen.get_signal()
+                signal = signal[:, 1:].astype(np.float32)
+                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                self.data.append(
+                    [signal, motion]
+                )
+        self.num_data = len(self.data)
+        print('[Actor] Number of Data Points: {num}'.format(
+            num = self.num_data)
+        )    
 
     def generator(self):
-        for batch in range(self.num_batches):
+        for batch in range(self.num_data):
             y, x = self.data[batch]
             y = np.expand_dims(y, 0)
             x = x
@@ -90,10 +109,10 @@ class Learner():
         ]
         self._action = None
         physical_devices = tf.config.list_physical_devices('GPU')
-        print('GPU>>>>>>>>>>>>')
-        print(physical_devices)
+        print('[Actor] GPU>>>>>>>>>>>>')
+        print('[Actor] {lst}'.format(lst = physical_devices))
         try:
-            print('Memory Growth Allowed')
+            print('[Actor] Memory Growth Allowed')
             tf.config.experimental.set_memory_growth(physical_devices[0], True)
         except:
              # Invalid device or cannot modify virtual devices once initialized.
@@ -119,34 +138,42 @@ class Learner():
         )
         return loss
 
-    def _dataset(self):
-        self.num_batches = self.params['num_data'] // self.params['pretrain_bs']
+    def create_dataset(self):
+        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         self.env.quadruped.reset()
         _state = self.env.quadruped.get_state_tensor()
-        for i in range(self.num_batches):
-            Y = []
-            X = [[] for i in range(len(self.params['observation_spec']))]
-            c = 0 
-            for y, x in self.signal_gen.generator():
-                c += 1
-                _state[0] = np.expand_dims(x, 0)
-                for i, s in enumerate(_state):
-                    X[i].append(s)
-                Y.append(y)
-                if c == self.params['pretrain_bs']:
-                    break
-            for i in range(len(X)):
-                X[i] = tf.concat(X[i], 0)
-            Y = tf.concat(Y, 0)
-            yield X, Y
-        """
+        Y = []
+        X = [[] for j in range(len(self.params['observation_spec']))]
+        for y, x in self.signal_gen.generator():
+            _state[0] = np.expand_dims(x, 0)
+            for j, s in enumerate(_state):
+                X[j].append(s)
+            Y.append(y)
+        for j in range(len(X)):
+            X[j] = np.concatenate(X[j], axis = 0)
+        Y = np.concatenate(Y, axis = 0)
+        print(Y.shape)
+        np.save('data/pretrain/Y.npy', Y)
+        for j in range(len(X)):
+            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j])
+    
+    def load_dataset(self):
+        Y = np.load('data/pretrain/Y.npy')
+        X = []
+        for j in range(len(self.params['observation_spec'])):
+            X.append(
+                tf.data.Dataset.from_tensor_slices(
+                    tf.convert_to_tensor(
+                        np.load('data/pretrain/X_{j}.npy'.format(j=j))
+                    )
+                )
+            )
         Y = tf.data.Dataset.from_tensor_slices(Y)
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
         dataset = dataset.batch(self.params['pretrain_bs']).prefetch(2)
-        self.num_batches = self.params['num_data'] // self.params['pretrain_bs']
+        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         return dataset
-        """
 
     def pretrain_actor(self, experiment, checkpoint_path = 'weights/actor_pretrain'):
         total_loss = 0.0
@@ -162,10 +189,11 @@ class Learner():
             ]        
         )
         """
+        dataset = self.load_dataset()
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
-            for step, (x, y) in tqdm(enumerate(self._dataset())):
+            for step, (x, y) in tqdm(enumerate(dataset)):
                 loss = self._pretrain_actor(x, y)
                 total_loss += loss.numpy()
             avg_loss = total_loss / self.num_batches

@@ -106,7 +106,7 @@ class CriticNetwork(object):
         self.target_model.set_weights(critic_target_weights)
 
     def loss(self, y_true, y_pred):
-        return tf.math.reduce_sum(tf.keras.losses.mean_squared_error(y_true, y_pred))
+        return tf.keras.losses.mean_squared_error(y_true, y_pred)
 
     def create_critic_network(self, params):
         print('[DDPG] Building the critic model')

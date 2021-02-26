@@ -6,16 +6,16 @@ params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 2*action_dim + 4 + 3 + 3,
     'dt'                          : 0.001,
-    'units_output_mlp'            : [10, 20, 12, action_dim],
-    'units_osc'                   : 10,
+    'units_output_mlp'            : [20, 30, 20, action_dim],
+    'units_osc'                   : 15,
     'units_combine'               : action_dim,
-    'units_robot_state'           : 10,
-    'units_motion_state'          : 10,
-    'units_history'               : 10,
-    'BATCH_SIZE'                  : 10,
+    'units_robot_state'           : 20,
+    'units_motion_state'          : 20,
+    'units_history'               : 20,
+    'BATCH_SIZE'                  : 100,
     'BUFFER_SIZE'                 : 100000,
     'GAMMA'                       : 0.99,
-    'TEST_AFTER_N_EPISODES'       : 10,
+    'TEST_AFTER_N_EPISODES'       : 100,
     'TAU'                         : 0.001,
     'LRA'                         : 0.0001,
     'LRC'                         : 0.001,
@@ -25,9 +25,9 @@ params = {
     'max_steps'                   : 10000,
     'action_dim'                  : action_dim,
 
-    'units_action_input'          : 10,
+    'units_action_input'          : 20,
     'rnn_steps'                   : 200,
-    'units_critic_hidden'         : 10,
+    'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
 
@@ -641,5 +641,5 @@ num_data = len(pretraining['Tst'])
 params.update(pretraining)
 params.update({
     'num_data' : num_data,
-    'pretrain_bs': 100
+    'pretrain_bs': 500
 })
