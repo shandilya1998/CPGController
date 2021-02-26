@@ -15,6 +15,8 @@ class ActorNetwork(object):
         self.optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.LEARNING_RATE
         )
+        self.pretrain_loss = tf.keras.losses.MeanSquaredError()
+
 
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
@@ -32,9 +34,7 @@ class ActorNetwork(object):
         )
 
     def _pretrain_loss(self, y_true, y_pred):
-        return tf.math.abs(
-            tf.math.reduce_sum(tf.keras.losses.mean_squared_error(y_true, y_pred))
-        )
+        return self.pretrain_loss(y_true, y_pred)
 
     def target_train(self):
         actor_weights = self.model.get_weights()
@@ -72,6 +72,8 @@ class CriticNetwork(object):
         self.optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.LEARNING_RATE
         )
+        self.mse =tf.keras.losses.MeanSquaredError()
+
 
 
     def q_grads(self, states, actions):
@@ -106,7 +108,7 @@ class CriticNetwork(object):
         self.target_model.set_weights(critic_target_weights)
 
     def loss(self, y_true, y_pred):
-        return tf.keras.losses.mean_squared_error(y_true, y_pred)
+        return self.mse(y_true, y_pred)
 
     def create_critic_network(self, params):
         print('[DDPG] Building the critic model')

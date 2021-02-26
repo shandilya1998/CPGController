@@ -10,6 +10,7 @@ from tf_agents.trajectories.time_step import TimeStep, time_step_spec
 from tqdm import tqdm
 import pickle
 import os
+from frequency_analysis import frequency_estimator
 
 class SignalDataGen:
     def __init__(self, params):
@@ -23,9 +24,16 @@ class SignalDataGen:
             self.N,
             self.params['dt']
         )
+        self.dt = self.params['dt']
         self.data = []
         self.num_data = 0
         self._create_data()
+
+    def get_ff(self, signal, ff_type = 'fft'):
+        if ff_type == 'fft':
+            return frequency_estimator.freq_from_fft(signal, 1/self.dt)
+        elif ff_type == 'autocorr':
+            return frequency_estimator.freq_from_autocorr(signal, 1/self.dt)
 
     def _create_data(self):
         """
@@ -55,8 +63,9 @@ class SignalDataGen:
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
                 motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                freq = self.get_ff(signal, 'autocorr')
                 self.data.append(
-                    [signal, motion]
+                    [signal, motion, freq]
                 )
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
@@ -99,7 +108,7 @@ class Learner():
         ), dtype = np.float32)
         self.desired_motion[:, 3] = 0.05
         self.signal_gen = SignalDataGen(params)
-        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
+        self.pretrain_actor_optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.params['LRA']
         )
         self._state = [
@@ -142,23 +151,28 @@ class Learner():
         self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         self.env.quadruped.reset()
         _state = self.env.quadruped.get_state_tensor()
+        F = []
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
-        for y, x in self.signal_gen.generator():
+        for y, x, f in self.signal_gen.generator():
             _state[0] = np.expand_dims(x, 0)
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
+            F.append(np.array([f]))
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
+        F = np.concatenate(F, axis = 0)
         print(Y.shape)
         np.save('data/pretrain/Y.npy', Y)
+        np.save('data/pretrain/F.npy', F)
         for j in range(len(X)):
             np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j])
     
     def load_dataset(self):
-        Y = np.load('data/pretrain/Y.npy')
+        Y = tf.convert_to_tensor(np.load('data/pretrain/Y.npy'))
+        #F = tf.convert_to_tensor(np.load('data/pretrain/F.npy'))
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
@@ -175,7 +189,7 @@ class Learner():
         self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         return dataset
 
-    def pretrain_actor(self, experiment, checkpoint_path = 'weights/actor_pretrain'):
+    def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e10
@@ -208,8 +222,8 @@ class Learner():
                 else:
                     self.actor.model.save_weights(
                         os.path.join(
-                            checkpoint_path,
-                            'actor_pretrained_{ex}_{ep}.h5'.format(ep=episode, ex = experiment)
+                            checkpoint_dir,
+                            'actor_pretrained_{ex}_{ep}.ckpt'.format(ep=episode, ex = experiment)
                         ),
                     )
                 prev_loss = avg_loss
