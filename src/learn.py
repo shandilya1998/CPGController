@@ -107,6 +107,7 @@ class Learner():
         ), dtype = np.float32)
         self.desired_motion[:, 3] = 0.05
         self.signal_gen = SignalDataGen(params)
+        self.create_dataset()
         self.pretrain_actor_optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.params['LRA']
         )
@@ -131,7 +132,7 @@ class Learner():
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape() as tape:
-            _action = self.actor.model(x)
+            _action, [omega, mu, b] = self.actor.model(x)
             y_pred = _action[0]
             loss = self.actor._pretrain_loss(y, y_pred)
         grads = tape.gradient(
@@ -165,7 +166,7 @@ class Learner():
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
         F = np.concatenate(F, axis = 0)
-        print(Y.shape)
+        print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
         np.save('data/pretrain/Y.npy', Y)
         np.save('data/pretrain/F.npy', F)
         for j in range(len(X)):
@@ -253,7 +254,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                action_original = self.actor.model(self._state)
+                action_original, [omega, mu, b] = self.actor.model(self._state)
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
@@ -311,7 +312,8 @@ class Learner():
                 rewards = tf.concat(rewards, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
 
-                inputs = next_states + self.actor.target_model(next_states)
+                actions, [o, m, b] = self.actor.target_model(next_states)
+                inputs = next_states + actions
                 target_q_values = self.critic.target_model(inputs)
 
                 y = [tf.repeat(reward, self.params['action_dim']) \
@@ -324,7 +326,7 @@ class Learner():
                 ])
 
                 loss += self.critic.train(states, actions, y)
-                a_for_grad = self.actor.model(states)
+                a_for_grad, [omega_, mu_, b_] = self.actor.model(states)
                 q_grads = self.critic.q_grads(states, a_for_grad)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
