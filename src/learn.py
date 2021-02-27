@@ -74,10 +74,9 @@ class SignalDataGen:
 
     def generator(self):
         for batch in range(self.num_data):
-            y, x = self.data[batch]
+            y, x, f = self.data[batch]
             y = np.expand_dims(y, 0)
-            x = x
-            yield y, x
+            yield y, x, f
 
 class Learner():
     def __init__(self, params):
@@ -157,7 +156,7 @@ class Learner():
         for y, x, f in self.signal_gen.generator():
             _state[0] = np.expand_dims(x, 0)
             for i in range(12):
-                _state[1][i] = y[0, i] * np.pi / 180
+                _state[1][0][i] = y[0][0][i] * np.pi / 180
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
