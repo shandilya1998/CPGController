@@ -156,6 +156,8 @@ class Learner():
         X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f in self.signal_gen.generator():
             _state[0] = np.expand_dims(x, 0)
+            for i in range(12):
+                _state[1][i] = y[0, i] * np.pi / 180
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
