@@ -176,7 +176,7 @@ class Actor(tf.keras.Model):
             name='ensure_shape_critic_time_distributed_out'
         )
         out = out[:, :, :self.out_dim]
-        return [out, z_out]
+        return [out, z_out], [omega, mu, b]
 
 def get_actor(params):
     cell = Actor(
