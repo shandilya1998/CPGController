@@ -80,6 +80,7 @@ class SignalDataGen:
 
 class Learner():
     def __init__(self, params):
+        tf.config.run_functions_eagerly(False)
         self.params = params
         self.actor = ActorNetwork(params)
         self.critic = CriticNetwork(params)
@@ -142,10 +143,9 @@ class Learner():
     def set_desired_motion(self, motion):
         self.desired_motion = motion
 
-    def print_grads(self, vars, grads):
-        for i, var in enumerate(grads):
-            print('[Actor] Name:{name}'.format(var.name))
-            print('[Actor] {grad}'.format(grad = grads[i]))
+    def print_grads(self, name, grads):
+        print('[Actor] {name} >>>>>>>>>>>>'.format(name=name))
+        print(grads)
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
@@ -161,7 +161,7 @@ class Learner():
             loss_action,
             self.actor.model.trainable_variables
         )
-        self.print_grads(self.actor.model.trainable_variables, grads_action)
+        self.print_grads('action', grads_action)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_action,
@@ -180,7 +180,7 @@ class Learner():
             loss_omega,
             vars_omega
         )
-        self.print_grads(vars_omega, grads_omega)
+        self.print_grads('omega', grads_omega)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_omega,
@@ -199,7 +199,7 @@ class Learner():
             loss_mu,
             vars_mu
         )
-        self.print_grads(vars_mu, grads_mu)
+        self.print_grads('mu', grads_mu)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_mu,
@@ -218,7 +218,7 @@ class Learner():
             loss_b,
             vars_b
         )
-        self.print_grads(vars_b, grads_b)
+        self.print_grads('b', grads_b)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_b,
