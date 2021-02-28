@@ -44,7 +44,7 @@ class StateEncoder(tf.keras.Model):
             name = 'omega_dense'
         )
         self.b_dense = tf.keras.layers.Dense(
-            units = units_osc,
+            units = 2 * units_osc,
             activation = activation_b,
             name = 'b_dense'
         )
