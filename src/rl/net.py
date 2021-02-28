@@ -53,7 +53,9 @@ class ActorNetwork(object):
             ) for spec in params['observation_spec']
         ]
 
-        outputs = actor.get_actor(params)(S)
+        [omega, mu, b] = actor.get_encoder(params)(S[0], S[1])
+        [action, z_out] = actor.get_actor(params)(S[2], omega, mu, b)
+        outputs = [[action, z_out], [omega, mu, b]]
         model = tf.keras.Model(inputs = S, outputs = outputs)
         return model, model.trainable_weights, model.inputs
 
@@ -73,8 +75,6 @@ class CriticNetwork(object):
             learning_rate = self.LEARNING_RATE
         )
         self.mse =tf.keras.losses.MeanSquaredError()
-
-
 
     def q_grads(self, states, actions):
         with tf.GradientTape() as tape:
