@@ -124,8 +124,21 @@ class Learner():
             print('[Actor] Memory Growth Allowed')
             tf.config.experimental.set_memory_growth(physical_devices[0], True)
         except:
-             # Invalid device or cannot modify virtual devices once initialized.
+             # Invalid device or cannot modify virtual 
+             # devices once initialized.
             pass
+
+        self.osc_mu = tf.ones((
+            self.params['pretrain_bs'],
+            self.params['num_osc']
+        )
+        self.osc_b = tf.zeros((
+            self.params['pretrain_bs'],
+            self.params['num_osc']
+        ))
+        self.mse_mu = tf.keras.losses.MeanSquaredError()
+        self.mse_b = tf.keras.losses.MeanSquaredError()
+        self.mse_omega = tf.keras.losses.MeanSquaredError()
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
@@ -134,7 +147,11 @@ class Learner():
         with tf.GradientTape() as tape:
             _action, [omega, mu, b] = self.actor.model(x)
             y_pred = _action[0]
-            loss = self.actor._pretrain_loss(y, y_pred)
+            loss_mu = self.mse_mu(self.osc_mu, mu)
+            loss_b = self.mse_b(self.osc_b, b)
+            loss_action = self.actor._pretrain_loss(y[0], y_pred)
+            loss_omega = self.mse_omega(y[1], omega)
+            loss = loss_mu + loss_b + loss_action + loss_omega
         grads = tape.gradient(
             loss,
             self.actor.model.trainable_variables
@@ -171,10 +188,10 @@ class Learner():
         np.save('data/pretrain/F.npy', F)
         for j in range(len(X)):
             np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j])
-    
+
     def load_dataset(self):
         Y = tf.convert_to_tensor(np.load('data/pretrain/Y.npy'))
-        #F = tf.convert_to_tensor(np.load('data/pretrain/F.npy'))
+        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy'))
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
@@ -185,9 +202,11 @@ class Learner():
                 )
             )
         Y = tf.data.Dataset.from_tensor_slices(Y)
+        F = tf.data.Dataset.from_tensor_slices(F)
+        Y = tf.data.Dataset.zip((Y, F))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.batch(self.params['pretrain_bs']).prefetch(2)
+        dataset = dataset.batch(self.params['pretrain_bs']).prefetch(4)
         self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         return dataset
 
