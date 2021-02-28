@@ -223,3 +223,23 @@ The following is parameter trends in the experiment data
 ![Visualization Plot]('weight_visualization_exp1_parameter_trends.png')
 The following is the tsne plot for pca components of the weights
 ![TSNE Plot]('tsne_weights_vis_exp1.png')
+
+# Pretraining Experiments
+## Experiment 1
+- All loss propagated throughout
+
+## Experiment 2
+- All loss propagated throughout
+- Data is shuffled
+- Loss plateaus at 588
+
+## Experiment 3 
+- Motion Encoder updated by separate loss 
+- Additional Signal MSE updates all weights
+- Loss plateaus at 588
+- Data is shuffled
+
+## Experiment 4
+- Motion Encoder updated by separate loss
+- Additional Signal MSE updates all weights
+- Need to remove shuffling
