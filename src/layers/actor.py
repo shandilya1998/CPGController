@@ -49,8 +49,7 @@ class StateEncoder(tf.keras.Model):
             name = 'b_dense'
         )
 
-    def call(self, S):
-        motion_state, robot_state, _ = S
+    def call(self, motion_state, robot_state):
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
         state = tf.concat([motion_state, robot_state], axis = -1)
@@ -113,18 +112,7 @@ class Actor(tf.keras.Model):
             dt = dt
         )
 
-        self.encoder = StateEncoder(
-            units_osc,
-            units_combine,
-            units_robot_state,
-            units_motion_state,
-        )
-
-
-    def call(self, S):
-        omega, mu, b = self.encoder(S)
-        _, _, z = S
-
+    def call(self, z, omega, mu, b):
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
 
         step = tf.constant(0)
@@ -176,7 +164,16 @@ class Actor(tf.keras.Model):
             name='ensure_shape_critic_time_distributed_out'
         )
         out = out[:, :, :self.out_dim]
-        return [out, z_out], [omega, mu, b]
+        return [out, z_out]
+
+def get_encoder(params):
+    encoder = StateEncoder(
+        units_osc = params['units_osc'],
+        units_combine = params['units_combine'],
+        units_robot_state = params['units_robot_state'],
+        units_motion_state = params['units_motion_state'],
+    )
+    return encoder
 
 def get_actor(params):
     cell = Actor(
