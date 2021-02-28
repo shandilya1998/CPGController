@@ -41,7 +41,7 @@ class SignalDataGen:
         """
         print('[Actor] Creating Data.')
         self.data = [] 
-        deltas = [0]#, -3, 3]
+        deltas = [0, -3, 3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -112,9 +112,9 @@ class Learner():
             1,
             self.params['units_osc']
         ), dtype = np.float32)
-        self.pretrain_osc_b = tf.zeros((
+        self.pretrain_osc_b = np.zeros((
             1,
-            self.params['units_osc']
+            2 * self.params['units_osc']
         ), dtype = np.float32)
         self.mse_mu = tf.keras.losses.MeanSquaredError()
         self.mse_b = tf.keras.losses.MeanSquaredError()
@@ -154,21 +154,21 @@ class Learner():
             loss_mu = self.mse_mu(y[2], mu)
             loss_b = self.mse_b(y[3], b)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
+            print(y[1])
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_b + loss_action + loss_omega
 
         grads_action = tape.gradient(
-            loss_action,
+            loss,
             self.actor.model.trainable_variables
         )
-        self.print_grads('action', grads_action)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_action,
                 self.actor.model.trainable_variables
             )
         )
-
+        """
         vars_omega = []
         for var in self.actor.model.trainable_variables:
             if 'state_encoder' in var.name:
@@ -180,7 +180,6 @@ class Learner():
             loss_omega,
             vars_omega
         )
-        self.print_grads('omega', grads_omega)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_omega,
@@ -199,7 +198,6 @@ class Learner():
             loss_mu,
             vars_mu
         )
-        self.print_grads('mu', grads_mu)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_mu,
@@ -218,15 +216,13 @@ class Learner():
             loss_b,
             vars_b
         )
-        self.print_grads('b', grads_b)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_b,
                 vars_b
             )
         )
-
-        print(loss.numpy())
+        """
         return loss, [loss_action, loss_omega, loss_mu, loss_b]
 
     def create_dataset(self):
@@ -245,7 +241,7 @@ class Learner():
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
-            F.append(np.array([f], dtype = np.float32))
+            F.append(np.array([[f]], dtype = np.float32))
             MU.append(self.pretrain_osc_mu)
             B.append(self.pretrain_osc_b)
         for j in range(len(X)):
