@@ -9,13 +9,13 @@ class StateEncoder(tf.keras.Model):
         units_combine,
         units_robot_state,
         units_motion_state,
-        activation_output_mlp = 'relu',
-        activation_combine = 'relu',
-        activation_robot_state = 'relu',
-        activation_motion_state = 'relu',
-        activation_mu = 'relu',
-        activation_omega = 'relu',
-        activation_b = 'relu',
+        activation_output_mlp = 'tanh',
+        activation_combine = 'tanh',
+        activation_robot_state = 'tanh',
+        activation_motion_state = 'tanh',
+        activation_mu = 'tanh',
+        activation_omega = 'tanh',
+        activation_b = 'tanh',
     ):
         super(StateEncoder, self).__init__()
         self.combine_dense = tf.keras.layers.Dense(
@@ -77,13 +77,13 @@ class Actor(tf.keras.Model):
         units_combine,
         units_robot_state,
         units_motion_state,
-        activation_output_mlp = 'relu',
-        activation_combine = 'relu',
-        activation_robot_state = 'relu',
-        activation_motion_state = 'relu',
-        activation_mu = 'relu',
-        activation_omega = 'relu',
-        activation_b = 'relu',
+        activation_output_mlp = 'tanh',
+        activation_combine = 'tanh',
+        activation_robot_state = 'tanh',
+        activation_motion_state = 'tanh',
+        activation_mu = 'tanh',
+        activation_omega = 'tanh',
+        activation_b = 'tanh',
         name = 'TimeDistributedActor'
     ):
         super(Actor, self).__init__(name = name)

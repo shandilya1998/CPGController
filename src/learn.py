@@ -41,7 +41,7 @@ class SignalDataGen:
         """
         print('[Actor] Creating Data.')
         self.data = [] 
-        deltas = [0, -3, 3]
+        deltas = [0, 3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -120,7 +120,7 @@ class Learner():
         self.mse_b = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
         self.create_dataset()
-        self.pretrain_actor_optimizer = tf.keras.optimizers.SGD(
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.params['LRA']
         )
         self._state = [
@@ -154,21 +154,21 @@ class Learner():
             loss_mu = self.mse_mu(y[2], mu)
             loss_b = self.mse_b(y[3], b)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            print(y[1])
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_b + loss_action + loss_omega
-
+        
         grads_action = tape.gradient(
-            loss,
+            loss_action,
             self.actor.model.trainable_variables
         )
+        #self.print_grads(self.actor.model.trainable_variables, grads_action)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_action,
                 self.actor.model.trainable_variables
             )
         )
-        """
+ 
         vars_omega = []
         for var in self.actor.model.trainable_variables:
             if 'state_encoder' in var.name:
@@ -180,6 +180,7 @@ class Learner():
             loss_omega,
             vars_omega
         )
+        #self.print_grads(vars_omega, grads_omega)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_omega,
@@ -198,6 +199,7 @@ class Learner():
             loss_mu,
             vars_mu
         )
+        #self.print_grads(vars_mu, grads_mu)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_mu,
@@ -216,13 +218,14 @@ class Learner():
             loss_b,
             vars_b
         )
+        #self.print_grads(vars_b, grads_b)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_b,
                 vars_b
             )
         )
-        """
+        
         return loss, [loss_action, loss_omega, loss_mu, loss_b]
 
     def create_dataset(self):
@@ -272,6 +275,7 @@ class Learner():
                     )
                 )
             )
+        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         Y = tf.data.Dataset.from_tensor_slices(Y)
         F = tf.data.Dataset.from_tensor_slices(F)
         MU = tf.data.Dataset.from_tensor_slices(MU)
@@ -279,11 +283,10 @@ class Learner():
         Y = tf.data.Dataset.zip((Y, F, MU, B))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.batch(
+        dataset = dataset.shuffle(self.signal_gen.num_data).batch(
             self.params['pretrain_bs'],
             drop_remainder=True
-        ).prefetch(2)
-        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
+        )
         return dataset
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
@@ -305,15 +308,24 @@ class Learner():
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
-            for step, (x, y) in tqdm(enumerate(dataset)):
+            total_loss = 0.0
+            for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_mu, loss_b] = \
                     self._pretrain_actor(x, y)
-                total_loss += loss.numpy()
-            avg_loss = total_loss / self.num_batches
+                loss = loss.numpy()
+                print('[Actor] Episode {ep} Step {st} Loss: {loss}'.format(
+                    ep = episode,
+                    st = step,
+                    loss = loss
+                ))
+                total_loss += loss
+            avg_loss = total_loss / (self.num_batches)
+            print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
                 l = avg_loss
             ))
+            print('-------------------------------------------------')
             history_loss.append(avg_loss)
             if episode % 5 == 0:
                 if prev_loss < avg_loss:
@@ -326,7 +338,9 @@ class Learner():
                         ),
                     )
                 prev_loss = avg_loss
-        pkl = open(os.path.join(checkpoint_dir, 'loss.pickle'), 'wb')
+        pkl = open(os.path.join(checkpoint_dir, 'loss_{ex}.pickle'.format(
+            ex = experiment
+        )), 'wb')
         pickle.dump(history_loss, pkl)
         pkl.close()
 
@@ -474,6 +488,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params)
-    experiment = 1
+    experiment = 4
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
