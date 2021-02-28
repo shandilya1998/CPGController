@@ -108,7 +108,7 @@ class Learner():
         self.desired_motion[:, 3] = 0.05
         self.signal_gen = SignalDataGen(params)
         self.create_dataset()
-        self.pretrain_actor_optimizer = tf.keras.optimizers.SGD(
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.params['LRA']
         )
         self._state = [
