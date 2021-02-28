@@ -46,14 +46,14 @@ class SignalDataGen:
         for i in range(len(deltas)):
             for j in range(len(deltas)):
                 delta.append([
-                    deltas[i], 
-                    deltas[j], 
+                    deltas[i],
+                    deltas[j],
                 ])
         for d in tqdm(delta):
             for tst, tsw, theta_h, theta_k in zip(
-                self.Tst, 
-                self.Tsw, 
-                self.theta_h, 
+                self.Tst,
+                self.Tsw,
+                self.theta_h,
                 self.theta_k
             ):
                 tsw = tsw + d[0]
@@ -70,7 +70,7 @@ class SignalDataGen:
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
             num = self.num_data)
-        )    
+        )
 
     def generator(self):
         for batch in range(self.num_data):
@@ -130,11 +130,11 @@ class Learner():
 
         self.osc_mu = tf.ones((
             self.params['pretrain_bs'],
-            self.params['num_osc']
-        )
+            self.params['units_osc']
+        ))
         self.osc_b = tf.zeros((
             self.params['pretrain_bs'],
-            self.params['num_osc']
+            self.params['units_osc']
         ))
         self.mse_mu = tf.keras.losses.MeanSquaredError()
         self.mse_b = tf.keras.losses.MeanSquaredError()
@@ -162,6 +162,7 @@ class Learner():
                 self.actor.model.trainable_variables
             )
         )
+        print(loss.numpy())
         return loss
 
     def create_dataset(self):
