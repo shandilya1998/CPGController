@@ -163,18 +163,22 @@ class Learner():
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_b + loss_action + loss_omega
         
+        vars_action = []
+        for var in self.actor.model.trainable_variables:
+            if 'complex_dense' in var.name:
+                vars_action.append(var)
         grads_action = tape.gradient(
             loss_action,
-            self.actor.model.trainable_variables
+            vars_action
         )
         #self.print_grads(self.actor.model.trainable_variables, grads_action)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads_action,
-                self.actor.model.trainable_variables
+                vars_action
             )
         )
- 
+
         vars_omega = []
         for var in self.actor.model.trainable_variables:
             if 'state_encoder' in var.name:
@@ -332,7 +336,7 @@ class Learner():
                 l = avg_loss
             ))
             print('[Actor] Learning Rate: {lr}'.format(
-                lr = self.pretrain_actor_optimizer.lr(step))
+                lr = self.pretrain_actor_optimizer.lr((episode + 1) * 5))
             )
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
@@ -352,6 +356,9 @@ class Learner():
         )), 'wb')
         pickle.dump(history_loss, pkl)
         pkl.close()
+
+    def load_actor(self, path):
+        self.actor.model.load(path)
 
     def learn(self, model_dir, identifier=''):
         i = 0
@@ -497,6 +504,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params)
-    experiment = 4
+    experiment = 5
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
