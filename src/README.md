@@ -27,6 +27,24 @@
 - Exponential decay of learning rate
 - Initial Learning rate 0.1, decay rate 0.95, decay steps 20
 
+## Experiment 6
+- Motion Encoder Pretrained using encoder loss
+- No Loss for bias
+- Additional *2pi* term in oscillator frequency(missing as a result of an error)
+- Actor trained using signal MSE + encoder loss
+- Data is shuffled
+- Exponential Decay of learning rate
+- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
+
+## Experiment 7
+- Motion Encoder Pretrained using encoder loss
+- No Loss for bias and mu
+- Additional *2pi* term in oscillator frequency(missing as a result of an error)
+- Actor trained using signal MSE + encoder loss
+- Data is shuffled
+- Exponential Decay of learning rate
+- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
+
 # OutputMLP training for multi speed gait generation
 Experiments involve training the OutputMLP taking as input, fourier components obtained by using the integer multiples of fundamental frequency of the output signal. 
 Experiments 1 to 4 use [Training File Link](train.py)

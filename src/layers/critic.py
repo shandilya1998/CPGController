@@ -156,13 +156,13 @@ class Critic(tf.keras.Model):
 def get_critic(params):
     critic = Critic(
         steps = params['rnn_steps'],
-        units_combine = params['units_combine'],
-        units_robot_state = params['units_robot_state'],
-        units_motion_state = params['units_motion_state'],
+        units_combine = params['action_dim'],
+        units_robot_state = params['units_robot_state_critic'],
+        units_motion_state = params['units_motion_state_critic'],
         units_action_input = params['units_action_input'],
         units_history = params['units_history'],
         units_osc = params['units_osc'],
-        units_lstm = params['units_combine'],
+        units_lstm = params['action_dim'],
         units_out = params['action_dim'],
     )
     return critic
