@@ -41,7 +41,7 @@ class SignalDataGen:
         """
         print('[Actor] Creating Data.')
         self.data = [] 
-        deltas = [0, 3]
+        deltas = [0, 3]#, -3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -120,8 +120,14 @@ class Learner():
         self.mse_b = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
         self.create_dataset()
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+            0.1,
+            decay_steps=20,
+            decay_rate=0.95,
+            staircase=True
+        )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
-            learning_rate = self.params['LRA']
+            learning_rate = lr_schedule
         )
         self._state = [
             self.env.quadruped.motion_state,
@@ -283,10 +289,10 @@ class Learner():
         Y = tf.data.Dataset.zip((Y, F, MU, B))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.shuffle(self.signal_gen.num_data).batch(
+        dataset = dataset.batch(
             self.params['pretrain_bs'],
             drop_remainder=True
-        )
+        ).shuffle(self.num_batches)
         return dataset
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
@@ -325,6 +331,9 @@ class Learner():
                 ep = episode,
                 l = avg_loss
             ))
+            print('[Actor] Learning Rate: {lr}'.format(
+                lr = self.pretrain_actor_optimizer.lr(step))
+            )
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
             if episode % 5 == 0:

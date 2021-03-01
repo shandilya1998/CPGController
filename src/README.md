@@ -242,4 +242,6 @@ The following is the tsne plot for pca components of the weights
 ## Experiment 4
 - Motion Encoder updated by separate loss
 - Additional Signal MSE updates all weights
-- Need to remove shuffling
+- Shuffling of batched data
+- Exponential decay of learning rate 
+- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
