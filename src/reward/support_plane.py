@@ -29,7 +29,7 @@ class SupportPlane:
     def get_n21(self):
         AAl = self.AL - self.A
         cross = np.cross(self.AB, AAl)
-        return cross/np.linal.norm(cross)
+        return cross/np.linalg.norm(cross)
 
     def get_n22(self):
         BBl = self.BL - self.B

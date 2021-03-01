@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import re
 import copy
 import numpy as np
 import tensorflow as tf
@@ -34,7 +35,11 @@ class Leg:
         self.params = params
         self.leg_name = leg_name
         self.joint_name_lst = joint_name_lst
-        self.jtp_zeros = np.zeros(len(joint_name_lst)).tolist()
+        self.jtp_zeros = np.zeros((len(joint_name_lst),)).tolist()
+        self.jtp_vel = np.zeros((len(joint_name_lst),))
+        self.jtp_vel.fill(8.7772)
+        self.jtp_effort = np.zeros((len(joint_name_lst),))
+        self.jtp_effort.fill(100)
         self.jtp = rospy.Publisher(
             '/quadruped/{leg_name}_controller/command'.format(
                 leg_name = leg_name
@@ -42,6 +47,7 @@ class Leg:
             JointTrajectory,
             queue_size=1
         )
+        self.vel = 8
         self.contact_state = ContactsState()
         self.contact_state_subscriber = rospy.Subscriber(
             '/quadruped/{leg_name}_tip_contact_sensor'.format(
@@ -184,30 +190,37 @@ class Leg:
         self.contact_state = contact_state
 
     def move(self, pos):
+        print('move')
         jtp_msg = JointTrajectory()
         jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
         point.positions = pos
-        #point.velocities = self.jtp_zeros
+        pos = np.array(pos)
+        duration = rospy.Duration(1.0)
+        point.velocities = self.jtp_vel.tolist()
         #point.accelerations = self.jtp_zeros
         #point.effort = self.jtp_zeros
         point.time_from_start = rospy.Duration(1.0/60.0)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
 
-    def reset_move(self, pos):
+    def reset_move(self, pos, test = False):
+        print('reset move')
+        self.last_pos = pos
         jtp_msg = JointTrajectory()
         self.jtp.publish(jtp_msg)
         jtp_msg = JointTrajectory()
         jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
         point.positions = pos
-        #point.velocities = self.jtp_zeros
+        point.velocities = self.jtp_zeros
         #point.accelerations = self.jtp_zeros
         #point.effort = self.jtp_zeros
-        point.time_from_start = rospy.Duration(1.0/60.0)
+        point.time_from_start = rospy.Duration(0.0001)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
+        if not test:
+            raise
 
 class AllLegs:
     def __init__(self, params):
@@ -334,7 +347,6 @@ class AllLegs:
         self.back_left.reset_move(pos[9:])
 
     def move(self, pos):
-        print('move')
         self.front_right.move(pos[:3])
         self.front_left.move(pos[3:6])
         self.back_right.move(pos[6:9])
@@ -505,7 +517,7 @@ class Quadruped:
         self.eta = 1e8
 
         self.history_joint_torque = np.zeros(self.history_shape)
-        self.history_joint_vel = np.zeros(self.history_shape)
+        self.history_joint_vel = np.zeros(self.history_ehape)
         self.history_pos = np.zeros((
             self.params['rnn_steps'] - 1,
             3
@@ -525,13 +537,11 @@ class Quadruped:
         self.Tb = self.params['rnn_steps']
         self.upright = True
 
-        self.reset()
-        rospy.sleep(15/60)
+        self._reset(True)
+        rospy.sleep(1.0)
         self.A, self.B = self.all_legs.get_AB()
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
-        ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
-        self.set_support_lines(ac)
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
@@ -661,7 +671,7 @@ class Quadruped:
             ], dtype = np.float32
         )
 
-    def reset(self):
+    def _reset(self, test = False):
         #pause physics
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
@@ -681,7 +691,7 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/set_model_configuration call failed')
         self.action = self.starting_pos
-        self.all_legs.reset_move(self.starting_pos)
+        self.all_legs.reset_move(self.starting_pos, test)
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
@@ -689,6 +699,9 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/unpause_physics service call failed')
 
+
+    def reset(self):
+        self._reset()
         #rospy.sleep(0.5)
         self.reward = 0.0
 
@@ -712,11 +725,6 @@ class Quadruped:
         self.last_joint = self.joint_position
         self.last_pos = self.pos
         diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
-        #print(self.joint_position.shape)
-        #print(diff_joint.shape)
-        #print(self.orientation.shape)
-        #print(self.angular_vel.shape)
-        #print(self.linear_acc.shape)
         self.robot_state = np.concatenate([
             self.joint_position,
             diff_joint,
@@ -760,7 +768,6 @@ class Quadruped:
 
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
-        print(AB)
         if AB:
             self.upright = True
             self._counter_1 += 1
@@ -860,7 +867,6 @@ class Quadruped:
         self.moment = self.get_moment()
         self.force = self.mass * self.linear_acc
         if self.upright:
-            print(self.AL)
             self.compute_reward.build(
                 self.counter_1 * self.dt,
                 self.Tb,
@@ -879,14 +885,14 @@ class Quadruped:
             self.history_joint_torque = np.concatenate(
                 [
                     self.history_joint_torque[1:],
-                    self.joint_torque
+                    np.expand_dims(self.joint_torque, 0)
                 ],
                 0
             )
             self.history_joint_vel = np.concatenate(
                 [
                     self.history_joint_vel[1:],
-                    self.joint_velocity
+                    np.expand_dims(self.joint_velocity,0)
                 ],
                 0
             )
@@ -967,13 +973,13 @@ class Quadruped:
         self.history = np.concatenate(
             [
                 self.history[1:, :],
-                self.action
+                np.expand_dims(self.action,0)
             ],
             0
         )
 
         self.last_joint = self.joint_position
-        self.last_pos = pos
+        self.last_pos = self.pos
 
         curr_time = rospy.get_time()
         print('[DDPG] time:', curr_time - self.episode_start_time)
