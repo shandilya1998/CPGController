@@ -15,10 +15,10 @@ echo "------------------------------"
 echo "Installing Cuda"
 echo "------------------------------"
 sudo apt-get -y install cuda
-echo "export PATH=/usr/local/cuda-11.2/bin:$PATH" >> ~/.bashrc
-echo "export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
-echo "export PATH=/usr/local/cuda-11.2/bin:$PATH" >> ~/.bash_profile
-echo "export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH" >> ~/.bash_profile
+echo "export PATH=/usr/local/cuda-11.0/bin:$PATH" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+echo "export PATH=/usr/local/cuda-11.0/bin:$PATH" >> ~/.bash_profile
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64:$LD_LIBRARY_PATH" >> ~/.bash_profile
 echo "------------------------------"
 echo "Installing cuDNN"
 echo "------------------------------"
