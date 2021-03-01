@@ -125,7 +125,7 @@ class Leg:
         self.leg2_joint_force_torque = wrench
 
     def _leg3_joint_force_torque_callback(self, wrench):
-        self.leg2_joint_force_torque = wrench
+        self.leg3_joint_force_torque = wrench
 
     def get_processed_contact_state(self):
         contact_state = self.contact_state
@@ -334,6 +334,7 @@ class AllLegs:
         self.back_left.reset_move(pos[9:])
 
     def move(self, pos):
+        print('move')
         self.front_right.move(pos[:3])
         self.front_left.move(pos[3:6])
         self.back_right.move(pos[6:9])
@@ -419,11 +420,11 @@ class Quadruped:
             GetLinkProperties
         )
         self.pause_proxy = rospy.ServiceProxy(
-            '/gazebo/pause_physics', 
+            '/gazebo/pause_physics',
             Empty
         )
         self.unpause_proxy = rospy.ServiceProxy(
-            '/gazebo/unpause_physics', 
+            '/gazebo/unpause_physics',
             Empty
         )
         self.model_config_proxy = rospy.ServiceProxy(
@@ -434,9 +435,9 @@ class Quadruped:
         self.model_config_req.model_name = 'quadruped'
         self.model_config_req.urdf_param_name = 'robot_description'
         self.model_config_req.joint_names = self.joint_name_lst
-        self.model_config_req.joint_positions = np.real(self.starting_pos)
+        self.model_config_req.joint_positions = self.starting_pos
         self.model_state_proxy = rospy.ServiceProxy(
-            '/gazebo/set_model_state', 
+            '/gazebo/set_model_state',
             SetModelState
         )
         self.model_state_req = SetModelStateRequest()
@@ -458,7 +459,7 @@ class Quadruped:
         self.model_state_req.model_state.reference_frame = 'world'
 
         self.get_model_state_proxy = rospy.ServiceProxy(
-            '/gazebo/get_model_state', 
+            '/gazebo/get_model_state',
             GetModelState
         )
         self.get_model_state_req = GetModelStateRequest()
@@ -475,14 +476,6 @@ class Quadruped:
         self._counter_1 = 0
         self.counter_1 = 0 # Counter for support line change
         self.dt = self.params['dt']
-        self.A = {'leg_name' : None}
-        self.B = {'leg_name' : None}
-        self.AF = {'leg_name' : None}
-        self.BF = {'leg_name' : None}
-        self.AL = {'leg_name' : None}
-        self.BL = {'leg_name' : None}
-        ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
-        self.set_support_lines(ac)
 
         self.orientation = np.zeros(4, dtype = np.float32)
         self.angular_vel = np.zeros(3, dtype = np.float32)
@@ -531,6 +524,14 @@ class Quadruped:
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
         self.Tb = self.params['rnn_steps']
         self.upright = True
+
+        self.reset()
+        rospy.sleep(15/60)
+        self.A, self.B = self.all_legs.get_AB()
+        self.AL, self.AF = self.A, self.A
+        self.BL, self.BF = self.B, self.B
+        ac = np.zeros((self.params['rnn_steps'], self.params['action_dim']))
+        self.set_support_lines(ac)
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
@@ -680,7 +681,7 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/set_model_configuration call failed')
         self.action = self.starting_pos
-        self.all_legs.reset_move(np.real(self.starting_pos))
+        self.all_legs.reset_move(self.starting_pos)
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
@@ -688,7 +689,7 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/unpause_physics service call failed')
 
-        rospy.sleep(0.5)
+        #rospy.sleep(0.5)
         self.reward = 0.0
 
         self.osc_state = np.zeros(
@@ -736,7 +737,7 @@ class Quadruped:
         self.episode_start_time = rospy.get_time()
         self.last_action = np.zeros(self.nb_joints, dtype = np.float32)
         self.reward = 0.0
-        time.sleep(1)
+        #time.sleep(1)
         self._counter_1 = 0
         self.counter_1 = 0 # Counter for support line change
         ac = np.zeros(
@@ -759,6 +760,7 @@ class Quadruped:
 
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
+        print(AB)
         if AB:
             self.upright = True
             self._counter_1 += 1
@@ -790,7 +792,7 @@ class Quadruped:
             t = 0
             for step in range(self.params['rnn_steps']):
                 pose=self.kinematics.get_end_effector_fk(
-                    np.real(action[step]).tolist()
+                    action[step].tolist()
                 )
                 if pose[A_name]['position']['z'] - \
                         current_pose[A_name]['position']['z'] > 0:
@@ -858,6 +860,7 @@ class Quadruped:
         self.moment = self.get_moment()
         self.force = self.mass * self.linear_acc
         if self.upright:
+            print(self.AL)
             self.compute_reward.build(
                 self.counter_1 * self.dt,
                 self.Tb,
@@ -907,8 +910,8 @@ class Quadruped:
     def set_observation(self, action, desired_motion):
         self.action = action[0]
         self.osc_state = action[1]
-        self.all_legs.move(np.real(self.action).tolist())
-        rospy.sleep(15.0/60.0)
+        self.all_legs.move(self.action.tolist())
+        #rospy.sleep(15.0/60.0)
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
         self.pos = np.array([

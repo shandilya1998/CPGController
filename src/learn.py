@@ -13,7 +13,7 @@ import os
 from frequency_analysis import frequency_estimator
 
 class SignalDataGen:
-    def __init__(self, params):
+    def __init__(self, params, create_data = False):
         self.Tst = params['Tst']
         self.Tsw = params['Tsw']
         self.theta_h = params['theta_h']
@@ -27,7 +27,10 @@ class SignalDataGen:
         self.dt = self.params['dt']
         self.data = []
         self.num_data = 0
-        self._create_data()
+        if create_data:
+            self._create_data()
+        else:
+            self.num_data = 896*5
 
     def get_ff(self, signal, ff_type = 'fft'):
         if ff_type == 'fft':
@@ -79,7 +82,7 @@ class SignalDataGen:
             yield y, x, f
 
 class Learner():
-    def __init__(self, params):
+    def __init__(self, params, create_data = False):
         tf.config.run_functions_eagerly(False)
         self.params = params
         self.actor = ActorNetwork(params)
@@ -119,7 +122,8 @@ class Learner():
         self.mse_mu = tf.keras.losses.MeanSquaredError()
         self.mse_b = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
-        self.create_dataset()
+        if create_data:
+            self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
             decay_steps=50,
