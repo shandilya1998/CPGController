@@ -1,3 +1,18 @@
+from learn import *
+from rl.constants import params
+import numpy as np
+
+learner = Learner(params)
+dataset = learner.load_dataset()
+step,(x,y) = next(enumerate(dataset))
+
+action = [y[0].numpy() * np.pi/180, y[3].numpy()]
+desired_motion = x[0][0].numpy()
+
+state, reward = learner.env.quadruped.reset()
+state, reward = learner.env.quadruped.step(action, desired_motion)
+
+"""
 from gait_generation import gait_generator as gg
 import matplotlib.pyplot as plt
 signal_gen = gg.Signal(500, 0.001)
@@ -11,3 +26,4 @@ for i in range(4):
     axes[i].plot(t, signal[:, 3*i+1], 'b')
     axes[i].plot(t, signal[:, 3*i+2], 'g')
 fig.savefig('data/pretrain/gait_pattern2.png')
+"""
