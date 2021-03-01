@@ -18,21 +18,23 @@ class StateEncoder(tf.keras.Model):
         activation_b = 'tanh',
     ):
         super(StateEncoder, self).__init__()
-        self.combine_dense = tf.keras.layers.Dense(
-            units = units_combine,
+        self.combine_dense = [tf.keras.layers.Dense(
+            units = units,
             activation = activation_combine,
             name = 'combine_dense'
-        )
-        self.robot_state_dense = tf.keras.layers.Dense(
-            units = units_robot_state,
+        ) for units in units_combine]
+        self.robot_state_dense = [tf.keras.layers.Dense(
+            units = units,
             activation = activation_robot_state,
             name = 'robot_state_dense'
-        )
-        self.motion_state_dense = tf.keras.layers.Dense(
-            units = units_motion_state,
+        ) for units in units_robot_state]
+        
+        self.motion_state_dense = [tf.keras.layers.Dense(
+            units = units,
             activation = activation_motion_state,
             name = 'motion_state_dense'
-        )
+        ) for units in units_motion_state]
+
         self.mu_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_mu,
@@ -50,10 +52,16 @@ class StateEncoder(tf.keras.Model):
         )
 
     def call(self, motion_state, robot_state):
-        motion_state = self.motion_state_dense(motion_state)
-        robot_state = self.robot_state_dense(robot_state)
+        for layer in self.motion_state_dense:
+            motion_state = layer(motion_state)
+
+        for layer in self.robot_state_dense:
+            robot_state = layer(robot_state)
+        
         state = tf.concat([motion_state, robot_state], axis = -1)
-        state = self.combine_dense(state)
+        for layer in self.combine_dense:
+            state = layer(state)
+        
         omega = tf.math.abs(self.omega_dense(state))
         b = tf.math.abs(self.b_dense(state))
         mu = tf.math.abs(self.mu_dense(state))

@@ -1,4 +1,5 @@
 import tensorflow as tf
+import numpy as np
 
 class HopfOscillator(tf.keras.Model):
     def __init__(
@@ -35,6 +36,11 @@ class HopfOscillator(tf.keras.Model):
         last_dim_omega = tf.compat.dimension_value(
             self.omega_input_shape[-1]
         )
+
+        self._2pi = tf.constant(
+            2*np.pi, dtype = tf.dtypes.float32
+        )
+
         last_dim_mu = tf.compat.dimension_value(self.mu_input_shape[-1])
         last_dim_bias = tf.compat.dimension_value(self.bias_input_shape[-1])
 
@@ -79,6 +85,8 @@ class HopfOscillator(tf.keras.Model):
             tf.math.square(real_state),
             tf.math.square(imag_state)
         )
+
+        inputs[1] = self._2pi * inputs[1]
 
         real_state = real_state + (
             -inputs[1] * self.range * imag_state + (inputs[2] - r2) * real_state
