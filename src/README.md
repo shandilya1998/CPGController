@@ -1,3 +1,32 @@
+# Actor Pretraining Experiments
+## Experiment 1
+- All loss propagated throughout
+
+## Experiment 2
+- All loss propagated throughout
+- Data is shuffled
+- Loss plateaus at 588
+
+## Experiment 3 
+- Motion Encoder updated by separate loss
+- Additional Signal MSE updates all weights
+- Loss plateaus at 588
+- Data is shuffled
+
+## Experiment 4
+- Motion Encoder updated by separate loss
+- Additional Signal MSE updates all weights
+- Shuffling of batched data
+- Exponential decay of learning rate
+- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
+
+## Experiment 5
+- Motion Encoder updated by separate loss
+- Signal MSE updates complexMLP weights
+- Shuffling of batched data
+- Exponential decay of learning rate
+- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
+
 # OutputMLP training for multi speed gait generation
 Experiments involve training the OutputMLP taking as input, fourier components obtained by using the integer multiples of fundamental frequency of the output signal. 
 Experiments 1 to 4 use [Training File Link](train.py)
@@ -223,25 +252,3 @@ The following is parameter trends in the experiment data
 ![Visualization Plot]('weight_visualization_exp1_parameter_trends.png')
 The following is the tsne plot for pca components of the weights
 ![TSNE Plot]('tsne_weights_vis_exp1.png')
-
-# Pretraining Experiments
-## Experiment 1
-- All loss propagated throughout
-
-## Experiment 2
-- All loss propagated throughout
-- Data is shuffled
-- Loss plateaus at 588
-
-## Experiment 3 
-- Motion Encoder updated by separate loss 
-- Additional Signal MSE updates all weights
-- Loss plateaus at 588
-- Data is shuffled
-
-## Experiment 4
-- Motion Encoder updated by separate loss
-- Additional Signal MSE updates all weights
-- Shuffling of batched data
-- Exponential decay of learning rate 
-- Initial Learning rate 0.1, decay rate 0.95, decay steps 20
