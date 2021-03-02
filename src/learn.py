@@ -44,7 +44,7 @@ class SignalDataGen:
         """
         print('[Actor] Creating Data.')
         self.data = [] 
-        deltas = [0, 3]#, -3]
+        deltas = [0]#, 3]#, -3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -110,7 +110,7 @@ class Learner():
             self.params['max_steps'], 6
         ), dtype = np.float32)
         self.desired_motion[:, 3] = 0.05
-        self.signal_gen = SignalDataGen(params)
+        self.signal_gen = SignalDataGen(params, create_data)
         self.pretrain_osc_mu = np.ones((
             1,
             self.params['units_osc']
