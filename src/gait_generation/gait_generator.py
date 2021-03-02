@@ -50,7 +50,7 @@ class Signal:
                     self.T * (1 - self.beta)
                 ) - np.pi * self.beta/(2 * (1 - self.beta))
             )
-            self.theta3 = -self.theta2
+            self.theta3 = self.theta2
         elif self.T * (2 - self.beta) / 2 <= t < self.T:
             self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
@@ -62,8 +62,8 @@ class Signal:
 
 
     def _get_base(self):
-        self.base_signal = np.zeros((self.N + self.T, 3))
-        for i in range(self.N + self.T):
+        self.base_signal = np.zeros((self.N + 2*self.T, 3))
+        for i in range(self.N + 2 * self.T):
             self._compute(i)
             self.base_signal[i, 0] = self.theta1
             self.base_signal[i, 1] = self.theta2
@@ -76,22 +76,26 @@ class Signal:
         t = np.arange(0, self.N) * self.dt
         out[:, 0] = t
         phases = []
-        out[:, 1] = signal[int(self.T / 2) : self.N + int(self.T / 2), 0]
-        out[:, 2] = signal[int(self.T / 2) : self.N + int(self.T / 2), 1]
-        out[:, 3] = signal[int(self.T / 2) : self.N + int(self.T / 2), 2]
-        phases.append(0.5)
-        out[:, 4] = signal[int(self.T):self.N + int(self.T), 0]
-        out[:, 5] = signal[int(self.T):self.N + int(self.T), 1]
-        out[:, 6] = signal[int(self.T):self.N + int(self.T), 2]
+        t = int(self.T + self.Tst / 4 - self.Tsw / 4)
+        out[:, 3] = signal[t : self.N + t, 0]
+        out[:, 2] = signal[t : self.N + t, 1]
+        out[:, 1] = signal[t : self.N + t, 2]
         phases.append(0)
-        out[:, 7] = signal[int(3*self.T / 4) : self.N + int(3*self.T / 4), 0]
-        out[:, 8] = signal[int(3*self.T / 4) : self.N + int(3*self.T / 4), 1]
-        out[:, 9] = signal[int(3*self.T / 4) : self.N + int(3*self.T / 4), 2]
-        phases.append(0.25)
-        out[:, 10] = signal[int(self.T / 4) : self.N+int(self.T / 4), 0]
-        out[:, 11] = signal[int(self.T / 4) : self.N+int(self.T/4), 1]
-        out[:, 12] = signal[int(self.T / 4) : self.N+int(self.T/4), 2]
+        t = int(self.T - self.Tst / 2)
+        out[:, 6] = -signal[t : self.N + t, 0]
+        out[:, 5] = signal[t : self.N + t, 1]
+        out[:, 4] = signal[t : self.N + t, 2]
         phases.append(0.75)
+        t = int(self.T + self.Tst / 2)
+        out[:, 9] = signal[t : self.N + t, 0]
+        out[:, 8] = signal[t : self.N + t, 1]
+        out[:, 7] = signal[t : self.N + t, 2]
+        phases.append(-0.25)
+        t = int(self.T + self.Tsw/4 - self.Tst/4)
+        out[:, 12] = -signal[t : self.N + t, 0]
+        out[:, 11] = signal[t : self.N + t, 1]
+        out[:, 10] = signal[t : self.N + t, 2]
+        phases.append(0.25)
         return out, phases
 
 def get_base_signal(Tsw, Tst, theta, N):
@@ -402,12 +406,10 @@ def support_lines(dt, Tsw, Tst, N, theta, version = 0, figname = 'support_pos_tr
                 ]    
             ] 
         )
-     
-    #"""
 """
 These values dt = 0.001, Tsw = 20, Tst = 60, N = 500, theta = 30 are used
 for experiments 6 through 8
-"""  
+"""
 """
 dt = 0.001
 Tsw = 80
@@ -425,7 +427,7 @@ support_polygon(dt, Tsw, Tst, N, theta, version, figname)
     Experiment 0
         Tsw = 15
         Tst = 15
-        theta = 15      
+        theta = 15
         factors of T/4 used to time shift the signal
     Experiment 1
         Tsw = 10

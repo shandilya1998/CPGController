@@ -210,15 +210,12 @@ class Leg:
         self.jta.send_goal_and_wait(goal)
 
     def move_jta(self, pos):
-        print('move')
         self._move_jta(pos)
 
     def reset_move_jta(self, pos):
-        print('reset move')
         self._move_jta(pos)
 
     def move(self, pos):
-        print('move')
         jtp_msg = JointTrajectory()
         jtp_msg.joint_names = self.joint_name_lst
         point = JointTrajectoryPoint()
@@ -233,7 +230,6 @@ class Leg:
         self.jtp.publish(jtp_msg)
 
     def reset_move(self, pos):
-        print('reset move')
         self.last_pos = pos
         jtp_msg = JointTrajectory()
         self.jtp.publish(jtp_msg)
@@ -567,6 +563,7 @@ class Quadruped:
         self.A, self.B = self.all_legs.get_AB()
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
+        self.last_joint = np.zeros((self.params['action_dim']))
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
