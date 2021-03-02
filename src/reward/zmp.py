@@ -38,10 +38,10 @@ class ZMP:
 
     def get_ZMP_s(self, com, force, torque):
         self.plane = self.support_plane()
-        com_s = self._transform(com, plane, self.inertial_plane)
-        force_s = self._transform(force, plane, self.inertial_plane)
-        torque_s = self._transform(torque, plane, self.inertial_plane)
-        g_s = self._transform(self.g, plane, self.inertial_plane)
+        com_s = self._transform(com, self.plane, self.inertial_plane)
+        force_s = self._transform(force, self.plane, self.inertial_plane)
+        torque_s = self._transform(torque, self.plane, self.inertial_plane)
+        g_s = self._transform(self.g, self.plane, self.inertial_plane)
         zmp_s = np.zeros((3,))
         zmp_s[1] = com_s[1] - (
             com_s[0] * (
