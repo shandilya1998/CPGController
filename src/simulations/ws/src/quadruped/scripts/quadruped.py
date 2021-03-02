@@ -2,6 +2,7 @@
 import rospy
 import re
 import copy
+import actionlib
 import numpy as np
 import tensorflow as tf
 from control_msgs.msg import FollowJointTrajectoryAction, \
@@ -35,6 +36,15 @@ class Leg:
         self.params = params
         self.leg_name = leg_name
         self.joint_name_lst = joint_name_lst
+        self.jta = actionlib.SimpleActionClient(
+            '/quadruped/{leg_name}_controller/follow_joint_trajectory'.format(
+                leg_name = self.leg_name
+            ),
+            FollowJointTrajectoryAction
+        )
+        print('[DDPG] Waiting for joint trajectory action')
+        self.jta.wait_for_server()
+        print('[DDPG] Found joint trajectory action!')
         self.jtp_zeros = np.zeros((len(joint_name_lst),)).tolist()
         self.jtp_vel = np.zeros((len(joint_name_lst),))
         self.jtp_vel.fill(8.7772)
@@ -189,6 +199,24 @@ class Leg:
     def contact_callback(self, contact_state):
         self.contact_state = contact_state
 
+    def _move_jta(self, pos):
+        goal = FollowJointTrajectoryGoal()
+        goal.trajectory.joint_names = self.joint_name_lst
+        point = JointTrajectoryPoint()
+        point.positions = pos
+        point.velocities = self.jtp_vel
+        point.time_from_start = rospy.Duration(1.0)
+        goal.trajectory.points.append(point)
+        self.jta.send_goal_and_wait(goal)
+
+    def move_jta(self, pos):
+        print('move')
+        self._move_jta(pos)
+
+    def reset_move_jta(self, pos):
+        print('reset move')
+        self._move_jta(pos)
+
     def move(self, pos):
         print('move')
         jtp_msg = JointTrajectory()
@@ -204,7 +232,7 @@ class Leg:
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
 
-    def reset_move(self, pos, test = False):
+    def reset_move(self, pos):
         print('reset move')
         self.last_pos = pos
         jtp_msg = JointTrajectory()
@@ -219,8 +247,6 @@ class Leg:
         point.time_from_start = rospy.Duration(0.0001)
         jtp_msg.points.append(point)
         self.jtp.publish(jtp_msg)
-        if not test:
-            raise
 
 class AllLegs:
     def __init__(self, params):
@@ -488,7 +514,6 @@ class Quadruped:
         self._counter_1 = 0
         self.counter_1 = 0 # Counter for support line change
         self.dt = self.params['dt']
-
         self.orientation = np.zeros(4, dtype = np.float32)
         self.angular_vel = np.zeros(3, dtype = np.float32)
         self.linear_acc = np.zeros(3, dtype = np.float32)
@@ -517,7 +542,7 @@ class Quadruped:
         self.eta = 1e8
 
         self.history_joint_torque = np.zeros(self.history_shape)
-        self.history_joint_vel = np.zeros(self.history_ehape)
+        self.history_joint_vel = np.zeros(self.history_shape)
         self.history_pos = np.zeros((
             self.params['rnn_steps'] - 1,
             3
@@ -537,8 +562,8 @@ class Quadruped:
         self.Tb = self.params['rnn_steps']
         self.upright = True
 
-        self._reset(True)
-        rospy.sleep(1.0)
+        self._reset()
+        rospy.sleep(2.0)
         self.A, self.B = self.all_legs.get_AB()
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
@@ -671,7 +696,7 @@ class Quadruped:
             ], dtype = np.float32
         )
 
-    def _reset(self, test = False):
+    def _reset(self):
         #pause physics
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
@@ -691,7 +716,7 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/set_model_configuration call failed')
         self.action = self.starting_pos
-        self.all_legs.reset_move(self.starting_pos, test)
+        self.all_legs.reset_move(self.starting_pos)
         #unpause physics
         rospy.wait_for_service('/gazebo/unpause_physics')
         try:
@@ -773,11 +798,11 @@ class Quadruped:
             self._counter_1 += 1
             if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF.update(self.A)
-                self.counter_1 = copy.deepcopy(self._counter_1)
+                self.counter_1 = self._counter_1
                 self_counter_1 = 0
             if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF.update(self.B)
-                self.counter_1 = copy.deepcopy(self._counter_1)
+                self.counter_1 = self._counter_1
                 self_counter_1 = 0
             self.A.update(AB[0])
             self.B.update(AB[1])
@@ -795,34 +820,26 @@ class Quadruped:
                 _B_name = self.leg_name_lst[2]
             current_pose = self.kinematics.get_current_end_effector_fk()
             pose = current_pose
-            c = 0
             t = 0
-            for step in range(self.params['rnn_steps']):
-                pose=self.kinematics.get_end_effector_fk(
-                    action[step].tolist()
-                )
-                if pose[A_name]['position']['z'] - \
-                        current_pose[A_name]['position']['z'] > 0:
-                    temp = A_name
-                    A_name = _A_name
-                    _A_name = temp
-                    t = copy.deepcopy(c)
-                    c = 0
-                    break
-                if pose[B_name]['position']['z'] - \
-                        current_pose[B_name]['position']['z'] > 0:
-                    temp = B_name
-                    B_name = _B_name
-                    _B_name = temp
-                    t = copy.deepcopy(c)
-                    c = 0
-                    break
+            pose = self.kinematics.get_end_effector_fk(
+                action[self.params['rnn_steps'] - 1].tolist()
+            )
+            if pose[A_name]['position']['z'] - \
+                    current_pose[A_name]['position']['z'] > 0:
+                temp = A_name
+                A_name = _A_name
+                _A_name = temp
+            if pose[B_name]['position']['z'] - \
+                    current_pose[B_name]['position']['z'] > 0:
+                temp = B_name
+                B_name = _B_name
+                _B_name = temp
             m = {
                 0 : 'x',
                 1 : 'y',
                 2 : 'z'
             }
-            self.Tb = (self.counter_1 + t) * self.dt
+            self.Tb = (self.counter_1 + self.params['rnn_steps']) * self.dt / 2
             self.AL.update({
                 'torque' : None,
                 'force' : None,
