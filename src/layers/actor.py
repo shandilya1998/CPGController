@@ -16,7 +16,6 @@ class StateEncoder(tf.keras.Model):
         activation_motion_state = 'tanh',
         activation_mu = 'relu',
         activation_omega = 'relu',
-        activation_b = 'relu',
     ):
         super(StateEncoder, self).__init__()
         self.combine_dense = [tf.keras.layers.Dense(
@@ -29,7 +28,6 @@ class StateEncoder(tf.keras.Model):
             activation = activation_robot_state,
             name = 'robot_state_dense'
         ) for units in units_robot_state]
-        
         self.motion_state_dense = [tf.keras.layers.Dense(
             units = units,
             activation = activation_motion_state,
@@ -46,11 +44,6 @@ class StateEncoder(tf.keras.Model):
             activation = activation_omega,
             name = 'omega_dense'
         )
-        self.b_dense = tf.keras.layers.Dense(
-            units = 2 * units_osc,
-            activation = activation_b,
-            name = 'b_dense'
-        )
 
     def call(self, motion_state, robot_state):
         for layer in self.motion_state_dense:
@@ -58,15 +51,12 @@ class StateEncoder(tf.keras.Model):
 
         for layer in self.robot_state_dense:
             robot_state = layer(robot_state)
-        
         state = tf.concat([motion_state, robot_state], axis = -1)
         for layer in self.combine_dense:
             state = layer(state)
-        
         omega = tf.math.abs(self.omega_dense(state))
-        b = tf.math.abs(self.b_dense(state))
         mu = tf.math.abs(self.mu_dense(state))
-        return [omega, mu, b]
+        return [omega, mu]
 
 
 def swap_batch_timestep(input_t):
@@ -90,8 +80,7 @@ class Actor(tf.keras.Model):
         activation_combine = 'tanh',
         activation_robot_state = 'tanh',
         activation_motion_state = 'tanh',
-        activation_omega = 'tanh',
-        activation_b = 'tanh',
+        activation_omega = 'relu',
         name = 'TimeDistributedActor'
     ):
         super(Actor, self).__init__(name = name)
@@ -120,11 +109,11 @@ class Actor(tf.keras.Model):
             dt = dt
         )
 
-    def call(self, z, omega, b):
+    def call(self, z, omega):
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
 
         step = tf.constant(0)
-        z_out = self.osc([z, omega, b])
+        z_out = self.osc([z, omega])
         o = self.output_mlp(z_out)
         out = out.write(
             step,
@@ -145,7 +134,6 @@ class Actor(tf.keras.Model):
             inputs = [
                 z,
                 omega,
-                b
             ]
 
             z = self.osc(inputs)
