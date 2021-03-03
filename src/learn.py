@@ -331,7 +331,9 @@ class Learner():
             np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j])
 
     def load_dataset(self):
-        Y = tf.convert_to_tensor(np.load('data/pretrain/Y.npy'))
+        Y = np.load('data/pretrain/Y.npy')
+        num_data = Y.shape[0]
+        Y = tf.convert_to_tensor(Y)
         F = tf.convert_to_tensor(np.load('data/pretrain/F.npy'))
         MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy'))
         B = tf.convert_to_tensor(np.load('data/pretrain/B.npy'))
@@ -352,7 +354,7 @@ class Learner():
         Y = tf.data.Dataset.zip((Y, F, MU, B))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.batch(
+        dataset = dataset.shuffle(num_data).batch(
             self.params['pretrain_bs'],
             drop_remainder=True
         )
