@@ -40,7 +40,7 @@ class HopfOscillator(tf.keras.Model):
         )
 
 
-        if last_dim_state is None or last_dim_omega is None or last_dim_bias is None:
+        if last_dim_state is None or last_dim_omega is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
                 'should be defined. Found `None`.')
         if last_dim_state != 2*self.units:
