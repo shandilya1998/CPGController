@@ -27,8 +27,7 @@ class HopfOscillator(tf.keras.Model):
 
         self.state_input_shape = input_shape[0]
         self.omega_input_shape = input_shape[1]
-        self.mu_input_shape = input_shape[2]
-        self.bias_input_shape = input_shape[3]
+        self.bias_input_shape = input_shape[2]
 
         last_dim_state = tf.compat.dimension_value(
             self.state_input_shape[-1]
@@ -41,10 +40,9 @@ class HopfOscillator(tf.keras.Model):
             2*np.pi, dtype = tf.dtypes.float32
         )
 
-        last_dim_mu = tf.compat.dimension_value(self.mu_input_shape[-1])
         last_dim_bias = tf.compat.dimension_value(self.bias_input_shape[-1])
 
-        if last_dim_state is None or last_dim_omega is None or last_dim_mu is None or last_dim_bias is None:
+        if last_dim_state is None or last_dim_omega is None or last_dim_bias is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
                 'should be defined. Found `None`.')
         if last_dim_state != 2*self.units:
@@ -54,10 +52,6 @@ class HopfOscillator(tf.keras.Model):
         if last_dim_omega != 1:
             raise ValueError('The last dimension of the omega inputs to `HopfOscillator` '
                 'should be equal to 1. Found `{dim}`.'.format(dim = last_dim_omega))
-
-        if last_dim_mu != self.units:
-            raise ValueError('The last dimension of the mu inputs to `HopfOscillator` '
-                'should be equal to number of units. Found `{dim}`.'.format(dim = last_dim_mu))
 
         if last_dim_bias != 2 * self.units:
             raise ValueError('The last dimension of the bias inputs to `HopfOscillator` '
@@ -73,7 +67,6 @@ class HopfOscillator(tf.keras.Model):
             inputs : [
                 state : (None, 2 * units),
                 omega : (None, 1),
-                mu : (None, units),
                 b : (None, units)
             ]
         """
@@ -86,15 +79,13 @@ class HopfOscillator(tf.keras.Model):
             tf.math.square(imag_state)
         )
 
-        inputs[1] = self._2pi * inputs[1]
-
         real_state = real_state + (
-            -inputs[1] * self.range * imag_state + (inputs[2] - r2) * real_state
-        ) * self.dt + inputs[3][:, :input_dim]
+            -inputs[1] * self.range * imag_state + (1 - r2) * real_state
+        ) * self.dt + inputs[2][:, :input_dim]
 
         imag_state = imag_state + (
-            inputs[1] * self.range * real_state + (inputs[2] - r2) * imag_state
-        ) * self.dt + inputs[3][:, input_dim:]
+            inputs[1] * self.range * real_state + (1 - r2) * imag_state
+        ) * self.dt + inputs[2][:, input_dim:]
 
         Z = tf.concat([real_state, imag_state], -1)
 

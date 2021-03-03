@@ -12,6 +12,7 @@ from tqdm import tqdm
 import pickle
 import os
 from frequency_analysis import frequency_estimator
+import time
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -45,7 +46,7 @@ class SignalDataGen:
         """
         print('[Actor] Creating Data.')
         self.data = []
-        deltas = [0, 3]#, -3]
+        deltas = [0]#, 3]#, -3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -67,20 +68,28 @@ class SignalDataGen:
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
                 motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                mu = np.array([theta_k, theta_k / 5, theta_h])
+                mu = [mu for i in range(4)]
+                mu =  np.concatenate(mu, 0)
                 freq = self.get_ff(signal[:, 0], 'autocorr')
                 self.data.append(
-                    [signal, motion, freq]
+                    [signal, motion, freq, mu]
                 )
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
             num = self.num_data)
         )
 
+    def preprocess(self, signal):
+        signal = signal-np.mean(signal, axis = 0)
+        signal = signal/(np.abs(signal.max(axis = 0)))
+        return signal
+
     def generator(self):
         for batch in range(self.num_data):
-            y, x, f = self.data[batch]
-            y = np.expand_dims(y, 0)
-            yield y, x, f
+            y, x, f, mu = self.data[batch]
+            mu = np.expand_dims(mu, 0)
+            yield y, x, f, mu
 
 class Learner():
     def __init__(self, params, create_data = False):
@@ -161,7 +170,7 @@ class Learner():
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, mu, b] = self.actor.model(x)
+            _action, [omega, b], mu = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
             loss_b = self.mse_b(y[3], b)
@@ -184,7 +193,7 @@ class Learner():
 
     def _pretrain_actor_segments(self, x, y):
         with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, mu, b] = self.actor.model(x)
+            _action, [omega, b], mu = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
             loss_b = self.mse_b(y[3], b)
@@ -283,10 +292,12 @@ class Learner():
         B = []
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
-        for y, x, f in tqdm(self.signal_gen.generator()):
+        for y, x, f, mu in tqdm(self.signal_gen.generator()):
+            mu = (mu * np.pi / 180)/(np.pi/3)
             y = y * np.pi / 180
-            ac = y[0][0]
-            y = y[:, 1:]
+            ac = y[0]
+            y = y[1:]
+            y = np.expand_dims(self.signal_gen.preprocess(y), 0)
             f = f * 2 * np.pi
             osc = self._hopf_oscillator(
                 f,
@@ -303,7 +314,7 @@ class Learner():
                 X[j].append(s)
             Y.append(y)
             F.append(np.array([[f]], dtype = np.float32))
-            MU.append(self.pretrain_osc_mu)
+            MU.append(mu)
             B.append(self.pretrain_osc_b)
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
@@ -341,7 +352,7 @@ class Learner():
         Y = tf.data.Dataset.zip((Y, F, MU, B))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.shuffle(self.signal_gen.num_data).batch(
+        dataset = dataset.batch(
             self.params['pretrain_bs'],
             drop_remainder=True
         )
@@ -367,6 +378,7 @@ class Learner():
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
+            start = time.time()
             for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_mu, loss_b] = \
                     grad_update(x, y)
@@ -377,6 +389,9 @@ class Learner():
                     loss = loss
                 ))
                 total_loss += loss
+                if step >= 25:
+                    break
+            end = time.time()
             avg_loss = total_loss / (self.num_batches)
             print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
@@ -386,6 +401,7 @@ class Learner():
             print('[Actor] Learning Rate: {lr}'.format(
                 lr = self.pretrain_actor_optimizer.lr((episode + 1) * 5))
             )
+            print('[Actor] Epoch Time: {time}s'.format(time = end - start))
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
             if episode % 5 == 0:
@@ -397,7 +413,7 @@ class Learner():
                             checkpoint_dir,
                             'actor_pretrained_{name}_{ex}_{ep}.ckpt'.format(
                                 name = name,
-                                ep=episode, 
+                                ep=episode,
                                 ex = experiment
                             )
                         )
@@ -412,19 +428,18 @@ class Learner():
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, mu, b] = self.actor.model(x)
+            _action, [omega, b], mu = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
             loss_b = self.mse_b(y[3], b)
             loss_omega = self.mse_omega(y[1], omega)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss = loss_omega
+            loss = loss_omega + loss_b + loss_mu
 
         vars_encoder = []
         for var in self.actor.model.trainable_variables:
             if 'state_encoder' in var.name:
-                if 'omega' in var.name:
-                    vars_encoder.append(var)
+                vars_encoder.append(var)
         grads = tape.gradient(
             loss,
             vars_encoder
@@ -481,7 +496,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                action_original, [omega, mu, b] = self.actor.model(self._state)
+                action_original, [omega, b], mu = self.actor.model(self._state)
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
@@ -553,7 +568,7 @@ class Learner():
                 ])
 
                 loss += self.critic.train(states, actions, y)
-                a_for_grad, [omega_, mu_, b_] = self.actor.model(states)
+                a_for_grad, [omega_, b_], mu_ = self.actor.model(states)
                 q_grads = self.critic.q_grads(states, a_for_grad)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
@@ -604,6 +619,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params, True)
-    experiment = 8
+    experiment = 9
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
