@@ -125,12 +125,7 @@ class Learner():
             1,
             self.params['units_osc']
         ), dtype = np.float32)
-        self.pretrain_osc_b = np.zeros((
-            1,
-            2 * self.params['units_osc']
-        ), dtype = np.float32)
         self.mse_mu = tf.keras.losses.MeanSquaredError()
-        self.mse_b = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
         self.dt = self.params['dt']
         if create_data:
@@ -170,10 +165,9 @@ class Learner():
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, b], mu = self.actor.model(x)
+            _action, [omega, mu] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
-            loss_b = self.mse_b(y[3], b)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_action + loss_omega
@@ -189,14 +183,13 @@ class Learner():
                 self.actor.model.trainable_variables
             )
         )
-        return loss, [loss_action, loss_omega, loss_mu, loss_b]
+        return loss, [loss_action, loss_omega, loss_mu]
 
     def _pretrain_actor_segments(self, x, y):
         with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, b], mu = self.actor.model(x)
+            _action, [omega, mu] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
-            loss_b = self.mse_b(y[3], b)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_action + loss_omega
@@ -254,26 +247,7 @@ class Learner():
                 vars_mu
             )
         )
-        """
-        vars_b = []
-        for var in self.actor.model.trainable_variables:
-            if 'state_encoder' in var.name:
-                if 'mu_dense' in var.name or 'omega_dense' in var.name:
-                    continue
-                else:
-                    vars_b.append(var)
-        grads_b = tape.gradient(
-            loss_b,
-            vars_b
-        )"""
-        #self.print_grads(vars_b, grads_b)
-        self.pretrain_actor_optimizer.apply_gradients(
-            zip(
-                grads_b,
-                vars_b
-            )
-        )
-        return loss, [loss_action, loss_omega, loss_mu, loss_b]
+        return loss, [loss_action, loss_omega, loss_mu]
 
     def _hopf_oscillator(self, omega, mu, b, z):
         rng = np.arange(1, self.params['units_osc'] + 1)
@@ -289,7 +263,6 @@ class Learner():
             self.env.quadruped.get_state_tensor()
         F = []
         MU = []
-        B = []
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f, mu in tqdm(self.signal_gen.generator()):
@@ -315,43 +288,38 @@ class Learner():
             Y.append(y)
             F.append(np.array([[f]], dtype = np.float32))
             MU.append(mu)
-            B.append(self.pretrain_osc_b)
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
         F = np.concatenate(F, axis = 0)
         MU = np.concatenate(MU, axis = 0)
-        B = np.concatenate(B, axis = 0)
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
-        np.save('data/pretrain/Y.npy', Y)
-        np.save('data/pretrain/F.npy', F)
-        np.save('data/pretrain/MU.npy', MU)
-        np.save('data/pretrain/B.npy', B)
+        np.save('data/pretrain/Y.npy', Y, allow_pickle = True)
+        np.save('data/pretrain/F.npy', F, allow_pickle = True)
+        np.save('data/pretrain/MU.npy', MU, allow_pickle = True)
         for j in range(len(X)):
-            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j])
+            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True)
 
     def load_dataset(self):
-        Y = np.load('data/pretrain/Y.npy')
+        Y = np.load('data/pretrain/Y.npy', allow_pickle = True, fix_imports=True,encoding='latin1')
         num_data = Y.shape[0]
         Y = tf.convert_to_tensor(Y)
-        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy'))
-        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy'))
-        B = tf.convert_to_tensor(np.load('data/pretrain/B.npy'))
+        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True,encoding='latin1'))
+        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True,encoding='latin1'))
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
                 tf.data.Dataset.from_tensor_slices(
                     tf.convert_to_tensor(
-                        np.load('data/pretrain/X_{j}.npy'.format(j=j))
+                        np.load('data/pretrain/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True,encoding='latin1')
                     )
                 )
             )
-        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
+        self.num_batches = num_data//self.params['pretrain_bs']
         Y = tf.data.Dataset.from_tensor_slices(Y)
         F = tf.data.Dataset.from_tensor_slices(F)
         MU = tf.data.Dataset.from_tensor_slices(MU)
-        B = tf.data.Dataset.from_tensor_slices(B)
-        Y = tf.data.Dataset.zip((Y, F, MU, B))
+        Y = tf.data.Dataset.zip((Y, F, MU))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
         dataset = dataset.shuffle(num_data).batch(
@@ -382,7 +350,7 @@ class Learner():
             total_loss = 0.0
             start = time.time()
             for step, (x, y) in enumerate(dataset):
-                loss, [loss_action, loss_omega, loss_mu, loss_b] = \
+                loss, [loss_action, loss_omega, loss_mu] = \
                     grad_update(x, y)
                 loss = loss.numpy()
                 print('[Actor] Episode {ep} Step {st} Loss: {loss}'.format(
@@ -430,13 +398,12 @@ class Learner():
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, b], mu = self.actor.model(x)
+            _action, [omega, mu] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
-            loss_b = self.mse_b(y[3], b)
             loss_omega = self.mse_omega(y[1], omega)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss = loss_omega + loss_b + loss_mu
+            loss = loss_omega + loss_mu
 
         vars_encoder = []
         for var in self.actor.model.trainable_variables:
@@ -453,7 +420,7 @@ class Learner():
                 vars_encoder
             )
         )
-        return loss, [loss_action, loss_omega, loss_mu, loss_b]
+        return loss, [loss_action, loss_omega, loss_mu]
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
         self._pretrain_loop(
@@ -498,7 +465,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                action_original, [omega, b], mu = self.actor.model(self._state)
+                action_original, [omega, mu] = self.actor.model(self._state)
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
@@ -570,7 +537,7 @@ class Learner():
                 ])
 
                 loss += self.critic.train(states, actions, y)
-                a_for_grad, [omega_, b_], mu_ = self.actor.model(states)
+                a_for_grad, [omega_, mu_] = self.actor.model(states)
                 q_grads = self.critic.q_grads(states, a_for_grad)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
