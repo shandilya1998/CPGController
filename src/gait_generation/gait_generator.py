@@ -50,7 +50,7 @@ class Signal:
                     self.T * (1 - self.beta)
                 ) - np.pi * self.beta/(2 * (1 - self.beta))
             )
-            self.theta3 = self.theta2
+            self.theta3 = -self.theta2 / 5
         elif self.T * (2 - self.beta) / 2 <= t < self.T:
             self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (

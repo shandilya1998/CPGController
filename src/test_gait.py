@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 params['rnn_steps'] = 10000
 signal_gen = gg.Signal(params['rnn_steps'], params['dt'])
 
-signal_gen.build(150, 450, 45, 30)
+signal_gen.build(150, 450, 40, 30)
 signal, phases = signal_gen.get_signal()
 t = signal[:, 0]
-signal = signal[:, 1:]
+signal = signal[:, 1:] * np.pi/180
 
 fig, axes = plt.subplots(4, 1, figsize = (20,20))
 legs = ['Front Right', 'Front Left', 'Back Right', 'Back Left']

@@ -1,4 +1,5 @@
 from rl.constants import params
+import rospy
 from rl.net import ActorNetwork, CriticNetwork
 from rl.env import Env
 from rl.replay_buffer import ReplayBuffer, OU
@@ -21,7 +22,7 @@ class SignalDataGen:
         self.N = params['rnn_steps']
         self.params = params
         self.signal_gen = Signal(
-            self.N,
+            self.N + 1,
             self.params['dt']
         )
         self.dt = self.params['dt']
@@ -43,8 +44,8 @@ class SignalDataGen:
             Turning Behaviour is to be learnt by RL
         """
         print('[Actor] Creating Data.')
-        self.data = [] 
-        deltas = [0]#, 3]#, -3]
+        self.data = []
+        deltas = [0, 3]#, -3]
         delta = []
         for i in range(len(deltas)):
             for j in range(len(deltas)):
@@ -122,6 +123,7 @@ class Learner():
         self.mse_mu = tf.keras.losses.MeanSquaredError()
         self.mse_b = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
+        self.dt = self.params['dt']
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -166,7 +168,7 @@ class Learner():
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_omega = self.mse_omega(y[1], omega)
             loss = loss_mu + loss_action + loss_omega
-        
+
         grads = tape.gradient(
             loss,
             self.actor.model.trainable_variables
@@ -264,19 +266,39 @@ class Learner():
         )
         return loss, [loss_action, loss_omega, loss_mu, loss_b]
 
+    def _hopf_oscillator(self, omega, mu, b, z):
+        rng = np.arange(1, self.params['units_osc'] + 1)
+        x, y = z[:self.params['units_osc']], z[self.params['units_osc']:]
+        x = x + ((mu - (x*x + y*y)) * x - omega * rng * y) * self.dt + b
+        y = y + ((mu - (x*x + y*y)) * y + omega * rng * x) * self.dt + b
+        return np.concatenate([x, y], -1)
+
     def create_dataset(self):
         self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
         self.env.quadruped.reset()
-        _state = self.env.quadruped.get_state_tensor()
+        motion_state, robot_state, osc_state = \
+            self.env.quadruped.get_state_tensor()
         F = []
         MU = []
         B = []
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
-        for y, x, f in self.signal_gen.generator():
-            _state[0] = np.expand_dims(x, 0)
-            for i in range(12):
-                _state[1][0][i] = y[0][0][i] * np.pi / 180
+        for y, x, f in tqdm(self.signal_gen.generator()):
+            y = y * np.pi / 180
+            ac = y[0][0]
+            y = y[:, 1:]
+            f = f * 2 * np.pi
+            osc = self._hopf_oscillator(
+                f,
+                np.ones((self.params['units_osc'],)),
+                np.zeros((self.params['units_osc'],)),
+                osc_state[0]
+            )
+            self.env.quadruped.all_legs.move(ac)
+            self.env.quadruped.set_initial_motion_state(x)
+            self.env.quadruped.set_osc_state(osc)
+            _state = self.env.quadruped.get_state_tensor()
+            rospy.sleep(0.1)
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
@@ -581,7 +603,7 @@ class Learner():
             print('\n')
 
 if __name__ == '__main__':
-    learner = Learner(params)
-    experiment = 7
+    learner = Learner(params, True)
+    experiment = 8
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')

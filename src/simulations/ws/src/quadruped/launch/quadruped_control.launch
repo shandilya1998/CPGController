@@ -4,7 +4,7 @@
   <arg name="db" default="false" />
   <arg name="pipeline" default="ompl" />
   <arg name="debug" value="true"/>
-  <arg name="use_rviz" default="false" />
+  <arg name="use_rviz" default="true" />
 
   <include file="$(find quadruped)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
@@ -12,6 +12,11 @@
 
   <include file="$(find quadruped)/launch/quadruped_gazebo.launch">
     <arg name="model" value="$(arg model)" />
+  </include>
+
+  <include file="$(find quadruped)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
+    <arg name="rviz_config" value="$(find quadruped)/rviz/moveit.rviz"/>
+    <arg name="debug" value="$(arg debug)"/>
   </include>
 
   <rosparam command="load" file="$(find quadruped)/config/quadruped_control.yaml"/>
@@ -25,6 +30,14 @@
     type="joint_state_publisher">
     <rosparam param="source_list">[quadruped/joint_states]</rosparam>
   </node>
+
+  <node
+    name="joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui">
+    <rosparam param="source_list">[quadruped/joint_states]</rosparam>
+  </node>
+
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher"
     respawn="false" output="screen">
     <remap from="/joint_states" to="/quadruped/joint_states" />

@@ -568,7 +568,20 @@ class Quadruped:
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
 
+    def set_osc_state(self, osc):
+        self.osc_state = osc
+
     def get_state_tensor(self):
+        diff_joint = self.joint_position - self.last_joint
+
+        self.robot_state = np.concatenate([
+            self.joint_position,
+            diff_joint,
+            self.orientation,
+            self.angular_vel,
+            self.linear_acc
+        ]).reshape(self.robot_state_shape)
+
         return [
             np.expand_dims(self.motion_state, 0),
             np.expand_dims(self.robot_state, 0),
