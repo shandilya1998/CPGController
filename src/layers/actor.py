@@ -14,9 +14,9 @@ class StateEncoder(tf.keras.Model):
         activation_combine = 'tanh',
         activation_robot_state = 'tanh',
         activation_motion_state = 'tanh',
-        activation_mu = 'tanh',
-        activation_omega = 'tanh',
-        activation_b = 'tanh',
+        activation_mu = 'relu',
+        activation_omega = 'relu',
+        activation_b = 'relu',
     ):
         super(StateEncoder, self).__init__()
         self.combine_dense = [tf.keras.layers.Dense(
