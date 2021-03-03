@@ -5,6 +5,7 @@ from layers.complex import ComplexDense, relu
 class StateEncoder(tf.keras.Model):
     def __init__(
         self,
+        action_dim,
         units_osc,
         units_combine,
         units_robot_state,
@@ -36,7 +37,7 @@ class StateEncoder(tf.keras.Model):
         ) for units in units_motion_state]
 
         self.mu_dense = tf.keras.layers.Dense(
-            units = units_osc,
+            units = action_dim,
             activation = activation_mu,
             name = 'mu_dense'
         )
@@ -89,7 +90,6 @@ class Actor(tf.keras.Model):
         activation_combine = 'tanh',
         activation_robot_state = 'tanh',
         activation_motion_state = 'tanh',
-        activation_mu = 'tanh',
         activation_omega = 'tanh',
         activation_b = 'tanh',
         name = 'TimeDistributedActor'
@@ -120,11 +120,11 @@ class Actor(tf.keras.Model):
             dt = dt
         )
 
-    def call(self, z, omega, mu, b):
+    def call(self, z, omega, b):
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
 
         step = tf.constant(0)
-        z_out = self.osc([z, omega, mu, b])
+        z_out = self.osc([z, omega, b])
         o = self.output_mlp(z_out)
         out = out.write(
             step,
@@ -145,7 +145,6 @@ class Actor(tf.keras.Model):
             inputs = [
                 z,
                 omega,
-                mu,
                 b
             ]
 
@@ -176,6 +175,7 @@ class Actor(tf.keras.Model):
 
 def get_encoder(params):
     encoder = StateEncoder(
+        action_dim = params['action_dim'],
         units_osc = params['units_osc'],
         units_combine = params['units_combine'],
         units_robot_state = params['units_robot_state'],
