@@ -282,7 +282,7 @@ class Learner():
             self.env.quadruped.set_initial_motion_state(x)
             self.env.quadruped.set_osc_state(osc)
             _state = self.env.quadruped.get_state_tensor()
-            rospy.sleep(0.1)
+            rospy.sleep(0.3)
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
@@ -294,24 +294,24 @@ class Learner():
         F = np.concatenate(F, axis = 0)
         MU = np.concatenate(MU, axis = 0)
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
-        np.save('data/pretrain/Y.npy', Y, allow_pickle = True)
-        np.save('data/pretrain/F.npy', F, allow_pickle = True)
-        np.save('data/pretrain/MU.npy', MU, allow_pickle = True)
+        np.save('data/pretrain/Y.npy', Y, allow_pickle = True, fix_imports=True)
+        np.save('data/pretrain/F.npy', F, allow_pickle = True, fix_imports=True)
+        np.save('data/pretrain/MU.npy', MU,allow_pickle = True,fix_imports=True)
         for j in range(len(X)):
-            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True)
+            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True, fix_imports=True)
 
     def load_dataset(self):
-        Y = np.load('data/pretrain/Y.npy', allow_pickle = True, fix_imports=True,encoding='latin1')
+        Y =np.load('data/pretrain/Y.npy', allow_pickle = True, fix_imports=True)
         num_data = Y.shape[0]
         Y = tf.convert_to_tensor(Y)
-        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True,encoding='latin1'))
-        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True,encoding='latin1'))
+        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True))
+        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
                 tf.data.Dataset.from_tensor_slices(
                     tf.convert_to_tensor(
-                        np.load('data/pretrain/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True,encoding='latin1')
+                        np.load('data/pretrain/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True)
                     )
                 )
             )
@@ -588,6 +588,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params, True)
-    experiment = 9
+    experiment = 10
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
