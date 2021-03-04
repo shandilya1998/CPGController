@@ -295,16 +295,22 @@ class Learner():
         MU = np.concatenate(MU, axis = 0)
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
         np.save('data/pretrain/Y.npy', Y, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
         np.save('data/pretrain/F.npy', F, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
         np.save('data/pretrain/MU.npy', MU,allow_pickle = True,fix_imports=True)
+        time.sleep(3)
         for j in range(len(X)):
+            time.sleep(3)
             np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True, fix_imports=True)
 
     def load_dataset(self):
         Y =np.load('data/pretrain/Y.npy', allow_pickle = True, fix_imports=True)
+        time.sleep(3)
         num_data = Y.shape[0]
         Y = tf.convert_to_tensor(Y)
         F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True))
+        time.sleep(3)
         MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
         X = []
         for j in range(len(self.params['observation_spec'])):
