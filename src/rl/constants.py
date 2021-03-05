@@ -185,8 +185,8 @@ Tst = [i*3 for i in Tsw]
 Tst = Tsw + Tst + Tst
 theta_h = [30 for i in range(len(Tsw))] + [45 for i in range(len(Tsw))] + \
         [60 for i in range(len(Tsw))]
-theta_k = [15 for i in range(len(Tsw))] + [30 for i in range(len(Tsw))] + \
-        [45 for i in range(len(Tsw))]
+theta_k = [30 for i in range(len(Tsw))] + [30 for i in range(len(Tsw))] + \
+        [30 for i in range(len(Tsw))]
 
 pretraining = {
     'Tst' : Tst,
