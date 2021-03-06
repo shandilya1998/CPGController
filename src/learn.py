@@ -1,5 +1,5 @@
 from rl.constants import params
-import rospy
+#import rospy
 from rl.net import ActorNetwork, CriticNetwork
 from rl.env import Env
 from rl.replay_buffer import ReplayBuffer, OU
@@ -102,6 +102,7 @@ class Learner():
             observation_spec = self.params['observation_spec'],
             reward_spec = self.params['reward_spec']
         )
+        """
         self.env = Env(
             self.time_step_spec,
             self.params,
@@ -115,6 +116,7 @@ class Learner():
             ), 0) for spec in self.env.action_spec()
         ]
         self._noise = self._noise_init
+        """
         self.OU = OU()
         self.desired_motion = np.zeros((
             self.params['max_steps'], 6
@@ -131,19 +133,21 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.01,
-            decay_steps=50,
-            decay_rate=0.95,
+            0.1,
+            decay_steps=20,
+            decay_rate=0.75,
             staircase=True
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
         )
+        """
         self._state = [
             self.env.quadruped.motion_state,
             self.env.quadruped.robot_state,
             self.env.quadruped.osc_state
         ]
+        """
         self._action = None
         physical_devices = tf.config.list_physical_devices('GPU')
         print('[Actor] GPU>>>>>>>>>>>>')
@@ -432,7 +436,7 @@ class Learner():
 
         vars_encoder = []
         for var in self.actor.model.trainable_variables:
-            if 'state_encoder' in var.name:
+            if 'motion_state_encoder' in var.name:
                 vars_encoder.append(var)
         grads = tape.gradient(
             loss,
