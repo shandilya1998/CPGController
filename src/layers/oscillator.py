@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-class HopfOscillator(tf.keras.Model):
+class HopfOscillator(tf.keras.layers.Layer):
     def __init__(
         self,
         units,
@@ -24,7 +24,6 @@ class HopfOscillator(tf.keras.Model):
         self.range = tf.range(start = 1, limit = self.units+1, delta = 1, dtype = 'float32')
 
     def build(self, input_shape):
-
         self.state_input_shape = input_shape[0]
         self.omega_input_shape = input_shape[1]
 
