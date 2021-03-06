@@ -2,14 +2,15 @@ import tensorflow as tf
 import numpy as np
 
 action_dim = 12
+units_osc = 15
 params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 2*action_dim + 4 + 3 + 3,
     'dt'                          : 0.001,
     'units_output_mlp'            : [30, 45, 24, action_dim],
-    'units_osc'                   : 15,
+    'units_osc'                   : units_osc,
     'units_combine'               : [50, 30, action_dim],
-    'units_robot_state'           : [40, 80, 40],
+    'units_robot_state'           : [40, 80, units_osc],
     'units_motion_state'          : [30, 60, 30],
     'units_robot_state_critic'    : 78,
     'units_motion_state_critic'   : 30,
@@ -29,7 +30,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 1500,
+    'rnn_steps'                   : 1200,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',

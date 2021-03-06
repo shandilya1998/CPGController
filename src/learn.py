@@ -279,10 +279,29 @@ class Learner():
                 osc_state[0]
             )
             self.env.quadruped.all_legs.move(ac)
+            rospy.sleep(0.3)
             self.env.quadruped.set_initial_motion_state(x)
             self.env.quadruped.set_osc_state(osc)
-            _state = self.env.quadruped.get_state_tensor()
-            rospy.sleep(0.3)
+            diff_joint = self.env.quadruped.joint_position - \
+                self.env.quadruped.last_joint
+            _state = [
+                np.expand_dims(
+                    self.env.quadruped.motion_state, 0
+                ),
+                np.expand_dims(
+                    np.concatenate(
+                        [
+                            np.sin(self.env.quadruped.joint_position),
+                            np.sin(diff_joint),
+                            self.env.quadruped.orientation,
+                            self.env.quadruped.angular_vel,
+                            self.env.quadruped.linear_acc
+                        ]
+                    ), 0
+                ),
+                np.expand_dims(self.env.quadruped.osc_state, 0)
+            ]
+            #_state = self.env.quadruped.get_state_tensor()
             for j, s in enumerate(_state):
                 X[j].append(s)
             Y.append(y)
