@@ -54,6 +54,10 @@ class SignalDataGen:
                     deltas[i],
                     deltas[j],
                 ])
+
+        """
+            Data for straight ahead
+        """
         for d in tqdm(delta):
             for tst, tsw, theta_h, theta_k in zip(
                 self.Tst,
@@ -67,13 +71,103 @@ class SignalDataGen:
                 signal, _ = self.signal_gen.get_signal()
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                motion = np.array([0, 1, 0, 0, v ,0], dtype = np.float32)
                 mu = np.array([theta_k, theta_k / 5, theta_h])
                 mu = [mu for i in range(4)]
                 mu =  np.concatenate(mu, 0)
                 freq = self.get_ff(signal[:, 0], 'autocorr')
                 self.data.append(
                     [signal, motion, freq, mu]
+                )
+        """
+            Data for straight back
+        """
+        for d in tqdm(delta):
+            for tst, tsw, theta_h, theta_k in zip(
+                self.Tst,
+                self.Tsw,
+                self.theta_h,
+                self.theta_k
+            ):  
+                tsw = tsw + d[0]
+                tst = tst + d[1]
+                self.signal_gen.build(tsw, tst, theta_h, theta_k)
+                signal, _ = self.signal_gen.get_signal()
+                signal = signal[:, 1:].astype(np.float32)
+                signal[:, 2] = -signal[:, 2]
+                signal[:, 5] = -signal[:, 5]
+                signal[:, 8] = -signal[:, 8]
+                signal[:, 11] = -signal[:, 11]
+                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+                motion = np.array([0, -1, 0, 0, v ,0], dtype = np.float32)
+                mu = np.array([theta_k, theta_k / 5, theta_h])
+                mu = [mu for i in range(4)]
+                mu =  np.concatenate(mu, 0)
+                freq = self.get_ff(signal[:, 0], 'autocorr')
+                self.data.append(
+                    [signal, motion, freq, mu] 
+                )
+        """
+            Data for straight right
+        """
+        for d in tqdm(delta):
+            for tst, tsw, theta_h, theta_k in zip(
+                self.Tst,
+                self.Tsw,
+                self.theta_h,
+                self.theta_k
+            ):
+                tsw = tsw + d[0]
+                tst = tst + d[1]
+                self.signal_gen.build(tsw, tst, theta_h, theta_k)
+                signal, _ = self.signal_gen.get_signal()
+                signal = signal[:, 1:].astype(np.float32)
+                signal_ = np.zeros(signal.shape)
+                signal_[:, 0:3] = signal[:, 3:6]
+                signal_[:, 3:6] = signal[:, 9:12]
+                signal_[:, 6:9] = signal[:, 0:3]
+                signal_[:, 9:12] = signal[:, 6:9]
+                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                mu = np.array([theta_k, theta_k / 5, theta_h])
+                mu = [mu for i in range(4)]
+                mu =  np.concatenate(mu, 0)
+                freq = self.get_ff(signal_[:, 0], 'autocorr')
+                self.data.append(
+                    [signal_, motion, freq, mu]
+                )
+        """
+            Data for straight left
+        """
+        for d in tqdm(delta):
+            for tst, tsw, theta_h, theta_k in zip(
+                self.Tst,
+                self.Tsw,
+                self.theta_h,
+                self.theta_k
+            ):
+                tsw = tsw + d[0]
+                tst = tst + d[1]
+                self.signal_gen.build(tsw, tst, theta_h, theta_k)
+                signal, _ = self.signal_gen.get_signal()
+                signal = signal[:, 1:].astype(np.float32)
+                signal[:, 2] = -signal[:, 2]
+                signal[:, 5] = -signal[:, 5]
+                signal[:, 8] = -signal[:, 8]
+                signal[:, 11] = -signal[:, 11]
+                signal_ = np.zeros(signal.shape)
+                signal_[:, 0:3] = signal[:, 3:6]
+                signal_[:, 3:6] = signal[:, 9:12]
+                signal_[:, 6:9] = signal[:, 0:3]
+                signal_[:, 9:12] = signal[:, 6:9]
+                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+                motion = np.array([-1, 0, 0, v, 0 ,0], dtype = np.float32)
+                mu = np.array([theta_k, theta_k / 5, theta_h])
+                mu = [mu for i in range(4)]
+                mu =  np.concatenate(mu, 0)
+                freq = self.get_ff(signal_[:, 0], 'autocorr')
+                self.data.append(
+                    [signal_, motion, freq, mu]
                 )
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
