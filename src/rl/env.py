@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tf_agents as tfa
 from rl.constants import params
-#from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
+from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
 from tf_agents.trajectories.time_step import TimeStep, time_step_spec
 
 class Env(tfa.environments.tf_environment.TFEnvironment):
