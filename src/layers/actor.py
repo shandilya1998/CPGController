@@ -39,7 +39,7 @@ class MotionStateEncoder(tf.keras.layers.Layer):
 
         omega = self.omega_dense(motion_state)
         mu = self.mu_dense(motion_state)
-        return [omega, mu]
+        return [omega, mu, motion_state]
 
 
 class RobotStateEncoder(tf.keras.layers.Layer):
@@ -64,7 +64,8 @@ class RNNCell(tf.keras.layers.Layer):
         dt,
         units_osc,
         activation_osc_state_dense = 'tanh',
-        activation_robot_state_dense = 'tanh'
+        activation_robot_state_dense = 'tanh',
+        activation_motion_state_dense = 'tanh'
     ):
         super(RNNCell, self).__init__()
         self.dt = dt
@@ -78,7 +79,7 @@ class RNNCell(tf.keras.layers.Layer):
             activation = activation_osc_state_dense
         )
 
-        self.robot_state_dense = ComplexDense(
+        self.state_dense = ComplexDense(
             units = units_osc,
             activation = activation_robot_state_dense
         )
@@ -88,10 +89,10 @@ class RNNCell(tf.keras.layers.Layer):
         self.built = True
 
     def call(self, inputs):
-        z, robot_state = inputs
+        z, state = inputs
         z = self.osc_state_dense(z)
-        robot_state = self.robot_state_dense(robot_state)
-        out = tf.math.add(z, robot_state)
+        state = self.state_dense(state)
+        out = tf.math.add(z, state)
         return out, out
 
 
@@ -151,21 +152,30 @@ class ComplexMLP(tf.keras.layers.Layer):
             units_osc = units_osc
         )
 
+        self.combine_dense = ComplexDense(
+            units = units_osc,
+            activation = activation_combine
+        )
+
     def build(self, input_shapes):
-        self.z_shape, self.omega_shape, self.robot_state_shape = input_shapes
+        self.z_shape, self.omega_shape, self.robot_state_shape, \
+            self.motion_state_shape = input_shapes
         self.osc.build([self.z_shape, self.omega_shape])
         self.rnn_cell.build([self.z_shape, self.robot_state_shape])
         self.built = True
 
     def call(self, inputs):
-        z, omega, robot_state = inputs
-        zeros = robot_state - robot_state
-        robot_state = tf.concat([robot_state, zeros], -1)
-
+        z, omega, robot_state, motion_state = inputs
+        state = tf.concat([robot_state, motion_state], -1)
+        zeros1 = robot_state - robot_state
+        zeros2 = motion_state - motion_state
+        zeros = tf.concat([zeros1, zeros2], -1)
+        state = tf.concat([state, zeros], -1)
+        state = self.combine_dense(state)
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
         step = tf.constant(0)
         z_out = self.osc([z, omega])
-        o, robot_state = self.rnn_cell([z_out, robot_state])
+        o, robot_state = self.rnn_cell([z_out, state])
         o = self.output_mlp(o)
         out = out.write(
             step,
@@ -173,7 +183,7 @@ class ComplexMLP(tf.keras.layers.Layer):
         )
         step = tf.math.add(step, tf.constant(1))
 
-        def cond(out, step, z, robot_state):
+        def cond(out, step, z, state):
             return tf.math.less(
                 step,
                 tf.constant(
@@ -182,14 +192,14 @@ class ComplexMLP(tf.keras.layers.Layer):
                 )
             )
 
-        def body(out, step, z, robot_state):
+        def body(out, step, z, state):
             inputs = [
                 z,
                 omega,
             ]
 
             z = self.osc(inputs)
-            o, robot_state = self.rnn_cell([z, robot_state])
+            o, robot_state = self.rnn_cell([z, state])
             o = self.output_mlp(z)
 
             out = out.write(
@@ -200,7 +210,7 @@ class ComplexMLP(tf.keras.layers.Layer):
             step = tf.math.add(step, tf.constant(1))
             return out, step, z, robot_state
 
-        out, step, _, _ = tf.while_loop(cond, body,[out,step,z_out,robot_state])
+        out, step, _, _ = tf.while_loop(cond, body,[out,step,z_out,state])
 
         out = out.stack()
         out = swap_batch_timestep(out)

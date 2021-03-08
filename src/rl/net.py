@@ -54,9 +54,11 @@ class ActorNetwork(object):
         ]
 
         motion_encoder, robot_encoder = actor.get_encoders(params)
-        [omega, mu] = motion_encoder(S[0])
+        [omega, mu, motion_state] = motion_encoder(S[0])
         robot_state = robot_encoder(S[1])
-        [action, z_out] =actor.get_complex_mlp(params)([S[2],omega,robot_state])
+        [action, z_out] = actor.get_complex_mlp(params)(
+            [S[2], omega, robot_state, motion_state]
+        )
         outputs = [[action, z_out], [omega, mu]]
         model = tf.keras.Model(inputs = S, outputs = outputs)
         return model, model.trainable_weights, model.inputs
