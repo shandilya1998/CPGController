@@ -1,0 +1,134 @@
+\documentclass[DD,synopsis]{iitmdiss}
+\usepackage{times}
+\usepackage{t1enc}
+
+%\usepackage[dvips]{graphicx}
+\usepackage{hyperref} % hyperlinks for references.
+\usepackage{amsmath} % easier math formulae, align, subequations \ldots
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\graphicspath{{./graphics/}}
+\usepackage{subcaption}
+\include{macrosv1}
+\title{Kinematic Analysis of a Class of Spatial Parallel Manipulators}
+
+\author{Shivani Guptasarma}
+
+\date{MAY 2019}
+\department{ENGINEERING DESIGN}
+
+
+\begin{document}
+
+%\nocite{*}
+\maketitle
+
+
+
+% The main text will follow from this point so set the page numbering
+% to arabic from here on.
+\pagenumbering{arabic}
+\setcounter{page}{0}
+%\newpage
+\section{Introduction}
+Parallel manipulators are indispensable in robotic applications requiring high levels of precision, such as surgery and micromachining, and in those demanding high payload capacities, such as rehabilitation and simulator-based training. However, the \emph{forward kinematic} (FK) analysis of these manipulators, i.e., the computation of the position and orientation of an end-effector or moving platform, given a set of actuator inputs, is more involved than that of serial manipulators. Furthermore, such manipulators may encounter \emph{singular} configurations at which one or more of the components is able to move instantaneously (or finitely), even if the actuators are held stationary. Such configurations are referred to as \emph{gain-type singularities}, as they permit an instantaneous (or finite) gain in the \emph{\dof}. This report documents studies on the kinematics of a class of spatial parallel manipulators, all of which can be modelled as equivalent to the~\rps manipulator~\cite{hunt1993} (see Fig.~\ref{fg:rpssplit}) for the purpose of their FK analyses.
+%The FK analyses of a class of parallel manipulators can be posed as follows. Three circles, of arbitrary radii, are located and oriented arbitrarily in space. A rigid body moves such that of three points lying on it, each is constrained to lie on one of these circles at any point in time. The positions of the three points, or equivalently, the orientation of the platform and the position of any point on it, are to be computed. %It is known (conjectured in~\cite{hunt1993, hunt1978} and proven in~\cite{merlet1992}) that there are~$16$ distinct solutions to this problem in general. \\
+%The~\rps parallel manipulator, proposed in~\cite{hunt1978}, % is a popular three \dofs parallel manipulator which forms the primary concern of the studies cited above. It is clear that given the lengths of the prismatically-actuated legs, the problem of locating the moving platform reduces to that described above. This problem 
+%is one such manipulator that has been studied extensively in the literature (see, e.g.,~\cite{schadlbauer2014, tk2017a}). However, as acknowledged in~\cite{merletbook}, there are several other manipulators posing an equivalent FK problem. New methods for their analyses continue to be implemented individually for each of these~(\cite{kong2018, pavanddp}).
+\section{Objectives}
+The objectives of this project are as follows:
+\begin{itemize} 
+	\item to unify the description of all manipulators belonging to the ``\rps-equivalent" class of parallel manipulators described above, 
+	\item to generalise the FK analysis used in~\cite{tk2017a} such that it is applicable to any member of this class, and 
+	\item to study the kinematic properties relating to the existence of multiple \emph{modes of operation} in certain members of this class.
+\end{itemize}
+\section{Methodology}
+The first objective above is achieved through a survey of the literature and an attempt to pose the FK problems of various manipulators in the above-described form. A general parametrisation is developed for manipulators belonging to this category by considering a~\rps manipulator with arbitrary architecture parameters (shown in Fig.~\ref{fg:rpssplit}). The FK problem is solved through the geometric method proposed in~\cite{tk2017a}. The location of one of the vertices of the platform is found as the intersection of its locii derived from two open kinematic \emph{sub-chains}, as depicted in Fig.~\ref{fg:rpssplit}. This problem reduces to an intersection of a circle and a $16$-degree plane curve~\mbox{$\mathcal{C}(x, z) = 0$} in the~\mbox{$y = 0$} plane. The coefficients of~$x$ and~$z$ in~$\mathcal{C}$ are derived as \emph{closed-form} expressions. Additionally, a univariate polynomial involving one of the passive joint angles is derived following the procedure used in~\cite{srivatsan2014}, the coefficients of which are found as closed-form symbolic expressions. Symbolic computations are performed with the Computer Algebra System (CAS) \verb|Mathematica|, using the \emph{monomial-based canonical} form for polynomials defined in~\cite{sbagmmt06}, techniques such as the temporary substitution of dummy variables, and simplification at each stage using the built-in command \verb|Simplify|.\\
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=1\textwidth]{rpssplit.png}
+	\caption{The~\rps manipulator and its decomposition into two kinematic sub-chains.}
+	\label{fg:rpssplit}
+\end{figure}
+Modes of operation are studied based on the factorisation of these polynomials, following~\cite{tk2017a}. To study the properties of motion in various modes, information regarding the configuration of the moving platform, derived in~\cite{schadlbauer2014}, is used along with a quaternion-based representation of the platform orientation. The singularities lying at the intersection of the operation modes of the~\rps manipulator are investigated in detail, and the gain of a \dof at these configurations is interpreted. The gain of \dofs at singularities is also studied in a different context, using the Lagrangian formulation of the dynamics of constrained systems, and the principles of linear algebra are used to characterise a matrix appearing in the formulation.
+\section{Results obtained}
+In addition to the many $3$-\dof analogues and $6$-\dof variants of the~\rps manipulator, it is found that some decoupled wrists and certain variants of the Stewart platform manipulator (SPM) fall within the~\rps-equivalent class. The FK analysis for a general architecture is validated using a numerical example from the literature pertaining to the~$6$-$3$~SPM. Some architectural conditions are identified as potential candidates for the existence of more than one operation mode. It is shown that when the vertices of the platform are constrained to three planes intersecting at a line (the vertical line shown in Fig.~\ref{fg:yaw}), the moving platform is able to have angular (yaw) motion about that line, which is non-intuitive. A two-parameter set of poses is identified, attaining which is a necessary and sufficient condition for \emph{each} of the following:
+\begin{enumerate}
+	\item yaw motion unaccompanied by roll and pitch motion
+	\item boundary of the translational workspace		
+	\item intersection of both the operation modes\cite{schadlbauer2014}
+	\item constraint singularity~\cite{zlatanov2002b}
+\end{enumerate}
+It is observed that kinematic singularities influence the dynamic formulation through a projection matrix~\bB. It is shown that 
+\begin{align}
+\rank{\bB}+\rank{\jetaq}=m+n,
+\end{align}
+where~\jetaq is the \emph{configuration Jacobian} matrix,~$m$ is the number of constraints and~$n$ the \dof. Therefore,~$\rank{\bB}$ increases at a \emph{configuration-space} singularity, which represents a gain in the~\dof. It is also shown that at certain conditions, at a gain-type singularity, only a particular submatrix of~\bB loses rank. 
+\begin{figure}[b]
+	\centering
+	%	\begin{subfigure}{0.5\textwidth}
+	%		\centering
+	%		\includegraphics[width=0.9\textwidth]{yaw1.pdf}
+	%		\caption{.}
+	%		\label{fg:rps0}
+	%	\end{subfigure}
+	%	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.4\textwidth]{yaw5.pdf}
+	\caption{A configuration of the~\rps manipulator at which yaw motion is permitted.}
+	\label{fg:yaw}
+	%	\end{subfigure}
+	%	\caption{.}
+\end{figure}
+\section{Analysis}
+The feasibility of yaw motion at the constraint singularities is interpreted in terms of the degeneracy of the system of \emph{constraint wrenches}, described in~\cite{zlatanov2002b}. In a similar manner, the gain of a \dof which corresponds to an increase in the rank of~\bB is due to a degeneracy in the generalised constraint forces.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography.
+
+\begin{singlespace}
+	\bibliography{rpsbib, sandipan}
+\end{singlespace}
+
+%\begin{singlespace}
+%\begin{thebibliography}{10}
+%\addcontentsline{toc}{section}{Bibliography}
+%
+%%\bibitem{paper1}
+%%Author 1 and Author 2
+%%\newblock {\em Paper title}.
+%%\newblock Journal\ \ {\bf Volume}, Page\ \ (Year).
+%\end{thebibliography}
+%
+%\end{singlespace}
+
+
+
+%%%%%%
+
+%\section{Proposed Contents of the Thesis}
+%The outline of the thesis is as follows:
+%\begin{enumerate}
+%\item Chapter 1 title
+%\item Chapter 2 title
+%\item ...
+%\end{enumerate}
+
+%
+%%\vskip 4cm
+%%%%%%%
+%\section{Publications}
+%\subsection{Papers in Refereed Journals}
+%\begin{enumerate}
+%\item Title \\
+%	{\bf Author 1}, Author 2...\\
+%	{\it Journal title.}, {\bf Volume}, Page (Year)
+%\end{enumerate}
+%
+%\subsection{Presentations in Conferences}
+%\begin{enumerate}
+%\item  Presented titled  {\em Title} at the {\bf Conference on...}  place, date..
+%\end{enumerate}
+%
+
+\end{document}
+
