@@ -653,6 +653,6 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params, True)
-    experiment = 10
+    experiment = 12
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
