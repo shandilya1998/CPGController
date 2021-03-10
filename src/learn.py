@@ -71,7 +71,7 @@ class SignalDataGen:
                 signal, _ = self.signal_gen.get_signal()
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([0, 1, 0, 0, v ,0], dtype = np.float32)
+                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
                 mu = np.array([theta_k, theta_k / 5, theta_h])
                 mu = [mu for i in range(4)]
                 mu =  np.concatenate(mu, 0)
@@ -135,10 +135,9 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.1,
-            decay_steps=20,
-            decay_rate=0.75,
-            staircase=True
+            0.01,
+            decay_steps=50,
+            decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
@@ -364,6 +363,9 @@ class Learner():
         avg_loss = 0.0
         prev_loss = 1e10
         history_loss = []
+        history_loss_action = []
+        history_loss_mu = []
+        history_loss_omega = []
         """
         dataset = tf.data.Dataset.from_generator(
             self._dataset,
@@ -379,6 +381,9 @@ class Learner():
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
+            total_loss_action = 0.0
+            total_loss_mu = 0.0
+            total_loss_omega = 0.0
             start = time.time()
             for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_mu] = \
@@ -390,10 +395,16 @@ class Learner():
                     loss = loss
                 ))
                 total_loss += loss
+                total_loss_action += loss_action
+                total_loss_mu += loss_mu
+                total_loss_omega += loss_omega
                 if step >= 25:
                     break
             end = time.time()
             avg_loss = total_loss / (self.num_batches)
+            avg_loss_action = total_loss_action / (self.num_batches)
+            avg_loss_mu = total_loss_mu / (self.num_batches)
+            avg_loss_omega = total_loss_omega / (self.num_batches)
             print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
@@ -405,6 +416,9 @@ class Learner():
             print('[Actor] Epoch Time: {time}s'.format(time = end - start))
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
+            history_loss_action.append(avg_loss_action)
+            history_loss_mu.append(avg_loss_mu)
+            history_loss_omega.append(avg_loss_omega)
             if episode % 5 == 0:
                 if prev_loss < avg_loss:
                     break
@@ -425,6 +439,27 @@ class Learner():
             ex = experiment
         )), 'wb')
         pickle.dump(history_loss, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(checkpoint_dir, 'loss_action_{ex}_{name}.pickle'.format(
+            name = name,
+            ex = experiment
+        )), 'wb')
+        pickle.dump(history_loss_action, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(checkpoint_dir, 'loss_mu_{ex}_{name}.pickle'.format(
+            name = name,
+            ex = experiment
+        )), 'wb')
+        pickle.dump(history_loss_mu, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(checkpoint_dir, 'loss_omega_{ex}_{name}.pickle'.format(
+            name = name,
+            ex = experiment
+        )), 'wb')
+        pickle.dump(history_loss_omega, pkl)
         pkl.close()
 
     def _pretrain_encoder(self, x, y):
@@ -461,8 +496,7 @@ class Learner():
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
             decay_steps=50,
-            decay_rate=0.95,
-            staircase=True
+            decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
