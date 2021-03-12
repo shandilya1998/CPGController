@@ -13,6 +13,7 @@ import pickle
 import os
 from frequency_analysis import frequency_estimator
 import time
+import numpy as np
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -138,7 +139,7 @@ class Learner():
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
-            decay_steps=60,
+            decay_steps=70,
             decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
@@ -378,6 +379,11 @@ class Learner():
         )
         """
         dataset = self.load_dataset()
+        path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
+        if not os.path.exists(path):
+            os.mkdir(path)
+            path = os.path.join(path, name)
+            os.mkdir(path)
         print('[Actor] Dataset {ds}'.format(ds = dataset))
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
@@ -422,47 +428,53 @@ class Learner():
             history_loss_mu.append(avg_loss_mu)
             history_loss_omega.append(avg_loss_omega)
             if episode % 5 == 0:
+                if avg_loss == np.nan:
+                    break
+                pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_action_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_action, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_mu, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_omega, pkl)
+                pkl.close()
                 if prev_loss < avg_loss:
                     break
                 else:
                     self.actor.model.save_weights(
                         os.path.join(
-                            checkpoint_dir,
+                            path,
                             'actor_pretrained_{name}_{ex}_{ep}.ckpt'.format(
+                                ep = episode,
+                                ex = experiment,
                                 name = name,
-                                ep=episode,
-                                ex = experiment
                             )
                         )
                     )
                 prev_loss = avg_loss
-        pkl = open(os.path.join(checkpoint_dir, 'loss_{ex}_{name}.pickle'.format(
-            name = name,
-            ex = experiment
-        )), 'wb')
-        pickle.dump(history_loss, pkl)
-        pkl.close()
-
-        pkl = open(os.path.join(checkpoint_dir, 'loss_action_{ex}_{name}.pickle'.format(
-            name = name,
-            ex = experiment
-        )), 'wb')
-        pickle.dump(history_loss_action, pkl)
-        pkl.close()
-
-        pkl = open(os.path.join(checkpoint_dir, 'loss_mu_{ex}_{name}.pickle'.format(
-            name = name,
-            ex = experiment
-        )), 'wb')
-        pickle.dump(history_loss_mu, pkl)
-        pkl.close()
-
-        pkl = open(os.path.join(checkpoint_dir, 'loss_omega_{ex}_{name}.pickle'.format(
-            name = name,
-            ex = experiment
-        )), 'wb')
-        pickle.dump(history_loss_omega, pkl)
-        pkl.close()
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
@@ -497,7 +509,7 @@ class Learner():
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
-            decay_steps=60,
+            decay_steps=70,
             decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
@@ -654,7 +666,7 @@ class Learner():
             print('\n')
 
 if __name__ == '__main__':
-    learner = Learner(params, True)
-    experiment = 12
+    learner = Learner(params, False)
+    experiment = 13
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
