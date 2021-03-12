@@ -13,6 +13,7 @@ import pickle
 import os
 from frequency_analysis import frequency_estimator
 import time
+import numpy as np
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -71,103 +72,13 @@ class SignalDataGen:
                 signal, _ = self.signal_gen.get_signal()
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([0, 1, 0, 0, v ,0], dtype = np.float32)
+                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
                 mu = np.array([theta_k, theta_k / 5, theta_h])
                 mu = [mu for i in range(4)]
                 mu =  np.concatenate(mu, 0)
                 freq = self.get_ff(signal[:, 0], 'autocorr')
                 self.data.append(
                     [signal, motion, freq, mu]
-                )
-        """
-            Data for straight back
-        """
-        for d in tqdm(delta):
-            for tst, tsw, theta_h, theta_k in zip(
-                self.Tst,
-                self.Tsw,
-                self.theta_h,
-                self.theta_k
-            ):  
-                tsw = tsw + d[0]
-                tst = tst + d[1]
-                self.signal_gen.build(tsw, tst, theta_h, theta_k)
-                signal, _ = self.signal_gen.get_signal()
-                signal = signal[:, 1:].astype(np.float32)
-                signal[:, 2] = -signal[:, 2]
-                signal[:, 5] = -signal[:, 5]
-                signal[:, 8] = -signal[:, 8]
-                signal[:, 11] = -signal[:, 11]
-                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([0, -1, 0, 0, v ,0], dtype = np.float32)
-                mu = np.array([theta_k, theta_k / 5, theta_h])
-                mu = [mu for i in range(4)]
-                mu =  np.concatenate(mu, 0)
-                freq = self.get_ff(signal[:, 0], 'autocorr')
-                self.data.append(
-                    [signal, motion, freq, mu] 
-                )
-        """
-            Data for straight right
-        """
-        for d in tqdm(delta):
-            for tst, tsw, theta_h, theta_k in zip(
-                self.Tst,
-                self.Tsw,
-                self.theta_h,
-                self.theta_k
-            ):
-                tsw = tsw + d[0]
-                tst = tst + d[1]
-                self.signal_gen.build(tsw, tst, theta_h, theta_k)
-                signal, _ = self.signal_gen.get_signal()
-                signal = signal[:, 1:].astype(np.float32)
-                signal_ = np.zeros(signal.shape)
-                signal_[:, 0:3] = signal[:, 3:6]
-                signal_[:, 3:6] = signal[:, 9:12]
-                signal_[:, 6:9] = signal[:, 0:3]
-                signal_[:, 9:12] = signal[:, 6:9]
-                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
-                mu = np.array([theta_k, theta_k / 5, theta_h])
-                mu = [mu for i in range(4)]
-                mu =  np.concatenate(mu, 0)
-                freq = self.get_ff(signal_[:, 0], 'autocorr')
-                self.data.append(
-                    [signal_, motion, freq, mu]
-                )
-        """
-            Data for straight left
-        """
-        for d in tqdm(delta):
-            for tst, tsw, theta_h, theta_k in zip(
-                self.Tst,
-                self.Tsw,
-                self.theta_h,
-                self.theta_k
-            ):
-                tsw = tsw + d[0]
-                tst = tst + d[1]
-                self.signal_gen.build(tsw, tst, theta_h, theta_k)
-                signal, _ = self.signal_gen.get_signal()
-                signal = signal[:, 1:].astype(np.float32)
-                signal[:, 2] = -signal[:, 2]
-                signal[:, 5] = -signal[:, 5]
-                signal[:, 8] = -signal[:, 8]
-                signal[:, 11] = -signal[:, 11]
-                signal_ = np.zeros(signal.shape)
-                signal_[:, 0:3] = signal[:, 3:6]
-                signal_[:, 3:6] = signal[:, 9:12]
-                signal_[:, 6:9] = signal[:, 0:3]
-                signal_[:, 9:12] = signal[:, 6:9]
-                v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([-1, 0, 0, v, 0 ,0], dtype = np.float32)
-                mu = np.array([theta_k, theta_k / 5, theta_h])
-                mu = [mu for i in range(4)]
-                mu =  np.concatenate(mu, 0)
-                freq = self.get_ff(signal_[:, 0], 'autocorr')
-                self.data.append(
-                    [signal_, motion, freq, mu]
                 )
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
@@ -227,10 +138,9 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.1,
-            decay_steps=20,
-            decay_rate=0.75,
-            staircase=True
+            0.01,
+            decay_steps=70,
+            decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
@@ -456,6 +366,9 @@ class Learner():
         avg_loss = 0.0
         prev_loss = 1e10
         history_loss = []
+        history_loss_action = []
+        history_loss_mu = []
+        history_loss_omega = []
         """
         dataset = tf.data.Dataset.from_generator(
             self._dataset,
@@ -466,11 +379,19 @@ class Learner():
         )
         """
         dataset = self.load_dataset()
+        path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
+        if not os.path.exists(path):
+            os.mkdir(path)
+            path = os.path.join(path, name)
+            os.mkdir(path)
         print('[Actor] Dataset {ds}'.format(ds = dataset))
         print('[Actor] Starting Actor Pretraining')
         for episode in range(self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
+            total_loss_action = 0.0
+            total_loss_mu = 0.0
+            total_loss_omega = 0.0
             start = time.time()
             for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_mu] = \
@@ -482,10 +403,16 @@ class Learner():
                     loss = loss
                 ))
                 total_loss += loss
+                total_loss_action += loss_action
+                total_loss_mu += loss_mu
+                total_loss_omega += loss_omega
                 if step >= 25:
                     break
             end = time.time()
             avg_loss = total_loss / (self.num_batches)
+            avg_loss_action = total_loss_action / (self.num_batches)
+            avg_loss_mu = total_loss_mu / (self.num_batches)
+            avg_loss_omega = total_loss_omega / (self.num_batches)
             print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
@@ -497,27 +424,57 @@ class Learner():
             print('[Actor] Epoch Time: {time}s'.format(time = end - start))
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
+            history_loss_action.append(avg_loss_action)
+            history_loss_mu.append(avg_loss_mu)
+            history_loss_omega.append(avg_loss_omega)
             if episode % 5 == 0:
+                if avg_loss == np.nan:
+                    break
+                pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_action_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_action, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_mu, pkl)
+                pkl.close()
+
+                pkl = open(os.path.join(path, 'loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_omega, pkl)
+                pkl.close()
                 if prev_loss < avg_loss:
                     break
                 else:
                     self.actor.model.save_weights(
                         os.path.join(
-                            checkpoint_dir,
+                            path,
                             'actor_pretrained_{name}_{ex}_{ep}.ckpt'.format(
+                                ep = episode,
+                                ex = experiment,
                                 name = name,
-                                ep=episode,
-                                ex = experiment
                             )
                         )
                     )
                 prev_loss = avg_loss
-        pkl = open(os.path.join(checkpoint_dir, 'loss_{ex}_{name}.pickle'.format(
-            name = name,
-            ex = experiment
-        )), 'wb')
-        pickle.dump(history_loss, pkl)
-        pkl.close()
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
@@ -552,9 +509,8 @@ class Learner():
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
-            decay_steps=50,
-            decay_rate=0.95,
-            staircase=True
+            decay_steps=70,
+            decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
@@ -710,7 +666,7 @@ class Learner():
             print('\n')
 
 if __name__ == '__main__':
-    learner = Learner(params, True)
-    experiment = 10
+    learner = Learner(params, False)
+    experiment = 13
     learner.pretrain_actor(experiment)
     learner.learn('rl/out_dir/models')
