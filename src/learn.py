@@ -382,7 +382,8 @@ class Learner():
         path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
         if not os.path.exists(path):
             os.mkdir(path)
-            path = os.path.join(path, name)
+        path = os.path.join(path, name)
+        if not os.path.exists(path):
             os.mkdir(path)
         print('[Actor] Dataset {ds}'.format(ds = dataset))
         print('[Actor] Starting Actor Pretraining')
