@@ -302,6 +302,7 @@ class AllLegs:
             contacts.append(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
+        print([contact['leg_name'] for contact in contacts])
         if len(contacts) == 1:
             self.w = 0.5
             return [contacts[0], contacts[0]]
@@ -546,7 +547,10 @@ class Quadruped:
 
         self._reset()
         rospy.sleep(2.0)
+        current_pose = self.kinematics.get_current_end_effector_fk()
         self.A, self.B = self.all_legs.get_AB()
+        self.A = self.get_contact_ob(self.A['leg_name'], current_pose)
+        self.B = self.get_contact_ob(self.B['leg_name'], current_pose)
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
         self.last_joint = np.zeros((self.params['action_dim']))
@@ -850,21 +854,56 @@ class Quadruped:
             self.osc_state,
         ], self.reward
 
+    def get_contact_ob(self, leg_name, pose):
+        m = {
+            0 : 'x',
+            1 : 'y',
+            2 : 'z'
+        }
+        return {
+            'position' : np.array(
+                [
+                    pose[A_name]['position'][m[i]] for i in range(3)
+                ], dtype = np.float32
+            ),
+            'flag' : True,
+            'leg_name' : leg_name
+        }
+
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
         if AB:
+            print('[DDPG] Here')
             self.upright = True
             self._counter_1 += 1
-            if self.A['leg_name'] != AB[0]['leg_name']:
-                self.AF.update(self.A)
+            current_pose = self.kinematics.get_current_end_effector_fk()
+            A_lst =[leg['leg_name'] for leg in AB if 'front' in leg['leg_name']]
+            B_lst =[leg['leg_name'] for leg in AB if 'back' in leg['leg_name']]
+            if not A_lst and len(B_lst) == 2:
+                A_lst = [B_lst[0]]
+                B_lst = [B_lst[1]]
+            elif not B_lst and len(A_lst) == 2:
+                B_lst = [A_lst[1]]
+                A_lst = [A_lst[0]]
+            if self.A['leg_name'] != A_lst[0]['leg_name']:
+                self.AF = {
+                    'leg_name' : self.A['leg_name'],
+                    'flag' : True,
+                    'position' : self.A['position']
+                }
                 self.counter_1 = self._counter_1
                 self_counter_1 = 0
-            if self.B['leg_name'] != AB[1]['leg_name']:
-                self.BF.update(self.B)
+            if self.B['leg_name'] != B_lst[0]['leg_name']:
+                self.BF = {
+                    'leg_name' : self.B['leg_name']
+                    'flag' : True,
+                    'position' : self.B['position']
+                }
                 self.counter_1 = self._counter_1
                 self_counter_1 = 0
-            self.A.update(AB[0])
-            self.B.update(AB[1])
+
+            self.A = self.get_contact_ob(A_lst[0], current_pose)
+            self.B = self.get_contact_ob(B_lst[0], current_pose)
             A_name = self.A['leg_name']
             B_name = self.B['leg_name']
             _A_name = None
@@ -877,9 +916,6 @@ class Quadruped:
                 _B_name = self.leg_name_lst[3]
             else:
                 _B_name = self.leg_name_lst[2]
-            current_pose = self.kinematics.get_current_end_effector_fk()
-            pose = current_pose
-            t = 0
             pose = self.kinematics.get_end_effector_fk(
                 action[self.params['rnn_steps'] - 1].tolist()
             )
@@ -900,32 +936,20 @@ class Quadruped:
             }
             self.Tb = (self.counter_1 + self.params['rnn_steps']) * self.dt / 2
             self.AL.update({
-                'torque' : None,
-                'force' : None,
                 'position' : np.array(
                     [
-                        self.A['position'][i] + \
-                            pose[A_name]['position'][m[i]] - \
-                            current_pose[A_name]['position'][m[i]] \
-                            for i in range(3)
+                        pose[A_name]['position'][m[i]] for i in range(3)
                     ], dtype = np.float32
                 ),
-                'normal' : self.A['normal'],
                 'flag' : True,
                 'leg_name' : A_name
             })
             self.BL.update({
-                'torque' : None,
-                'force' : None,
                 'position' : np.array(
                     [
-                        self.B['position'][i] + \
-                            pose[B_name]['position'][m[i]] - \
-                            current_pose[B_name]['position'][m[i]] \
-                            for i in range(3)
+                        pose[B_name]['position'][m[i]] for i in range(3)
                     ], dtype = np.float32
                 ),
-                'normal' : self.B['normal'],
                 'flag' : True,
                 'leg_name' : B_name
             })
@@ -947,7 +971,7 @@ class Quadruped:
             print('[DDPG] No Support Line found')
             self.upright = False
 
-    def set_reward(self, action):
+    def _set_reward(self, action):
         """
             Need to complete A, B, AF, BF, AL and BL computation
         """
@@ -1002,55 +1026,6 @@ class Quadruped:
         else:
             self.reward = -100
 
-    def _set_observation(self, action, desired_motion):
-        self.action = action[0]
-        self.osc_state = action[1]
-        self.all_legs.move(self.action.tolist())
-        #rospy.sleep(15.0/60.0)
-        rospy.wait_for_service('/gazebo/get_model_state')
-        model_state = self.get_model_state_proxy(self.get_model_state_req)
-        self.pos = np.array([
-            model_state.pose.position.x,
-            model_state.pose.position.y,
-            model_state.pose.position.z
-        ], dtype = np.float32)
-        self.history_pos = np.concatenate([
-            self.history_pos[1:],
-            np.expand_dims(self.pos, 0)
-        ])
-        self.v_real = np.array([
-            model_state.twist.linear.x,
-            model_state.twist.linear.y,
-            model_state.twist.linear.z
-        ], dtype = np.float32)
-        self.history_vel = np.concatenate([
-            self.history_vel[1:],
-            np.expand_dims(self.v_real, 0)
-        ])
-        self.history_desired_motion = np.concatenate([
-            self.history_desired_motion[1:],
-            np.expand_dims(desired_motion, 0)
-        ])
-        self.v_exp =  desired_motion[3:6]
-
-        diff_joint = self.joint_position - self.last_joint
-
-        self.robot_state = np.concatenate([
-            self.joint_position,
-            diff_joint,
-            self.orientation,
-            self.angular_vel,
-            self.linear_acc
-        ]).reshape(self.robot_state_shape)
-
-        self.motion_state = np.concatenate(
-            [
-                self.pos,
-                desired_motion
-            ],
-            0
-        )
-
     def set_observation(self, action, desired_motion):
         self.action, self.osc_state = action
         self.action = self.action[0][0]
@@ -1069,15 +1044,68 @@ class Quadruped:
 
         self.motion_state = desired_motion
 
+        rospy.wait_for_service('/gazebo/get_model_state')
+        model_state = self.get_model_state_proxy(self.get_model_state_req)
+        self.pos = np.array([
+            model_state.pose.position.x,
+            model_state.pose.position.y,
+            model_state.pose.position.z
+        ], dtype = np.float32)
+
+        self.joint_torque = self.all_legs.get_all_torques()
+        self.v_real = np.array([
+            model_state.twist.linear.x,
+            model_state.twist.linear.y,
+            model_state.twist.linear.z
+        ], dtype = np.float32)
+        self.v_exp =  desired_motion[3:6]
+
+    def set_history(self, desired_motion):
+        self.history = np.concatenate(
+            [self.history[1:], np.expand_dims(self.action, 0)], 0
+        )
+        self.history_pos = np.concatenate(
+            [
+                self.history_pos[1:, :],
+                np.expand_dims(self.pos, 0)
+            ], 0
+        )
+        self.history_joint_torque = np.concatenate(
+            [
+                self.history_joint_torque[1:, :],
+                np.expand_dims(self.joint_torque, 0)
+            ]
+        )
+        self.history_joint_vel = np.concatenate(
+            [
+                self.history_joint_vel[1:],
+                np.expand_dims(self.joint_velocity,0)
+            ],
+            0
+        )
+        self.history_desired_motion = np.concatenate([
+            self.history_desired_motion[1:],
+            np.expand_dims(desired_motion, 0)
+        ])
+        self.history_vel = np.concatenate([
+            self.history_vel[1:],
+            np.expand_dims(self.v_real, 0)
+        ])
+
+    def set_reward(self, action):
+        self.set_support_lines(action)
+
     def step(self, action, desired_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
             ) for a in action
         ]
-        print(action[0].shape)
-        print(action[1].shape)
+        print('[DDPG] Set Observation')
         self.set_observation(action, desired_motion)
+        print('[DDPG] Set history')
+        self.set_history(desired_motion)
+        self.set_reward(action[0][0])
         return [
             self.motion_state,
             self.robot_state,
