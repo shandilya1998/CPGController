@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tf_agents as tfa
 from rl.constants import params
-#from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
+from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
 from tf_agents.trajectories.time_step import TimeStep, time_step_spec
 
 class Env(tfa.environments.tf_environment.TFEnvironment):
@@ -63,6 +63,12 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
 
     def step(self, action, desired_motion, last_step = False):
         return self._step(action, desired_motion, last_step)
+
+    def set_initial_motion_state(self, desired_motion):
+        self.quadruped.set_initial_motion_state(desired_motion)
+
+    def set_initial_osc_state(self, osc_state):
+        self.quadruped.set_osc_state = osc_state
 
     def _step(self, action, desired_motion, last_step = False):
         observation, reward = self.quadruped.step(action, desired_motion)
