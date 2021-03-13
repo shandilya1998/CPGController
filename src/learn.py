@@ -1,5 +1,5 @@
 from rl.constants import params
-#import rospy
+import rospy
 from rl.net import ActorNetwork, CriticNetwork
 from rl.env import Env
 from rl.replay_buffer import ReplayBuffer, OU
@@ -107,7 +107,6 @@ class Learner():
             observation_spec = self.params['observation_spec'],
             reward_spec = self.params['reward_spec']
         )
-        """
         self.env = Env(
             self.time_step_spec,
             self.params,
@@ -121,12 +120,13 @@ class Learner():
             ), 0) for spec in self.env.action_spec()
         ]
         self._noise = self._noise_init
-        """
         self.OU = OU()
         self.desired_motion = np.zeros((
-            self.params['max_steps'], 6
+            self.params['max_steps'] + 1, 6
         ), dtype = np.float32)
-        self.desired_motion[:, 3] = 0.05
+        self.f_init  = 0.06 * 2 * np.pi/ (2 * (0.1+0.015) * 2.2 * 45)
+        self.desired_motion[:, 0] = 1
+        self.desired_motion[:, 3] = 0.06
         self.signal_gen = SignalDataGen(params, create_data)
         self.pretrain_osc_mu = np.ones((
             1,
@@ -145,13 +145,11 @@ class Learner():
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
         )
-        """
         self._state = [
             self.env.quadruped.motion_state,
             self.env.quadruped.robot_state,
             self.env.quadruped.osc_state
         ]
-        """
         self._action = None
         physical_devices = tf.config.list_physical_devices('GPU')
         print('[Actor] GPU>>>>>>>>>>>>')
@@ -522,7 +520,7 @@ class Learner():
         )
 
     def load_actor(self, path):
-        self.actor.model.load(path)
+        self.actor.model.load_weights(path)
 
     def learn(self, model_dir, identifier=''):
         i = 0
@@ -533,8 +531,21 @@ class Learner():
                         spec.dtype
                     ), 0) for spec in self.env.action_spec()
                 ]
+
+        motion_state, robot_state, osc_state = \
+            self.env.quadruped.get_state_tensor()
+
+        osc = self._hopf_oscillator(
+            self.f_init,
+            np.ones((self.params['units_osc'],)),
+            np.zeros((self.params['units_osc'],)),
+            osc_state[0]
+        )
+
         print('[DDPG] Training Start')
         while i < self.params['train_episode_count']:
+            self.env.set_initial_motion_state(self.desired_motion[0])
+            self.env.set_initial_osc_state(osc)
             self.current_time_step = self.env.reset()
             print('[DDPG] Starting Episode {i}'.format(i = i), end = '')
             self._state = self.current_time_step.observation
@@ -556,7 +567,7 @@ class Learner():
                 self._action[1] = action_original[1] + self._noise[1]
                 self.current_time_step = self.env.step(
                     self._action,
-                    self.desired_motion[j]
+                    self.desired_motion[j + 1]
                 )
                 experience = [
                     self._state,
@@ -603,7 +614,7 @@ class Learner():
                 rewards = tf.concat(rewards, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
 
-                actions, [o, m, b] = self.actor.target_model(next_states)
+                actions, [o, m] = self.actor.target_model(next_states)
                 inputs = next_states + actions
                 target_q_values = self.critic.target_model(inputs)
 
@@ -669,5 +680,8 @@ class Learner():
 if __name__ == '__main__':
     learner = Learner(params, False)
     experiment = 13
-    learner.pretrain_actor(experiment)
+    #learner.pretrain_actor(experiment)
+    learner.load_actor(
+        'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
+    )
     learner.learn('rl/out_dir/models')

@@ -391,6 +391,7 @@ class Quadruped:
             shape = self.motion_state_shape,
             dtype = self.motion_state_dtype
         )
+        self.motion_state_set = False
 
         self.robot_state_shape = tuple(
             params['observation_spec'][1].shape
@@ -413,6 +414,7 @@ class Quadruped:
             shape = self.osc_state_shape,
             dtype = self.osc_state_dtype
         )
+        self.osc_state_set = False
         self.history_shape = tuple(
             params['history_spec'].shape
         )
@@ -537,22 +539,6 @@ class Quadruped:
         self.pos = np.zeros((3,))
         self.eta = 1e8
 
-        self.history_joint_torque = np.zeros(self.history_shape)
-        self.history_joint_vel = np.zeros(self.history_shape)
-        self.history_pos = np.zeros((
-            self.params['rnn_steps'] - 1,
-            3
-        ))
-        self.history_pos[:, 2] = 2.2 * 0.13
-        self.history_vel = np.zeros((
-            self.params['rnn_steps'] - 1,
-            3
-        ))
-        self.history_desired_motion = np.zeros((
-            self.params['rnn_steps'] - 1,
-            6
-        ), dtype = self.motion_state_dtype)
-
         self.tf_buffer = tf2_ros.Buffer()
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
         self.Tb = self.params['rnn_steps']
@@ -567,9 +553,11 @@ class Quadruped:
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
+        self.motion_state_set = True
 
-    def set_osc_state(self, osc):
+    def set_init_osc_state(self, osc):
         self.osc_state = osc
+        self.osc_state_set = True
 
     def get_state_tensor(self):
         diff_joint = self.joint_position - self.last_joint
@@ -708,6 +696,8 @@ class Quadruped:
 
     def _reset(self):
         #pause physics
+        print('[DDPG] Resetting Services')
+        start = time.time()
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
             self.pause_proxy()
@@ -733,17 +723,23 @@ class Quadruped:
             self.unpause_proxy()
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/unpause_physics service call failed')
-
+        end = time.time()
+        print('[DDPG] Services Reset complete in {t} s'.format(t = round(
+            end - start, 4
+        )))
 
     def reset(self):
         self._reset()
-        #rospy.sleep(0.5)
+        start = time.time()
+        print('[DDPG] Resetting Environment State')
         self.reward = 0.0
-
-        self.osc_state = np.zeros(
-            shape = self.osc_state_shape,
-            dtype = self.osc_state_dtype
-        )
+        if not self.osc_state_set:
+            self.osc_state = np.zeros(
+                shape = self.osc_state_shape,
+                dtype = self.osc_state_dtype
+            )
+        else:
+            self.osc_state_set = False
         self.history = np.repeat(
             np.expand_dims(self.starting_pos, 0),
             self.params['rnn_steps'] - 1,
@@ -752,13 +748,24 @@ class Quadruped:
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
+
         self.pos = np.array([
-            model_state.pose.position.x, 
-            model_state.pose.position.y, 
+            model_state.pose.position.x,
+            model_state.pose.position.y,
             model_state.pose.position.z
         ], dtype = np.float32)
+        self.history_pos = np.zeros(
+            shape = (self.params['rnn_steps'] - 1, 3),
+            dtype = np.float32
+        )
+        self.history_pos = np.concatenate(
+            [
+                self.history_pos[1:, :],
+                np.expand_dims(self.pos, 0)
+            ], 0
+        )
+
         self.last_joint = self.joint_position
-        self.last_pos = self.pos
         diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
         self.robot_state = np.concatenate([
             self.joint_position,
@@ -766,35 +773,77 @@ class Quadruped:
             self.orientation,
             self.angular_vel,
             self.linear_acc
-        ]).reshape(self.robot_state_shape)
-        self.motion_state = np.concatenate(
-            [
-                self.pos,
-                np.zeros(
-                    shape = self.motion_state_shape,
-                    dtype = self.motion_state_dtype
-                )
-            ],
-            0
-        )
-        self.episode_start_time = rospy.get_time()
-        self.last_action = np.zeros(self.nb_joints, dtype = np.float32)
-        self.reward = 0.0
-        #time.sleep(1)
-        self._counter_1 = 0
-        self.counter_1 = 0 # Counter for support line change
-        ac = np.zeros(
-            (self.params['rnn_steps'], self.params['action_dim']),
+        ])
+        if not self.motion_state_set:
+            self.motion_state = np.zeros(
+                shape = self.motion_state_shape,
+                dtype = self.motion_state_dtype
+            )
+        else:
+            self.motion_state_set = False
+        self.joint_torque = self.all_legs.get_all_torques()
+        self.history_joint_torque = np.zeros(
+            shape = (self.params['rnn_steps'] - 1, self.nb_joints),
             dtype = np.float32
         )
-        self.set_support_lines(ac)
+        self.history_joint_torque = np.concatenate(
+            [
+                self.history_joint_torque[1:, :],
+                np.expand_dims(self.joint_torque, 0)
+            ]
+        )
+
+        self.history_joint_vel = np.zeros(
+            shape = (self.params['rnn_steps'] - 1, self.nb_joints),
+            dtype = np.float32
+        )
+        self.history_joint_vel = np.concatenate(
+                [
+                    self.history_joint_vel[1:],
+                    np.expand_dims(self.joint_velocity,0)
+                ],
+                0
+            )
+
+        self.v_real = np.array([
+            model_state.twist.linear.x,
+            model_state.twist.linear.y,
+            model_state.twist.linear.z
+        ], dtype = np.float32)
+        self.history_vel = np.zeros(
+            shape = (self.params['rnn_steps'] - 1, 3),
+            dtype = np.float32
+        )
+        self.history_vel = np.concatenate([
+            self.history_vel[1:],
+            np.expand_dims(self.v_real, 0)
+        ])
+        self.history_desired_motion = np.zeros(
+            shape = (
+                self.params['rnn_steps'] - 1, self.params['motion_state_size']
+            ),
+            dtype = np.float32
+        )
 
         self.starting_pos = self.params['starting_pos']
-        self.history = np.repeat(
-            np.expand_dims(self.starting_pos, 0),
-            self.params['rnn_steps'] - 1,
-            0
+        self.history = np.zeros(
+            shape = (self.params['rnn_steps'] - 1, self.nb_joints),
+            dtype = np.float32
         )
+
+        ac = np.zeros(
+            shape = (self.params['rnn_steps'], self.nb_joints),
+            dtype = np.float32
+        )
+        self._counter_1 = 0
+        self.counter_1 = 0
+        rospy.sleep(0.5)
+        self.set_support_lines(ac)
+        end = time.time()
+        print('[DDPG] Environment State Reset complete in {t} s'.format(
+            t = round(end - start, 4)
+        ))
+        self.episode_start_time = rospy.get_time()
         return [
             self.motion_state,
             self.robot_state,
@@ -880,6 +929,19 @@ class Quadruped:
                 'flag' : True,
                 'leg_name' : B_name
             })
+            print('AF')
+            print(self.AF)
+            print('BF')
+            print(self.BF)
+            print('A')
+            print(self.A)
+            print('B')
+            print(self.B)
+            print('AL')
+            print(self.AL)
+            print('BL')
+            print(self.BL)
+            print(self.Tb)
         else:
             #raise NotImplementedError
             print('[DDPG] No Support Line found')
@@ -940,7 +1002,7 @@ class Quadruped:
         else:
             self.reward = -100
 
-    def set_observation(self, action, desired_motion):
+    def _set_observation(self, action, desired_motion):
         self.action = action[0]
         self.osc_state = action[1]
         self.all_legs.move(self.action.tolist())
@@ -989,7 +1051,40 @@ class Quadruped:
             0
         )
 
+    def set_observation(self, action, desired_motion):
+        self.action, self.osc_state = action
+        self.action = self.action[0][0]
+        self.osc_state = self.osc_state[0]
+
+        self.all_legs.move(self.action.tolist())
+        diff_joint = self.joint_position - self.last_joint
+
+        self.robot_state = np.concatenate([
+            self.joint_position,
+            diff_joint,
+            self.orientation,
+            self.angular_vel,
+            self.linear_acc
+        ])
+
+        self.motion_state = desired_motion
+
     def step(self, action, desired_motion):
+        action = [
+            tf.make_ndarray(
+                tf.make_tensor_proto(a)
+            ) for a in action
+        ]
+        print(action[0].shape)
+        print(action[1].shape)
+        self.set_observation(action, desired_motion)
+        return [
+            self.motion_state,
+            self.robot_state,
+            self.osc_state,
+        ], self.reward
+
+    def _step(self, action, desired_motion):
         action = [
             tf.make_ndarray(
                 tf.make_tensor_proto(a)
