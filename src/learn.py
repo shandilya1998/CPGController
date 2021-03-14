@@ -35,6 +35,9 @@ class SignalDataGen:
         else:
             self.num_data = 896*5
 
+    def set_N(self, N):
+        self.N = N
+
     def get_ff(self, signal, ff_type = 'fft'):
         if ff_type == 'fft':
             return frequency_estimator.freq_from_fft(signal, 1/self.dt)
@@ -556,7 +559,9 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                action_original, [omega, mu] = self.actor.model(self._state)
+                [out, osc], [omega, mu] = self.actor.model(self._state)
+                out = out * mu
+                action_original = [out, osc]
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
                     0.0,
@@ -614,7 +619,9 @@ class Learner():
                 rewards = tf.concat(rewards, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
 
-                actions, [o, m] = self.actor.target_model(next_states)
+                [out, osc], [o, m] = self.actor.target_model(next_states)
+                out = out * m
+                actions = [out, osc]
                 inputs = next_states + actions
                 target_q_values = self.critic.target_model(inputs)
 
@@ -679,7 +686,7 @@ class Learner():
 
 if __name__ == '__main__':
     learner = Learner(params, False)
-    experiment = 13
+    experiment = 1
     #learner.pretrain_actor(experiment)
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
