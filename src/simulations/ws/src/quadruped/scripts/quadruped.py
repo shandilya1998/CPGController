@@ -30,6 +30,7 @@ from simulations.ws.src.quadruped.scripts.kinematics import Kinematics
 from reward import FitnessFunction
 import tf2_ros
 import time
+import matplotlib.pyplot as plt
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -302,7 +303,6 @@ class AllLegs:
             contacts.append(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
-        print([contact['leg_name'] for contact in contacts])
         if len(contacts) == 1:
             self.w = 0.5
             return [contacts[0], contacts[0]]
@@ -554,6 +554,8 @@ class Quadruped:
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
         self.last_joint = np.zeros((self.params['action_dim']))
+        self.delta = 1e-8
+        self.pause_proxy()
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
@@ -733,6 +735,7 @@ class Quadruped:
         )))
 
     def reset(self):
+        self.unpause_proxy()
         self._reset()
         start = time.time()
         print('[DDPG] Resetting Environment State')
@@ -848,6 +851,7 @@ class Quadruped:
             t = round(end - start, 4)
         ))
         self.episode_start_time = rospy.get_time()
+        self.pause_proxy()
         return [
             self.motion_state,
             self.robot_state,
@@ -863,7 +867,7 @@ class Quadruped:
         return {
             'position' : np.array(
                 [
-                    pose[A_name]['position'][m[i]] for i in range(3)
+                    pose[leg_name]['position'][m[i]] for i in range(3)
                 ], dtype = np.float32
             ),
             'flag' : True,
@@ -873,9 +877,7 @@ class Quadruped:
     def set_support_lines(self, action):
         AB = self.all_legs.get_AB()
         if AB:
-            print('[DDPG] Here')
             self.upright = True
-            self._counter_1 += 1
             current_pose = self.kinematics.get_current_end_effector_fk()
             A_lst =[leg['leg_name'] for leg in AB if 'front' in leg['leg_name']]
             B_lst =[leg['leg_name'] for leg in AB if 'back' in leg['leg_name']]
@@ -885,22 +887,20 @@ class Quadruped:
             elif not B_lst and len(A_lst) == 2:
                 B_lst = [A_lst[1]]
                 A_lst = [A_lst[0]]
-            if self.A['leg_name'] != A_lst[0]['leg_name']:
+            if self.A['leg_name'] != A_lst[0]:
                 self.AF = {
                     'leg_name' : self.A['leg_name'],
                     'flag' : True,
                     'position' : self.A['position']
                 }
-                self.counter_1 = self._counter_1
-                self_counter_1 = 0
-            if self.B['leg_name'] != B_lst[0]['leg_name']:
+                self_counter_1 = rospy.get_rostime().to_sec()
+            if self.B['leg_name'] != B_lst[0]:
                 self.BF = {
-                    'leg_name' : self.B['leg_name']
+                    'leg_name' : self.B['leg_name'],
                     'flag' : True,
                     'position' : self.B['position']
                 }
-                self.counter_1 = self._counter_1
-                self_counter_1 = 0
+                self_counter_1 = rospy.get_rostime().to_sec()
 
             self.A = self.get_contact_ob(A_lst[0], current_pose)
             self.B = self.get_contact_ob(B_lst[0], current_pose)
@@ -934,7 +934,7 @@ class Quadruped:
                 1 : 'y',
                 2 : 'z'
             }
-            self.Tb = (self.counter_1 + self.params['rnn_steps']) * self.dt / 2
+            self.Tb = (self.delta  + self.params['rnn_steps'] * self.dt) / 2
             self.AL.update({
                 'position' : np.array(
                     [
@@ -971,66 +971,12 @@ class Quadruped:
             print('[DDPG] No Support Line found')
             self.upright = False
 
-    def _set_reward(self, action):
-        """
-            Need to complete A, B, AF, BF, AL and BL computation
-        """
-        self.set_support_lines(action)
-        self.com = self.get_com()
-        self.moment = self.get_moment()
-        self.force = self.mass * self.linear_acc
-        if self.upright:
-            self.compute_reward.build(
-                self.counter_1 * self.dt,
-                self.Tb,
-                self.A,
-                self.B,
-                self.AF,
-                self.BF,
-                self.AL,
-                self.BL,
-            )
-            vd = np.linalg.norm(self.v_exp)
-            if vd == 0:
-                vd = 1e-8
-            self.eta = (self.params['L'] + self.params['W'])/(2*vd)
-            self.joint_torque = self.all_legs.get_all_torques()
-            self.history_joint_torque = np.concatenate(
-                [
-                    self.history_joint_torque[1:],
-                    np.expand_dims(self.joint_torque, 0)
-                ],
-                0
-            )
-            self.history_joint_vel = np.concatenate(
-                [
-                    self.history_joint_vel[1:],
-                    np.expand_dims(self.joint_velocity,0)
-                ],
-                0
-            )
-            self.reward = self.compute_reward(
-                self.com,
-                self.force,
-                self.torque,
-                self.v_real,
-                self.v_exp,
-                self.eta,
-                self.all_legs.w,
-                self.history_joint_vel,
-                self.history_joint_torque,
-                self.history_pos,
-                self.history_vel,
-                self.history_desired_motion
-            )
-        else:
-            self.reward = -100
-
     def set_observation(self, action, desired_motion):
+        self.unpause_proxy()
+        now = rospy.get_rostime().to_sec()
         self.action, self.osc_state = action
         self.action = self.action[0][0]
         self.osc_state = self.osc_state[0]
-
         self.all_legs.move(self.action.tolist())
         diff_joint = self.joint_position - self.last_joint
 
@@ -1059,6 +1005,8 @@ class Quadruped:
             model_state.twist.linear.z
         ], dtype = np.float32)
         self.v_exp =  desired_motion[3:6]
+        self.delta = rospy.get_rostime().to_sec() - now
+        self.pause_proxy()
 
     def set_history(self, desired_motion):
         self.history = np.concatenate(
@@ -1094,18 +1042,47 @@ class Quadruped:
 
     def set_reward(self, action):
         self.set_support_lines(action)
+        self.com = self.get_com()
+        self.force = self.mass * self.linear_acc
+        if self.upright:
+            self.compute_reward.build(
+                self.counter_1 * self.dt,
+                self.Tb,
+                self.A,
+                self.B,
+                self.AF,
+                self.BF,
+                self.AL,
+                self.BL,
+            )
+            vd = np.linalg.norm(self.v_exp)
+            if vd == 0:
+                vd = 1e-8
+            self.eta = (self.params['L'] + self.params['W'])/(2*vd)
+            self.reward = self.compute_reward(
+                self.com,
+                self.force,
+                self.torque,
+                self.v_real,
+                self.v_exp,
+                self.eta,
+                self.all_legs.w,
+                self.history_joint_vel,
+                self.history_joint_torque,
+                self.history_pos,
+                self.history_vel,
+                self.history_desired_motion
+            )
+        else:
+            self.reward = -100
 
     def step(self, action, desired_motion):
         action = [
-            tf.make_ndarray(
-                tf.make_tensor_proto(a)
-            ) for a in action
+            a.numpy() for a in action
         ]
-        print('[DDPG] Set Observation')
         self.set_observation(action, desired_motion)
-        print('[DDPG] Set history')
-        self.set_history(desired_motion)
         self.set_reward(action[0][0])
+        self.set_history(desired_motion)
         return [
             self.motion_state,
             self.robot_state,
