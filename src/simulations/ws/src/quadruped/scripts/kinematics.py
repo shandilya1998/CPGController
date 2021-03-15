@@ -5,7 +5,7 @@ from moveit_msgs.srv import GetPositionFK, \
     GetPositionFKRequest, \
     GetPositionIK
 from std_msgs.msg import Header
-
+import sys
 # refer to the following link for creation of a service to get fk
 # https://groups.google.com/g/moveit-users/c/Wb7TqHuf-ig
 

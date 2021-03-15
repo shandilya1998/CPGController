@@ -31,6 +31,9 @@ from reward import FitnessFunction
 import tf2_ros
 import time
 import matplotlib.pyplot as plt
+from moveit_commander import MoveGroupCommander, roscpp_initialize
+import sys
+import moveit_commander
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -378,7 +381,10 @@ class AllLegs:
 
 class Quadruped:
     def __init__(self, params):
+        joint_state_topic = ['joint_states:=/quadruped/joint_states']
+        moveit_commander.roscpp_initialize(joint_state_topic)
         rospy.init_node('joint_position_node')
+        roscpp_initialize(sys.argv)
         self.nb_joints = params['action_dim']
         self.nb_links = params['action_dim'] + 1
 
@@ -555,6 +561,7 @@ class Quadruped:
         self.BL, self.BF = self.B, self.B
         self.last_joint = np.zeros((self.params['action_dim']))
         self.delta = 1e-8
+        rospy.sleep(2.0)
         self.pause_proxy()
 
     def set_initial_motion_state(self, desired_motion):

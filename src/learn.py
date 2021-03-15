@@ -570,10 +570,13 @@ class Learner():
                 )
                 self._action[0] = action_original[0] + self._noise[0]
                 self._action[1] = action_original[1] + self._noise[1]
+                start = time.time()
                 self.current_time_step = self.env.step(
                     self._action,
                     self.desired_motion[j + 1]
                 )
+                print('[DDPG] Step time: {time}'.format(time=time.time()-start))
+                start = time.time()
                 experience = [
                     self._state,
                     self._action,
@@ -618,7 +621,9 @@ class Learner():
                 actions = [tf.concat(action, 0) for action in actions]
                 rewards = tf.concat(rewards, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
-
+                print('[DDPG] Rplay Buffer and Batching Time: {time}'.format(
+                    time = time.time() - start
+                ))
                 [out, osc], [o, m] = self.actor.target_model(next_states)
                 out = out * m
                 actions = [out, osc]
