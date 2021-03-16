@@ -1,5 +1,6 @@
 import tensorflow as tf
 from layers.complex import ComplexDense
+import sys
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -26,7 +27,8 @@ class Critic(tf.keras.Model):
         activation_osc = 'tanh',
         activation_lstm = 'tanh',
         recurrent_activation_lstm = 'sigmoid',
-        activation_out = 'tanh'
+        activation_out = 'relu',
+        training = True
     ):
         super(Critic, self).__init__()
 
@@ -46,113 +48,52 @@ class Critic(tf.keras.Model):
             activation = activation_robot_state,
             name = 'robot_state_dense'
         )
-        self.action_input_dense = tf.keras.layers.Dense(
-            units = units_action_input,
-            activation = activation_action_input,
-            name = 'action_input_dense'
-        )
         self.motion_state_dense = tf.keras.layers.Dense(
             units = units_motion_state,
             activation = activation_motion_state,
             name = 'motion_state_dense'
         )
-        self.real_osc_dense = tf.keras.layers.Dense(
+        self.osc_state_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_osc,
-            name = 'real_osc_dense'
+            name = 'osc_state_dense'
         )
-        self.imag_osc_dense = tf.keras.layers.Dense(
+        self.osc_dense = tf.keras.layers.Dense(
             units = units_osc,
             activation = activation_osc,
-            name = 'imag_osc_dense'
+            name = 'osc_dense'
         )
         self.lstm = tf.keras.layers.LSTMCell(
             units = units_lstm,
             activation = activation_lstm,
             recurrent_activation = recurrent_activation_lstm
         )
-        self.out_dense = ComplexDense(
+        self.out_dense = tf.keras.layers.Dense(
             units = units_out,
-            activation = activation_out
+            activation = activation_out,
+            name = 'out_dense'
         )
+        self.training = training
 
     def call(self, inputs):
-        S, A, history = inputs
-        motion_state, robot_state, osc_state = S
-        action, osc = A
-
-        osc_input_dim = osc.shape[-1] // 2
-        real_osc_state = tf.concat([
-            osc_state[:, :osc_input_dim],
-            osc[:, :osc_input_dim]
-        ], axis = -1)
-
-        imag_osc_state = tf.concat([
-            osc_state[:, osc_input_dim:],
-            osc[:, osc_input_dim:]
-        ], axis = -1)
-        real_osc_state = self.real_osc_dense(real_osc_state)
-        imag_osc_state = self.imag_osc_dense(imag_osc_state)
-        osc_state = tf.concat([real_osc_state, imag_osc_state], -1)
-        osc_state = self.combine_osc_dense(osc_state)
-
+        motion_state, robot_state, osc_state, action, osc, history = inputs
+        
+        osc_state = self.osc_state_dense(osc_state)
+        osc = self.osc_dense(osc)
+        osc = tf.concat([osc_state, osc], -1)
+        osc = self.combine_osc_dense(osc)
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
 
         state = tf.concat([
+            osc,
             motion_state,
-            robot_state,
-            osc_state
-        ], axis = -1)
+            robot_state
+        ], -1)
         state = self.combine_dense(state)
 
-        ta_history = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size = True)
-        history = swap_batch_timestep(history)
-        ta_history.unstack(history)
-
-        ta_action = tf.TensorArray(
-            tf.dtypes.float32,
-            size = 0,
-            dynamic_size = True
-        )
-        action = swap_batch_timestep(action)
-        ta_action.unstack(action)
-
-        step = tf.constant(0, dtype = tf.dtypes.int32)
-        def cond(out, h, c, step):
-            return tf.math.less(
-                step,
-                self.steps-1
-            )
-
-        def body(out, h, c, step):
-            inp = ta_history.read(step)
-            out, [h, c] = self.lstm(inp, [h, c])
-            step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
-            return out, h, c, step
-
-        out, h, c, step = tf.while_loop(cond, body, [state, state, state, step])
-
-        step = tf.constant(0, dtype = tf.dtypes.int32)
-        def cond(out, h, c, step):
-            return tf.math.less(
-                step,
-                self.steps
-            )
-
-        def body(out, h, c, step):
-            inp = ta_action.read(step)
-            out, [h, c] = self.lstm(inp, [h, c])
-            step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
-            return out, h, c, step
-
-        out, h, c, step = tf.while_loop(cond, body, [out, h, c, step])
-
-        out = self.out_dense(out)
-
-        return out
-
-
+        return state
+    
 def get_critic(params):
     critic = Critic(
         steps = params['rnn_steps'],
@@ -166,4 +107,3 @@ def get_critic(params):
         units_out = params['action_dim'],
     )
     return critic
-

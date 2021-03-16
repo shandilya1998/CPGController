@@ -4,7 +4,7 @@ quadruped:
     joint_model_group_pose: todo_state_name
   # Settings for ros_control_boilerplate control loop
   generic_hw_control_loop:
-    loop_hz: 300
+    loop_hz: 100
     cycle_time_error_threshold: 0.01
   # Settings for ros_control hardware interface
   hardware_interface:
@@ -26,7 +26,7 @@ quadruped:
   # Creates the /joint_states topic necessary in ROS
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 60
+    publish_rate: 100
 
   front_right_leg_controller:
     type: position_controllers/JointTrajectoryController
