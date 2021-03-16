@@ -381,8 +381,6 @@ class AllLegs:
 
 class Quadruped:
     def __init__(self, params):
-        joint_state_topic = ['joint_states:=/quadruped/joint_states']
-        moveit_commander.roscpp_initialize(joint_state_topic)
         rospy.init_node('joint_position_node')
         roscpp_initialize(sys.argv)
         self.nb_joints = params['action_dim']
@@ -560,9 +558,9 @@ class Quadruped:
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
         self.last_joint = np.zeros((self.params['action_dim']))
+        self.t = 1e-8
         self.delta = 1e-8
         rospy.sleep(2.0)
-        self.pause_proxy()
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
@@ -609,7 +607,7 @@ class Quadruped:
             output_pose_stamped = self.tf_buffer.transform(
                 pose_stamped,
                 to_frame,
-                rospy.Duration(1.0/60.0)
+                rospy.Duration(0.1)
             )
             return output_pose_stamped.pose
 
@@ -742,7 +740,6 @@ class Quadruped:
         )))
 
     def reset(self):
-        self.unpause_proxy()
         self._reset()
         start = time.time()
         print('[DDPG] Resetting Environment State')
@@ -858,7 +855,6 @@ class Quadruped:
             t = round(end - start, 4)
         ))
         self.episode_start_time = rospy.get_time()
-        self.pause_proxy()
         return [
             self.motion_state,
             self.robot_state,
@@ -888,12 +884,15 @@ class Quadruped:
             current_pose = self.kinematics.get_current_end_effector_fk()
             A_lst =[leg['leg_name'] for leg in AB if 'front' in leg['leg_name']]
             B_lst =[leg['leg_name'] for leg in AB if 'back' in leg['leg_name']]
+            self.t += self.delta
             if not A_lst and len(B_lst) == 2:
                 A_lst = [B_lst[0]]
                 B_lst = [B_lst[1]]
+                self.t = self.delta
             elif not B_lst and len(A_lst) == 2:
                 B_lst = [A_lst[1]]
                 A_lst = [A_lst[0]]
+                self.t = self.delta
             if self.A['leg_name'] != A_lst[0]:
                 self.AF = {
                     'leg_name' : self.A['leg_name'],
@@ -941,7 +940,7 @@ class Quadruped:
                 1 : 'y',
                 2 : 'z'
             }
-            self.Tb = (self.delta  + self.params['rnn_steps'] * self.dt) / 2
+            self.Tb = (self.t + self.params['rnn_steps'] * self.dt) / 2
             self.AL.update({
                 'position' : np.array(
                     [
@@ -979,12 +978,12 @@ class Quadruped:
             self.upright = False
 
     def set_observation(self, action, desired_motion):
-        self.unpause_proxy()
         now = rospy.get_rostime().to_sec()
         self.action, self.osc_state = action
         self.action = self.action[0][0]
         self.osc_state = self.osc_state[0]
         self.all_legs.move(self.action.tolist())
+        self.delta = rospy.get_rostime().to_sec() - now
         diff_joint = self.joint_position - self.last_joint
 
         self.robot_state = np.concatenate([
@@ -1012,8 +1011,6 @@ class Quadruped:
             model_state.twist.linear.z
         ], dtype = np.float32)
         self.v_exp =  desired_motion[3:6]
-        self.delta = rospy.get_rostime().to_sec() - now
-        self.pause_proxy()
 
     def set_history(self, desired_motion):
         self.history = np.concatenate(
@@ -1095,6 +1092,9 @@ class Quadruped:
             self.robot_state,
             self.osc_state,
         ], self.reward
+
+    def get_history(self):
+        return tf.convert_to_tensor(np.expand_dims(self.history), 0)
 
     def _step(self, action, desired_motion):
         action = [

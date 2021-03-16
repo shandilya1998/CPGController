@@ -571,6 +571,7 @@ class Learner():
                 self._action[0] = action_original[0] + self._noise[0]
                 self._action[1] = action_original[1] + self._noise[1]
                 start = time.time()
+                self._history = self.env.quadruped.get_history()
                 self.current_time_step = self.env.step(
                     self._action,
                     self.desired_motion[j + 1]
@@ -580,6 +581,7 @@ class Learner():
                 experience = [
                     self._state,
                     self._action,
+                    self._history,
                     self.current_time_step.reward,
                     self.current_time_step.observation,
                     self.current_time_step.step_type
@@ -604,13 +606,15 @@ class Learner():
                     )
                 )]
                 rewards = []
+                history = []
                 step_types = []
                 for item in batch:
                     state = item[0]
                     action = item[1]
-                    rewards.append(item[2])
-                    next_state = item[3]
-                    step_types.append(item[4])
+                    history.append(item[2])
+                    rewards.append(item[3])
+                    next_state = item[4]
+                    step_types.append(item[5])
                     for i, s in enumerate(state):
                         states[i].append(s)
                     for i, a in enumerate(action):
@@ -620,14 +624,15 @@ class Learner():
                 states = [tf.concat(state, 0) for state in states]
                 actions = [tf.concat(action, 0) for action in actions]
                 rewards = tf.concat(rewards, 0)
+                history = tf.concat(history,  0)
                 next_states = [tf.concat(state, 0) for state in next_states]
-                print('[DDPG] Rplay Buffer and Batching Time: {time}'.format(
+                print('[DDPG] Replay Buffer and Batching Time: {time}'.format(
                     time = time.time() - start
                 ))
                 [out, osc], [o, m] = self.actor.target_model(next_states)
                 out = out * m
                 actions = [out, osc]
-                inputs = next_states + actions
+                inputs = next_states + actions + [history]
                 target_q_values = self.critic.target_model(inputs)
 
                 y = [tf.repeat(reward, self.params['action_dim']) \
@@ -639,9 +644,9 @@ class Learner():
                     else y[k] for k in range(len(y))
                 ])
 
-                loss += self.critic.train(states, actions, y)
+                loss += self.critic.train(states, actions, history, y)
                 a_for_grad, [omega_, mu_] = self.actor.model(states)
-                q_grads = self.critic.q_grads(states, a_for_grad)
+                q_grads = self.critic.q_grads(states, a_for_grad, history)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
                 self.critic.target_train()

@@ -80,17 +80,17 @@ class CriticNetwork(object):
         )
         self.mse =tf.keras.losses.MeanSquaredError()
 
-    def q_grads(self, states, actions):
+    def q_grads(self, states, actions, history):
         with tf.GradientTape() as tape:
             tape.watch(actions)
-            inputs = states + actions
+            inputs = states + actions + [history]
             q_values = self.model(inputs)
             q_values = tf.squeeze(q_values)
         return tape.gradient(q_values, actions)
 
-    def train(self, states, actions, y):
+    def train(self, states, actions, history,y):
         with tf.GradientTape() as tape:
-            inputs = states + actions
+            inputs = states + actions + [history]
             y_pred = self.model(inputs)
             loss = self.loss(y, y_pred)
         critic_grads = tape.gradient(
@@ -136,8 +136,10 @@ class CriticNetwork(object):
             dtype = params['history_spec'].dtype
         )
 
+        inputs = S + A + [history]
+
         cr = critic.get_critic(params)
-        out = cr([S, A, history])
+        out = cr(inputs)
 
         model = tf.keras.Model(
             inputs = [S, A, history],
