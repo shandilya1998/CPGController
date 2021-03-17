@@ -20,9 +20,10 @@ class ActorNetwork(object):
 
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
-            out = self.model(states)
+            action, [omega, mu] = self.model(states)
+            action[0] = action[0] * mu
         grads = tape.gradient(
-            out,
+            action,
             self.model.trainable_variables,
             [-grad for grad in q_grads]
         )
