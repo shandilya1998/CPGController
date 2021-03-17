@@ -1094,7 +1094,7 @@ class Quadruped:
         ], self.reward
 
     def get_history(self):
-        return tf.convert_to_tensor(np.expand_dims(self.history), 0)
+        return tf.convert_to_tensor(np.expand_dims(self.history, 0))
 
     def _step(self, action, desired_motion):
         action = [
