@@ -74,14 +74,13 @@ class FitnessFunction:
             )
         ) / self.Tb
         D_av = np.sqrt(
-            np.sum(
+            np.linalg.norm(
                 history_joint_torque * history_joint_vel - \
                     P_av) / self.Tb
         )
         P_L = np.sum(
             np.square(history_joint_torque)
         ) / self.Tb
-
         F_min = P_av + D_av + P_L
 
         motion = np.sqrt(
@@ -102,6 +101,6 @@ class FitnessFunction:
                 )
             )
         )
-        reward = stability - F_min - motion
+        reward = np.sum(stability) - F_min - motion
 
-        return reward
+        return np.float32(reward)

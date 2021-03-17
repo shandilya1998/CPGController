@@ -576,12 +576,14 @@ class Learner():
                     self._action,
                     self.desired_motion[j + 1]
                 )
+                self._history_next = self.env.quadruped.get_history()
                 print('[DDPG] Step time: {time}'.format(time=time.time()-start))
                 start = time.time()
                 experience = [
                     self._state,
                     self._action,
                     self._history,
+                    self._history_next,
                     self.current_time_step.reward,
                     self.current_time_step.observation,
                     self.current_time_step.step_type
@@ -607,14 +609,16 @@ class Learner():
                 )]
                 rewards = []
                 history = []
+                history_next = []
                 step_types = []
                 for item in batch:
                     state = item[0]
                     action = item[1]
                     history.append(item[2])
-                    rewards.append(item[3])
-                    next_state = item[4]
-                    step_types.append(item[5])
+                    history_next.append(item[3])
+                    rewards.append(item[4])
+                    next_state = item[5]
+                    step_types.append(item[6])
                     for i, s in enumerate(state):
                         states[i].append(s)
                     for i, a in enumerate(action):
@@ -623,20 +627,21 @@ class Learner():
                         next_states[i].append(s)
                 states = [tf.concat(state, 0) for state in states]
                 actions = [tf.concat(action, 0) for action in actions]
-                rewards = tf.concat(rewards, 0)
+                #rewards = tf.concat(rewards, 0)
                 history = tf.concat(history,  0)
+                history_next = tf.concat(history_next, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
                 print('[DDPG] Replay Buffer and Batching Time: {time}'.format(
                     time = time.time() - start
                 ))
                 [out, osc], [o, m] = self.actor.target_model(next_states)
                 out = out * m
-                actions = [out, osc]
-                inputs = next_states + actions + [history]
+                ac = [out, osc]
+                inputs = next_states + ac + [history_next]
                 target_q_values = self.critic.target_model(inputs)
-
-                y = [tf.repeat(reward, self.params['action_dim']) \
-                        for reward in rewards]
+                y = [tf.expand_dims(
+                    tf.repeat(reward, self.params['action_dim']), 0
+                ) for reward in rewards]
                 y = tf.stack([
                     y[k] + self.params['GAMMA'] * target_q_values[k] \
                     if step_types[k] != \

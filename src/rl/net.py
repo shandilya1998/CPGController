@@ -140,7 +140,6 @@ class CriticNetwork(object):
 
         cr = critic.get_critic(params)
         out = cr(inputs)
-
         model = tf.keras.Model(
             inputs = [S, A, history],
             outputs = out
