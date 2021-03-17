@@ -648,14 +648,19 @@ class Learner():
                         tfa.trajectories.time_step.StepType.LAST \
                     else y[k] for k in range(len(y))
                 ])
-
+                print('here1')
                 loss += self.critic.train(states, actions, history, y)
+                print('here2')
                 a_for_grad, [omega_, mu_] = self.actor.model(states)
+                print('here3')
                 q_grads = self.critic.q_grads(states, a_for_grad, history)
+                print('here4')
                 self.actor.train(states, q_grads)
+                print('here5')
                 self.actor.target_train()
+                print('here6')
                 self.critic.target_train()
-
+                print('here7')
                 self.total_reward += self.current_time_step.reward
                 self._state = self.current_time_step.observation
                 print('.', end = '')
@@ -664,7 +669,7 @@ class Learner():
                     tfa.trajectories.time_step.StepType.LAST:
                     break
 
-                if not self.quadruped.upright:
+                if not self.env.quadruped.upright:
                     break
                 # Save the model after every n episodes
                 if i > 0 and \
