@@ -6,7 +6,7 @@ class ActorNetwork(object):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
-
+        self.params = params
         #Now create the model
         self.model , self.weights, self.state = \
             self.create_actor_network(params)
@@ -21,7 +21,11 @@ class ActorNetwork(object):
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
             action, [omega, mu] = self.model(states)
-            action[0] = action[0] * mu
+            action[0] = action[0] * tf.repeat(
+                tf.expand_dims(mu, 1),
+                self.params['rnn_steps'],
+                axis = 1
+            )
         grads = tape.gradient(
             action,
             self.model.trainable_variables,
