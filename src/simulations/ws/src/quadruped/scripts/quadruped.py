@@ -917,7 +917,7 @@ class Quadruped:
                 print('[DDPG] Leg Change')
                 self.t = self.delta
             self.A = self.get_contact_ob(AB[0]['leg_name'], current_pose)
-            self.B = self.get_contact_ob(AB[0]['leg_name'], current_pose)
+            self.B = self.get_contact_ob(AB[1]['leg_name'], current_pose)
             A_name = self.A['leg_name']
             B_name = self.B['leg_name']
             _A_name = None
@@ -933,6 +933,7 @@ class Quadruped:
             pose = self.kinematics.get_end_effector_fk(
                 action[self.params['rnn_steps'] - 1].tolist()
             )
+            print(pose)
             if pose[A_name]['position']['z'] - \
                     current_pose[A_name]['position']['z'] > 0:
                 temp = A_name
