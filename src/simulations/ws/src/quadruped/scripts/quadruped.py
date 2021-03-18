@@ -842,14 +842,15 @@ class Quadruped:
             dtype = np.float32
         )
 
-        ac = np.zeros(
-            shape = (self.params['rnn_steps'], self.nb_joints),
-            dtype = np.float32
-        )
         self._counter_1 = 0
         self.counter_1 = 0
         rospy.sleep(0.5)
-        self.set_support_lines(ac)
+        current_pose = self.kinematics.get_current_end_effector_fk()
+        self.A, self.B = self.all_legs.get_AB()
+        self.A = self.get_contact_ob(self.A['leg_name'], current_pose)
+        self.B = self.get_contact_ob(self.B['leg_name'], current_pose)
+        self.AL, self.AF = self.A, self.A
+        self.BL, self.BF = self.B, self.B
         end = time.time()
         print('[DDPG] Environment State Reset complete in {t} s'.format(
             t = round(end - start, 4)
@@ -882,34 +883,41 @@ class Quadruped:
         if AB:
             self.upright = True
             current_pose = self.kinematics.get_current_end_effector_fk()
-            A_lst =[leg['leg_name'] for leg in AB if 'front' in leg['leg_name']]
-            B_lst =[leg['leg_name'] for leg in AB if 'back' in leg['leg_name']]
             self.t += self.delta
-            if not A_lst and len(B_lst) == 2:
-                A_lst = [B_lst[0]]
-                B_lst = [B_lst[1]]
-                self.t = self.delta
-            elif not B_lst and len(A_lst) == 2:
-                B_lst = [A_lst[1]]
-                A_lst = [A_lst[0]]
-                self.t = self.delta
-            if self.A['leg_name'] != A_lst[0]:
+            if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF = {
                     'leg_name' : self.A['leg_name'],
                     'flag' : True,
                     'position' : self.A['position']
                 }
-                self_counter_1 = rospy.get_rostime().to_sec()
-            if self.B['leg_name'] != B_lst[0]:
+                print('[DDPG] Leg Change')
+                self.t = self.delta
+            elif (self.A['position'] != AB[0]['position']).any():
+                self.AF = {
+                    'leg_name' : self.A['leg_name'],
+                    'flag' : True,
+                    'position' : self.A['position']
+                }
+                print('[DDPG] Leg Change')
+                self.t = self.delta
+            if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF = {
                     'leg_name' : self.B['leg_name'],
                     'flag' : True,
                     'position' : self.B['position']
                 }
-                self_counter_1 = rospy.get_rostime().to_sec()
-
-            self.A = self.get_contact_ob(A_lst[0], current_pose)
-            self.B = self.get_contact_ob(B_lst[0], current_pose)
+                print('[DDPG] Leg Change')
+                self.t = self.delta
+            elif (self.B['position'] != AB[1]['position']).any():
+                self.BF = {
+                    'leg_name' : self.B['leg_name'],
+                    'flag' : True,
+                    'position' : self.B['position']
+                }
+                print('[DDPG] Leg Change')
+                self.t = self.delta
+            self.A = self.get_contact_ob(AB[0]['leg_name'], current_pose)
+            self.B = self.get_contact_ob(AB[0]['leg_name'], current_pose)
             A_name = self.A['leg_name']
             B_name = self.B['leg_name']
             _A_name = None
@@ -941,7 +949,7 @@ class Quadruped:
                 2 : 'z'
             }
             self.Tb = (self.t + self.params['rnn_steps'] * self.dt) / 2
-            self.AL.update({
+            self.AL = {
                 'position' : np.array(
                     [
                         pose[A_name]['position'][m[i]] for i in range(3)
@@ -949,8 +957,8 @@ class Quadruped:
                 ),
                 'flag' : True,
                 'leg_name' : A_name
-            })
-            self.BL.update({
+            }
+            self.BL = {
                 'position' : np.array(
                     [
                         pose[B_name]['position'][m[i]] for i in range(3)
@@ -958,7 +966,8 @@ class Quadruped:
                 ),
                 'flag' : True,
                 'leg_name' : B_name
-            })
+            }
+            print('\nSupport Positions')
             print('AF')
             print(self.AF)
             print('BF')

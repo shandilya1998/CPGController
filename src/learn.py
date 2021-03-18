@@ -525,7 +525,7 @@ class Learner():
     def load_actor(self, path):
         self.actor.model.load_weights(path)
 
-    def learn(self, model_dir, identifier=''):
+    def learn(self, model_dir, experiment, identifier=''):
         i = 0
         epsilon = 1
         self._noise_init = [
@@ -560,7 +560,11 @@ class Learner():
                 self._action = self.env._action_init
                 self._noise = self._noise_init
                 [out, osc], [omega, mu] = self.actor.model(self._state)
-                out = out * mu
+                out = out * tf.repeat(
+                    tf.expand_dims(mu, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                )
                 action_original = [out, osc]
                 self._noise[0] = max(epsilon, 0) * self.OU.function(
                     action_original[0],
@@ -635,7 +639,11 @@ class Learner():
                     time = time.time() - start
                 ))
                 [out, osc], [o, m] = self.actor.target_model(next_states)
-                out = out * m
+                out = out * tf.repeat(
+                    tf.expand_dims(m, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                )
                 ac = [out, osc]
                 inputs = next_states + ac + [history_next]
                 target_q_values = self.critic.target_model(inputs)
@@ -652,6 +660,11 @@ class Learner():
                 loss += self.critic.train(states, actions, history, y)
                 print('here2')
                 a_for_grad, [omega_, mu_] = self.actor.model(states)
+                a_for_grad[0] = a_for_grad[0] * tf.repeat(
+                    tf.expand_dims(mu_, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                )
                 print('here3')
                 q_grads = self.critic.q_grads(states, a_for_grad, history)
                 print('here4')
@@ -676,9 +689,9 @@ class Learner():
                     np.mod(i, self.params['TEST_AFTER_N_EPISODES']) == 0:
                     actor.model.save_weights(
                         os.path.join(
-                            model_dir, 
+                            model_dir,
                             'actormodel_'+identifier+'_{}'.format(i)+'.h5'
-                        ), 
+                        ),
                         overwrite=True)
                     with open(
                         os.path.join(
@@ -711,4 +724,4 @@ if __name__ == '__main__':
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
-    learner.learn('rl/out_dir/models')
+    learner.learn('rl/out_dir/models', experiment = experiment)
