@@ -546,6 +546,10 @@ class Learner():
         )
 
         print('[DDPG] Training Start')
+        critic_loss = []
+        total_critic_loss = []
+        rewards = []
+        total_reward = []
         while i < self.params['train_episode_count']:
             self.env.set_initial_motion_state(self.desired_motion[0])
             self.env.set_initial_osc_state(osc)
@@ -554,8 +558,8 @@ class Learner():
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             step = 0
+            tot_loss = 0.0
             for j in range(self.params['max_steps']):
-                loss = 0.0
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -592,6 +596,7 @@ class Learner():
                     self.current_time_step.observation,
                     self.current_time_step.step_type
                 ]
+                rewards.append(self.current_time_step.reward.numpy())
                 self.replay_buffer.add_batch(experience)
                 batch = self.replay_buffer.get_next(
                     self.params['BATCH_SIZE']
@@ -656,24 +661,19 @@ class Learner():
                         tfa.trajectories.time_step.StepType.LAST \
                     else y[k] for k in range(len(y))
                 ])
-                print('here1')
-                loss += self.critic.train(states, actions, history, y)
-                print('here2')
+                loss = self.critic.train(states, actions, history, y)
+                critic_loss.append(loss.numpy())
+                tot_loss += loss.numpy()
                 a_for_grad, [omega_, mu_] = self.actor.model(states)
                 a_for_grad[0] = a_for_grad[0] * tf.repeat(
                     tf.expand_dims(mu_, 1),
                     self.params['rnn_steps'],
                     axis = 1
                 )
-                print('here3')
                 q_grads = self.critic.q_grads(states, a_for_grad, history)
-                print('here4')
                 self.actor.train(states, q_grads)
-                print('here5')
                 self.actor.target_train()
-                print('here6')
                 self.critic.target_train()
-                print('here7')
                 self.total_reward += self.current_time_step.reward
                 self._state = self.current_time_step.observation
                 print('.', end = '')
@@ -685,8 +685,7 @@ class Learner():
                 if not self.env.quadruped.upright:
                     break
                 # Save the model after every n episodes
-                if i > 0 and \
-                    np.mod(i, self.params['TEST_AFTER_N_EPISODES']) == 0:
+                if i > 0 and i % self.params['TEST_AFTER_N_EPISODES'] == 0:
                     actor.model.save_weights(
                         os.path.join(
                             model_dir,
@@ -713,8 +712,37 @@ class Learner():
                             )+'.json'
                         ), "w") as outfile:
                         json.dump(critic.model.to_json(), outfile)
+                    pkl = open(os.path.join(
+                        model_dir,
+                        'rewards.pickle'
+                    ), 'wb')
+                    pickle.dump(rewards, pkl)
+                    pkl.close()
+
+                    pkl = open(os.path.join(
+                        model_dir,
+                        'total_reward.pickle'
+                    ), 'wb')
+                    pickle.dump(total_reward, pkl)
+                    pkl.close()
+
+                    pkl = open(os.path.join(
+                        model_dir,
+                        'critic_loss.pickle'
+                    ), 'wb')
+                    pickle.dump(total_critic_loss, pkl)
+                    pkl.close()
+
+                    pkl = open(os.path.join(
+                        model_dir,
+                        'total_critic_loss.pickle'
+                    ), 'wb')
+                    pickle.dump(total_critic_loss, pkl)
+                    pkl.close()
 
             i += 1
+            total_reward.append(self.total_reward.numpy())
+            total_critic_loss.append(tot_loss)
             print('\n')
 
 if __name__ == '__main__':
