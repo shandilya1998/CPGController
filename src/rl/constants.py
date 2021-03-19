@@ -18,7 +18,7 @@ params = {
     'BATCH_SIZE'                  : 100,
     'BUFFER_SIZE'                 : 100000,
     'GAMMA'                       : 0.99,
-    'TEST_AFTER_N_EPISODES'       : 100,
+    'TEST_AFTER_N_STEPS'          : 100,
     'TAU'                         : 0.001,
     'decay_steps'                 : int(20),
     'LRA'                         : 1,
@@ -26,7 +26,7 @@ params = {
     'EXPLORE'                     : 100000,
     'train_episode_count'         : 125,
     'test_episode_count'          : 10,
-    'max_steps'                   : 5000,
+    'max_steps'                   : 4000,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
