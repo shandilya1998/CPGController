@@ -43,16 +43,19 @@ class ZMP:
         torque_s = self._transform(torque, self.plane, self.inertial_plane)
         g_s = self._transform(self.g, self.plane, self.inertial_plane)
         zmp_s = np.zeros((3,))
+        temp = 1e-8
+        if (force_s[0] + g_s[0]) != 0:
+            temp = (force_s[0] + g_s[0])
         zmp_s[1] = com_s[1] - (
             com_s[0] * (
                 force_s[1] + g_s[1]
             ) + torque_s[2]
-        ) / (force_s[0] + g_s[0])
+        ) / temp
         zmp_s[2] = com_s[2] - (
             com_s[0] * (
                 force_s[2] + g_s[2]
             ) - torque_s[1]
-        ) / (force_s[0] + g_s[0])
+        ) / temp
         return zmp_s
 
     def __call__(self, com, force, torque, v_real, v_exp, eta):

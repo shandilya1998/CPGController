@@ -560,7 +560,7 @@ class Learner():
             self.total_reward = 0.0
             step = 0
             tot_loss = 0.0
-            for j in range(self.params['max_steps']):
+            for j in tqdm(range(self.params['max_steps'])):
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -586,7 +586,6 @@ class Learner():
                     self.desired_motion[j + 1]
                 )
                 self._history_next = self.env.quadruped.get_history()
-                print('[DDPG] Step time: {time}'.format(time=time.time()-start))
                 start = time.time()
                 experience = [
                     self._state,
@@ -641,9 +640,6 @@ class Learner():
                 history = tf.concat(history,  0)
                 history_next = tf.concat(history_next, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
-                print('[DDPG] Replay Buffer and Batching Time: {time}'.format(
-                    time = time.time() - start
-                ))
                 [out, osc], [o, m] = self.actor.target_model(next_states)
                 out = out * tf.repeat(
                     tf.expand_dims(m, 1),
@@ -677,7 +673,6 @@ class Learner():
                 self.critic.target_train()
                 self.total_reward += self.current_time_step.reward
                 self._state = self.current_time_step.observation
-                print('.', end = '')
                 step += 1
                 if self.current_time_step.step_type == \
                     tfa.trajectories.time_step.StepType.LAST:
@@ -686,7 +681,7 @@ class Learner():
                 if not self.env.quadruped.upright:
                     break
                 # Save the model after every n episodes
-                if step > 0 and step % self.params['TEST_AFTER_N_STEPS'] == 0:
+                if step % self.params['TEST_AFTER_N_STEPS'] == 0:
                     self.actor.model.save_weights(
                         os.path.join(
                             model_dir,
