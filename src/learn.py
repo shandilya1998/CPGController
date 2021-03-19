@@ -14,6 +14,7 @@ import os
 from frequency_analysis import frequency_estimator
 import time
 import numpy as np
+import argparse
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -525,8 +526,8 @@ class Learner():
     def load_actor(self, path):
         self.actor.model.load_weights(path)
 
-    def learn(self, model_dir, experiment, identifier=''):
-        i = 0
+    def learn(self, model_dir, experiment):
+        ep = 0
         epsilon = 1
         self._noise_init = [
                     tf.expand_dims(tf.zeros(
@@ -550,11 +551,11 @@ class Learner():
         total_critic_loss = []
         rewards = []
         total_reward = []
-        while i < self.params['train_episode_count']:
+        while ep < self.params['train_episode_count']:
             self.env.set_initial_motion_state(self.desired_motion[0])
             self.env.set_initial_osc_state(osc)
             self.current_time_step = self.env.reset()
-            print('[DDPG] Starting Episode {i}'.format(i = i), end = '')
+            print('[DDPG] Starting Episode {i}'.format(i = ep), end = '')
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             step = 0
@@ -596,7 +597,7 @@ class Learner():
                     self.current_time_step.observation,
                     self.current_time_step.step_type
                 ]
-                rewards.append(self.current_time_step.reward.numpy())
+                rewards.append(self.current_time_step.reward)
                 self.replay_buffer.add_batch(experience)
                 batch = self.replay_buffer.get_next(
                     self.params['BATCH_SIZE']
@@ -685,71 +686,112 @@ class Learner():
                 if not self.env.quadruped.upright:
                     break
                 # Save the model after every n episodes
-                if i > 0 and i % self.params['TEST_AFTER_N_EPISODES'] == 0:
-                    actor.model.save_weights(
+                if step > 0 and step % self.params['TEST_AFTER_N_STEPS'] == 0:
+                    self.actor.model.save_weights(
                         os.path.join(
                             model_dir,
-                            'actormodel_'+identifier+'_{}'.format(i)+'.h5'
-                        ),
-                        overwrite=True)
+                            'actormodel_ep{ep}_step{step}.ckpt'.format(
+                                ep = ep,
+                                step = step
+                            )
+                        )
+                    )
                     with open(
                         os.path.join(
-                            model_dir, 
-                            'actormodel_'+identifier+'_{}'.format(i)+'.json'
+                            model_dir,
+                            'actormodel_ep{ep}_step{step}.json'.format(
+                                ep = ep,
+                                step = step
+                            )
                         ), "w") as outfile:
-                        json.dump(actor.model.to_json(), outfile)
+                        json.dump(self.actor.model.to_json(), outfile)
 
-                    critic.model.save_weights(
+                    self.critic.model.save_weights(
                         os.path.join(
-                            model_dir, 
-                            'criticmodel_'+identifier+'_{}'.format(i)+'.h5'
-                        ), overwrite=True)
+                            model_dir,
+                            'criticmodel_ep{ep}_step{step}.ckpt'.format(
+                                ep = ep,
+                                step = step
+                            )
+                        )
+                    )
                     with open(
                         os.path.join(
                             model_dir,
-                            'criticmodel_'+identifier+'_{}'.format(
-                                i
-                            )+'.json'
+                            'criticmodel_ep{ep}_step{step}.json'.format(
+                                ep = ep,
+                                step = step
+                            )
                         ), "w") as outfile:
-                        json.dump(critic.model.to_json(), outfile)
+                        json.dump(self.critic.model.to_json(), outfile)
+
                     pkl = open(os.path.join(
                         model_dir,
-                        'rewards.pickle'
+                        'rewards_ep{ep}_step{step}.pickle'.format(
+                            ep = ep,
+                            step = step
+                        )
                     ), 'wb')
                     pickle.dump(rewards, pkl)
                     pkl.close()
 
                     pkl = open(os.path.join(
                         model_dir,
-                        'total_reward.pickle'
+                        'total_reward_ep{ep}_step{step}.pickle'.format(
+                            ep = ep,
+                            step = step
+                            )
                     ), 'wb')
                     pickle.dump(total_reward, pkl)
                     pkl.close()
 
                     pkl = open(os.path.join(
                         model_dir,
-                        'critic_loss.pickle'
+                        'critic_loss_ep{ep}_step{step}.pickle'.format(
+                            ep = ep,
+                            step = step
+                        )
                     ), 'wb')
                     pickle.dump(total_critic_loss, pkl)
                     pkl.close()
 
                     pkl = open(os.path.join(
                         model_dir,
-                        'total_critic_loss.pickle'
+                        'total_critic_loss_ep{ep}_step{step}.pickle'.format(
+                            ep = ep,
+                            step = step
+                        )
                     ), 'wb')
                     pickle.dump(total_critic_loss, pkl)
                     pkl.close()
 
-            i += 1
-            total_reward.append(self.total_reward.numpy())
+            ep += 1
+            total_reward.append(self.total_reward)
             total_critic_loss.append(tot_loss)
             print('\n')
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--experiment',
+        type = int,
+        help = 'ID of experiment being performaed'
+    )
+    parser.add_argument(
+        '--out_path',
+        type = str,
+        help = 'Path to output directory'
+    )
+    args = parser.parse_args()
     learner = Learner(params, False)
-    experiment = 1
     #learner.pretrain_actor(experiment)
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
-    learner.learn('rl/out_dir/models', experiment = experiment)
+    path = os.path.join(args.out_path, 'exp{exp}'.format(
+        exp=args.experiment
+    ))
+
+    if not os.path.exists(path):
+        os.mkdir(path)
+    learner.learn(path, experiment = args.experiment)
