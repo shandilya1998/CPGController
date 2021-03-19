@@ -6,6 +6,8 @@ class SupportPlane:
 
     def build(self, t, Tb, A, B, AL, BL, AF, BF):
         self.t = t
+        if Tb == 0:
+            Tb = 1e-8
         self.Tb = Tb
         self.A = A['position']
         self.AL = AL['position']

@@ -21,14 +21,19 @@ class FitnessFunction:
             history_joint_vel, history_joint_torque, \
             history_pos, history_vel, history_desired_motion):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
+        norm = 1e-8
+        if np.linalg.norm((self.A - self.B)) != 0:
+            norm = np.linalg.norm((self.A - self.B))
         dc = np.abs(np.cross(
             (self.A - zmp),
             (self.A - self.B)
-        ) / np.linalg.norm((self.A - self.B)))
+        ) / norm)
+        norm = 1e-8
+        if np.linalg.norm(self.AL - self.BL) != 0:
+            norm = np.linalg.norm(self.AL - self.BL)
         dl = np.abs(np.cross(
             (self.BL - zmp),
-            (self.AL - self.BL)
-        ) / np.linalg.norm(self.AL - self.BL))
+            (self.AL - self.BL)) / norm)
         wc = 0
         if 0.25*self.Tb < self.t < self.Tb*0.75:
             wc = -2*self.t/self.Tb + 1.5

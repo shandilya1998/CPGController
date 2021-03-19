@@ -1046,6 +1046,9 @@ class Quadruped:
         self.com = self.get_com()
         self.force = self.mass * self.linear_acc
         if self.upright:
+            if self.Tb == 0:
+                self.reward = -100
+                return
             self.compute_reward.build(
                 self.counter_1 * self.dt,
                 self.Tb,
