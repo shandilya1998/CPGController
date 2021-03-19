@@ -546,7 +546,7 @@ class Quadruped:
 
         self.tf_buffer = tf2_ros.Buffer()
         self.listener = tf2_ros.TransformListener(self.tf_buffer)
-        self.Tb = self.params['rnn_steps']
+        self.Tb = self.params['dt']
         self.upright = True
 
         self._reset()
@@ -559,7 +559,7 @@ class Quadruped:
         self.BL, self.BF = self.B, self.B
         self.last_joint = np.zeros((self.params['action_dim']))
         self.t = 1e-8
-        self.delta = 1e-8
+        self.delta = self.dt
         rospy.sleep(2.0)
 
     def set_initial_motion_state(self, desired_motion):
@@ -890,7 +890,6 @@ class Quadruped:
                     'flag' : True,
                     'position' : self.A['position']
                 }
-                print('[DDPG] Leg Change')
                 self.t = self.delta
             elif (self.A['position'] != AB[0]['position']).any():
                 self.AF = {
@@ -898,7 +897,6 @@ class Quadruped:
                     'flag' : True,
                     'position' : self.A['position']
                 }
-                print('[DDPG] Leg Change')
                 self.t = self.delta
             if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF = {
@@ -906,7 +904,6 @@ class Quadruped:
                     'flag' : True,
                     'position' : self.B['position']
                 }
-                print('[DDPG] Leg Change')
                 self.t = self.delta
             elif (self.B['position'] != AB[1]['position']).any():
                 self.BF = {
@@ -914,7 +911,6 @@ class Quadruped:
                     'flag' : True,
                     'position' : self.B['position']
                 }
-                print('[DDPG] Leg Change')
                 self.t = self.delta
             self.A = self.get_contact_ob(AB[0]['leg_name'], current_pose)
             self.B = self.get_contact_ob(AB[1]['leg_name'], current_pose)
@@ -930,58 +926,49 @@ class Quadruped:
                 _B_name = self.leg_name_lst[3]
             else:
                 _B_name = self.leg_name_lst[2]
+
             pose = self.kinematics.get_end_effector_fk(
                 action[self.params['rnn_steps'] - 1].tolist()
             )
-            print(pose)
-            if pose[A_name]['position']['z'] - \
-                    current_pose[A_name]['position']['z'] > 0:
-                temp = A_name
-                A_name = _A_name
-                _A_name = temp
-            if pose[B_name]['position']['z'] - \
-                    current_pose[B_name]['position']['z'] > 0:
-                temp = B_name
-                B_name = _B_name
-                _B_name = temp
             m = {
                 0 : 'x',
                 1 : 'y',
                 2 : 'z'
             }
-            self.Tb = (self.t + self.params['rnn_steps'] * self.dt) / 2
-            self.AL = {
-                'position' : np.array(
-                    [
-                        pose[A_name]['position'][m[i]] for i in range(3)
-                    ], dtype = np.float32
-                ),
-                'flag' : True,
-                'leg_name' : A_name
-            }
-            self.BL = {
-                'position' : np.array(
-                    [
-                        pose[B_name]['position'][m[i]] for i in range(3)
-                    ], dtype = np.float32
-                ),
-                'flag' : True,
-                'leg_name' : B_name
-            }
-            print('\nSupport Positions')
-            print('AF')
-            print(self.AF)
-            print('BF')
-            print(self.BF)
-            print('A')
-            print(self.A)
-            print('B')
-            print(self.B)
-            print('AL')
-            print(self.AL)
-            print('BL')
-            print(self.BL)
-            print(self.Tb)
+            flag1 = False
+            flag2 = False
+            for j in range(1, self.params['rnn_steps']):
+                pose = self.kinematics.get_end_effector_fk(
+                    action[j].tolist()
+                )
+                if pose[A_name]['position']['z'] - \
+                        current_pose[A_name]['position']['z'] > 0 and not flag1:
+                    self.AL = {
+                        'position' : np.array(
+                            [
+                                pose[_A_name]['position'][m[i]] \
+                                    for i in range(3)
+                            ], dtype = np.float32
+                        ),
+                        'flag' : True,
+                        'leg_name' : _A_name
+                    }
+                    flag1 = True
+                    self.Tb = (self.t + j * self.delta) / 2
+                if pose[B_name]['position']['z'] - \
+                        current_pose[B_name]['position']['z'] > 0 and not flag2:
+                    self.BL = {
+                        'position' : np.array(
+                            [
+                                pose[_B_name]['position'][m[i]] \
+                                    for i in range(3)
+                            ], dtype = np.float32
+                        ),
+                        'flag' : True,
+                        'leg_name' : B_name
+                    }
+                    flag2 = True
+                    self.Tb = (self.t + j * self.delta) / 2
         else:
             #raise NotImplementedError
             print('[DDPG] No Support Line found')

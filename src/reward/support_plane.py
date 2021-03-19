@@ -82,7 +82,10 @@ class SupportPlane:
             return temp
 
     def get_zs(self):
-        return self.AB/np.linalg.norm(self.AB)
+        if np.linalg.norm(self.AB) != 0:
+            return self.AB/np.linalg.norm(self.AB)
+        else:
+            return self.AB/1e-8
 
     def get_ys(self, t, xs = None, zs = None):
         if isinstance(xs, np.ndarray) and isinstance(zs, np.ndarray):
