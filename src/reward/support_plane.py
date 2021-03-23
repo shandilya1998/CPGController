@@ -20,74 +20,42 @@ class SupportPlane:
     def get_n11(self):
         AAf = self.AF-self.A
         cross = np.cross(self.AB, AAf)
-        norm = np.linalg.norm(cross)
-        if norm != 0:
-            return cross/np.linalg.norm(cross)
-        else:
-            return cross
+        return cross/np.linalg.norm(cross)
 
     def get_n12(self):
         BBf = self.BF - self.B
         cross = np.cross(self.AB, BBf)
-        norm = np.linalg.norm(cross)
-        if norm != 0:
-            return cross/np.linalg.norm(cross)
-        else:
-            return cross
+        return cross/np.linalg.norm(cross)
 
     def get_n21(self):
         AAl = self.AL - self.A
         cross = np.cross(self.AB, AAl)
-        norm = np.linalg.norm(cross)
-        if norm != 0:
-            return cross/np.linalg.norm(cross)
-        else:
-            return cross
+        return cross/np.linalg.norm(cross)
 
     def get_n22(self):
         BBl = self.BL - self.B
         cross = np.cross(self.AB, BBl)
-        norm = np.linalg.norm(cross)
-        if norm != 0:
-            return cross/np.linalg.norm(cross)
-        else:
-            return cross
+        return cross/np.linalg.norm(cross)
 
     def get_n1(self):
         n11 = self.get_n11()
         n12 = self.get_n12()
-        norm = np.linalg.norm(n11 + n12)
-        if norm != 0:
-            return (n11 + n12)/np.linalg.norm(n11 + n12)
-        else:
-            return n11 + n12
+        return (n11 + n12)/np.linalg.norm(n11 + n12)
 
     def get_n2(self):
         n21 = self.get_n21()
         n22 = self.get_n22()
-        norm = np.linalg.norm(n21 + n22)
-        if norm != 0:
-            return (n21 + n22)/np.linalg.norm(n21 + n22)
-        else:
-            return n21 + n22
-
+        return (n21 + n22)/np.linalg.norm(n21 + n22)
 
     def get_xs(self, t):
         mu = -t/self.Tb + 1
         n1 = self.get_n1()
         n2 = self.get_n2()
         temp = mu*n1 + (1-mu)*n2
-        norm = np.linalg.norm(temp)
-        if norm != 0:
-            return temp/np.linalg.norm(temp)
-        else:
-            return temp
+        return temp/np.linalg.norm(temp)
 
     def get_zs(self):
-        if np.linalg.norm(self.AB) != 0:
-            return self.AB/np.linalg.norm(self.AB)
-        else:
-            return self.AB/1e-8
+        return self.AB/np.linalg.norm(self.AB)
 
     def get_ys(self, t, xs = None, zs = None):
         if isinstance(xs, np.ndarray) and isinstance(zs, np.ndarray):
@@ -122,13 +90,7 @@ class SupportPlane:
         zs = self.get_zs()
         ys = self.get_ys(self.t, xs, zs)
         plane = np.zeros((3, 3))
-        norm = np.linalg.norm(xs)
-        if norm != 0:
-            plane[0, :] = xs/norm
-        norm =np.linalg.norm(ys)
-        if norm != 0:
-            plane[1, :] = ys/np.linalg.norm(ys)
-        norm = np.linalg.norm(zs)
-        if norm != 0:
-            plane[2, :] = zs/np.linalg.norm(zs)
+        plane[0, :] = xs/np.linalg.norm(xs)
+        plane[1, :] = ys/np.linalg.norm(ys)
+        plane[2, :] = zs/np.linalg.norm(zs)
         return plane

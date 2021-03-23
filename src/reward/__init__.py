@@ -21,19 +21,15 @@ class FitnessFunction:
             history_joint_vel, history_joint_torque, \
             history_pos, history_vel, history_desired_motion):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
-        norm = 1e-8
-        if np.linalg.norm((self.A - self.B)) != 0:
-            norm = np.linalg.norm((self.A - self.B))
         dc = np.abs(np.cross(
             (self.A - zmp),
             (self.A - self.B)
-        ) / norm)
-        norm = 1e-8
-        if np.linalg.norm(self.AL - self.BL) != 0:
-            norm = np.linalg.norm(self.AL - self.BL)
+        ) / np.linalg.norm((self.A - self.B)))
+
         dl = np.abs(np.cross(
             (self.BL - zmp),
-            (self.AL - self.BL)) / norm)
+            (self.AL - self.BL)) / np.linalg.norm(self.AL - self.BL)
+        )
         wc = 0
         if 0.25*self.Tb < self.t < self.Tb*0.75:
             wc = -2*self.t/self.Tb + 1.5
@@ -68,6 +64,9 @@ class FitnessFunction:
         cosT = np.dot(u, self.zmp.plane[0])/(np.linalg.norm(u) * np.linalg.norm(self.zmp.plane[0]))
         sinT = np.sqrt(1-cosT*cosT)
 
+        d1 = d_edge
+        d2 = ((self.params['L'] + self.params['W']) / 8) * sinT
+        d3 =((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt
         stability = d_edge - \
             ((self.params['L'] + self.params['W']) / 8) * sinT - \
             ((self.params['L'] + self.params['W']) * \
@@ -106,6 +105,6 @@ class FitnessFunction:
                 )
             )
         )
-        reward = np.sum(stability) - F_min - motion
+        reward = np.sum(stability) #- F_min - motion
 
-        return np.float32(reward)
+        return np.float32(reward), d1, d2, d3
