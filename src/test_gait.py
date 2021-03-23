@@ -27,7 +27,7 @@ for i in range(4):
 fig.savefig('gait_pattern.png')
 
 
-#learner = Learner(params, False)
+learner = Learner(params, False)
 """
 dataset = learner.load_dataset()
 step,(x,y) = next(enumerate(dataset))
@@ -42,7 +42,7 @@ print(y.shape)
 osc = y[3]
 print(osc.shape)
 """
-"""
+#"""
 for i in range(params['rnn_steps']):
     learner.env.quadruped.all_legs.move(
             signal[i].tolist()
