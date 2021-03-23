@@ -875,6 +875,11 @@ class Quadruped:
             current_pose = self.kinematics.get_end_effector_fk(
                 action[0].tolist()
             )
+            m = {
+                0 : 'x',
+                1 : 'y',
+                2 : 'z'
+            }
             self.t += self.delta
             if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF = {
@@ -882,28 +887,36 @@ class Quadruped:
                     'flag' : True,
                     'position' : self.A['position']
                 }
-                self.A = self.get_contact_ob(AB[0]['leg_name'], current_pose)
                 self.t = self.delta
-            elif (self.A['position'] != AB[0]['position']).any():
-                self.A = {
-                    'leg_name' : AB[0]['leg_name'],
-                    'flag' : True,
-                    'position' : AB[0]['position']
-                }
             if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF = {
                     'leg_name' : self.B['leg_name'],
                     'flag' : True,
                     'position' : self.B['position']
                 }
-                self.B = self.get_contact_ob(AB[1]['leg_name'], current_pose)
                 self.t = self.delta
-            elif (self.B['position'] != AB[1]['position']).any():
-                self.B = {
-                    'leg_name' : AB[1]['leg_name'],
-                    'flag' : True,
-                    'position' : AB[1]['position']
-                }
+
+            self.A = {
+                'position' : np.array(
+                    [
+                        current_pose[AB[0]['leg_name']]['position'][m[i]] \
+                            for i in range(3)
+                    ], dtype = np.float32
+                ),
+                'flag' : True,
+                'leg_name' : AB[0]['leg_name']
+            }
+            self.B = {
+                'position' : np.array(
+                    [
+                        current_pose[AB[1]['leg_name']]['position'][m[i]] \
+                            for i in range(3)
+                    ], dtype = np.float32
+                ),
+                'flag' : True,
+                'leg_name' : AB[1]['leg_name']
+            }
+
             A_name = self.A['leg_name']
             B_name = self.B['leg_name']
             _A_name = None
@@ -921,11 +934,6 @@ class Quadruped:
             pose = self.kinematics.get_end_effector_fk(
                 action[self.params['rnn_steps'] - 1].tolist()
             )
-            m = {
-                0 : 'x',
-                1 : 'y',
-                2 : 'z'
-            }
             flag1 = False
             flag2 = False
             self.AL = {
