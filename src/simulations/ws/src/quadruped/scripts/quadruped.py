@@ -462,6 +462,10 @@ class Quadruped:
             '/gazebo/unpause_physics',
             Empty
         )
+        self.get_physics_params_proxy = rospy.ServiceProxy(
+            '/gazebo/get_physics_properties',
+            GetPhysicsProperties
+        )
         self.model_config_proxy = rospy.ServiceProxy(
             '/gazebo/set_model_configuration',
             SetModelConfiguration
@@ -554,6 +558,13 @@ class Quadruped:
         self.delta = self.dt
         rospy.sleep(2.0)
         self.com = self.get_com()
+        self.counter = 0
+        params = self.get_physics_params_proxy()
+        self.gravity = np.array([
+            params.gravity.x,
+            params.gravity.y,
+            params.gravity.z
+        ], dtype = np.float32)
 
     def set_initial_motion_state(self, desired_motion):
         self.motion_state = desired_motion
@@ -845,6 +856,7 @@ class Quadruped:
             t = round(end - start, 4)
         ))
         self.episode_start_time = rospy.get_time()
+        self.counter = 0
         return [
             self.motion_state,
             self.robot_state,
@@ -881,6 +893,7 @@ class Quadruped:
                 2 : 'z'
             }
             self.t += self.delta
+            self.counter += 1
             if self.A['leg_name'] != AB[0]['leg_name']:
                 self.AF = {
                     'leg_name' : self.A['leg_name'],
@@ -888,6 +901,7 @@ class Quadruped:
                     'position' : self.A['position']
                 }
                 self.t = self.delta
+                self.counter = 1
             if self.B['leg_name'] != AB[1]['leg_name']:
                 self.BF = {
                     'leg_name' : self.B['leg_name'],
@@ -1062,7 +1076,7 @@ class Quadruped:
         self.force = self.mass * self.linear_acc
         if self.upright:
             if self.Tb == 0:
-                self.reward = -1
+                self.reward = -3
                 return
             self.compute_reward.build(
                 self.t,
@@ -1079,7 +1093,8 @@ class Quadruped:
                 vd = 1e-8
             self.eta = (self.params['L'] + self.params['W'])/(2*vd)
             now = time.time()
-            self.reward, self.d1, self.d2, self.d3= self.compute_reward(
+            self.reward, self.d1, self.d2, self.d3, \
+                    self.stability, self.COT = self.compute_reward(
                 self.com,
                 self.force,
                 self.torque,
@@ -1087,15 +1102,17 @@ class Quadruped:
                 self.v_exp,
                 self.eta,
                 self.all_legs.w,
-                self.history_joint_vel,
-                self.history_joint_torque,
+                self.joint_velocity,
+                self.joint_torque,
                 self.history_pos,
                 self.history_vel,
-                self.history_desired_motion
+                self.history_desired_motion,
+                self.mass,
+                self.gravity
             )
         else:
             print('Not Upright')
-            self.reward = -1
+            self.reward = -3
 
     def step(self, action, desired_motion):
         action = [

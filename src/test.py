@@ -111,7 +111,9 @@ BFz = []
 comx = []
 comy = []
 comz = []
-for i in tqdm(range(1500)):
+COT = []
+stability = []
+for i in tqdm(range(1000)):
     signal = y[:, i : i + params['rnn_steps'], :]
     current_time_step=env.step([signal,osc], desired_motion)
     rewards.append(current_time_step.reward)
@@ -142,6 +144,8 @@ for i in tqdm(range(1500)):
     comx.append(env.quadruped.com[0])
     comy.append(env.quadruped.com[1])
     comz.append(env.quadruped.com[2])
+    stability.append(env.quadruped.stability)
+    COT.append(env.quadruped.COT)
 #"""
 
 fig1, ax1 = plt.subplots(1,1,figsize = (5,5))
@@ -238,29 +242,22 @@ ax12.set_xlabel('time')
 fig12.savefig('rl/out_dir/ideal_gait_d3.png')
 
 fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
-ax13.plot(rewards)
-ax13.set_ylabel('rewards')
+ax13.plot(d2)
+ax13.set_ylabel('d2')
 ax13.set_xlabel('time')
-fig13.savefig('rl/out_dir/ideal_gait_rewards.png')
-
-fig14, ax14 = plt.subplots(1,1,figsize = (5,5))
-ax14.plot(rewards)
-ax14.set_ylabel('rewards')
-ax14.set_xlabel('time')
-fig14.savefig('rl/out_dir/ideal_gait_rewards.png')
+fig13.savefig('rl/out_dir/ideal_gait_d2.png')
 
 fig15, ax15 = plt.subplots(1,1,figsize = (5,5))
-ax15.plot(rewards)
-ax15.set_ylabel('rewards')
+ax15.plot(stability)
+ax15.set_ylabel('stability')
 ax15.set_xlabel('time')
-fig15.savefig('rl/out_dir/ideal_gait_rewards.png')
+fig15.savefig('rl/out_dir/ideal_gait_stability.png')
 
 fig16, ax16 = plt.subplots(1,1,figsize = (5,5))
-ax16.plot(d2)
-ax16.set_ylabel('d2')
+ax16.plot(COT)
+ax16.set_ylabel('COT')
 ax16.set_xlabel('time')
-fig16.savefig('rl/out_dir/ideal_gait_d2.png')
-
+fig16.savefig('rl/out_dir/ideal_gait_COT.png')
 
 pkl = open('rl/out_dir/ideal_gait_rewards.pickle', 'wb')
 pickle.dump(rewards, pkl)
