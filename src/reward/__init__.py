@@ -18,8 +18,9 @@ class FitnessFunction:
         self.zmp.build(t, Tb, A, B, AL, BL, AF, BF)
 
     def __call__(self, com, force, torque, v_real, v_exp, eta, omega, \
-            history_joint_vel, history_joint_torque, \
-            history_pos, history_vel, history_desired_motion):
+            joint_vel, joint_torque, \
+            history_pos, history_vel, history_desired_motion, \
+            mass, g):
         zmp = self.zmp(com, force, torque, v_real, v_exp, eta)
         dc = np.abs(np.cross(
             (self.A - zmp),
@@ -67,44 +68,14 @@ class FitnessFunction:
         d1 = d_edge
         d2 = ((self.params['L'] + self.params['W']) / 8) * sinT
         d3 =((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt
-        stability = d_edge - \
-            ((self.params['L'] + self.params['W']) / 8) * sinT - \
-            ((self.params['L'] + self.params['W']) * \
-                0.9 / (self.params['W'] * 4 )) * d_spt
+        stability = d1 - d2 - d3
 
-        P_av = np.sum(
-            np.abs(
-                history_joint_torque * history_joint_vel
-            )
-        ) / self.Tb
-        D_av = np.sqrt(
-            np.linalg.norm(
-                history_joint_torque * history_joint_vel - \
-                    P_av) / self.Tb
-        )
-        P_L = np.sum(
-            np.square(history_joint_torque)
-        ) / self.Tb
-        F_min = P_av + D_av + P_L
+        p_e = np.sum(joint_torque * joint_vel)
+        if p_e < 0:
+            p_e = 0
+        P = np.sum(joint_torque * 5.0/472.22) + p_e
+        COT = P/(mass * np.linalg.norm(g) * np.linalg.norm(v_real))
 
-        motion = np.sqrt(
-            np.sum(
-                np.square(
-                    (
-                        history_pos[1:] - history_pos[:-1]
-                    ) / np.linalg.norm(
-                        history_pos[1:] - history_pos[:-1]
-                    )  - \
-                        history_desired_motion[1:, :3]
-                )
-            )
-        ) + np.sqrt(
-            np.sum(
-                np.square(
-                    history_vel  - history_desired_motion[:, 3:6]
-                )
-            )
-        )
-        reward = np.sum(stability) #- F_min - motion
+        reward = np.sum(stability) - COT
 
-        return np.float32(reward), d1, d2, d3
+        return np.float32(reward), d1, d2, d3, np.sum(stability), COT
