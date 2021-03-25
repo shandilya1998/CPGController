@@ -1122,7 +1122,9 @@ class Quadruped:
                 self.gravity
             )
             if math.isnan(self.reward):
-                self.reward = -5.0
+                self.reward = -10.0
+            if self.compute_reward.zmp.support_plane.flag:
+                self.reward = -10.0
         else:
             self.reward = -3.0
 

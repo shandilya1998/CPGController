@@ -17,6 +17,7 @@ import numpy as np
 import argparse
 import json
 import matplotlib.pyplot as plt
+import matplotlib
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -159,6 +160,7 @@ class Learner():
             self.env.quadruped.osc_state
         ]
         self._action = None
+        matplotlib.use('Agg')
         physical_devices = tf.config.list_physical_devices('GPU')
         print('[Actor] GPU>>>>>>>>>>>>')
         print('[Actor] {lst}'.format(lst = physical_devices))
@@ -932,7 +934,6 @@ class Learner():
                 ep = ep,
             )
         ))
-        plt.close('all')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
