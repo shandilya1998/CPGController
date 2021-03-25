@@ -16,7 +16,7 @@ params = {
     'units_motion_state_critic'   : 30,
     'units_history'               : 24,
     'BATCH_SIZE'                  : 100,
-    'BUFFER_SIZE'                 : 100000,
+    'BUFFER_SIZE'                 : 1000,
     'GAMMA'                       : 0.99,
     'TEST_AFTER_N_STEPS'          : 100,
     'TAU'                         : 0.001,
@@ -26,7 +26,7 @@ params = {
     'EXPLORE'                     : 100000,
     'train_episode_count'         : 125,
     'test_episode_count'          : 10,
-    'max_steps'                   : 360,
+    'max_steps'                   : 200,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
