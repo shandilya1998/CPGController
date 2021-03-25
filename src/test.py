@@ -113,6 +113,7 @@ comy = []
 comz = []
 COT = []
 stability = []
+motion = []
 for i in tqdm(range(1000)):
     signal = y[:, i : i + params['rnn_steps'], :]
     current_time_step=env.step([signal,osc], desired_motion)
@@ -146,6 +147,7 @@ for i in tqdm(range(1000)):
     comz.append(env.quadruped.com[2])
     stability.append(env.quadruped.stability)
     COT.append(env.quadruped.COT)
+    motion.append(env.quadruped.r_motion)
 #"""
 
 fig1, ax1 = plt.subplots(1,1,figsize = (5,5))
@@ -258,6 +260,12 @@ ax16.plot(COT)
 ax16.set_ylabel('COT')
 ax16.set_xlabel('time')
 fig16.savefig('rl/out_dir/ideal_gait_COT.png')
+
+fig17, ax17 = plt.subplots(1,1,figsize = (5,5))
+ax17.plot(motion)
+ax17.set_ylabel('motion')
+ax17.set_xlabel('time')
+fig17.savefig('rl/out_dir/ideal_gait_motion.png')
 
 pkl = open('rl/out_dir/ideal_gait_rewards.pickle', 'wb')
 pickle.dump(rewards, pkl)
