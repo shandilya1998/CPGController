@@ -555,12 +555,14 @@ class Learner():
             self.env.set_initial_motion_state(self.desired_motion[0])
             self.env.set_initial_osc_state(osc)
             self.current_time_step = self.env.reset()
-            print('[DDPG] Starting Episode {i}'.format(i = ep), end = '')
+            print('[DDPG] Starting Episode {i}'.format(i = ep))
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             step = 0
             tot_loss = 0.0
-            for j in tqdm(range(self.params['max_steps'])):
+            print('[DDPG] Learning', end = '')
+            for j in range(self.params['max_steps']):
+                print('.',end='')
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -653,8 +655,9 @@ class Learner():
                     tf.repeat(reward, self.params['action_dim']), 0
                 ) for reward in rewards]
                 y = tf.stack([
-                    y[k] + self.params['GAMMA'] * target_q_values[k] \
-                    if step_types[k] != \
+                    y[k] + self.params['GAMMA'] * tf.expand_dims(
+                        target_q_values[k], 0
+                    ) if step_types[k] != \
                         tfa.trajectories.time_step.StepType.LAST \
                     else y[k] for k in range(len(y))
                 ])
