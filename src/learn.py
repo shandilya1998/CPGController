@@ -15,6 +15,8 @@ from frequency_analysis import frequency_estimator
 import time
 import numpy as np
 import argparse
+import json
+import matplotlib.pyplot as plt
 
 class SignalDataGen:
     def __init__(self, params, create_data = False):
@@ -125,12 +127,6 @@ class Learner():
         ]
         self._noise = self._noise_init
         self.OU = OU()
-        self.desired_motion = np.zeros((
-            self.params['max_steps'] + 1, 6
-        ), dtype = np.float32)
-        self.f_init  = 0.06 * 2 * np.pi/ (2 * (0.1+0.015) * 2.2 * 45)
-        self.desired_motion[:, 0] = 1
-        self.desired_motion[:, 3] = 0.06
         self.signal_gen = SignalDataGen(params, create_data)
         self.pretrain_osc_mu = np.ones((
             1,
@@ -148,6 +144,14 @@ class Learner():
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
+        )
+        self.pretrain_dataset = self.load_dataset()
+        i, (x, y) = next(enumerate(self.pretrain_dataset))
+        self.osc = x[-1][0]
+        self.desired_motion = np.repeat(
+            np.expand_dims(x[0][0], 0),
+            self.params['max_steps'] + 1,
+            0
         )
         self._state = [
             self.env.quadruped.motion_state,
@@ -524,6 +528,7 @@ class Learner():
         )
 
     def load_actor(self, path):
+        print('[DDPG] Loading Actor Weights')
         self.actor.model.load_weights(path)
 
     def learn(self, model_dir, experiment):
@@ -539,30 +544,29 @@ class Learner():
         motion_state, robot_state, osc_state = \
             self.env.quadruped.get_state_tensor()
 
-        osc = self._hopf_oscillator(
-            self.f_init,
-            np.ones((self.params['units_osc'],)),
-            np.zeros((self.params['units_osc'],)),
-            osc_state[0]
-        )
 
         print('[DDPG] Training Start')
         critic_loss = []
         total_critic_loss = []
         rewards = []
         total_reward = []
+        steps = []
+        d1 = []
+        d2 = []
+        d3 = []
+        stability = []
+        COT = []
+        motion = []
         while ep < self.params['train_episode_count']:
             self.env.set_initial_motion_state(self.desired_motion[0])
-            self.env.set_initial_osc_state(osc)
+            self.env.set_initial_osc_state(self.osc)
             self.current_time_step = self.env.reset()
             print('[DDPG] Starting Episode {i}'.format(i = ep))
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
             step = 0
             tot_loss = 0.0
-            print('[DDPG] Learning', end = '')
             for j in range(self.params['max_steps']):
-                print('.',end='')
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -579,6 +583,12 @@ class Learner():
                     0.15,
                     0.2
                 )
+                self._noise[1] = max(epsilon, 0) * self.OU.function(
+                    action_original[1],
+                    0.0,
+                    0.15,
+                    0.2
+                )
                 self._action[0] = action_original[0] + self._noise[0]
                 self._action[1] = action_original[1] + self._noise[1]
                 start = time.time()
@@ -587,6 +597,12 @@ class Learner():
                     self._action,
                     self.desired_motion[j + 1]
                 )
+                d1.append(self.env.quadruped.d1)
+                d2.append(self.env.quadruped.d2)
+                d3.append(self.env.quadruped.d3)
+                stability.append(self.env.quadruped.stability)
+                motion.append(self.env.quadruped.r_motion)
+                COT.append(self.env.quadruped.COT)
                 self._history_next = self.env.quadruped.get_history()
                 start = time.time()
                 experience = [
@@ -670,6 +686,14 @@ class Learner():
                     self.params['rnn_steps'],
                     axis = 1
                 )
+                print('[DDPG] Episode {ep} Step {step}'.format(
+                    ep = ep,
+                    step = step
+                ))
+                print('[DDPG] Total Reward {reward} Critic Loss {loss}'.format(
+                    reward = self.current_time_step.reward,
+                    loss = loss.numpy()
+                ))
                 q_grads = self.critic.q_grads(states, a_for_grad, history)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
@@ -684,89 +708,231 @@ class Learner():
                 if not self.env.quadruped.upright:
                     break
                 # Save the model after every n episodes
-                if step % self.params['TEST_AFTER_N_STEPS'] == 0:
-                    self.actor.model.save_weights(
-                        os.path.join(
-                            model_dir,
-                            'actormodel_ep{ep}_step{step}.ckpt'.format(
-                                ep = ep,
-                                step = step
-                            )
-                        )
-                    )
-                    with open(
-                        os.path.join(
-                            model_dir,
-                            'actormodel_ep{ep}_step{step}.json'.format(
-                                ep = ep,
-                                step = step
-                            )
-                        ), "w") as outfile:
-                        json.dump(self.actor.model.to_json(), outfile)
 
-                    self.critic.model.save_weights(
-                        os.path.join(
-                            model_dir,
-                            'criticmodel_ep{ep}_step{step}.ckpt'.format(
-                                ep = ep,
-                                step = step
-                            )
-                        )
-                    )
-                    with open(
-                        os.path.join(
-                            model_dir,
-                            'criticmodel_ep{ep}_step{step}.json'.format(
-                                ep = ep,
-                                step = step
-                            )
-                        ), "w") as outfile:
-                        json.dump(self.critic.model.to_json(), outfile)
+            if ep % 3 == 0:
+                self.save(model_dir, ep, rewards, total_reward, \
+                    total_critic_loss, critic_loss, d1, d2, d3, \
+                    stability, COT, motion)
 
-                    pkl = open(os.path.join(
-                        model_dir,
-                        'rewards_ep{ep}_step{step}.pickle'.format(
-                            ep = ep,
-                            step = step
-                        )
-                    ), 'wb')
-                    pickle.dump(rewards, pkl)
-                    pkl.close()
-
-                    pkl = open(os.path.join(
-                        model_dir,
-                        'total_reward_ep{ep}_step{step}.pickle'.format(
-                            ep = ep,
-                            step = step
-                            )
-                    ), 'wb')
-                    pickle.dump(total_reward, pkl)
-                    pkl.close()
-
-                    pkl = open(os.path.join(
-                        model_dir,
-                        'critic_loss_ep{ep}_step{step}.pickle'.format(
-                            ep = ep,
-                            step = step
-                        )
-                    ), 'wb')
-                    pickle.dump(total_critic_loss, pkl)
-                    pkl.close()
-
-                    pkl = open(os.path.join(
-                        model_dir,
-                        'total_critic_loss_ep{ep}_step{step}.pickle'.format(
-                            ep = ep,
-                            step = step
-                        )
-                    ), 'wb')
-                    pickle.dump(total_critic_loss, pkl)
-                    pkl.close()
-
+            steps.append(step + 1)
             ep += 1
             total_reward.append(self.total_reward)
             total_critic_loss.append(tot_loss)
-            print('\n')
+
+    def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
+            critic_loss, d1, d2, d3, \
+            stability, COT, motion):
+        print('\n[DDPG] Saving Model')
+        self.actor.model.save_weights(
+            os.path.join(
+                model_dir,
+                'actor',
+                'model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        self.critic.model.save_weights(
+            os.path.join(
+                model_dir,
+                'critic',
+                'model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        pkl = open(os.path.join(
+            model_dir,
+            'rewards_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(rewards, pkl)
+        pkl.close()
+        fig1, ax1 = plt.subplots(1,1,figsize = (5,5))
+        ax1.plot(rewards)
+        ax1.set_ylabel('reward')
+        ax1.set_xlabel('steps')
+        fig1.savefig(os.path.join(
+            model_dir,
+            'rewards_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+           'total_reward_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(total_reward, pkl)
+        pkl.close()
+        fig2, ax2 = plt.subplots(1,1,figsize = (5,5))
+        ax2.plot(total_reward)
+        ax2.set_ylabel('total reward')
+        ax2.set_xlabel('episodes')
+        fig2.savefig(os.path.join(
+            model_dir,
+            'total_reward_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'critic_loss_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(critic_loss, pkl)
+        pkl.close()
+        fig3, ax3 = plt.subplots(1,1,figsize = (5,5))
+        ax3.plot(critic_loss)
+        ax3.set_ylabel('critic loss')
+        ax3.set_xlabel('steps')
+        fig3.savefig(os.path.join(
+            model_dir,
+            'critic_loss_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'total_critic_loss_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(total_critic_loss, pkl)
+        pkl.close()
+        fig4, ax4 = plt.subplots(1,1,figsize = (5,5))
+        ax4.plot(total_critic_loss)
+        ax4.set_ylabel('total critic loss')
+        ax4.set_xlabel('episodes')
+        fig4.savefig(os.path.join(
+            model_dir,
+            'total_critic_loss_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd1_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d1, pkl)
+        pkl.close()
+        fig5, ax5 = plt.subplots(1,1,figsize = (5,5))
+        ax5.plot(d1)
+        ax5.set_ylabel('d1')
+        ax5.set_xlabel('steps')
+        fig5.savefig(os.path.join(
+            model_dir,
+            'd1_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd2_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d2, pkl)
+        pkl.close()
+        fig6, ax6 = plt.subplots(1,1,figsize = (5,5))
+        ax6.plot(d2)
+        ax6.set_ylabel('d2')
+        ax6.set_xlabel('steps')
+        fig6.savefig(os.path.join(
+            model_dir,
+            'd2_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd3_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d3, pkl)
+        pkl.close()
+        fig7, ax7 = plt.subplots(1,1,figsize = (5,5))
+        ax7.plot(d3)
+        ax7.set_ylabel('d3')
+        ax7.set_xlabel('steps')
+        fig7.savefig(os.path.join(
+            model_dir,
+            'd3_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'stability_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(stability, pkl)
+        pkl.close()
+        fig8, ax8 = plt.subplots(1,1,figsize = (5,5))
+        ax8.plot(stability)
+        ax8.set_ylabel('stability reward')
+        ax8.set_xlabel('steps')
+        fig8.savefig(os.path.join(
+            model_dir,
+            'stability_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'COT_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(COT, pkl)
+        pkl.close()
+        fig9, ax9 = plt.subplots(1,1,figsize = (5,5))
+        ax9.plot(COT)
+        ax9.set_ylabel('COT')
+        ax9.set_xlabel('steps')
+        fig9.savefig(os.path.join(
+            model_dir,
+            'COT_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'motion_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(motion, pkl)
+        pkl.close()
+        fig10, ax10 = plt.subplots(1,1,figsize = (5,5))
+        ax10.plot(motion)
+        ax10.set_ylabel('motion deviation')
+        ax10.set_xlabel('steps')
+        fig10.savefig(os.path.join(
+            model_dir,
+            'motion_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+        plt.close('all')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -792,4 +958,13 @@ if __name__ == '__main__':
 
     if not os.path.exists(path):
         os.mkdir(path)
+
+    actor_path = os.path.join(path, 'actor')
+    if not os.path.exists(actor_path):
+        os.mkdir(actor_path)
+
+    critic_path = os.path.join(path, 'critic')
+    if not os.path.exists(critic_path):
+        os.mkdir(critic_path)
+
     learner.learn(path, experiment = args.experiment)

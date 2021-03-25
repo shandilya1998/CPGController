@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 from moveit_commander import MoveGroupCommander, roscpp_initialize
 import sys
 import moveit_commander
+import math
 
 class Leg:
     def __init__(self, params, leg_name, joint_name_lst):
@@ -525,6 +526,12 @@ class Quadruped:
         )
 
         self.reward = 0.0
+        self.d1 = 0.0
+        self.d2 = 0.0
+        self.d3 = 0.0
+        self.stability = 0.0
+        self.COT = 0.0
+        self.r_motion = 0.0
         self.episode_start_time = 0.0
         self.max_sim_time = 15.0
         self.pos_z_limit = 0.18
@@ -845,7 +852,7 @@ class Quadruped:
             dtype = np.float32
         )
 
-        rospy.sleep(0.5)
+        rospy.sleep(2.0)
         self.com = self.get_com()
         current_pose = self.kinematics.get_current_end_effector_fk()
         AB = self.all_legs.get_AB()
@@ -1079,7 +1086,9 @@ class Quadruped:
         if self.upright:
             if self.Tb == 0:
                 self.reward = -3.0
-            return
+                return
+            if (action > np.pi/3).any() or (action < -np.pi/3).any():
+                self.reward = -5.0
             self.compute_reward.build(
                 self.t,
                 self.Tb,
@@ -1095,8 +1104,8 @@ class Quadruped:
                 vd = 1e-8
             self.eta = (self.params['L'] + self.params['W'])/(2*vd)
             now = time.time()
-            self.reward, self.d1, self.d2, self.d3, \
-                    self.stability, self.COT = self.compute_reward(
+            self.reward, self.d1, self.d2, self.d3, self.stability, \
+                    self.COT, self.r_motion=self.compute_reward(
                 self.com,
                 self.force,
                 self.torque,
@@ -1112,6 +1121,8 @@ class Quadruped:
                 self.mass,
                 self.gravity
             )
+            if math.isnan(self.reward):
+                self.reward = -5.0
         else:
             self.reward = -3.0
 

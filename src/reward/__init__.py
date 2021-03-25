@@ -68,7 +68,7 @@ class FitnessFunction:
         d1 = d_edge
         d2 = ((self.params['L'] + self.params['W']) / 8) * sinT
         d3 =((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt
-        stability = d1 - d2 - d3
+        stability = np.sum(d1 - d2 - d3)
 
         p_e = np.sum(joint_torque * joint_vel)
         if p_e < 0:
@@ -76,6 +76,22 @@ class FitnessFunction:
         P = np.sum(joint_torque * 5.0/472.22) + p_e
         COT = P/(mass * np.linalg.norm(g) * np.linalg.norm(v_real))
 
-        reward = np.sum(stability) - COT
 
-        return np.float32(reward), d1, d2, d3, np.sum(stability), COT
+        sum_1 = 0
+        sum_2 = 0
+        for i in range(5):
+            pos = history_pos[-1*(i+1)] - history_pos[-1*(i+2)]
+            if np.linalg.norm(pos) != 0:
+                pos = pos / np.linalg.norm(pos)
+            sum_1 += np.square(pos - history_desired_motion[-1 * (i+1), :3])
+            sum_2 += np.square(history_vel[
+                -1 * (i+1)
+            ] - history_desired_motion[
+                    -1 * (i+1), 3:
+            ])
+
+        motion = np.sqrt(np.sum(sum_1)) + np.sqrt(np.sum(sum_2))
+
+        reward = stability - COT - motion
+
+        return np.float32(reward), d1, d2, d3, stability, COT, motion
