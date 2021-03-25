@@ -307,7 +307,9 @@ class AllLegs:
         if bl_contact['flag']:
             contacts.append(bl_contact)
         if len(contacts) == 1:
-            return contacts
+            B = copy.deepcopy(contacts[0])
+            B['position'] += 1e-8
+            return [contacts[0], B]
         elif len(contacts) == 2:
             return contacts
         elif len(contacts) == 3:
@@ -846,7 +848,8 @@ class Quadruped:
         rospy.sleep(0.5)
         self.com = self.get_com()
         current_pose = self.kinematics.get_current_end_effector_fk()
-        self.A, self.B = self.all_legs.get_AB()
+        AB = self.all_legs.get_AB()
+        self.A, self.B = AB
         self.A = self.get_contact_ob(self.A['leg_name'], current_pose)
         self.B = self.get_contact_ob(self.B['leg_name'], current_pose)
         self.AL, self.AF = self.A, self.A
@@ -997,7 +1000,6 @@ class Quadruped:
                 }
         else:
             #raise NotImplementedError
-            print('[DDPG] No Support Line found')
             self.upright = False
 
     def set_observation(self, action, desired_motion):
@@ -1076,8 +1078,8 @@ class Quadruped:
         self.force = self.mass * self.linear_acc
         if self.upright:
             if self.Tb == 0:
-                self.reward = -3
-                return
+                self.reward = -3.0
+            return
             self.compute_reward.build(
                 self.t,
                 self.Tb,
@@ -1111,8 +1113,7 @@ class Quadruped:
                 self.gravity
             )
         else:
-            print('Not Upright')
-            self.reward = -3
+            self.reward = -3.0
 
     def step(self, action, desired_motion):
         action = [
