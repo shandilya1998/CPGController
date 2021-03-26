@@ -1,7 +1,7 @@
 #!/bin/sh
 
 OUT_PATH="rl/out_dir/models"
-EXPERIMENT=1
+EXPERIMENT=14
 
 nohup roslaunch quadruped quadruped_control.launch \
     >> $OUT_PATH/exp$EXPERIMENT/ros.log &

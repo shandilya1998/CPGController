@@ -575,11 +575,11 @@ class Quadruped:
             params.gravity.z
         ], dtype = np.float32)
 
-    def set_initial_motion_state(self, desired_motion):
+    def set_motion_state(self, desired_motion):
         self.motion_state = desired_motion
         self.motion_state_set = True
 
-    def set_init_osc_state(self, osc):
+    def set_osc_state(self, osc):
         self.osc_state = osc
         self.osc_state_set = True
 
@@ -717,7 +717,6 @@ class Quadruped:
 
     def _reset(self):
         #pause physics
-        print('[DDPG] Resetting Services')
         start = time.time()
         rospy.wait_for_service('/gazebo/pause_physics')
         try:
@@ -745,14 +744,10 @@ class Quadruped:
         except rospy.ServiceException:
             print('[Gazebo] /gazebo/unpause_physics service call failed')
         end = time.time()
-        print('[DDPG] Services Reset complete in {t} s'.format(t = round(
-            end - start, 4
-        )))
 
     def reset(self):
         self._reset()
         start = time.time()
-        print('[DDPG] Resetting Environment State')
         self.reward = 0.0
         if not self.osc_state_set:
             self.osc_state = np.zeros(
@@ -862,9 +857,6 @@ class Quadruped:
         self.AL, self.AF = self.A, self.A
         self.BL, self.BF = self.B, self.B
         end = time.time()
-        print('[DDPG] Environment State Reset complete in {t} s'.format(
-            t = round(end - start, 4)
-        ))
         self.episode_start_time = rospy.get_time()
         self.counter = 0
         return [
