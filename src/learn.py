@@ -208,12 +208,12 @@ class Learner():
                 np.zeros((self.params['units_osc'],)),
                 osc_state[0]
             )
+            y = y * np.pi / 180
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
                 y_ = self.signal_gen.preprocess(y)
                 actions = np.expand_dims(y_[i+1:self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
-                rospy.sleep(0.3)
                 self.env.quadruped.set_motion_state(x)
                 self.env.quadruped.set_osc_state(osc)
                 _state = self.env.quadruped.get_state_tensor()

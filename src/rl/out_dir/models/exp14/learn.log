@@ -31127,4 +31127,143 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
   signal = signal/(np.abs(signal.max(axis = 0)))
 learn.py:100: RuntimeWarning: invalid value encountered in true_divide
   signal = signal/(np.abs(signal.max(axis = 0)))
-1it [00:26, 26.75s/it]
+1it [00:26, 26.75s/it]2021-03-26 12:59:02.814933: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 12:59:02.815088: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[DDPG] Building the actor model
+2021-03-26 12:59:33.080967: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-26 12:59:33.092680: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 12:59:33.092738: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-03-26 12:59:33.092785: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-03-26 12:59:33.093213: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-26 12:59:33.093785: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1616743780.969407087, 15.563000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1616743780.971221515, 15.564000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1616743780.971437455, 15.564000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1616743782.463366378, 16.525000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1616743783.407022267, 17.201000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1616743784.638133929, 18.001000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1616743785.750210555, 18.800000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] Creating Data.
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:21<00:00, 21.28s/it]100%|██████████| 1/1 [00:21<00:00, 21.29s/it]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]learn.py:100: RuntimeWarning: divide by zero encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+learn.py:100: RuntimeWarning: invalid value encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+0it [00:43, ?it/s]
+Traceback (most recent call last):
+  File "learn.py", line 880, in <module>
+    learner = Learner(params, True)
+  File "learn.py", line 144, in __init__
+    self.create_dataset()
+  File "learn.py", line 216, in create_dataset
+    rospy.sleep(0.3)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-03-26 13:02:14.773917: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 13:02:14.773961: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[DDPG] Building the actor model
+2021-03-26 13:02:18.350632: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-26 13:02:18.350967: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 13:02:18.350997: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-03-26 13:02:18.351033: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-03-26 13:02:18.351345: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-26 13:02:18.351596: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1616743943.523762166, 2.167000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1616743943.531913390, 2.171000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1616743943.532038646, 2.171000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1616743945.003893774, 3.201000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1616743946.467675723, 4.201000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1616743947.548490301, 5.000000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1616743948.618076746, 5.800000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] Creating Data.
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:20<00:00, 20.60s/it]100%|██████████| 1/1 [00:20<00:00, 20.61s/it]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]learn.py:100: RuntimeWarning: divide by zero encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+learn.py:100: RuntimeWarning: invalid value encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+0it [00:34, ?it/s]
+Traceback (most recent call last):
+  File "learn.py", line 881, in <module>
+    learner.pretrain_actor(args.experiment)
+  File "learn.py", line 144, in __init__
+    self.create_dataset()
+  File "learn.py", line 217, in create_dataset
+    self.env.quadruped.set_motion_state(x)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-03-26 13:03:56.184677: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 13:03:56.184720: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[DDPG] Building the actor model
+2021-03-26 13:03:59.906171: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-26 13:03:59.906517: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-03-26 13:03:59.906540: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-03-26 13:03:59.906575: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-03-26 13:03:59.906852: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-26 13:03:59.907123: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1616744044.907176843, 2.256000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1616744044.908816370, 2.256000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1616744044.911344985, 2.258000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1616744046.418128939, 3.315000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1616744046.820028854, 3.600000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1616744047.516998387, 4.001000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1616744048.073826703, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] Creating Data.
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:21<00:00, 21.44s/it]100%|██████████| 1/1 [00:21<00:00, 21.44s/it]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]learn.py:100: RuntimeWarning: divide by zero encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+learn.py:100: RuntimeWarning: invalid value encountered in true_divide
+  signal = signal/(np.abs(signal.max(axis = 0)))
+1it [00:07,  7.05s/it]2it [00:13,  6.92s/it]3it [00:21,  7.05s/it]4it [00:28,  7.01s/it]5it [00:34,  6.97s/it]6it [00:42,  7.10s/it]7it [00:49,  7.10s/it]8it [00:55,  6.78s/it]9it [01:02,  6.71s/it]10it [01:09,  6.80s/it]11it [01:16,  7.06s/it]12it [01:22,  6.77s/it]13it [01:29,  6.81s/it]14it [01:36,  6.82s/it]15it [01:43,  6.81s/it]16it [01:51,  7.19s/it]17it [01:56,  6.58s/it]18it [02:03,  6.69s/it]19it [02:10,  6.79s/it]20it [02:17,  6.93s/it]21it [02:24,  6.89s/it]22it [02:30,  6.73s/it]23it [02:38,  6.95s/it]24it [02:45,  6.91s/it]25it [02:52,  6.88s/it]26it [02:59,  6.99s/it]27it [03:06,  7.05s/it]28it [03:13,  7.12s/it]29it [03:20,  7.07s/it]30it [03:27,  7.08s/it]31it [03:35,  7.11s/it]32it [03:42,  7.16s/it]32it [03:47,  7.12s/it]
+Traceback (most recent call last):
+  File "learn.py", line 880, in <module>
+    learner = Learner(params, True)
+  File "learn.py", line 144, in __init__
+    self.create_dataset()
+  File "learn.py", line 231, in create_dataset
+    self.env.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 850, in reset
+    rospy.sleep(2.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
