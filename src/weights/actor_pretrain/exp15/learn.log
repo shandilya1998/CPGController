@@ -1,0 +1,268 @@
+2021-03-26 11:24:30.279448: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+[DDPG] Building the actor model
+2021-03-26 11:24:33.807390: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-26 11:24:33.809064: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-03-26 11:24:33.901120: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.901965: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-26 11:24:33.902000: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-26 11:24:33.905673: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-26 11:24:33.905823: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-26 11:24:33.907310: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-26 11:24:33.907692: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-26 11:24:33.911435: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-26 11:24:33.912314: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-26 11:24:33.912538: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-26 11:24:33.912718: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.913663: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.914594: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-26 11:24:33.914971: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-26 11:24:33.915193: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-26 11:24:33.915364: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.916176: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-26 11:24:33.916199: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-26 11:24:33.916296: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-26 11:24:33.916376: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-26 11:24:33.916443: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-26 11:24:33.916520: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-26 11:24:33.916585: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-26 11:24:33.916649: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-26 11:24:33.916712: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-26 11:24:33.916826: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.917736: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:33.918505: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-26 11:24:33.918545: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-26 11:24:34.723898: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-03-26 11:24:34.723939: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-03-26 11:24:34.723948: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-03-26 11:24:34.724303: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:34.725248: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:34.726064: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-26 11:24:34.726833: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1616757878.087466154, 1493.151000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1616757878.088289668, 1493.151000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1616757878.088338565, 1493.151000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1616757879.260959370, 1494.319000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1616757879.793094548, 1494.846000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1616757880.194766630, 1495.246000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1616757880.600974810, 1495.646000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[Actor] Memory Growth Allowed
+[Actor] Dataset <BatchDataset shapes: (((900, 6), (900, 34), (900, 30)), ((900, 80, 12), (900, 1), (900, 12))), types: ((tf.float32, tf.float32, tf.float64), (tf.float32, tf.float32, tf.float64))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-03-26 11:24:57.846739: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-26 11:24:58.732259: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[Actor] Episode 0 Step 0 Loss: 8890270875648.0
+[Actor] Episode 0 Step 1 Loss: 8934419070976.0
+[Actor] Episode 0 Step 2 Loss: 8908130222080.0
+[Actor] Episode 0 Step 3 Loss: 8817027842048.0
+[Actor] Episode 0 Step 4 Loss: 8872153579520.0
+[Actor] Episode 0 Step 5 Loss: 8853819228160.0
+[Actor] Episode 0 Step 6 Loss: 8769359052800.0
+[Actor] Episode 0 Step 7 Loss: 8850253021184.0
+[Actor] Episode 0 Step 8 Loss: 8888253415424.0
+[Actor] Episode 0 Step 9 Loss: 8801830830080.0
+[Actor] Episode 0 Step 10 Loss: 8873471639552.0
+[Actor] Episode 0 Step 11 Loss: 8866860367872.0
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 8860487428778.666
+[Actor] Learning Rate: 0.009963428601622581
+[Actor] Epoch Time: 122.0829107761383s
+-------------------------------------------------
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 8927568723968.0
+[Actor] Episode 1 Step 1 Loss: 8807975485440.0
+[Actor] Episode 1 Step 2 Loss: 8857503924224.0
+[Actor] Episode 1 Step 3 Loss: 8910885879808.0
+[Actor] Episode 1 Step 4 Loss: 8829367484416.0
+[Actor] Episode 1 Step 5 Loss: 8866582495232.0
+[Actor] Episode 1 Step 6 Loss: 8884939915264.0
+[Actor] Episode 1 Step 7 Loss: 8867223175168.0
+[Actor] Episode 1 Step 8 Loss: 8797838901248.0
+[Actor] Episode 1 Step 9 Loss: 8820121141248.0
+[Actor] Episode 1 Step 10 Loss: 8867263021056.0
+[Actor] Episode 1 Step 11 Loss: 8888577425408.0
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 8860487297706.666
+[Actor] Learning Rate: 0.009926991537213326
+[Actor] Epoch Time: 124.31288957595825s
+-------------------------------------------------
+[Actor] Starting Episode 2
+[Actor] Episode 2 Step 0 Loss: 8898658435072.0
+[Actor] Episode 2 Step 1 Loss: 9048959221760.0
+[Actor] Episode 2 Step 2 Loss: 8789247918080.0
+[Actor] Episode 2 Step 3 Loss: 8976407199744.0
+[Actor] Episode 2 Step 4 Loss: 8844491096064.0
+[Actor] Episode 2 Step 5 Loss: 8886020997120.0
+[Actor] Episode 2 Step 6 Loss: 8769250525184.0
+[Actor] Episode 2 Step 7 Loss: 8879907799040.0
+[Actor] Episode 2 Step 8 Loss: 8815986606080.0
+[Actor] Episode 2 Step 9 Loss: 8844767920128.0
+[Actor] Episode 2 Step 10 Loss: 8768831619072.0
+[Actor] Episode 2 Step 11 Loss: 8803314565120.0
+-------------------------------------------------
+[Actor] Episode 2 Average Loss: 8860486991872.0
+[Actor] Learning Rate: 0.00989068765193224
+[Actor] Epoch Time: 122.1212306022644s
+-------------------------------------------------
+[Actor] Starting Episode 3
+[Actor] Episode 3 Step 0 Loss: 8868582129664.0
+[Actor] Episode 3 Step 1 Loss: 8807530889216.0
+[Actor] Episode 3 Step 2 Loss: 8985919881216.0
+[Actor] Episode 3 Step 3 Loss: 8870330105856.0
+[Actor] Episode 3 Step 4 Loss: 8791860969472.0
+[Actor] Episode 3 Step 5 Loss: 8861223223296.0
+[Actor] Episode 3 Step 6 Loss: 8947949895680.0
+[Actor] Episode 3 Step 7 Loss: 8917602009088.0
+[Actor] Episode 3 Step 8 Loss: 8874235002880.0
+[Actor] Episode 3 Step 9 Loss: 8752086908928.0
+[Actor] Episode 3 Step 10 Loss: 8804053811200.0
+[Actor] Episode 3 Step 11 Loss: 8844470124544.0
+-------------------------------------------------
+[Actor] Episode 3 Average Loss: 8860487079253.334
+[Actor] Learning Rate: 0.009854516014456749
+[Actor] Epoch Time: 120.36698269844055s
+-------------------------------------------------
+[Actor] Starting Episode 4
+[Actor] Episode 4 Step 0 Loss: 8886859857920.0
+[Actor] Episode 4 Step 1 Loss: 8833796669440.0
+[Actor] Episode 4 Step 2 Loss: 8860823715840.0
+[Actor] Episode 4 Step 3 Loss: 8925776707584.0
+[Actor] Episode 4 Step 4 Loss: 8859040088064.0
+[Actor] Episode 4 Step 5 Loss: 8899985932288.0
+[Actor] Episode 4 Step 6 Loss: 8862986928128.0
+[Actor] Episode 4 Step 7 Loss: 8773277057024.0
+[Actor] Episode 4 Step 8 Loss: 8877698449408.0
+[Actor] Episode 4 Step 9 Loss: 8885363539968.0
+[Actor] Episode 4 Step 10 Loss: 8824993873920.0
+[Actor] Episode 4 Step 11 Loss: 8835242655744.0
+-------------------------------------------------
+[Actor] Episode 4 Average Loss: 8860487122944.0
+[Actor] Learning Rate: 0.009818476624786854
+[Actor] Epoch Time: 123.08204507827759s
+-------------------------------------------------
+[Actor] Starting Episode 5
+[Actor] Episode 5 Step 0 Loss: 8770393997312.0
+[Actor] Episode 5 Step 1 Loss: 8831755091968.0
+[Actor] Episode 5 Step 2 Loss: 8837856755712.0
+[Actor] Episode 5 Step 3 Loss: 8882057379840.0
+[Actor] Episode 5 Step 4 Loss: 8790185869312.0
+[Actor] Episode 5 Step 5 Loss: 8881655775232.0
+[Actor] Episode 5 Step 6 Loss: 8907140366336.0
+[Actor] Episode 5 Step 7 Loss: 8755355844608.0
+[Actor] Episode 5 Step 8 Loss: 8871590494208.0
+[Actor] Episode 5 Step 9 Loss: 8889053478912.0
+[Actor] Episode 5 Step 10 Loss: 8966009520128.0
+[Actor] Episode 5 Step 11 Loss: 8942788804608.0
+-------------------------------------------------
+[Actor] Episode 5 Average Loss: 8860486948181.334
+[Actor] Learning Rate: 0.009782569482922554
+[Actor] Epoch Time: 124.35772109031677s
+-------------------------------------------------
+[Actor] Starting Episode 6
+[Actor] Episode 6 Step 0 Loss: 8866232270848.0
+[Actor] Episode 6 Step 1 Loss: 8873030189056.0
+[Actor] Episode 6 Step 2 Loss: 8837260115968.0
+[Actor] Episode 6 Step 3 Loss: 8889337643008.0
+[Actor] Episode 6 Step 4 Loss: 8876295454720.0
+[Actor] Episode 6 Step 5 Loss: 8821163425792.0
+[Actor] Episode 6 Step 6 Loss: 8821876457472.0
+[Actor] Episode 6 Step 7 Loss: 8837123801088.0
+[Actor] Episode 6 Step 8 Loss: 8900603543552.0
+[Actor] Episode 6 Step 9 Loss: 8808398061568.0
+[Actor] Episode 6 Step 10 Loss: 8928225132544.0
+[Actor] Episode 6 Step 11 Loss: 8866297282560.0
+-------------------------------------------------
+[Actor] Episode 6 Average Loss: 8860486948181.334
+[Actor] Learning Rate: 0.009746793657541275
+[Actor] Epoch Time: 127.79372596740723s
+-------------------------------------------------
+[Actor] Starting Episode 7
+[Actor] Episode 7 Step 0 Loss: 8799415959552.0
+[Actor] Episode 7 Step 1 Loss: 8938241130496.0
+[Actor] Episode 7 Step 2 Loss: 8885488320512.0
+[Actor] Episode 7 Step 3 Loss: 8914897731584.0
+[Actor] Episode 7 Step 4 Loss: 8812281987072.0
+[Actor] Episode 7 Step 5 Loss: 8985365184512.0
+[Actor] Episode 7 Step 6 Loss: 8877776044032.0
+[Actor] Episode 7 Step 7 Loss: 8852029308928.0
+[Actor] Episode 7 Step 8 Loss: 8873758949376.0
+[Actor] Episode 7 Step 9 Loss: 8811191468032.0
+[Actor] Episode 7 Step 10 Loss: 8778072195072.0
+[Actor] Episode 7 Step 11 Loss: 8797324050432.0
+-------------------------------------------------
+[Actor] Episode 7 Average Loss: 8860486860800.0
+[Actor] Learning Rate: 0.009711148217320442
+[Actor] Epoch Time: 126.7751898765564s
+-------------------------------------------------
+[Actor] Starting Episode 8
+[Actor] Episode 8 Step 0 Loss: 8893832888320.0
+[Actor] Episode 8 Step 1 Loss: 8894063575040.0
+[Actor] Episode 8 Step 2 Loss: 8930454405120.0
+[Actor] Episode 8 Step 3 Loss: 8960563216384.0
+[Actor] Episode 8 Step 4 Loss: 8875507974144.0
+[Actor] Episode 8 Step 5 Loss: 8875582423040.0
+[Actor] Episode 8 Step 6 Loss: 8718739570688.0
+[Actor] Episode 8 Step 7 Loss: 8831510773760.0
+[Actor] Episode 8 Step 8 Loss: 8755631620096.0
+[Actor] Episode 8 Step 9 Loss: 8787640451072.0
+[Actor] Episode 8 Step 10 Loss: 8996182294528.0
+[Actor] Episode 8 Step 11 Loss: 8806137331712.0
+-------------------------------------------------
+[Actor] Episode 8 Average Loss: 8860487210325.334
+[Actor] Learning Rate: 0.00967563409358263
+[Actor] Epoch Time: 126.78481483459473s
+-------------------------------------------------
+[Actor] Starting Episode 9
+[Actor] Episode 9 Step 0 Loss: 8939497324544.0
+[Actor] Episode 9 Step 1 Loss: 8855677304832.0
+[Actor] Episode 9 Step 2 Loss: 8754417369088.0
+[Actor] Episode 9 Step 3 Loss: 8788083474432.0
+[Actor] Episode 9 Step 4 Loss: 8871206715392.0
+[Actor] Episode 9 Step 5 Loss: 8857665404928.0
+[Actor] Episode 9 Step 6 Loss: 8803784327168.0
+[Actor] Episode 9 Step 7 Loss: 8961478623232.0
+[Actor] Episode 9 Step 8 Loss: 8835333881856.0
+[Actor] Episode 9 Step 9 Loss: 8882128683008.0
+[Actor] Episode 9 Step 10 Loss: 8958039293952.0
+[Actor] Episode 9 Step 11 Loss: 8818535694336.0
+-------------------------------------------------
+[Actor] Episode 9 Average Loss: 8860487341397.334
+[Actor] Learning Rate: 0.00964024942368269
+[Actor] Epoch Time: 124.73270511627197s
+-------------------------------------------------
+[Actor] Starting Episode 10
+[Actor] Episode 10 Step 0 Loss: 8909479739392.0
+[Actor] Episode 10 Step 1 Loss: 8814150549504.0
+[Actor] Episode 10 Step 2 Loss: 8806618628096.0
+[Actor] Episode 10 Step 3 Loss: 8978614452224.0
+[Actor] Episode 10 Step 4 Loss: 8829461856256.0
+[Actor] Episode 10 Step 5 Loss: 8951066263552.0
+[Actor] Episode 10 Step 6 Loss: 8939719622656.0
+[Actor] Episode 10 Step 7 Loss: 8764753182720.0
+[Actor] Episode 10 Step 8 Loss: 8824775770112.0
+[Actor] Episode 10 Step 9 Loss: 8895456083968.0
+[Actor] Episode 10 Step 10 Loss: 8768949583872.0
+[Actor] Episode 10 Step 11 Loss: 8842799742976.0
+-------------------------------------------------
+[Actor] Episode 10 Average Loss: 8860487122944.0
+[Actor] Learning Rate: 0.00960499420762062
+[Actor] Epoch Time: 124.43273901939392s
+-------------------------------------------------
