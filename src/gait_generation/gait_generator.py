@@ -32,7 +32,7 @@ class Signal:
     def _compute(self, t):
         t = t % self.T
         if 0 <=t <=self.beta * self.T/2:
-            sel.theta1 = np.sin(
+            self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
                     self.T * self.beta
                 ) + np.pi
@@ -40,19 +40,19 @@ class Signal:
             self.theta2 = 0
             self.theta3 = 0
         elif self.T * self.beta / 2 < t < self.T * (2 - self.beta) / 2:
-            self.theta1 = np.sin(
+            self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
                     self.T * (1 - self.beta)
                 ) + np.pi * (3 - 4 * self.beta)/(2 * (1 - self.beta))
             )
-            self.theta2 = np.sin(
+            self.theta2 = self.theta_k * np.sin(
                 np.pi * t/(
                     self.T * (1 - self.beta)
                 ) - np.pi * self.beta/(2 * (1 - self.beta))
             )
             self.theta3 = -self.theta2 / 5
         elif self.T * (2 - self.beta) / 2 <= t < self.T:
-            self.theta1 = np.sin(
+            self.theta1 = self.theta_h * np.sin(
                 np.pi * t / (
                     self.T * self.beta
                 ) + np.pi * (self.beta - 1) / self.beta

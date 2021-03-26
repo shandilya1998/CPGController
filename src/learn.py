@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 class SignalDataGen:
-    def __init__(self, params, create_data = False):
+    def __init__(self, params):
         self.Tst = params['Tst']
         self.Tsw = params['Tsw']
         self.theta_h = params['theta_h']
@@ -34,13 +34,17 @@ class SignalDataGen:
         self.dt = self.params['dt']
         self.data = []
         self.num_data = 0
+
+    def set_N(self, N, create_data = False):
+        self.N = N
+        self.signal_gen = Signal(
+            self.N + 1,
+            self.params['dt']
+        )
         if create_data:
             self._create_data()
         else:
             self.num_data = 896*5
-
-    def set_N(self, N):
-        self.N = N
 
     def get_ff(self, signal, ff_type = 'fft'):
         if ff_type == 'fft':
@@ -83,7 +87,7 @@ class SignalDataGen:
                 mu = np.array([theta_k, theta_k / 5, theta_h])
                 mu = [mu for i in range(4)]
                 mu =  np.concatenate(mu, 0)
-                freq = self.get_ff(signal[:, 0], 'autocorr')
+                freq = self.get_ff(signal[:, 2], 'fft')
                 self.data.append(
                     [signal, motion, freq, mu]
                 )
@@ -127,8 +131,8 @@ class Learner():
         ]
         self._noise = self._noise_init
         self.OU = OU()
-        self.signal_gen = SignalDataGen(params, create_data)
-        self.signal_gen.set_N(10 * self.params['rnn_steps'])
+        self.signal_gen = SignalDataGen(params)
+        self.signal_gen.set_N(10 * self.params['rnn_steps'], create_data)
         self.pretrain_osc_mu = np.ones((
             1,
             self.params['units_osc']
@@ -204,13 +208,13 @@ class Learner():
                 np.zeros((self.params['units_osc'],)),
                 osc_state[0]
             )
-            y = self.signal_gen.preprocess(y)
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
-                actions = np.expand_dims(y[i+1:self.params['rnn_steps']], 0)
+                y_ = self.signal_gen.preprocess(y)
+                actions = np.expand_dims(y_[i+1:self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
                 rospy.sleep(0.3)
-                self.env.quadruped.set_initial_motion_state(x)
+                self.env.quadruped.set_motion_state(x)
                 self.env.quadruped.set_osc_state(osc)
                 _state = self.env.quadruped.get_state_tensor()
                 for j, s in enumerate(_state):
@@ -224,6 +228,7 @@ class Learner():
                     np.zeros((self.params['units_osc'],)),
                     osc
                 )
+            self.env.quadruped.reset()
 
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
@@ -872,7 +877,7 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, False)
+    learner = Learner(params, True)
     learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
