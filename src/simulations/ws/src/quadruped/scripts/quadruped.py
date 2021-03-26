@@ -587,8 +587,8 @@ class Quadruped:
         diff_joint = self.joint_position - self.last_joint
 
         self.robot_state = np.concatenate([
-            self.joint_position,
-            diff_joint,
+            np.sin(self.joint_position),
+            np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
             self.linear_acc
@@ -789,8 +789,8 @@ class Quadruped:
         self.last_joint = self.joint_position
         diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
         self.robot_state = np.concatenate([
-            self.joint_position,
-            diff_joint,
+            np.sin(self.joint_position),
+            np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
             self.linear_acc
@@ -1021,8 +1021,8 @@ class Quadruped:
         diff_joint = self.joint_position - self.last_joint
 
         self.robot_state = np.concatenate([
-            self.joint_position,
-            diff_joint,
+            np.sin(self.joint_position),
+            np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
             self.linear_acc

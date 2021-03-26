@@ -93,7 +93,6 @@ class SignalDataGen:
         )
 
     def preprocess(self, signal):
-        signal = signal-np.mean(signal, axis = 0)
         signal = signal/(np.abs(signal.max(axis = 0)))
         return signal
 
@@ -129,6 +128,7 @@ class Learner():
         self._noise = self._noise_init
         self.OU = OU()
         self.signal_gen = SignalDataGen(params, create_data)
+        self.signal_gen.set_N(10 * self.params['rnn_steps'])
         self.pretrain_osc_mu = np.ones((
             1,
             self.params['units_osc']
@@ -179,92 +179,6 @@ class Learner():
         print('[Actor] {name} >>>>>>>>>>>>'.format(name=name))
         print(grads)
 
-    def _pretrain_actor(self, x, y):
-        with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, mu] = self.actor.model(x)
-            y_pred = _action[0]
-            loss_mu = self.mse_mu(y[2], mu)
-            loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss_omega = self.mse_omega(y[1], omega)
-            loss = loss_mu + loss_action + loss_omega
-
-        grads = tape.gradient(
-            loss,
-            self.actor.model.trainable_variables
-        )
-        #self.print_grads(self.actor.model.trainable_variables, grads_action)
-        self.pretrain_actor_optimizer.apply_gradients(
-            zip(
-                grads,
-                self.actor.model.trainable_variables
-            )
-        )
-        return loss, [loss_action, loss_omega, loss_mu]
-
-    def _pretrain_actor_segments(self, x, y):
-        with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, mu] = self.actor.model(x)
-            y_pred = _action[0]
-            loss_mu = self.mse_mu(y[2], mu)
-            loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss_omega = self.mse_omega(y[1], omega)
-            loss = loss_mu + loss_action + loss_omega
-
-        vars_action = []
-        for var in self.actor.model.trainable_variables:
-            if 'complex_dense' in var.name:
-                vars_action.append(var)
-        grads_action = tape.gradient(
-            loss_action,
-            vars_action
-        )
-        #self.print_grads(self.actor.model.trainable_variables, grads_action)
-        self.pretrain_actor_optimizer.apply_gradients(
-            zip(
-                grads_action,
-                vars_action
-            )
-        )
-
-        vars_omega = []
-        for var in self.actor.model.trainable_variables:
-            if 'state_encoder' in var.name:
-                if 'mu_dense' in var.name or 'b_dense' in var.name:
-                    continue
-                else:
-                    vars_omega.append(var)
-        grads_omega = tape.gradient(
-            loss_omega,
-            vars_omega
-        )
-        #self.print_grads(vars_omega, grads_omega)
-        self.pretrain_actor_optimizer.apply_gradients(
-            zip(
-                grads_omega,
-                vars_omega
-            )
-        )
-
-        vars_mu = []
-        for var in self.actor.model.trainable_variables:
-            if 'state_encoder' in var.name:
-                if 'omega_dense' in var.name or 'b_dense' in var.name:
-                    continue
-                else:
-                    vars_mu.append(var)
-        grads_mu = tape.gradient(
-            loss_mu,
-            vars_mu
-        )
-        #self.print_grads(vars_mu, grads_mu)
-        self.pretrain_actor_optimizer.apply_gradients(
-            zip(
-                grads_mu,
-                vars_mu
-            )
-        )
-        return loss, [loss_action, loss_omega, loss_mu]
-
     def _hopf_oscillator(self, omega, mu, b, z):
         rng = np.arange(1, self.params['units_osc'] + 1)
         x, y = z[:self.params['units_osc']], z[self.params['units_osc']:]
@@ -282,11 +196,7 @@ class Learner():
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f, mu in tqdm(self.signal_gen.generator()):
-            mu = (mu * np.pi / 180)/(np.pi/3)
-            y = y * np.pi / 180
-            ac = y[0]
-            y = y[1:]
-            y = np.expand_dims(self.signal_gen.preprocess(y), 0)
+            mu = mu * np.pi / 180
             f = f * 2 * np.pi
             osc = self._hopf_oscillator(
                 f,
@@ -294,35 +204,27 @@ class Learner():
                 np.zeros((self.params['units_osc'],)),
                 osc_state[0]
             )
-            self.env.quadruped.all_legs.move(ac)
-            rospy.sleep(0.3)
-            self.env.quadruped.set_initial_motion_state(x)
-            self.env.quadruped.set_osc_state(osc)
-            diff_joint = self.env.quadruped.joint_position - \
-                self.env.quadruped.last_joint
-            _state = [
-                np.expand_dims(
-                    self.env.quadruped.motion_state, 0
-                ),
-                np.expand_dims(
-                    np.concatenate(
-                        [
-                            np.sin(self.env.quadruped.joint_position),
-                            np.sin(diff_joint),
-                            self.env.quadruped.orientation,
-                            self.env.quadruped.angular_vel,
-                            self.env.quadruped.linear_acc
-                        ]
-                    ), 0
-                ),
-                np.expand_dims(self.env.quadruped.osc_state, 0)
-            ]
-            #_state = self.env.quadruped.get_state_tensor()
-            for j, s in enumerate(_state):
-                X[j].append(s)
-            Y.append(y)
-            F.append(np.array([[f]], dtype = np.float32))
-            MU.append(mu)
+            y = self.signal_gen.preprocess(y)
+            for i in range(self.params['rnn_steps']):
+                ac = y[i]
+                actions = np.expand_dims(y[i+1:self.params['rnn_steps']], 0)
+                self.env.quadruped.all_legs.move(ac)
+                rospy.sleep(0.3)
+                self.env.quadruped.set_initial_motion_state(x)
+                self.env.quadruped.set_osc_state(osc)
+                _state = self.env.quadruped.get_state_tensor()
+                for j, s in enumerate(_state):
+                    X[j].append(s)
+                Y.append(actions)
+                F.append(np.array([[f]], dtype = np.float32))
+                MU.append(mu)
+                osc = self._hopf_oscillator(
+                    f,
+                    np.ones((self.params['units_osc'],)),
+                    np.zeros((self.params['units_osc'],)),
+                    osc
+                )
+
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
@@ -484,6 +386,28 @@ class Learner():
                         )
                     )
                 prev_loss = avg_loss
+
+    def _pretrain_actor(self, x, y):
+        with tf.GradientTape(persistent=False) as tape:
+            _action, [omega, mu] = self.actor.model(x)
+            y_pred = _action[0]
+            loss_mu = self.mse_mu(y[2], mu)
+            loss_action = self.actor._pretrain_loss(y[0], y_pred)
+            loss_omega = self.mse_omega(y[1], omega)
+            loss = loss_mu + loss_action + loss_omega
+
+        grads = tape.gradient(
+            loss,
+            self.actor.model.trainable_variables
+        )
+        #self.print_grads(self.actor.model.trainable_variables, grads_action)
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                self.actor.model.trainable_variables
+            )
+        )
+        return loss, [loss_action, loss_omega, loss_mu], _action, [omega, mu]
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
@@ -949,7 +873,8 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, False)
-    #learner.pretrain_actor(experiment)
+    learner.pretrain_actor(args.experiment)
+    """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
@@ -969,3 +894,4 @@ if __name__ == '__main__':
         os.mkdir(critic_path)
 
     learner.learn(path, experiment = args.experiment)
+    """

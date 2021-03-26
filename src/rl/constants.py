@@ -180,7 +180,7 @@ robot_data = {
 
 params.update(robot_data)
 
-Tsw = [i for i in range(20, 200)]
+Tsw = [i for i in range(20, 200, 4)]
 Tsw = Tsw + Tsw + Tsw
 Tst = [i*3 for i in Tsw]
 Tst = Tsw + Tst + Tst
