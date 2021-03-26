@@ -449,6 +449,48 @@ class Learner():
         )
         return loss, [loss_action, loss_omega, loss_mu]
 
+    def _pretrain_segments(self, x, y):
+        with tf.GradientTape(persistent=True) as tape:
+            _action, [omega, mu] = self.actor.model(x)
+            y_pred = _action[0]
+            loss_mu = self.mse_mu(y[2], mu)
+            loss_omega = self.mse_omega(y[1], omega)
+            loss_action = self.actor._pretrain_loss(y[0], y_pred)
+            loss_enc = loss_omega + loss_mu
+            loss = loss_enc + loss_action
+        vars_encoder = []
+        vars_remainder = []
+        for var in self.actor.model.trainable_variables:
+            if 'motion_state_encoder' in var.name:
+                vars_encoder.append(var)
+            else:
+                vars_remainder.append(var)
+        grads = tape.gradient(
+            loss_enc,
+            vars_encoder
+        )
+        #self.print_grads(self.actor.model.trainable_variables, grads_action)
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                vars_encoder
+            )
+        )
+
+        grads = tape.gradient(
+            loss_action,
+            vars_remainder
+        )
+        #self.print_grads(self.actor.model.trainable_variables, grads_action)
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                vars_remainder
+            )
+        )
+
+        return loss, [loss_action, loss_omega, loss_mu]
+
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
         self._pretrain_loop(
             self._pretrain_encoder, experiment, checkpoint_dir, 'pretrain_enc'
@@ -889,7 +931,7 @@ if __name__ == '__main__':
     learner = Learner(params, False)
     learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
     learner._pretrain_loop(
-            learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+            learner._pretrain_segments, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
         )
     #learner.pretrain_actor(args.experiment)
     """
