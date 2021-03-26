@@ -1,8 +1,8 @@
 #!/bin/sh
 
-EXPERIMENT=2
-MODEL=""
-EPOCHS=""
+EXPERIMENT=14
+MODEL="enc"
+EPOCHS="20"
 ITEM=""
 
 OUT="exp$EXPERIMENT/"

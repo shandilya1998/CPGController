@@ -97,7 +97,14 @@ class SignalDataGen:
         )
 
     def preprocess(self, signal):
-        signal = signal/(np.abs(signal.max(axis = 0)))
+        norm = np.abs(signal.max(axis = 0))
+        try:
+            signal = signal/norm
+        except FloatingPointError:
+            res = np.where(norm == 0)
+            for i in res:
+                norm[i] = 1e-8
+            signal = signal/norm
         return signal
 
     def generator(self):
@@ -108,6 +115,7 @@ class SignalDataGen:
 
 class Learner():
     def __init__(self, params, create_data = False):
+        np.seterr(all='raise')
         tf.config.run_functions_eagerly(False)
         self.params = params
         self.actor = ActorNetwork(params)
@@ -166,6 +174,7 @@ class Learner():
         self._action = None
         matplotlib.use('Agg')
         physical_devices = tf.config.list_physical_devices('GPU')
+        np.seterr(all='raise')
         print('[Actor] GPU>>>>>>>>>>>>')
         print('[Actor] {lst}'.format(lst = physical_devices))
         try:
@@ -212,7 +221,7 @@ class Learner():
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
                 y_ = self.signal_gen.preprocess(y)
-                actions = np.expand_dims(y_[i+1:self.params['rnn_steps']], 0)
+                actions = np.expand_dims(y_[i + 1: i + 1 + self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
                 self.env.quadruped.set_motion_state(x)
                 self.env.quadruped.set_osc_state(osc)
@@ -279,7 +288,7 @@ class Learner():
     def _pretrain_loop(self, grad_update, experiment, checkpoint_dir, name):
         total_loss = 0.0
         avg_loss = 0.0
-        prev_loss = 1e10
+        prev_loss = 1e20
         history_loss = []
         history_loss_action = []
         history_loss_mu = []
@@ -412,7 +421,7 @@ class Learner():
                 self.actor.model.trainable_variables
             )
         )
-        return loss, [loss_action, loss_omega, loss_mu], _action, [omega, mu]
+        return loss, [loss_action, loss_omega, loss_mu]
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
@@ -877,8 +886,12 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, True)
-    learner.pretrain_actor(args.experiment)
+    learner = Learner(params, False)
+    learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
+    learner._pretrain_loop(
+            learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+        )
+    #learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
