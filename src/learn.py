@@ -97,14 +97,8 @@ class SignalDataGen:
         )
 
     def preprocess(self, signal):
-        norm = np.abs(signal.max(axis = 0))
-        try:
-            signal = signal/norm
-        except FloatingPointError:
-            res = np.where(norm == 0)
-            for i in res:
-                norm[i] = 1e-8
-            signal = signal/norm
+        signal = signal-np.mean(signal, axis = 0)
+        signal = signal/(np.abs(signal.max(axis = 0)))
         return signal
 
     def generator(self):
@@ -209,7 +203,7 @@ class Learner():
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f, mu in tqdm(self.signal_gen.generator()):
-            mu = mu * np.pi / 180
+            mu = (mu * np.pi / 180 ) / (np.pi/3)
             f = f * 2 * np.pi
             osc = self._hopf_oscillator(
                 f,
@@ -512,6 +506,17 @@ class Learner():
     def load_actor(self, path):
         print('[DDPG] Loading Actor Weights')
         self.actor.model.load_weights(path)
+
+    def plot_y(self, y, name):
+        time = np.arange(y.shape[0])
+        fig, axes = plt.subplots(4,1, figsize = (5,20))
+        for i in range(4):
+            axes[i].plot(time, y[:, 3*i], color = 'r', label = 'ankle')
+            axes[i].plot(time, y[:, 3*i + 1], color = 'g', label = 'knee')
+            axes[i].plot(time, y[:, 3*i + 2], color = 'b', label = 'hip')
+            axes[i].legend()
+        fig.savefig(name)
+        plt.close()
 
     def learn(self, model_dir, experiment):
         ep = 0
@@ -931,7 +936,7 @@ if __name__ == '__main__':
     learner = Learner(params, False)
     learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
     learner._pretrain_loop(
-            learner._pretrain_segments, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+            learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
         )
     #learner.pretrain_actor(args.experiment)
     """
@@ -954,4 +959,4 @@ if __name__ == '__main__':
         os.mkdir(critic_path)
 
     learner.learn(path, experiment = args.experiment)
-    """
+    #"""
