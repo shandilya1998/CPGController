@@ -20,7 +20,7 @@ class ActorNetwork(object):
 
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
-            action, [omega, mu] = self.model(states)
+            action, [omega, mu, mean] = self.model(states)
             action[0] = action[0] * tf.repeat(
                 tf.expand_dims(mu, 1),
                 self.params['rnn_steps'],
@@ -59,12 +59,12 @@ class ActorNetwork(object):
         ]
 
         motion_encoder, robot_encoder = actor.get_encoders(params)
-        [omega, mu, motion_state] = motion_encoder(S[0])
+        [omega, mu, mean, motion_state] = motion_encoder(S[0])
         robot_state = robot_encoder(S[1])
         [action, z_out] = actor.get_complex_mlp(params)(
             [S[2], omega, robot_state, motion_state]
         )
-        outputs = [[action, z_out], [omega, mu]]
+        outputs = [[action, z_out], [omega, mu, mean]]
         model = tf.keras.Model(inputs = S, outputs = outputs)
         return model, model.trainable_weights, model.inputs
 

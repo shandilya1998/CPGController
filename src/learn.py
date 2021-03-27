@@ -97,9 +97,10 @@ class SignalDataGen:
         )
 
     def preprocess(self, signal):
-        signal = signal-np.mean(signal, axis = 0)
+        mean = np.mean(signal, axis = 0)
+        signal = signal - mean
         signal = signal/(np.abs(signal.max(axis = 0)))
-        return signal
+        return signal, mean
 
     def generator(self):
         for batch in range(self.num_data):
@@ -134,12 +135,13 @@ class Learner():
         self._noise = self._noise_init
         self.OU = OU()
         self.signal_gen = SignalDataGen(params)
-        self.signal_gen.set_N(10 * self.params['rnn_steps'], create_data)
+        self.signal_gen.set_N(3 * self.params['rnn_steps'], create_data)
         self.pretrain_osc_mu = np.ones((
             1,
             self.params['units_osc']
         ), dtype = np.float32)
         self.mse_mu = tf.keras.losses.MeanSquaredError()
+        self.mse_mean = tf.keras.losses.MeanSquaredError()
         self.mse_omega = tf.keras.losses.MeanSquaredError()
         self.dt = self.params['dt']
         if create_data:
@@ -201,6 +203,7 @@ class Learner():
         F = []
         MU = []
         Y = []
+        MEAN = []
         X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f, mu in tqdm(self.signal_gen.generator()):
             mu = (mu * np.pi / 180 ) / (np.pi/3)
@@ -214,7 +217,7 @@ class Learner():
             y = y * np.pi / 180
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
-                y_ = self.signal_gen.preprocess(y)
+                y_, mean = self.signal_gen.preprocess(y)
                 actions = np.expand_dims(y_[i + 1: i + 1 + self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
                 self.env.quadruped.set_motion_state(x)
@@ -231,6 +234,7 @@ class Learner():
                     np.zeros((self.params['units_osc'],)),
                     osc
                 )
+                MEAN.append(np.expand_dims(mean, 0))
             self.env.quadruped.reset()
 
         for j in range(len(X)):
@@ -238,12 +242,20 @@ class Learner():
         Y = np.concatenate(Y, axis = 0)
         F = np.concatenate(F, axis = 0)
         MU = np.concatenate(MU, axis = 0)
+        MEAN = np.concatenate(MEAN, axis = 0)
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
         np.save('data/pretrain/Y.npy', Y, allow_pickle = True, fix_imports=True)
         time.sleep(3)
         np.save('data/pretrain/F.npy', F, allow_pickle = True, fix_imports=True)
         time.sleep(3)
         np.save('data/pretrain/MU.npy', MU,allow_pickle = True,fix_imports=True)
+        time.sleep(3)
+        np.save(
+            'data/pretrain/MEAN.npy',
+            MEAN,
+            allow_pickle = True,
+            fix_imports=True
+        )
         time.sleep(3)
         for j in range(len(X)):
             time.sleep(3)
@@ -257,6 +269,8 @@ class Learner():
         F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True))
         time.sleep(3)
         MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
+        MEAN = tf.convert_to_tensor(np.load('data/pretrain/MEAN.npy', allow_pickle = True, fix_imports=True))
+        MEAN = []
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
@@ -270,7 +284,8 @@ class Learner():
         Y = tf.data.Dataset.from_tensor_slices(Y)
         F = tf.data.Dataset.from_tensor_slices(F)
         MU = tf.data.Dataset.from_tensor_slices(MU)
-        Y = tf.data.Dataset.zip((Y, F, MU))
+        MEAN = tf.data.Dataset.from_tensor_slices(MEAN)
+        Y = tf.data.Dataset.zip((Y, F, MU, MEAN))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
         dataset = dataset.shuffle(num_data).batch(
@@ -325,7 +340,7 @@ class Learner():
                 total_loss_action += loss_action
                 total_loss_mu += loss_mu
                 total_loss_omega += loss_omega
-                if step >= 25:
+                if step >= 30:
                     break
             end = time.time()
             avg_loss = total_loss / (self.num_batches)
@@ -397,12 +412,13 @@ class Learner():
 
     def _pretrain_actor(self, x, y):
         with tf.GradientTape(persistent=False) as tape:
-            _action, [omega, mu] = self.actor.model(x)
+            _action, [omega, mu, mean] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
+            loss_mean = self.mse_mean(y[3], mean)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_omega = self.mse_omega(y[1], omega)
-            loss = loss_mu + loss_action + loss_omega
+            loss = loss_mu + loss_action + loss_omega + loss_mean
 
         grads = tape.gradient(
             loss,
@@ -419,12 +435,13 @@ class Learner():
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, mu] = self.actor.model(x)
+            _action, [omega, mu, mean] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
+            loss_mean = self.mse_mean(y[3], mean)
             loss_omega = self.mse_omega(y[1], omega)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss = loss_omega + loss_mu
+            loss = loss_omega + loss_mu + loss_mean
 
         vars_encoder = []
         for var in self.actor.model.trainable_variables:
@@ -445,12 +462,13 @@ class Learner():
 
     def _pretrain_segments(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, mu] = self.actor.model(x)
+            _action, [omega, mu, mean] = self.actor.model(x)
             y_pred = _action[0]
             loss_mu = self.mse_mu(y[2], mu)
+            loss_mean = self.mse_mean(y[3], mean)
             loss_omega = self.mse_omega(y[1], omega)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
-            loss_enc = loss_omega + loss_mu
+            loss_enc = loss_omega + loss_mu + loss_mean
             loss = loss_enc + loss_action
         vars_encoder = []
         vars_remainder = []
@@ -557,9 +575,13 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                [out, osc], [omega, mu] = self.actor.model(self._state)
+                [out, osc], [omega, mu, mean] = self.actor.model(self._state)
                 out = out * tf.repeat(
                     tf.expand_dims(mu, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                ) + tf.repeat(
+                    tf.expand_dims(mean, 1),
                     self.params['rnn_steps'],
                     axis = 1
                 )
@@ -645,9 +667,13 @@ class Learner():
                 history = tf.concat(history,  0)
                 history_next = tf.concat(history_next, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
-                [out, osc], [o, m] = self.actor.target_model(next_states)
+                [out, osc], [o, m, mn] = self.actor.target_model(next_states)
                 out = out * tf.repeat(
                     tf.expand_dims(m, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                ) + tf.repeat(
+                    tf.expand_dims(mn, 1),
                     self.params['rnn_steps'],
                     axis = 1
                 )
@@ -667,9 +693,13 @@ class Learner():
                 loss = self.critic.train(states, actions, history, y)
                 critic_loss.append(loss.numpy())
                 tot_loss += loss.numpy()
-                a_for_grad, [omega_, mu_] = self.actor.model(states)
+                a_for_grad, [omega_, mu_, mean_] = self.actor.model(states)
                 a_for_grad[0] = a_for_grad[0] * tf.repeat(
                     tf.expand_dims(mu_, 1),
+                    self.params['rnn_steps'],
+                    axis = 1
+                ) +  tf.repeat(
+                    tf.expand_dims(mean_, 1),
                     self.params['rnn_steps'],
                     axis = 1
                 )
@@ -933,12 +963,12 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, False)
-    learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
-    learner._pretrain_loop(
-            learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
-        )
-    #learner.pretrain_actor(args.experiment)
+    learner = Learner(params, True)
+    #learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
+    #learner._pretrain_loop(
+    #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+    #    )
+    learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'

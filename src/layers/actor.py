@@ -7,12 +7,14 @@ class MotionStateEncoder(tf.keras.layers.Layer):
         self,
         action_dim,
         units_osc,
+        units_mu,
+        units_mean,
         units_combine,
         units_motion_state,
         activation_output_mlp = 'tanh',
         activation_combine = 'tanh',
         activation_motion_state = 'tanh',
-        activation_mu = 'relu',
+        activation_mu = 'tanh',
         activation_omega = 'relu',
     ):
         super(MotionStateEncoder, self).__init__()
@@ -23,10 +25,29 @@ class MotionStateEncoder(tf.keras.layers.Layer):
         ) for units in units_motion_state]
 
         self.mu_dense = tf.keras.layers.Dense(
-            units = action_dim,
+            units = units_mu,
             activation = activation_mu,
             name = 'mu_dense'
         )
+
+        self.mu_dense_2 = tf.keras.layers.Dense(
+            units = action_dim,
+            activation = tf.keras.activations.linear,
+            name = 'mu_dense'
+        )
+
+        self.mean_dense = tf.keras.layers.Dense(
+            units = units_mean,
+            activation = activation_mu,
+            name = 'mean_dense'
+        )
+
+        self.mean_dense_2 = tf.keras.layers.Dense(
+            units = action_dim,
+            activation = tf.keras.activations.linear,
+            name = 'mu_dense'
+        )
+
         self.omega_dense = tf.keras.layers.Dense(
             units = 1,
             activation = activation_omega,
@@ -38,8 +59,9 @@ class MotionStateEncoder(tf.keras.layers.Layer):
             motion_state = layer(motion_state)
 
         omega = self.omega_dense(motion_state)
-        mu = self.mu_dense(motion_state)
-        return [omega, mu, motion_state]
+        mu = self.mu_dense_2(self.mu_dense(motion_state))
+        mean = self.mean_dense_2(self.mean_dense(motion_state))
+        return [omega, mu, mean, motion_state]
 
 
 class RobotStateEncoder(tf.keras.layers.Layer):
@@ -228,6 +250,8 @@ def get_encoders(params):
     motion_encoder = MotionStateEncoder(
         action_dim = params['action_dim'],
         units_osc = params['units_osc'],
+        units_mu = params['units_mu'],
+        units_mean = params['units_mean'],
         units_combine = params['units_combine'],
         units_motion_state = params['units_motion_state'],
     )
