@@ -19,6 +19,10 @@ import json
 import matplotlib.pyplot as plt
 import matplotlib
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+
 class SignalDataGen:
     def __init__(self, params):
         self.Tst = params['Tst']
@@ -109,7 +113,7 @@ class SignalDataGen:
             yield y, x, f, mu
 
 class Learner():
-    def __init__(self, params, create_data = False):
+    def __init__(self, params, experiment, create_data = False):
         np.seterr(all='raise')
         tf.config.run_functions_eagerly(False)
         self.params = params
@@ -123,6 +127,7 @@ class Learner():
         self.env = Env(
             self.time_step_spec,
             self.params,
+            experiment
         )
         self.current_time_step = None
         self._action = self.env._action_init
@@ -294,7 +299,7 @@ class Learner():
         dataset = dataset.shuffle(self.num_data).batch(
             self.params['pretrain_bs'],
             drop_remainder=True
-        )
+        ).prefetch(tf.data.AUTOTUNE)
         return dataset
 
     def _pretrain_loop(self, grad_update, experiment, checkpoint_dir, name):
@@ -330,6 +335,7 @@ class Learner():
             total_loss_mu = 0.0
             total_loss_omega = 0.0
             start = time.time()
+            num = 0
             for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_mu] = \
                     grad_update(x, y)
@@ -343,11 +349,14 @@ class Learner():
                 total_loss_action += loss_action
                 total_loss_mu += loss_mu
                 total_loss_omega += loss_omega
+                num += 1
+                if step > 25:
+                    break
             end = time.time()
-            avg_loss = total_loss / (self.num_batches)
-            avg_loss_action = total_loss_action / (self.num_batches)
-            avg_loss_mu = total_loss_mu / (self.num_batches)
-            avg_loss_omega = total_loss_omega / (self.num_batches)
+            avg_loss = total_loss / num
+            avg_loss_action = total_loss_action / num
+            avg_loss_mu = total_loss_mu / num
+            avg_loss_omega = total_loss_omega / num
             print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
@@ -362,7 +371,7 @@ class Learner():
             history_loss_action.append(avg_loss_action)
             history_loss_mu.append(avg_loss_mu)
             history_loss_omega.append(avg_loss_omega)
-            if episode % 5 == 0:
+            if episode % 3 == 0:
                 if avg_loss == np.nan:
                     break
                 pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
@@ -964,12 +973,21 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, False)
-    #learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
-    #learner._pretrain_loop(
-    #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
-    #    )
+    learner = Learner(params, args.experiment, False)
+    """
+        Experiment 17 call
+    """
+    #"""
+    learner._pretrain_loop(
+        learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+    )
+    #"""
+    """
+        Experiment 16 call
+    """
+    """
     learner.pretrain_actor(args.experiment)
+    """
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
