@@ -201,7 +201,8 @@ pretraining = {
 
 num_data = len(pretraining['Tst'])
 params.update(pretraining)
+bs = 1000
 params.update({
-    'num_data' : num_data,
-    'pretrain_bs': 1125
+    'num_data' : 20 * bs,
+    'pretrain_bs': bs
 })

@@ -44,7 +44,7 @@ class SignalDataGen:
         if create_data:
             self._create_data()
         else:
-            self.num_data = 896*5
+            self.num_data = self.params['num_data'] // self.params['rnn_steps']
 
     def get_ff(self, signal, ff_type = 'fft'):
         if ff_type == 'fft':
@@ -196,7 +196,7 @@ class Learner():
         return np.concatenate([x, y], -1)
 
     def create_dataset(self):
-        self.num_batches = self.signal_gen.num_data//self.params['pretrain_bs']
+        self.num_batches = self.params['num_data']//self.params['pretrain_bs']
         self.env.quadruped.reset()
         motion_state, robot_state, osc_state = \
             self.env.quadruped.get_state_tensor()
@@ -270,7 +270,6 @@ class Learner():
         time.sleep(3)
         MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
         MEAN = tf.convert_to_tensor(np.load('data/pretrain/MEAN.npy', allow_pickle = True, fix_imports=True))
-        MEAN = []
         X = []
         for j in range(len(self.params['observation_spec'])):
             X.append(
@@ -280,6 +279,10 @@ class Learner():
                     )
                 )
             )
+        if num_data < self.params['num_data']:
+            self.num_data = num_data
+        else:
+            self.num_data = self.params['num_data']
         self.num_batches = num_data//self.params['pretrain_bs']
         Y = tf.data.Dataset.from_tensor_slices(Y)
         F = tf.data.Dataset.from_tensor_slices(F)
@@ -288,7 +291,7 @@ class Learner():
         Y = tf.data.Dataset.zip((Y, F, MU, MEAN))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.shuffle(num_data).batch(
+        dataset = dataset.shuffle(self.num_data).batch(
             self.params['pretrain_bs'],
             drop_remainder=True
         )
@@ -963,7 +966,7 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, True)
+    learner = Learner(params, False)
     #learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
     #learner._pretrain_loop(
     #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
