@@ -977,17 +977,17 @@ if __name__ == '__main__':
     """
         Experiment 17 call
     """
-    #"""
+    """
     learner._pretrain_loop(
         learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
     )
-    #"""
+    """
     """
         Experiment 16 call
     """
-    """
+    #"""
     learner.pretrain_actor(args.experiment)
-    """
+    #"""
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
