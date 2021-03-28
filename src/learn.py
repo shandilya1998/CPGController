@@ -964,7 +964,7 @@ if __name__ == '__main__':
         help = 'Path to output directory'
     )
     args = parser.parse_args()
-    learner = Learner(params, True)
+    learner = Learner(params, False)
     #learner.load_actor('weights/actor_pretrain/exp14/pretrain_enc/actor_pretrained_pretrain_enc_14_20.ckpt')
     #learner._pretrain_loop(
     #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
