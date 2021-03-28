@@ -8,6 +8,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
     def __init__(self,
             time_step_spec,
             params,
+            experiment,
             initial_state = None,
             GUI = False
         ):
@@ -33,7 +34,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self._state = self.initial_state
         self._reward = 0.0
         self.current_time_step = self._create_initial_time_step()
-        self.quadruped = Quadruped(params)
+        self.quadruped = Quadruped(params, experiment)
         self.params = params
 
     def _create_initial_time_step(self):

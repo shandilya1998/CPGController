@@ -377,8 +377,10 @@ class AllLegs:
 
 
 class Quadruped:
-    def __init__(self, params):
-        rospy.init_node('joint_position_node')
+    def __init__(self, params, experiment):
+        rospy.init_node('joint_position_node_exp{exp}'.format(
+            exp = experiment
+        ))
         roscpp_initialize(sys.argv)
         self.nb_joints = params['action_dim']
         self.nb_links = params['action_dim'] + 1
