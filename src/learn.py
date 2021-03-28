@@ -279,10 +279,10 @@ class Learner():
                     )
                 )
             )
-        if num_data < self.params['num_data']:
-            self.num_data = num_data
-        else:
+        if num_data == self.params['num_data']:
             self.num_data = self.params['num_data']
+        else:
+            self.num_data = num_data
         self.num_batches = num_data//self.params['pretrain_bs']
         Y = tf.data.Dataset.from_tensor_slices(Y)
         F = tf.data.Dataset.from_tensor_slices(F)
@@ -343,8 +343,6 @@ class Learner():
                 total_loss_action += loss_action
                 total_loss_mu += loss_mu
                 total_loss_omega += loss_omega
-                if step >= 30:
-                    break
             end = time.time()
             avg_loss = total_loss / (self.num_batches)
             avg_loss_action = total_loss_action / (self.num_batches)
