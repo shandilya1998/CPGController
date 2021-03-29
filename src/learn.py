@@ -153,7 +153,7 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.01,
+            0.001,
             decay_steps=60,
             decay_rate=0.95
         )
@@ -474,17 +474,6 @@ class Learner():
                 self.actor.model.trainable_variables
             )
         )
-        
-        print('Y Pred')
-        print(y_pred)
-        print('omega')
-        print(omega)
-        print('mu')
-        print(mu)
-        print('mean')
-        print(mean)
-        print('grads')
-        print(grads)
 
         return loss, [loss_action, loss_omega, loss_mu]
 
@@ -533,6 +522,7 @@ class Learner():
                 vars_encoder.append(var)
             else:
                 vars_remainder.append(var)
+        """
         grads = tape.gradient(
             loss_enc,
             vars_encoder
@@ -544,7 +534,7 @@ class Learner():
                 vars_encoder
             )
         )
-
+        """
         grads = tape.gradient(
             loss_action,
             vars_remainder
@@ -1020,17 +1010,18 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    #learner.load_actor(
-    #    'weights/actor_pretrain/exp17/pretrain_actor/actor_pretrained_pretrain_actor_17_6.ckpt'
-    #)
-    #learner._pretrain_loop(
-    #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
-    #)
+    learner.load_actor(
+        'weights/actor_pretrain/exp18/pretrain_enc/actor_pretrained_pretrain_enc_18_15.ckpt'
+    )
+    learner._pretrain_loop(
+        learner._pretrain_segments, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+    )
     #learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
+    """
     """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
