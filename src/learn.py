@@ -153,7 +153,7 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.001,
+            0.005,
             decay_steps=60,
             decay_rate=0.95
         )
@@ -500,6 +500,29 @@ class Learner():
             zip(
                 grads,
                 vars_encoder
+            )
+        )
+        return loss, [loss_action, loss_omega, loss_mu]
+
+    def _pretrain_actor_action_loss_only(self, x, y):
+        with tf.GradientTape(persistent=True) as tape:
+            _action, [omega, mu, mean] = self.actor.model(x)
+            y_pred = _action[0]
+            loss_mu = self.mse_mu(y[2], mu)
+            loss_mean = self.mse_mean(y[3], mean)
+            loss_omega = self.mse_omega(y[1], omega)
+            loss_action = self.actor._pretrain_loss(y[0], y_pred)
+            loss = loss_mu + loss_mean + loss_action
+
+        grads = tape.gradient(
+            loss,
+            self.actor.model.trainable_variables
+        )
+        #self.print_grads(self.actor.model.trainable_variables, grads_action)
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                self.actor.model.trainable_variables
             )
         )
         return loss, [loss_action, loss_omega, loss_mu]
@@ -1014,7 +1037,7 @@ if __name__ == '__main__':
         'weights/actor_pretrain/exp18/pretrain_enc/actor_pretrained_pretrain_enc_18_15.ckpt'
     )
     learner._pretrain_loop(
-        learner._pretrain_segments, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+        learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor', 3
     )
     #learner.pretrain_actor(args.experiment)
     """
