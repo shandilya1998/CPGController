@@ -139,3 +139,546 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [Actor] Episode 0 Step 10 Loss: 2716.44091796875
 [Actor] Episode 0 Step 11 Loss: 2609.22119140625
 [Actor] Episode 0 Step 12 Loss: 2837.034912109375
+[Actor] Episode 0 Step 13 Loss: 2832.051513671875
+[Actor] Episode 0 Step 14 Loss: 2938.108642578125
+[Actor] Episode 0 Step 15 Loss: 2896.865478515625
+[Actor] Episode 0 Step 16 Loss: 2961.62841796875
+[Actor] Episode 0 Step 17 Loss: 3049.576904296875
+2021-03-29 11:30:46.294080: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(learn.py:11728): Gdk-CRITICAL **: 11:30:49.375: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+2021-03-29 11:30:49.828739: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:30:49.829926: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-03-29 11:30:49.944948: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:49.947719: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:30:49.947813: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:30:49.957210: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:30:49.957999: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:30:49.961781: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:30:49.963133: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:30:49.972677: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:30:49.975529: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:30:49.976109: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:30:49.976555: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:49.979182: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:49.980755: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-03-29 11:30:50.407635: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-29 11:30:50.407891: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:30:50.408210: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:50.409190: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:30:50.409238: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:30:50.409437: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:30:50.409543: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:30:50.409618: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:30:50.409691: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:30:50.409762: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:30:50.409939: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:30:50.410033: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:30:50.410239: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:50.411248: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:50.412174: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-29 11:30:50.412231: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:30:51.327647: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-03-29 11:30:51.327695: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-03-29 11:30:51.327706: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-03-29 11:30:51.328061: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:51.329036: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:51.329881: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:30:51.330669: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+2021-03-29 11:31:11.605506: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(learn.py:11978): Gdk-CRITICAL **: 11:31:15.095: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+2021-03-29 11:31:15.382394: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:31:15.383591: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-03-29 11:31:15.443680: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.444597: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:31:15.444644: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:31:15.448580: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:31:15.448736: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:31:15.450378: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:31:15.450807: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:31:15.455563: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:31:15.458851: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:31:15.459864: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:31:15.464293: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.467394: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.468319: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-03-29 11:31:15.791272: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-29 11:31:15.791667: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:31:15.792008: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.792864: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:31:15.792906: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:31:15.793082: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:31:15.793180: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:31:15.793256: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:31:15.793337: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:31:15.793380: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:31:15.793424: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:31:15.793468: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:31:15.793623: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.794454: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:15.795079: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-29 11:31:15.795141: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:31:16.529036: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-03-29 11:31:16.529210: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-03-29 11:31:16.529235: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-03-29 11:31:16.529603: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:16.530549: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:16.531279: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:31:16.531986: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617017479.525931953, 22235.163000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617017479.526664069, 22235.163000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617017479.526766573, 22235.163000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617017480.619004317, 22236.253000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617017480.831505445, 22236.463000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617017481.033104640, 22236.664000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617017481.232302101, 22236.863000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[Actor] Memory Growth Allowed
+[Actor] Dataset <PrefetchDataset shapes: (((1125, 6), (1125, 34), (1125, 60)), ((1125, 350, 12), (1125, 1), (1125, 12), (1125, 12))), types: ((tf.float32, tf.float32, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-03-29 11:31:45.477106: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:31:46.075105: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[Actor] Episode 0 Step 0 Loss: 2958.59228515625
+[Actor] Episode 0 Step 1 Loss: 2776.624267578125
+[Actor] Episode 0 Step 2 Loss: 2752.046142578125
+[Actor] Episode 0 Step 3 Loss: 3042.799072265625
+[Actor] Episode 0 Step 4 Loss: 2698.462646484375
+[Actor] Episode 0 Step 5 Loss: 2573.46533203125
+[Actor] Episode 0 Step 6 Loss: 2720.638671875
+[Actor] Episode 0 Step 7 Loss: 2883.693359375
+[Actor] Episode 0 Step 8 Loss: 2840.561279296875
+[Actor] Episode 0 Step 9 Loss: 2766.087646484375
+[Actor] Episode 0 Step 10 Loss: 2573.260009765625
+[Actor] Episode 0 Step 11 Loss: 2866.46533203125
+[Actor] Episode 0 Step 12 Loss: 2639.644775390625
+[Actor] Episode 0 Step 13 Loss: 2937.7216796875
+[Actor] Episode 0 Step 14 Loss: 2556.9453125
+[Actor] Episode 0 Step 15 Loss: 2821.885986328125
+[Actor] Episode 0 Step 16 Loss: 2645.480712890625
+[Actor] Episode 0 Step 17 Loss: 2678.859375
+[Actor] Episode 0 Step 18 Loss: 2646.377685546875
+[Actor] Episode 0 Step 19 Loss: 2853.634765625
+[Actor] Episode 0 Step 20 Loss: 2783.4990234375
+[Actor] Episode 0 Step 21 Loss: 2747.72998046875
+[Actor] Episode 0 Step 22 Loss: 2849.249267578125
+[Actor] Episode 0 Step 23 Loss: 2636.882080078125
+[Actor] Episode 0 Step 24 Loss: 2662.853271484375
+[Actor] Episode 0 Step 25 Loss: 2861.137451171875
+[Actor] Episode 0 Step 26 Loss: 2595.95263671875
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 2754.4648166232637
+[Actor] Learning Rate: 0.009957346133887768
+[Actor] Epoch Time: 591.982129573822s
+-------------------------------------------------
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 2792.473388671875
+[Actor] Episode 1 Step 1 Loss: 2564.046142578125
+[Actor] Episode 1 Step 2 Loss: 2743.173095703125
+[Actor] Episode 1 Step 3 Loss: 2771.5244140625
+[Actor] Episode 1 Step 4 Loss: 2884.955078125
+[Actor] Episode 1 Step 5 Loss: 2475.915771484375
+[Actor] Episode 1 Step 6 Loss: 2888.153564453125
+[Actor] Episode 1 Step 7 Loss: 2712.619140625
+[Actor] Episode 1 Step 8 Loss: 2706.12060546875
+[Actor] Episode 1 Step 9 Loss: 2642.10986328125
+[Actor] Episode 1 Step 10 Loss: 2881.69873046875
+[Actor] Episode 1 Step 11 Loss: 3134.092529296875
+[Actor] Episode 1 Step 12 Loss: 2802.285888671875
+[Actor] Episode 1 Step 13 Loss: 2709.224853515625
+[Actor] Episode 1 Step 14 Loss: 2926.834228515625
+[Actor] Episode 1 Step 15 Loss: 2795.728271484375
+[Actor] Episode 1 Step 16 Loss: 2887.117919921875
+[Actor] Episode 1 Step 17 Loss: 2515.20068359375
+[Actor] Episode 1 Step 18 Loss: 2797.818603515625
+[Actor] Episode 1 Step 19 Loss: 2777.312744140625
+[Actor] Episode 1 Step 20 Loss: 2925.75634765625
+[Actor] Episode 1 Step 21 Loss: 2668.82568359375
+[Actor] Episode 1 Step 22 Loss: 2726.951416015625
+[Actor] Episode 1 Step 23 Loss: 2539.512451171875
+[Actor] Episode 1 Step 24 Loss: 2799.239501953125
+[Actor] Episode 1 Step 25 Loss: 2706.93798828125
+[Actor] Episode 1 Step 26 Loss: 2941.256591796875
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 2767.2920554832176
+[Actor] Learning Rate: 0.009914875030517578
+[Actor] Epoch Time: 692.3682334423065s
+-------------------------------------------------
+[Actor] Starting Episode 2
+2021-03-29 11:54:35.431207: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(learn.py:14731): Gdk-CRITICAL **: 11:54:39.110: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+2021-03-29 11:54:39.464239: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:54:39.465497: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-03-29 11:54:39.557088: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.557993: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:54:39.558032: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:54:39.562117: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:54:39.562279: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:54:39.563965: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:54:39.564365: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:54:39.568599: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:54:39.569613: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:54:39.569885: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:54:39.570155: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.571216: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.572078: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-03-29 11:54:39.865087: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-29 11:54:39.865359: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:54:39.865686: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.866615: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:54:39.866646: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:54:39.866842: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:54:39.866911: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:54:39.866953: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:54:39.866991: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:54:39.867035: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:54:39.867073: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:54:39.867110: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:54:39.867304: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.868275: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:39.869097: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-29 11:54:39.869140: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:54:40.626808: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-03-29 11:54:40.626850: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-03-29 11:54:40.626859: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-03-29 11:54:40.627174: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:40.627998: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:40.628701: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:54:40.629306: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+2021-03-29 11:55:18.714704: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(learn.py:14966): Gdk-CRITICAL **: 11:55:22.450: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+2021-03-29 11:55:22.829668: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:55:22.830879: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-03-29 11:55:22.887998: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:22.888777: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:55:22.888815: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:55:22.892247: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:55:22.892543: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:55:22.894093: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:55:22.894497: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:55:22.898363: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:55:22.899320: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:55:22.899569: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:55:22.899766: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:22.900745: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:22.901487: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-03-29 11:55:23.118485: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-03-29 11:55:23.119025: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-03-29 11:55:23.119343: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.120204: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-03-29 11:55:23.120244: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:55:23.120418: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:55:23.120494: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-03-29 11:55:23.120562: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-03-29 11:55:23.120618: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-03-29 11:55:23.120672: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-03-29 11:55:23.120730: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-03-29 11:55:23.120795: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-03-29 11:55:23.120982: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.121943: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.122735: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-03-29 11:55:23.122801: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-03-29 11:55:23.835977: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-03-29 11:55:23.836037: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-03-29 11:55:23.836051: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-03-29 11:55:23.836382: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.837252: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.837943: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-03-29 11:55:23.838566: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617018926.938719583, 23590.364000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617018926.939605055, 23590.365000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617018926.939768121, 23590.365000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617018928.141867503, 23591.565000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617018928.420941631, 23591.844000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617018928.621354919, 23592.043000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617018928.821411107, 23592.244000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[Actor] Memory Growth Allowed
+[Actor] Dataset <PrefetchDataset shapes: (((1125, 6), (1125, 34), (1125, 60)), ((1125, 350, 12), (1125, 1), (1125, 12), (1125, 12))), types: ((tf.float32, tf.float32, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-03-29 11:55:53.925872: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-03-29 11:55:54.526055: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[Actor] Episode 0 Step 0 Loss: 2847.579345703125
+[Actor] Episode 0 Step 1 Loss: 2904.695556640625
+[Actor] Episode 0 Step 2 Loss: 2517.5224609375
+[Actor] Episode 0 Step 3 Loss: 2778.82568359375
+[Actor] Episode 0 Step 4 Loss: 2586.4873046875
+[Actor] Episode 0 Step 5 Loss: 2661.273681640625
+[Actor] Episode 0 Step 6 Loss: 2602.46337890625
+[Actor] Episode 0 Step 7 Loss: 2769.66162109375
+[Actor] Episode 0 Step 8 Loss: 2434.402587890625
+[Actor] Episode 0 Step 9 Loss: 2619.56982421875
+[Actor] Episode 0 Step 10 Loss: 2453.202880859375
+[Actor] Episode 0 Step 11 Loss: 2238.110595703125
+[Actor] Episode 0 Step 12 Loss: 2346.3203125
+[Actor] Episode 0 Step 13 Loss: 2134.582275390625
+[Actor] Episode 0 Step 14 Loss: 2022.4534912109375
+[Actor] Episode 0 Step 15 Loss: 1664.9940185546875
+[Actor] Episode 0 Step 16 Loss: 1601.974609375
+[Actor] Episode 0 Step 17 Loss: 1521.251708984375
+[Actor] Episode 0 Step 18 Loss: 1266.76611328125
+[Actor] Episode 0 Step 19 Loss: 1369.6878662109375
+[Actor] Episode 0 Step 20 Loss: 1203.921875
+[Actor] Episode 0 Step 21 Loss: 1042.8223876953125
+[Actor] Episode 0 Step 22 Loss: 954.876220703125
+[Actor] Episode 0 Step 23 Loss: 867.9854125976562
+[Actor] Episode 0 Step 24 Loss: 1030.7696533203125
+[Actor] Episode 0 Step 25 Loss: 967.9642333984375
+[Actor] Episode 0 Step 26 Loss: 1022.2627563476562
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 1941.9417724609375
+[Actor] Learning Rate: 0.009957346133887768
+[Actor] Epoch Time: 598.0073320865631s
+-------------------------------------------------
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 1110.6097412109375
+[Actor] Episode 1 Step 1 Loss: 1153.285888671875
+[Actor] Episode 1 Step 2 Loss: 1090.4713134765625
+[Actor] Episode 1 Step 3 Loss: 977.7395629882812
+[Actor] Episode 1 Step 4 Loss: 973.3612060546875
+[Actor] Episode 1 Step 5 Loss: 982.396728515625
+[Actor] Episode 1 Step 6 Loss: 963.5922241210938
+[Actor] Episode 1 Step 7 Loss: 867.2364501953125
+[Actor] Episode 1 Step 8 Loss: 853.6422729492188
+[Actor] Episode 1 Step 9 Loss: 870.5802001953125
+[Actor] Episode 1 Step 10 Loss: 921.9742431640625
+[Actor] Episode 1 Step 11 Loss: 981.742431640625
+[Actor] Episode 1 Step 12 Loss: 901.234619140625
+[Actor] Episode 1 Step 13 Loss: 886.7730712890625
+[Actor] Episode 1 Step 14 Loss: 917.5892333984375
+[Actor] Episode 1 Step 15 Loss: 840.1699829101562
+[Actor] Episode 1 Step 16 Loss: 907.9117431640625
+[Actor] Episode 1 Step 17 Loss: 851.3845825195312
+[Actor] Episode 1 Step 18 Loss: 976.8154907226562
+[Actor] Episode 1 Step 19 Loss: 898.4563598632812
+[Actor] Episode 1 Step 20 Loss: 808.4248657226562
+[Actor] Episode 1 Step 21 Loss: 952.6575317382812
+[Actor] Episode 1 Step 22 Loss: 826.8793334960938
+[Actor] Episode 1 Step 23 Loss: 833.5022583007812
+[Actor] Episode 1 Step 24 Loss: 937.2106323242188
+[Actor] Episode 1 Step 25 Loss: 866.6038208007812
+[Actor] Episode 1 Step 26 Loss: 838.4423828125
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 925.5810433846933
+[Actor] Learning Rate: 0.009914875030517578
+[Actor] Epoch Time: 597.2504880428314s
+-------------------------------------------------
+[Actor] Starting Episode 2
+[Actor] Episode 2 Step 0 Loss: 808.606201171875
+[Actor] Episode 2 Step 1 Loss: 945.66015625
+[Actor] Episode 2 Step 2 Loss: 937.00732421875
+[Actor] Episode 2 Step 3 Loss: 742.4495849609375
+[Actor] Episode 2 Step 4 Loss: 856.9138793945312
+[Actor] Episode 2 Step 5 Loss: 769.9121704101562
+[Actor] Episode 2 Step 6 Loss: 905.2955322265625
+[Actor] Episode 2 Step 7 Loss: 842.2354736328125
+[Actor] Episode 2 Step 8 Loss: 764.8172607421875
+[Actor] Episode 2 Step 9 Loss: 726.7734375
+[Actor] Episode 2 Step 10 Loss: 781.7955322265625
+[Actor] Episode 2 Step 11 Loss: 835.6787719726562
+[Actor] Episode 2 Step 12 Loss: 779.8541259765625
+[Actor] Episode 2 Step 13 Loss: 776.4295043945312
+[Actor] Episode 2 Step 14 Loss: 836.8441162109375
+[Actor] Episode 2 Step 15 Loss: 849.294921875
+[Actor] Episode 2 Step 16 Loss: 735.4261474609375
+[Actor] Episode 2 Step 17 Loss: 802.6954956054688
+[Actor] Episode 2 Step 18 Loss: 731.0262451171875
+[Actor] Episode 2 Step 19 Loss: 853.3369140625
+[Actor] Episode 2 Step 20 Loss: 736.0565185546875
+[Actor] Episode 2 Step 21 Loss: 813.642578125
+[Actor] Episode 2 Step 22 Loss: 663.2765502929688
+[Actor] Episode 2 Step 23 Loss: 706.2730102539062
+[Actor] Episode 2 Step 24 Loss: 661.2645263671875
+[Actor] Episode 2 Step 25 Loss: 620.2680053710938
+[Actor] Episode 2 Step 26 Loss: 767.1080322265625
+-------------------------------------------------
+[Actor] Episode 2 Average Loss: 787.0348895037615
+[Actor] Learning Rate: 0.009872585535049438
+[Actor] Epoch Time: 575.7803678512573s
+-------------------------------------------------
+[Actor] Starting Episode 3
+[Actor] Episode 3 Step 0 Loss: 724.5133666992188
+[Actor] Episode 3 Step 1 Loss: 751.2781982421875
+[Actor] Episode 3 Step 2 Loss: 664.4991455078125
+[Actor] Episode 3 Step 3 Loss: 694.4290161132812
+[Actor] Episode 3 Step 4 Loss: 687.64208984375
+[Actor] Episode 3 Step 5 Loss: 670.943115234375
+[Actor] Episode 3 Step 6 Loss: 703.4284057617188
+[Actor] Episode 3 Step 7 Loss: 622.4506225585938
+[Actor] Episode 3 Step 8 Loss: 618.72900390625
+[Actor] Episode 3 Step 9 Loss: 674.3793334960938
+[Actor] Episode 3 Step 10 Loss: 624.370849609375
+[Actor] Episode 3 Step 11 Loss: 579.9887084960938
+[Actor] Episode 3 Step 12 Loss: 599.8197021484375
+[Actor] Episode 3 Step 13 Loss: 580.2559814453125
+[Actor] Episode 3 Step 14 Loss: 595.5353393554688
+[Actor] Episode 3 Step 15 Loss: 629.1690673828125
+[Actor] Episode 3 Step 16 Loss: 602.281005859375
+[Actor] Episode 3 Step 17 Loss: 472.7088317871094
+[Actor] Episode 3 Step 18 Loss: 499.284912109375
+[Actor] Episode 3 Step 19 Loss: 475.34063720703125
+[Actor] Episode 3 Step 20 Loss: 454.19757080078125
+[Actor] Episode 3 Step 21 Loss: 476.9172668457031
+[Actor] Episode 3 Step 22 Loss: 439.6282043457031
+[Actor] Episode 3 Step 23 Loss: 520.2371215820312
+[Actor] Episode 3 Step 24 Loss: 475.26788330078125
+[Actor] Episode 3 Step 25 Loss: 394.9096374511719
+[Actor] Episode 3 Step 26 Loss: 415.99224853515625
+-------------------------------------------------
+[Actor] Episode 3 Average Loss: 579.5628616898148
+[Actor] Learning Rate: 0.009830474853515625
+[Actor] Epoch Time: 581.3327763080597s
+-------------------------------------------------
+[Actor] Starting Episode 4
+[Actor] Episode 4 Step 0 Loss: 444.9508972167969
+[Actor] Episode 4 Step 1 Loss: 359.14739990234375
+[Actor] Episode 4 Step 2 Loss: 337.3023986816406
+[Actor] Episode 4 Step 3 Loss: 307.81939697265625
+[Actor] Episode 4 Step 4 Loss: 333.5974426269531
+[Actor] Episode 4 Step 5 Loss: 315.49652099609375
+[Actor] Episode 4 Step 6 Loss: 291.1368408203125
+[Actor] Episode 4 Step 7 Loss: 262.3897399902344
+[Actor] Episode 4 Step 8 Loss: 238.2148895263672
+[Actor] Episode 4 Step 9 Loss: 201.20797729492188
+[Actor] Episode 4 Step 10 Loss: 174.02590942382812
+[Actor] Episode 4 Step 11 Loss: 161.1482391357422
+[Actor] Episode 4 Step 12 Loss: 156.00999450683594
+[Actor] Episode 4 Step 13 Loss: 121.2495346069336
+[Actor] Episode 4 Step 14 Loss: 110.34774780273438
+[Actor] Episode 4 Step 15 Loss: 91.80764770507812
+[Actor] Episode 4 Step 16 Loss: 67.67169952392578
+[Actor] Episode 4 Step 17 Loss: 55.006141662597656
+[Actor] Episode 4 Step 18 Loss: 41.841800689697266
+[Actor] Episode 4 Step 19 Loss: 33.075714111328125
+[Actor] Episode 4 Step 20 Loss: 22.63088607788086
+[Actor] Episode 4 Step 21 Loss: 12.581764221191406
+[Actor] Episode 4 Step 22 Loss: 7.050412654876709
+[Actor] Episode 4 Step 23 Loss: 2.9043641090393066
+[Actor] Episode 4 Step 24 Loss: 0.6676095724105835
+[Actor] Episode 4 Step 25 Loss: 0.1494278758764267
+[Actor] Episode 4 Step 26 Loss: 0.7516219615936279
+-------------------------------------------------
+[Actor] Episode 4 Average Loss: 153.71051924703298
+[Actor] Learning Rate: 0.009788545779883862
+[Actor] Epoch Time: 574.7860498428345s
+-------------------------------------------------
+[Actor] Starting Episode 5
+[Actor] Episode 5 Step 0 Loss: 1.9319522380828857
+[Actor] Episode 5 Step 1 Loss: 3.970778226852417
+[Actor] Episode 5 Step 2 Loss: 5.562802314758301
+[Actor] Episode 5 Step 3 Loss: 7.473144054412842
+[Actor] Episode 5 Step 4 Loss: 8.813035011291504
+[Actor] Episode 5 Step 5 Loss: 9.534040451049805
+[Actor] Episode 5 Step 6 Loss: 10.509159088134766
+[Actor] Episode 5 Step 7 Loss: 8.617586135864258
+[Actor] Episode 5 Step 8 Loss: 9.425996780395508
+[Actor] Episode 5 Step 9 Loss: 7.327831745147705
+[Actor] Episode 5 Step 10 Loss: 7.328417778015137
+[Actor] Episode 5 Step 11 Loss: 4.763833999633789
+[Actor] Episode 5 Step 12 Loss: 4.00832986831665
+[Actor] Episode 5 Step 13 Loss: 3.295306444168091
+[Actor] Episode 5 Step 14 Loss: 3.391413688659668
+[Actor] Episode 5 Step 15 Loss: 3.0909063816070557
+[Actor] Episode 5 Step 16 Loss: 3.064626455307007
+[Actor] Episode 5 Step 17 Loss: 3.202522039413452
+[Actor] Episode 5 Step 18 Loss: 3.363083839416504
+[Actor] Episode 5 Step 19 Loss: 3.6147494316101074
+[Actor] Episode 5 Step 20 Loss: 3.6941137313842773
+[Actor] Episode 5 Step 21 Loss: 3.7391245365142822
+[Actor] Episode 5 Step 22 Loss: 4.099466800689697
+[Actor] Episode 5 Step 23 Loss: 3.829779863357544
+[Actor] Episode 5 Step 24 Loss: 3.589510440826416
+[Actor] Episode 5 Step 25 Loss: 3.5281686782836914
+[Actor] Episode 5 Step 26 Loss: 3.549088716506958
+-------------------------------------------------
+[Actor] Episode 5 Average Loss: 5.122917360729641
+[Actor] Learning Rate: 0.009746793657541275
+[Actor] Epoch Time: 603.798600435257s
+-------------------------------------------------
+[Actor] Starting Episode 6
+[Actor] Episode 6 Step 0 Loss: 3.281437635421753
+[Actor] Episode 6 Step 1 Loss: 3.0155441761016846
+[Actor] Episode 6 Step 2 Loss: 2.8063430786132812
+[Actor] Episode 6 Step 3 Loss: 2.618389844894409
+[Actor] Episode 6 Step 4 Loss: 2.39631986618042
+[Actor] Episode 6 Step 5 Loss: 2.247291326522827
+[Actor] Episode 6 Step 6 Loss: 1.9426361322402954
+[Actor] Episode 6 Step 7 Loss: 1.9770259857177734
+[Actor] Episode 6 Step 8 Loss: 1.7694079875946045
+[Actor] Episode 6 Step 9 Loss: 1.5691192150115967
+[Actor] Episode 6 Step 10 Loss: 1.6734930276870728
+[Actor] Episode 6 Step 11 Loss: 1.4497148990631104
+[Actor] Episode 6 Step 12 Loss: 1.336016058921814
+[Actor] Episode 6 Step 13 Loss: 1.2685348987579346
+[Actor] Episode 6 Step 14 Loss: 1.1841171979904175
+[Actor] Episode 6 Step 15 Loss: 1.1406633853912354
+[Actor] Episode 6 Step 16 Loss: 1.120911955833435
+[Actor] Episode 6 Step 17 Loss: 0.9826454520225525

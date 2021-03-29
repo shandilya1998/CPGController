@@ -25,6 +25,10 @@ class ActorNetwork(object):
                 tf.expand_dims(mu, 1),
                 self.params['rnn_steps'],
                 axis = 1
+            ) + tf.repeat(
+                tf.expand_dims(mean, 1),
+                self.params['rnn_steps'],
+                axis = 1
             )
         grads = tape.gradient(
             action,

@@ -65,10 +65,10 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
     def step(self, action, desired_motion, last_step = False):
         return self._step(action, desired_motion, last_step)
 
-    def set_initial_motion_state(self, desired_motion):
-        self.quadruped.set_initial_motion_state(desired_motion)
+    def set_motion_state(self, desired_motion):
+        self.quadruped.set_motion_state(desired_motion)
 
-    def set_initial_osc_state(self, osc_state):
+    def set_osc_state(self, osc_state):
         self.quadruped.set_osc_state = osc_state
 
     def _step(self, action, desired_motion, last_step = False):
