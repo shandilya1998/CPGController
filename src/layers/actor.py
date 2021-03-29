@@ -11,10 +11,10 @@ class MotionStateEncoder(tf.keras.layers.Layer):
         units_mean,
         units_combine,
         units_motion_state,
-        activation_output_mlp = 'tanh',
-        activation_combine = 'tanh',
-        activation_motion_state = 'tanh',
-        activation_mu = 'tanh',
+        activation_output_mlp = 'relu',
+        activation_combine = 'relu',
+        activation_motion_state = 'relu',
+        activation_mu = 'relu',
         activation_omega = 'relu',
     ):
         super(MotionStateEncoder, self).__init__()
@@ -67,7 +67,7 @@ class MotionStateEncoder(tf.keras.layers.Layer):
 class RobotStateEncoder(tf.keras.layers.Layer):
     def __init__(self, 
         units_robot_state,
-        activation_robot_state = 'tanh'
+        activation_robot_state = 'relu'
     ):
         super(RobotStateEncoder, self).__init__()
         self.robot_state_dense = [tf.keras.layers.Dense(
@@ -85,9 +85,9 @@ class RNNCell(tf.keras.layers.Layer):
     def __init__(self,
         dt,
         units_osc,
-        activation_osc_state_dense = 'tanh',
-        activation_robot_state_dense = 'tanh',
-        activation_motion_state_dense = 'tanh'
+        activation_osc_state_dense = 'relu',
+        activation_robot_state_dense = 'relu',
+        activation_motion_state_dense = 'relu'
     ):
         super(RNNCell, self).__init__()
         self.dt = dt
@@ -136,9 +136,9 @@ class ComplexMLP(tf.keras.layers.Layer):
         units_robot_state,
         units_motion_state,
         activation_output_mlp = 'tanh',
-        activation_combine = 'tanh',
-        activation_robot_state = 'tanh',
-        activation_motion_state = 'tanh',
+        activation_combine = 'relu',
+        activation_robot_state = 'relu',
+        activation_motion_state = 'relu',
         activation_omega = 'relu',
         name = 'TimeDistributedActor'
     ):
@@ -243,7 +243,7 @@ class ComplexMLP(tf.keras.layers.Layer):
             ),
             name='ensure_shape_critic_time_distributed_out'
         )
-        out = out[:, :, :self.out_dim]
+        out = 2 * out[:, :, :self.out_dim]
         return [out, z_out]
 
 def get_encoders(params):
