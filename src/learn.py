@@ -153,7 +153,7 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.005,
+            0.01,
             decay_steps=60,
             decay_rate=0.95
         )
@@ -565,7 +565,7 @@ class Learner():
         )
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.01,
+            0.005,
             decay_steps=70,
             decay_rate=0.95
         )
@@ -619,8 +619,8 @@ class Learner():
         COT = []
         motion = []
         while ep < self.params['train_episode_count']:
-            self.env.set_initial_motion_state(self.desired_motion[0])
-            self.env.set_initial_osc_state(self.osc)
+            self.env.set_motion_state(self.desired_motion[0])
+            self.env.set_osc_state(self.osc)
             self.current_time_step = self.env.reset()
             print('[DDPG] Starting Episode {i}'.format(i = ep))
             self._state = self.current_time_step.observation
@@ -1026,11 +1026,12 @@ if __name__ == '__main__':
     #learner._pretrain_loop(
     #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
     #)
-    learner.pretrain_actor(args.experiment)
+    #learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
+    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))

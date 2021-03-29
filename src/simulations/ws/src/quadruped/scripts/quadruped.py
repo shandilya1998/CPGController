@@ -557,7 +557,7 @@ class Quadruped:
         self.upright = True
 
         self._reset()
-        rospy.sleep(2.0)
+        rospy.sleep(5.0)
         current_pose = self.kinematics.get_current_end_effector_fk()
         self.A, self.B = self.all_legs.get_AB()
         self.A = self.get_contact_ob(self.A['leg_name'], current_pose)
@@ -1081,6 +1081,7 @@ class Quadruped:
             if self.Tb == 0:
                 self.reward = -3.0
                 return
+            print(action)
             if (action > np.pi/3).any() or (action < -np.pi/3).any():
                 self.reward = -5.0
             self.compute_reward.build(
