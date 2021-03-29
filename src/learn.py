@@ -18,6 +18,7 @@ import argparse
 import json
 import matplotlib.pyplot as plt
 import matplotlib
+import math
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
@@ -152,8 +153,8 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.01,
-            decay_steps=70,
+            0.005,
+            decay_steps=60,
             decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
@@ -302,7 +303,7 @@ class Learner():
         ).prefetch(tf.data.AUTOTUNE)
         return dataset
 
-    def _pretrain_loop(self, grad_update, experiment, checkpoint_dir, name):
+    def _pretrain_loop(self, grad_update, experiment, checkpoint_dir, name, start = 0):
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e20
@@ -310,6 +311,44 @@ class Learner():
         history_loss_action = []
         history_loss_mu = []
         history_loss_omega = []
+        path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
+        if not os.path.exists(path):
+            os.mkdir(path)
+        path = os.path.join(path, name)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        if start != 0:
+            pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_action_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_action = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_mu = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_omega = pickle.load(pkl)
+            pkl.close()
         """
         dataset = tf.data.Dataset.from_generator(
             self._dataset,
@@ -320,15 +359,9 @@ class Learner():
         )
         """
         dataset = self.load_dataset()
-        path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
-        if not os.path.exists(path):
-            os.mkdir(path)
-        path = os.path.join(path, name)
-        if not os.path.exists(path):
-            os.mkdir(path)
         print('[Actor] Dataset {ds}'.format(ds = dataset))
         print('[Actor] Starting Actor Pretraining')
-        for episode in range(self.params['train_episode_count']):
+        for episode in range(start, self.params['train_episode_count']):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
             total_loss_action = 0.0
@@ -372,7 +405,7 @@ class Learner():
             history_loss_mu.append(avg_loss_mu)
             history_loss_omega.append(avg_loss_omega)
             if episode % 3 == 0:
-                if avg_loss == np.nan:
+                if math.isnan(avg_loss):
                     break
                 pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
                     name = name,
@@ -441,6 +474,18 @@ class Learner():
                 self.actor.model.trainable_variables
             )
         )
+        
+        print('Y Pred')
+        print(y_pred)
+        print('omega')
+        print(omega)
+        print('mu')
+        print(mu)
+        print('mean')
+        print(mean)
+        print('grads')
+        print(grads)
+
         return loss, [loss_action, loss_omega, loss_mu]
 
     def _pretrain_encoder(self, x, y):
@@ -480,6 +525,7 @@ class Learner():
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_enc = loss_omega + loss_mu + loss_mean
             loss = loss_enc + loss_action
+            
         vars_encoder = []
         vars_remainder = []
         for var in self.actor.model.trainable_variables:
@@ -974,20 +1020,13 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    """
-        Experiment 17 call
-    """
-    """
-    learner._pretrain_loop(
-        learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
-    )
-    """
-    """
-        Experiment 16 call
-    """
-    #"""
+    #learner.load_actor(
+    #    'weights/actor_pretrain/exp17/pretrain_actor/actor_pretrained_pretrain_actor_17_6.ckpt'
+    #)
+    #learner._pretrain_loop(
+    #    learner._pretrain_actor, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
+    #)
     learner.pretrain_actor(args.experiment)
-    #"""
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
