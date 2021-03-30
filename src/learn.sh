@@ -1,7 +1,7 @@
 #!/bin/sh
 
 OUT_PATH="weights/actor_pretrain"
-EXPERIMENT=18
+EXPERIMENT=20
 
 nohup roslaunch quadruped quadruped_control.launch \
     >> $OUT_PATH/exp$EXPERIMENT/ros.log &

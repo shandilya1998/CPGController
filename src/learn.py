@@ -89,10 +89,10 @@ class SignalDataGen:
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
                 motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
-                mu = np.array([theta_k, theta_k / 5, theta_h])
+                mu = np.array([theta_k, theta_k / 5, theta_h], dtype = np.float32)
                 mu = [mu for i in range(4)]
                 mu =  np.concatenate(mu, 0)
-                freq = self.get_ff(signal[:, 2], 'fft')
+                freq = np.float32(self.get_ff(signal[:, 2], 'fft'))
                 self.data.append(
                     [signal, motion, freq, mu]
                 )
@@ -197,15 +197,35 @@ class Learner():
     def _hopf_oscillator(self, omega, mu, b, z):
         rng = np.arange(1, self.params['units_osc'] + 1)
         x, y = z[:self.params['units_osc']], z[self.params['units_osc']:]
-        x = x + ((mu - (x*x + y*y)) * x - omega * rng * y) * self.dt + b
-        y = y + ((mu - (x*x + y*y)) * y + omega * rng * x) * self.dt + b
+        rng = omega * rng
+        print(x)
+        print(y)
+        print(np.square(x))
+        print(np.square(y))
+        mod = (mu - (np.square(x) + np.square(y)))
+        x = x + (
+            np.multiply(
+                mod,
+                x
+            ) - np.multiply(
+                rng, 
+                y
+            )
+        ) * self.dt + b
+        y = y + (
+            np.multiply(
+                mod,
+                y
+            ) + np.multiply(
+                rng,
+                x
+            )
+        ) * self.dt + b
         return np.concatenate([x, y], -1)
 
     def create_dataset(self):
         self.num_batches = self.params['num_data']//self.params['pretrain_bs']
         self.env.quadruped.reset()
-        motion_state, robot_state, osc_state = \
-            self.env.quadruped.get_state_tensor()
         F = []
         MU = []
         Y = []
@@ -214,12 +234,6 @@ class Learner():
         for y, x, f, mu in tqdm(self.signal_gen.generator()):
             mu = (mu * np.pi / 180 ) / (np.pi/3)
             f = f * 2 * np.pi
-            osc = self._hopf_oscillator(
-                f,
-                np.ones((self.params['units_osc'],)),
-                np.zeros((self.params['units_osc'],)),
-                osc_state[0]
-            )
             y = y * np.pi / 180
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
@@ -227,18 +241,16 @@ class Learner():
                 actions = np.expand_dims(y_[i + 1: i + 1 + self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
                 self.env.quadruped.set_motion_state(x)
-                self.env.quadruped.set_osc_state(osc)
                 _state = self.env.quadruped.get_state_tensor()
                 for j, s in enumerate(_state):
                     X[j].append(s)
                 Y.append(actions)
                 F.append(np.array([[f]], dtype = np.float32))
                 MU.append(mu)
-                osc = self._hopf_oscillator(
+                self.env.quadruped._hopf_oscillator(
                     f,
                     np.ones((self.params['units_osc'],)),
                     np.zeros((self.params['units_osc'],)),
-                    osc
                 )
                 MEAN.append(np.expand_dims(mean, 0))
             self.env.quadruped.reset()
@@ -1033,11 +1045,11 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner.load_actor(
-        'weights/actor_pretrain/exp18/pretrain_enc/actor_pretrained_pretrain_enc_18_15.ckpt'
-    )
+    #learner.load_actor(
+    #    'weights/actor_pretrain/exp18/pretrain_enc/actor_pretrained_pretrain_enc_18_15.ckpt'
+    #)
     learner._pretrain_loop(
-        learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor', 3
+        learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor'
     )
     #learner.pretrain_actor(args.experiment)
     """
