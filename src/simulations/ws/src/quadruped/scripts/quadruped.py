@@ -378,6 +378,7 @@ class AllLegs:
 
 class Quadruped:
     def __init__(self, params, experiment):
+        self.params = params
         rospy.init_node('joint_position_node_exp{exp}'.format(
             exp = experiment
         ))
@@ -414,10 +415,7 @@ class Quadruped:
         self.osc_state_dtype = params[
             'observation_spec'
         ][2].dtype.as_numpy_dtype
-        self.osc_state = np.zeros(
-            shape = self.osc_state_shape,
-            dtype = self.osc_state_dtype
-        )
+        self.osc_state = self.create_init_osc_state()
         self.osc_state_set = False
         self.history_shape = tuple(
             params['history_spec'].shape
@@ -580,6 +578,30 @@ class Quadruped:
     def set_motion_state(self, desired_motion):
         self.motion_state = desired_motion
         self.motion_state_set = True
+
+    def create_init_osc_state(self):
+        r = np.ones((self.params['units_osc'],))
+        phi = np.zeros((self.params['units_osc'],))
+        z = r * np.exp(1j * phi)
+        x = np.real(z)
+        y = np.imag(z)
+        return np.concatenate([x, y], -1)
+
+    def _hopf_oscillator(self, omega, mu, b):
+        rng = np.arange(1, self.params['units_osc'] + 1)
+        x = self.osc_state[:self.params['units_osc']]
+        y = self.osc_state[self.params['units_osc']:]
+        z = x + 1j * y
+        rng = omega * rng
+        mod = (mu - np.square(np.abs(z)))
+        r = np.abs(z)
+        phi = np.angle(z)
+        r = r + (mu-r**2)*r*self.dt
+        phi = phi + rng*self.dt
+        z = r*np.exp(1j*phi) + b
+        x = np.real(z)
+        y = np.imag(z)
+        self.osc_state = np.concatenate([x, y], -1)
 
     def set_osc_state(self, osc):
         self.osc_state = osc
@@ -752,10 +774,7 @@ class Quadruped:
         start = time.time()
         self.reward = 0.0
         if not self.osc_state_set:
-            self.osc_state = np.zeros(
-                shape = self.osc_state_shape,
-                dtype = self.osc_state_dtype
-            )
+            self.osc_state = self.create_init_osc_state()
         else:
             self.osc_state_set = False
         self.history = np.repeat(
