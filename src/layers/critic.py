@@ -27,7 +27,7 @@ class Critic(tf.keras.Model):
         activation_osc = 'tanh',
         activation_lstm = 'tanh',
         recurrent_activation_lstm = 'sigmoid',
-        activation_out = 'relu',
+        activation_out = 'tanh',
         training = True
     ):
         super(Critic, self).__init__()
