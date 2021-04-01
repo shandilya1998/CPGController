@@ -1,6 +1,6 @@
 import tensorflow as tf
 from layers.oscillator import HopfOscillator
-from layers.complex import ComplexDense, relu
+from layers.complex import ComplexDense, ComplexGRUCell, relu
 
 class MotionStateEncoder(tf.keras.layers.Layer):
     def __init__(
@@ -9,114 +9,143 @@ class MotionStateEncoder(tf.keras.layers.Layer):
         units_osc,
         units_mu,
         units_mean,
-        units_combine,
         units_motion_state,
         activation_output_mlp = 'relu',
         activation_combine = 'relu',
         activation_motion_state = 'relu',
         activation_mu = 'relu',
         activation_omega = 'relu',
+        name = 'motion_state_encoder',
+        trainable = True
     ):
-        super(MotionStateEncoder, self).__init__()
-        self.motion_state_dense = [tf.keras.layers.Dense(
-            units = units,
-            activation = activation_motion_state,
-            name = 'motion_state_dense'
-        ) for units in units_motion_state]
-
-        self.mu_dense = tf.keras.layers.Dense(
-            units = units_mu,
-            activation = activation_mu,
-            name = 'mu_dense'
-        )
-
-        self.mu_dense_2 = tf.keras.layers.Dense(
-            units = action_dim,
-            activation = tf.keras.activations.linear,
-            name = 'mu_dense'
-        )
-
-        self.mean_dense = tf.keras.layers.Dense(
-            units = units_mean,
-            activation = activation_mu,
-            name = 'mean_dense'
-        )
-
-        self.mean_dense_2 = tf.keras.layers.Dense(
-            units = action_dim,
-            activation = tf.keras.activations.linear,
-            name = 'mu_dense'
-        )
-
-        self.omega_dense = tf.keras.layers.Dense(
-            units = 1,
-            activation = activation_omega,
-            name = 'omega_dense'
-        )
+        super(MotionStateEncoder, self).__init__(trainable, name)
+        self.motion_state_dense = tf.keras.Sequential(name='motion_state_dense')
+        for i, units in enumerate(units_motion_state):
+            self.motion_state_dense.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_motion_state,
+                    name = 'motion_state_dense_{i}'.format(i = i),
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
 
     def call(self, motion_state):
-        for layer in self.motion_state_dense:
-            motion_state = layer(motion_state)
-
-        omega = self.omega_dense(motion_state)
-        mu = self.mu_dense_2(self.mu_dense(motion_state))
-        mean = self.mean_dense_2(self.mean_dense(motion_state))
-        return [omega, mu, mean, motion_state]
+        return self.motion_state_dense(motion_state)
 
 
 class RobotStateEncoder(tf.keras.layers.Layer):
     def __init__(self, 
         units_robot_state,
-        activation_robot_state = 'relu'
+        activation_robot_state = 'relu',
+        name = 'robot_state_encoder',
+        trainable = True
     ):
-        super(RobotStateEncoder, self).__init__()
-        self.robot_state_dense = [tf.keras.layers.Dense(
-            units = units,
-            activation = activation_robot_state,
-            name = 'motion_state_dense'
-        ) for units in units_robot_state]
+        super(RobotStateEncoder, self).__init__(trainable, name)
+        self.robot_state_dense = tf.keras.Sequential(name='robot_state_dense')
+        for i, units in enumerate(units_robot_state):
+            self.robot_state_dense.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_robot_state,
+                    name = 'robot_state_dense_{i}'.format(i = i),
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
 
     def call(self, robot_state):
-        for layer in self.robot_state_dense:
-            robot_state = layer(robot_state)
-        return robot_state
+        return self.robot_state_dense(robot_state)
 
-class RNNCell(tf.keras.layers.Layer):
-    def __init__(self,
-        dt,
-        units_osc,
-        activation_osc_state_dense = 'relu',
-        activation_robot_state_dense = 'relu',
-        activation_motion_state_dense = 'relu'
-    ):
-        super(RNNCell, self).__init__()
-        self.dt = dt
-        self.osc = HopfOscillator(
-            units = units_osc,
-            dt = dt
+
+class ParamNet(tf.keras.layers.Layer):
+    def __init__(
+            self,
+            units_osc,
+            action_dim,
+            units_combine,
+            units_mu,
+            units_omega,
+            units_mean,
+            activation_combine = 'relu',
+            activation_mu = 'relu',
+            activation_mean = 'relu',
+            activation_omega = 'relu',
+            name = 'param_net',
+            trainable = True
+        ):
+        super(ParamNet, self).__init__(trainable, name)
+
+        self.combine_dense = tf.keras.Sequential(name = 'combine_dense')
+        for units in units_combine:
+            self.combine_dense.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_combine,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
+
+        self.mu_layers = tf.keras.Sequential(name = 'mu_dense')
+        for units in units_mu:
+            self.mu_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_mu,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
+        self.mu_layers.add(
+            tf.keras.layers.Dense(
+                units = action_dim,
+                activation = tf.keras.activations.linear,
+                name = 'mu_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
         )
 
-        self.osc_state_dense = ComplexDense(
-            units = units_osc,
-            activation = activation_osc_state_dense
+        self.mean_layers = tf.keras.Sequential(name = 'mean_dense')
+        for units in units_mean:
+            self.mean_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_mean,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
+        self.mean_layers.add(
+            tf.keras.layers.Dense(
+                units = action_dim,
+                activation = tf.keras.activations.linear,
+                name = 'mean_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
         )
 
-        self.state_dense = ComplexDense(
-            units = units_osc,
-            activation = activation_robot_state_dense
+        self.omega_layers = tf.keras.Sequential(name = 'omega_dense')
+        for units in units_omega:
+            self.omega_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_omega,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                )
+            )
+        self.omega_layers.add(
+            tf.keras.layers.Dense(
+                units = 1,
+                activation = tf.keras.activations.linear,
+                name = 'omega_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
         )
-
-    def build(self, input_shapes):
-        self.z_shape, self.robot_shape = input_shapes
-        self.built = True
 
     def call(self, inputs):
-        z, state = inputs
-        z = self.osc_state_dense(z)
-        state = self.state_dense(state)
-        out = tf.math.add(z, state)
-        return out, out
-
+        state = tf.concat(inputs, -1)
+        state = self.combine_dense(state)
+        mu = self.mu_layers(state)
+        mean = self.mean_layers(state)
+        omega = self.omega_layers(state)
+        return [state, omega, mu, mean]
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -124,7 +153,7 @@ def swap_batch_timestep(input_t):
     axes[0], axes[1] = 1, 0
     return tf.transpose(input_t, axes)
 
-class ComplexMLP(tf.keras.layers.Layer):
+class ComplexRNN(tf.keras.Model):
     def __init__(
         self,
         dt,
@@ -142,18 +171,19 @@ class ComplexMLP(tf.keras.layers.Layer):
         activation_omega = 'relu',
         name = 'TimeDistributedActor'
     ):
-        super(ComplexMLP, self).__init__(name = name)
+        super(ComplexRNN, self).__init__(name = name)
         self.steps = steps
         self.out_dim = action_dim
 
-        self.output_mlp = tf.keras.Sequential()
+        self.output_mlp = tf.keras.Sequential(name = 'output_mlp')
         if isinstance(units_output_mlp, list):
             for i, num in enumerate(units_output_mlp):
                 self.output_mlp.add(
                     ComplexDense(
                         units = num,
                         activation = activation_output_mlp,
-                        name = 'complex_dense{i}'.format(i=i)
+                        name = 'complex_dense{i}'.format(i=i),
+                        kernel_regularizer = tf.keras.regularizers.l2(1e-3)
                     )
                 )
         else:
@@ -164,41 +194,29 @@ class ComplexMLP(tf.keras.layers.Layer):
                 )
             )
 
+        self.gru_cell = ComplexGRUCell(
+            units = units_combine[-1],
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )
+
         self.osc = HopfOscillator(
             units = units_osc,
             dt = dt
         )
 
-        self.rnn_cell = RNNCell(
-            dt = dt,
-            units_osc = units_osc
-        )
-
-        self.combine_dense = ComplexDense(
-            units = units_osc,
-            activation = activation_combine
-        )
-
     def build(self, input_shapes):
-        self.z_shape, self.omega_shape, self.robot_state_shape, \
-            self.motion_state_shape = input_shapes
+        self.z_shape, self.state_shape, self.omega_shape = input_shapes
         self.osc.build([self.z_shape, self.omega_shape])
-        self.rnn_cell.build([self.z_shape, self.robot_state_shape])
+        self.gru_cell.build(self.z_shape)
         self.built = True
 
     def call(self, inputs):
-        z, omega, robot_state, motion_state = inputs
-        state = tf.concat([robot_state, motion_state], -1)
-        zeros1 = robot_state - robot_state
-        zeros2 = motion_state - motion_state
-        zeros = tf.concat([zeros1, zeros2], -1)
-        state = tf.concat([state, zeros], -1)
-        state = self.combine_dense(state)
+        z, state, omega = inputs
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
         step = tf.constant(0)
         z_out = self.osc([z, omega])
-        o, robot_state = self.rnn_cell([z_out, state])
-        o = self.output_mlp(o)
+        o, state = self.gru_cell(z_out, state)
+        o = self.output_mlp(z_out)
         out = out.write(
             step,
             o
@@ -221,8 +239,8 @@ class ComplexMLP(tf.keras.layers.Layer):
             ]
 
             z = self.osc(inputs)
-            o, robot_state = self.rnn_cell([z, state])
-            o = self.output_mlp(z)
+            o, state = self.gru_cell(z, state)
+            o = self.output_mlp(o)
 
             out = out.write(
                 step,
@@ -230,7 +248,7 @@ class ComplexMLP(tf.keras.layers.Layer):
             )
 
             step = tf.math.add(step, tf.constant(1))
-            return out, step, z, robot_state
+            return out, step, z, state
 
         out, step, _, _ = tf.while_loop(cond, body,[out,step,z_out,state])
 
@@ -252,7 +270,6 @@ def get_encoders(params):
         units_osc = params['units_osc'],
         units_mu = params['units_mu'],
         units_mean = params['units_mean'],
-        units_combine = params['units_combine'],
         units_motion_state = params['units_motion_state'],
     )
 
@@ -262,8 +279,19 @@ def get_encoders(params):
 
     return motion_encoder, robot_encoder
 
+def get_param_net(params):
+    param_net = ParamNet(
+        units_osc = params['units_osc'],
+        action_dim = params['action_dim'],
+        units_combine = params['units_combine'],
+        units_mu = params['units_mu'],
+        units_omega = params['units_omega'],
+        units_mean = params['units_mean']
+    )
+    return param_net
+
 def get_complex_mlp(params):
-    cell = ComplexMLP(
+    cell = ComplexRNN(
         dt = params['dt'],
         steps = params['rnn_steps'],
         action_dim = params['action_dim'],
