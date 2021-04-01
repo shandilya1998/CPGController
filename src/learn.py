@@ -549,7 +549,6 @@ class Learner():
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_enc = loss_omega + loss_mu + loss_mean
             loss = loss_enc + loss_action
-            
         vars_encoder = []
         vars_remainder = []
         for var in self.actor.model.trainable_variables:
@@ -643,9 +642,10 @@ class Learner():
         stability = []
         COT = []
         motion = []
+        self.mass = self.env.quadruped.mass
+        self.gravity = self.env.quadruped.gravity
         while ep < self.params['train_episode_count']:
             self.env.set_motion_state(self.desired_motion[0])
-            self.env.set_osc_state(self.osc)
             self.current_time_step = self.env.reset()
             print('[DDPG] Starting Episode {i}'.format(i = ep))
             self._state = self.current_time_step.observation
@@ -656,7 +656,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                [out, osc], [omega, mu, mean] = self.actor.model(self._state)
+                [out, osc], [omega, mu, mean]=self.actor.model(self._state)
                 out = out * tf.repeat(
                     tf.expand_dims(mu, 1),
                     self.params['rnn_steps'],
@@ -683,6 +683,7 @@ class Learner():
                 self._action[1] = action_original[1] + self._noise[1]
                 start = time.time()
                 self._history = self.env.quadruped.get_history()
+                reward = 0.0
                 self.current_time_step = self.env.step(
                     self._action,
                     self.desired_motion[j + 1]
