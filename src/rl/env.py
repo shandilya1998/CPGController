@@ -72,7 +72,16 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self.quadruped.set_osc_state = osc_state
 
     def _step(self, action, desired_motion, last_step = False):
-        observation, reward = self.quadruped.step(action, desired_motion)
+        observation = self.quadruped.get_state()
+        reward = 0.0
+        for i in range(self.params['rnn_steps']):
+            observation =  self.quadruped.step(
+                action,
+                desired_motion
+            )
+            reward -= self.quadruped.get_COT()
+            reward -= self.quadruped.get_motion_reward()
+        reward += self.quadruped.stability_reward()
         observation = [
             tf.expand_dims(
                 tf.convert_to_tensor(ob),
