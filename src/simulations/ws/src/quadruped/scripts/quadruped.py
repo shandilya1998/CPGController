@@ -564,12 +564,23 @@ class Quadruped:
         A, B = self.all_legs.get_AB()
         A = self.get_contact_ob(A['leg_name'], current_pose)
         B = self.get_contact_ob(B['leg_name'], current_pose)
-        self.A = [A, A, A]
-        self.A[0]['position'] += 1e-8
-        self.A[-1]['position'] += 1e-8
-        self.B = [B, B, B]
-        self.B[0]['position'] += 1e-8
-        self.B[-1]['position'] += 1e-8
+        def get_other_leg(name):
+            if 'front' in name:
+                if 'left' in name:
+                    return 'front_right_leg'
+                else:
+                    return 'front_left_leg'
+            else:
+                if 'left' in name:
+                    return 'back_right_leg'
+                else:
+                    return 'back_left_leg'
+        A_ = self.get_contact_ob(get_other_leg(A['leg_name']), current_pose)
+        B_ = self.get_contact_ob(get_other_leg(B['leg_name']), current_pose)
+        self.A = [A_, A, A_]
+        self.A_time = [-1e-3, 0.0, 1e-3]
+        self.B = [B_, B, B_]
+        self.B_time = [-1e-3, 0.0, 1e-3]
         self.last_joint = np.zeros((self.params['action_dim']))
         self.t = 1e-8
         self.delta = self.dt
@@ -885,9 +896,22 @@ class Quadruped:
         A, B = AB
         A = self.get_contact_ob(A['leg_name'], current_pose)
         B = self.get_contact_ob(B['leg_name'], current_pose)
-        self.A = [A, A, A]
+        def get_other_leg(name):
+            if 'front' in name:
+                if 'left' in name:
+                    return 'front_right_leg'
+                else:
+                    return 'front_left_leg'
+            else:
+                if 'left' in name:
+                    return 'back_right_leg'
+                else:
+                    return 'back_left_leg'
+        A_ = self.get_contact_ob(get_other_leg(A['leg_name']), current_pose)
+        B_ = self.get_contact_ob(get_other_leg(B['leg_name']), current_pose)
+        self.A = [A_, A, A_]
         self.A_time = [-1e-3, 0.0, 1e-3]
-        self.B = [B, B, B]
+        self.B = [B_, B, B_]
         self.B_time = [-1e-3, 0.0, 1e-3]
         end = time.time()
         self.episode_start_time = rospy.get_time()
@@ -956,10 +980,12 @@ class Quadruped:
         self.action, self.osc_state = action
         self.action = self.action[0]
         self.osc_state = self.osc_state[0]
+        if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
+            self.reward += -5.0
+        self.osc_state = self.osc_state[0]
         self.all_legs.move(self.action.tolist())
         self.delta = rospy.get_rostime().to_sec() - self.time
         self.time = rospy.get_rostime().to_sec()
-        self.delta = rospy.get_rostime().to_sec() - now
         if self.delta == 0.0:
             self.delta = self.dt
         diff_joint = self.joint_position - self.last_joint
@@ -1026,7 +1052,10 @@ class Quadruped:
     def get_COT(self):
         self.COT = self.compute_reward.COT(
             self.joint_torque,
-            self.joint_vel
+            self.joint_velocity,
+            self.v_real,
+            self.mass,
+            self.gravity
         )
         return self.COT
 
@@ -1035,6 +1064,9 @@ class Quadruped:
             self.history_pos,
             self.history_vel,
             self.history_desired_motion,
+            self.pos,
+            self.last_pos,
+            self.motion_state
         )
         return self.r_motion
 
@@ -1068,7 +1100,8 @@ class Quadruped:
                 self.A[1],
                 self.B[1],
             )
-            self.d1, self.d2, self.d3, self.stability = self.compute_reward(
+            self.d1, self.d2, self.d3, self.stability = \
+                self.compute_reward.stability_reward(
                 self.com,
                 force,
                 torque,
@@ -1079,18 +1112,19 @@ class Quadruped:
                 self.gravity
             )
             self.reward += self.stability
+            if self.compute_reward.zmp.support_plane.flag:
+                self.reward += -5.0
             if math.isnan(self.reward):
                 self.reward += -5.0
         else:
-            self.reward+ = -5.0
+            self.reward += -5.0
+        return self.reward
 
     def step(self, action, desired_motion):
         self.reward = 0.0
         action = [
             a.numpy() for a in action
         ]
-        if (action > np.pi/3).any() or (action < -np.pi/3).any():
-            self.reward += -5.0
         self.set_observation(action, desired_motion)
         self.force = self.mass * self.linear_acc
         self.torque = self.get_moment()

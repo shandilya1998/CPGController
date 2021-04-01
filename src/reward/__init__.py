@@ -69,7 +69,7 @@ class FitnessFunction:
         stability = np.sum(d1 - d2 - d3)
         return d1, d2, d3, stability
 
-    def COT(self, joint_torque, joint_vel, v_real):
+    def COT(self, joint_torque, joint_vel, v_real, mass, g):
         p_e = np.sum(joint_torque * joint_vel)
         if p_e < 0:
             p_e = 0

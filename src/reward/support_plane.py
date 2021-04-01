@@ -26,11 +26,9 @@ class SupportPlane:
             BBf = self.BF - self.B
             cross = np.cross(self.AB, BBf)
             norm = np.linalg.norm(cross)
-        """
         if norm == 0:
             norm = 1e-8
             self.flag = True
-        """
         n11 = cross / norm
         if n11[0] < 0:
             return -1 * n11
@@ -45,11 +43,9 @@ class SupportPlane:
             AAf = self.AF - self.A
             cross = np.cross(self.AB, AAf)
             norm = np.linalg.norm(cross)
-        """
         if norm == 0:
             norm = 1e-8
             self.flag = True
-        """
         n12 = cross / norm
         if n12[0] < 0:
             return -1 * n12
@@ -64,11 +60,9 @@ class SupportPlane:
             BBl = self.BL - self.B
             cross = np.cross(self.AB, BBl)
             norm = np.linalg.norm(cross)
-        """
         if norm == 0:
             norm = 1e-8
             self.flag = True
-        """
         n21 = cross / norm
         if n21[0] < 0:
             return -1 * n21
@@ -83,11 +77,9 @@ class SupportPlane:
             AAl = self.AL - self.A
             cross = np.cross(self.AB, AAl)
             norm = np.linalg.norm(cross)
-        """
         if norm == 0:
             norm = 1e-8
             self.flag = True
-        """
         n22 = cross / norm
         if n22[0] < 0:
             return -1 * n22
@@ -98,22 +90,18 @@ class SupportPlane:
         n11 = self.get_n11()
         n12 = self.get_n12()
         norm = np.linalg.norm(n11 + n12)
-        """
         if norm == 0:
             self.flag = True
             return n11 + n12
-        """
         return (n11 + n12)/np.linalg.norm(n11 + n12)
 
     def get_n2(self):
         n21 = self.get_n21()
         n22 = self.get_n22()
         norm = np.linalg.norm(n21 + n22)
-        """
         if norm == 0:
             self.flag = True
             return n21 + n22
-        """
         return (n21 + n22)/np.linalg.norm(n21 + n22)
 
     def get_xs(self, t):

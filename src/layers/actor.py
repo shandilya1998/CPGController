@@ -199,6 +199,7 @@ class ComplexRNN(tf.keras.Model):
             kernel_regularizer = tf.keras.regularizers.l2(1e-3)
         )
 
+        self.units_osc = units_osc
         self.osc = HopfOscillator(
             units = units_osc,
             dt = dt
@@ -213,6 +214,7 @@ class ComplexRNN(tf.keras.Model):
     def call(self, inputs):
         z, state, omega = inputs
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
+        Z = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
         step = tf.constant(0)
         z_out = self.osc([z, omega])
         o, state = self.gru_cell(z_out, state)
@@ -221,9 +223,13 @@ class ComplexRNN(tf.keras.Model):
             step,
             o
         )
+        Z = Z.write(
+            step,
+            z
+        )
         step = tf.math.add(step, tf.constant(1))
 
-        def cond(out, step, z, state):
+        def cond(out, Z, step, z, state):
             return tf.math.less(
                 step,
                 tf.constant(
@@ -232,7 +238,7 @@ class ComplexRNN(tf.keras.Model):
                 )
             )
 
-        def body(out, step, z, state):
+        def body(out, Z, step, z, state):
             inputs = [
                 z,
                 omega,
@@ -246,14 +252,20 @@ class ComplexRNN(tf.keras.Model):
                 step,
                 o
             )
+            Z = Z.write(
+                step,
+                z
+            )
 
             step = tf.math.add(step, tf.constant(1))
-            return out, step, z, state
+            return out, Z, step, z, state
 
-        out, step, _, _ = tf.while_loop(cond, body,[out,step,z_out,state])
+        out, Z, step, _, _ = tf.while_loop(cond, body,[out,Z,step,z_out,state])
 
         out = out.stack()
+        Z = Z.stack()
         out = swap_batch_timestep(out)
+        Z = swap_batch_timestep(Z)
         out = tf.ensure_shape(
             out,
             tf.TensorShape(
@@ -261,8 +273,17 @@ class ComplexRNN(tf.keras.Model):
             ),
             name='ensure_shape_critic_time_distributed_out'
         )
+
+        Z = tf.ensure_shape(
+            Z,
+            tf.TensorShape(
+                (None, self.steps, 2 * self.units_osc)
+            ),
+            name='ensure_shape_critic_time_distributed_out'
+        )
+        
         out = 2 * out[:, :, :self.out_dim]
-        return [out, z_out]
+        return [out, Z]
 
 def get_encoders(params):
     motion_encoder = MotionStateEncoder(

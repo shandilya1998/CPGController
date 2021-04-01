@@ -1047,18 +1047,18 @@ if __name__ == '__main__':
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
     learner.load_actor(
-        'weights/actor_pretrain/exp21/pretrain_actor/actor_pretrained_pretrain_actor_21_3.ckpt'
+        'weights/actor_pretrain/exp22/pretrain_actor/actor_pretrained_pretrain_actor_22_27.ckpt'
     )
-    learner._pretrain_loop(
-        learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor', 4
-    )
+    #learner._pretrain_loop(
+    #    learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor', 4
+    #)
     #learner.pretrain_actor(args.experiment)
     """
     learner.load_actor(
         'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
     )
     """
-    """
+    #"""
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
