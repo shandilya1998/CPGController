@@ -1,8 +1,14 @@
 import tensorflow as tf
 import tf_agents as tfa
 from rl.constants import params
-#from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
+from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
 from tf_agents.trajectories.time_step import TimeStep, time_step_spec
+
+def swap_batch_timestep(input_t):
+    # Swap the batch and timestep dim for the incoming tensor.
+    axes = list(range(len(input_t.shape)))
+    axes[0], axes[1] = 1, 0
+    return tf.transpose(input_t, axes)
 
 class Env(tfa.environments.tf_environment.TFEnvironment):
     def __init__(self,
@@ -74,14 +80,17 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
     def _step(self, action, desired_motion, last_step = False):
         observation = self.quadruped.get_state()
         reward = 0.0
+        action[0] = swap_batch_timestep(action[0])
+        action[1] = swap_batch_timestep(action[1])
         for i in range(self.params['rnn_steps']):
+            _action = [action[0][i], action[1][i]]
             observation =  self.quadruped.step(
-                action,
+                _action,
                 desired_motion
             )
             reward -= self.quadruped.get_COT()
             reward -= self.quadruped.get_motion_reward()
-        reward += self.quadruped.stability_reward()
+        reward += self.quadruped.get_stability_reward()
         observation = [
             tf.expand_dims(
                 tf.convert_to_tensor(ob),
