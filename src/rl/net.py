@@ -63,10 +63,14 @@ class ActorNetwork(object):
         ]
 
         motion_encoder, robot_encoder = actor.get_encoders(params)
-        [omega, mu, mean, motion_state] = motion_encoder(S[0])
+        param_net = actor.get_param_net(params)
+        motion_state = motion_encoder(S[0])
         robot_state = robot_encoder(S[1])
+        [state, omega, mu, mean] = param_net([motion_state, robot_state])
+        zeros = tf.zeros_like(state)
+        state = tf.concat([state, zeros], -1)
         [action, z_out] = actor.get_complex_mlp(params)(
-            [S[2], omega, robot_state, motion_state]
+            [S[2], state, omega]
         )
         outputs = [[action, z_out], [omega, mu, mean]]
         model = tf.keras.Model(inputs = S, outputs = outputs)
