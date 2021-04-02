@@ -88,9 +88,10 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
                 _action,
                 desired_motion
             )
-            reward += 0.1 * self.quadruped.get_COT()
+            reward += 0.008 * self.quadruped.get_COT()
             reward += self.quadruped.get_motion_reward()
         #reward += self.quadruped.get_stability_reward()
+        reward += self.quadruped.reward
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
         observation = [
@@ -103,6 +104,8 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         step_type = tfa.trajectories.time_step.StepType.MID
         self._episode_ended = last_step
         if last_step:
+            step_type = tfa.trajectories.time_step.StepType.LAST
+        if not self.quadruped.upright:
             step_type = tfa.trajectories.time_step.StepType.LAST
         step_type = tf.stack([step_type \
             for i in range(self.batch_size)])

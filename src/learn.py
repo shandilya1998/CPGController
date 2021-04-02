@@ -640,7 +640,8 @@ class Learner():
             self.total_reward = 0.0
             step = 0
             tot_loss = 0.0
-            for j in range(self.params['max_steps']):
+            break_loop = False
+            while(step < self.params['max_steps'] or break_loop):
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -671,14 +672,14 @@ class Learner():
                 self._action[1] = action_original[1] + self._noise[1]
                 if math.isnan(np.sum(self._action[0].numpy())):
                     print('[DDPG] Action value NaN. Ending Episode')
-                    break
+                    break_loop = True
                 start = time.time()
                 self._history = self.env.quadruped.get_history()
                 self._history_osc = self.env.quadruped.get_osc_history()
                 reward = 0.0
                 self.current_time_step = self.env.step(
                     self._action,
-                    self.desired_motion[j + 1]
+                    self.desired_motion[step + 1]
                 )
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
@@ -802,11 +803,8 @@ class Learner():
                 step += 1
                 if self.current_time_step.step_type == \
                     tfa.trajectories.time_step.StepType.LAST:
-                    break
-
-                if not self.env.quadruped.upright:
-                    break
-                # Save the model after every n episodes
+                    print('[DDPG] Starting Next Episode')
+                    break_loop = True
 
             if ep % 3 == 0:
                 self.save(model_dir, ep, rewards, total_reward, \
@@ -953,6 +951,7 @@ class Learner():
                 ep = ep,
             )
         ))
+        plt.close('all')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -93,5 +93,5 @@ class FitnessFunction:
                     -1 * (i+1), 3:
             ])
 
-        motion = sum_3 -np.sqrt(np.sum(sum_1))
+        motion = sum_3# -np.sqrt(np.sum(sum_1))
         return motion
