@@ -58,11 +58,17 @@ class Critic(tf.keras.Model):
             activation = activation_osc,
             name = 'osc_state_dense'
         )
-        self.osc_dense = tf.keras.layers.Dense(
-            units = units_osc,
+        self.osc_dense_real = tf.keras.layers.Dense(
+            units = units_osc//2,
             activation = activation_osc,
-            name = 'osc_dense'
+            name = 'osc_dense_real'
         )
+        self.osc_dense_imag = tf.keras.layers.Dense(
+            units = units_osc//2,
+            activation = activation_osc,
+            name = 'osc_dense_imag'
+        )
+
         self.lstm = tf.keras.layers.LSTMCell(
             units = units_lstm,
             activation = activation_lstm,
@@ -76,16 +82,12 @@ class Critic(tf.keras.Model):
         self.training = training
 
     def call(self, inputs):
-        motion_state, robot_state, osc_state, action, osc, history = inputs
-        osc_state = self.osc_state_dense(osc_state)
-        osc = self.osc_dense(osc)
-        osc = tf.concat([osc_state, osc], -1)
-        osc = self.combine_osc_dense(osc)
+        motion_state, robot_state, osc_state, \
+            action, osc, history, history_osc = inputs
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
-
+        osc_size = osc.shape[-1] // 2
         state = tf.concat([
-            osc,
             motion_state,
             robot_state
         ], -1)
@@ -95,6 +97,7 @@ class Critic(tf.keras.Model):
             tf.dtypes.float32, size = 0, dynamic_size = True
         )
         history = swap_batch_timestep(history)
+        history = history[-1 * self.steps + 1:]
         ta_history.unstack(history)
 
         ta_action = tf.TensorArray(
@@ -105,6 +108,23 @@ class Critic(tf.keras.Model):
         action = swap_batch_timestep(action)
         ta_action.unstack(action)
 
+        ta_osc = tf.TensorArray(
+            tf.dtypes.float32,
+            size = 0,
+            dynamic_size = True
+        )
+        osc = swap_batch_timestep(osc)
+        ta_osc.unstack(osc)
+
+        ta_history_osc = tf.TensorArray(
+            tf.dtypes.float32,
+            size = 0,
+            dynamic_size = True
+        )
+        history_osc = swap_batch_timestep(history_osc)
+        history_osc = history_osc[-1 * self.steps + 1:, :, :]
+        ta_history_osc.unstack(history_osc)
+
         step = tf.constant(0, dtype = tf.dtypes.int32)
         def cond(out, h, c, step):
             return tf.math.less(
@@ -113,7 +133,11 @@ class Critic(tf.keras.Model):
             )
 
         def body(out, h, c, step):
-            inp = ta_history.read(step)
+            inp1 = ta_history.read(step)
+            inp2 = ta_history_osc.read(step)
+            inp2 = self.osc_dense_real(inp2[:, :osc_size])
+            inp3 = self.osc_dense_imag(inp2[:, osc_size:])
+            inp = tf.concat([inp1, inp2, inp3], -1)
             out, [h, c] = self.lstm(inp, [h, c])
             step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
             return out, h, c, step
@@ -128,7 +152,11 @@ class Critic(tf.keras.Model):
             )
 
         def body(out, h, c, step):
-            inp = ta_action.read(step)
+            inp1 = ta_action.read(step)
+            inp2 = ta_osc.read(step)
+            inp2 = self.osc_dense_real(inp2[:, :osc_size])
+            inp3 = self.osc_dense_imag(inp2[:, osc_size:])
+            inp = tf.concat([inp1, inp2, inp3], -1)
             out, [h, c] = self.lstm(inp, [h, c])
             step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
             return out, h, c, step

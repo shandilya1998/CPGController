@@ -12,7 +12,7 @@ class ActorNetwork(object):
             self.create_actor_network(params)
         self.target_model, self.target_weights, self.target_state = \
             self.create_actor_network(params)
-        self.optimizer = tf.keras.optimizers.Adam(
+        self.optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.LEARNING_RATE
         )
         self.pretrain_loss = tf.keras.losses.MeanSquaredError()
@@ -88,22 +88,22 @@ class CriticNetwork(object):
             self.create_critic_network(params)
         self.target_model, self.target_action, self.target_state, \
             self.target_history = self.create_critic_network(params)
-        self.optimizer = tf.keras.optimizers.Adam(
+        self.optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.LEARNING_RATE
         )
         self.mse =tf.keras.losses.MeanSquaredError()
 
-    def q_grads(self, states, actions, history):
+    def q_grads(self, states, actions, history, history_osc):
         with tf.GradientTape() as tape:
             tape.watch(actions)
-            inputs = states + actions + [history]
+            inputs = states + actions + [history, history_osc]
             q_values = self.model(inputs)
             q_values = tf.squeeze(q_values)
         return tape.gradient(q_values, actions)
 
-    def train(self, states, actions, history,y):
+    def train(self, states, actions, history, history_osc, y):
         with tf.GradientTape() as tape:
-            inputs = states + actions + [history]
+            inputs = states + actions + [history, history_osc]
             y_pred = self.model(inputs)
             loss = self.loss(y, y_pred)
         critic_grads = tape.gradient(
@@ -149,12 +149,17 @@ class CriticNetwork(object):
             dtype = params['history_spec'].dtype
         )
 
-        inputs = S + A + [history]
+        history_osc = tf.keras.Input(
+            shape = params['history_osc_spec'].shape,
+            dtype = params['history_spec'].dtype
+        )
+
+        inputs = S + A + [history, history_osc]
 
         cr = critic.get_critic(params)
         out = cr(inputs)
         model = tf.keras.Model(
-            inputs = [S, A, history],
+            inputs = [S, A, history, history_osc],
             outputs = out
         )
 

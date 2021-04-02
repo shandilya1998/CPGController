@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import math
 
-gpus = tf.config.experimental.list_physical_devices('GPU')
-for gpu in gpus:
-    tf.config.experimental.set_memory_growth(gpu, True)
+#gpus = tf.config.experimental.list_physical_devices('GPU')
+#for gpu in gpus:
+#    tf.config.experimental.set_memory_growth(gpu, True)
 
 class SignalDataGen:
     def __init__(self, params):
@@ -116,7 +116,6 @@ class SignalDataGen:
 class Learner():
     def __init__(self, params, experiment, create_data = False):
         np.seterr(all='raise')
-        tf.config.run_functions_eagerly(False)
         self.params = params
         self.actor = ActorNetwork(params)
         self.critic = CriticNetwork(params)
@@ -179,13 +178,6 @@ class Learner():
         np.seterr(all='raise')
         print('[Actor] GPU>>>>>>>>>>>>')
         print('[Actor] {lst}'.format(lst = physical_devices))
-        try:
-            print('[Actor] Memory Growth Allowed')
-            tf.config.experimental.set_memory_growth(physical_devices[0], True)
-        except:
-             # Invalid device or cannot modify virtual 
-             # devices once initialized.
-            pass
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
@@ -636,10 +628,6 @@ class Learner():
         rewards = []
         total_reward = []
         steps = []
-        d1 = []
-        d2 = []
-        d3 = []
-        stability = []
         COT = []
         motion = []
         self.mass = self.env.quadruped.mass
@@ -681,31 +669,34 @@ class Learner():
                 )
                 self._action[0] = action_original[0] + self._noise[0]
                 self._action[1] = action_original[1] + self._noise[1]
+                if math.isnan(np.sum(self._action[0].numpy())):
+                    print('[DDPG] Action value NaN. Ending Episode')
+                    break
                 start = time.time()
                 self._history = self.env.quadruped.get_history()
+                self._history_osc = self.env.quadruped.get_osc_history()
                 reward = 0.0
                 self.current_time_step = self.env.step(
                     self._action,
                     self.desired_motion[j + 1]
                 )
-                d1.append(self.env.quadruped.d1)
-                d2.append(self.env.quadruped.d2)
-                d3.append(self.env.quadruped.d3)
-                stability.append(self.env.quadruped.stability)
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
                 self._history_next = self.env.quadruped.get_history()
+                self._history_osc_next = self.env.quadruped.get_osc_history()
                 start = time.time()
                 experience = [
                     self._state,
                     self._action,
                     self._history,
+                    self._history_osc,
                     self._history_next,
+                    self._history_osc_next,
                     self.current_time_step.reward,
                     self.current_time_step.observation,
                     self.current_time_step.step_type
                 ]
-                rewards.append(self.current_time_step.reward)
+                rewards.append(self.current_time_step.reward.numpy())
                 self.replay_buffer.add_batch(experience)
                 batch = self.replay_buffer.get_next(
                     self.params['BATCH_SIZE']
@@ -727,16 +718,20 @@ class Learner():
                 )]
                 rewards = []
                 history = []
+                history_osc = []
                 history_next = []
+                history_osc_next = []
                 step_types = []
                 for item in batch:
                     state = item[0]
                     action = item[1]
                     history.append(item[2])
-                    history_next.append(item[3])
-                    rewards.append(item[4])
-                    next_state = item[5]
-                    step_types.append(item[6])
+                    history_osc.append(item[3])
+                    history_next.append(item[4])
+                    history_osc_next.append(item[5])
+                    rewards.append(item[6])
+                    next_state = item[7]
+                    step_types.append(item[8])
                     for i, s in enumerate(state):
                         states[i].append(s)
                     for i, a in enumerate(action):
@@ -747,7 +742,9 @@ class Learner():
                 actions = [tf.concat(action, 0) for action in actions]
                 #rewards = tf.concat(rewards, 0)
                 history = tf.concat(history,  0)
+                history_osc = tf.concat(history_osc, 0)
                 history_next = tf.concat(history_next, 0)
+                history_osc_next = tf.concat(history_osc_next, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
                 [out, osc], [o, m, mn] = self.actor.target_model(next_states)
                 out = out * tf.repeat(
@@ -760,19 +757,21 @@ class Learner():
                     axis = 1
                 )
                 ac = [out, osc]
-                inputs = next_states + ac + [history_next]
+                inputs = next_states + ac + [history_next, history_osc_next]
                 target_q_values = self.critic.target_model(inputs)
-                y = [tf.expand_dims(
-                    tf.repeat(reward, self.params['action_dim']), 0
-                ) for reward in rewards]
-                y = tf.stack([
-                    y[k] + self.params['GAMMA'] * tf.expand_dims(
-                        target_q_values[k], 0
-                    ) if step_types[k] != \
+                y = [tf.repeat(reward, self.params['action_dim'])\
+                    for reward in rewards]
+                y = [
+                    y[k] + self.params['GAMMA'] * target_q_values[k] \
+                        if step_types[k] != \
                         tfa.trajectories.time_step.StepType.LAST \
                     else y[k] for k in range(len(y))
-                ])
-                loss = self.critic.train(states, actions, history, y)
+                ]
+                y = tf.concat([
+                    tf.expand_dims(_y, 0) for _y in y
+                ], 0)
+                loss = self.critic.train(states, actions, \
+                    history, history_osc, y)
                 critic_loss.append(loss.numpy())
                 tot_loss += loss.numpy()
                 a_for_grad, [omega_, mu_, mean_] = self.actor.model(states)
@@ -793,7 +792,8 @@ class Learner():
                     reward = self.current_time_step.reward,
                     loss = loss.numpy()
                 ))
-                q_grads = self.critic.q_grads(states, a_for_grad, history)
+                q_grads = self.critic.q_grads(states, a_for_grad, history, \
+                    history_osc)
                 self.actor.train(states, q_grads)
                 self.actor.target_train()
                 self.critic.target_train()
@@ -810,8 +810,7 @@ class Learner():
 
             if ep % 3 == 0:
                 self.save(model_dir, ep, rewards, total_reward, \
-                    total_critic_loss, critic_loss, d1, d2, d3, \
-                    stability, COT, motion)
+                    total_critic_loss, critic_loss, COT, motion)
 
             steps.append(step + 1)
             ep += 1
@@ -819,8 +818,7 @@ class Learner():
             total_critic_loss.append(tot_loss)
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
-            critic_loss, d1, d2, d3, \
-            stability, COT, motion):
+            critic_loss, COT, motion):
         print('\n[DDPG] Saving Model')
         self.actor.model.save_weights(
             os.path.join(
@@ -920,82 +918,6 @@ class Learner():
 
         pkl = open(os.path.join(
             model_dir,
-            'd1_ep{ep}.pickle'.format(
-                ep = ep,
-            )
-        ), 'wb')
-        pickle.dump(d1, pkl)
-        pkl.close()
-        fig5, ax5 = plt.subplots(1,1,figsize = (5,5))
-        ax5.plot(d1)
-        ax5.set_ylabel('d1')
-        ax5.set_xlabel('steps')
-        fig5.savefig(os.path.join(
-            model_dir,
-            'd1_ep{ep}.png'.format(
-                ep = ep,
-            )
-        ))
-
-        pkl = open(os.path.join(
-            model_dir,
-            'd2_ep{ep}.pickle'.format(
-                ep = ep,
-            )
-        ), 'wb')
-        pickle.dump(d2, pkl)
-        pkl.close()
-        fig6, ax6 = plt.subplots(1,1,figsize = (5,5))
-        ax6.plot(d2)
-        ax6.set_ylabel('d2')
-        ax6.set_xlabel('steps')
-        fig6.savefig(os.path.join(
-            model_dir,
-            'd2_ep{ep}.png'.format(
-                ep = ep,
-            )
-        ))
-
-        pkl = open(os.path.join(
-            model_dir,
-            'd3_ep{ep}.pickle'.format(
-                ep = ep,
-            )
-        ), 'wb')
-        pickle.dump(d3, pkl)
-        pkl.close()
-        fig7, ax7 = plt.subplots(1,1,figsize = (5,5))
-        ax7.plot(d3)
-        ax7.set_ylabel('d3')
-        ax7.set_xlabel('steps')
-        fig7.savefig(os.path.join(
-            model_dir,
-            'd3_ep{ep}.png'.format(
-                ep = ep,
-            )
-        ))
-
-        pkl = open(os.path.join(
-            model_dir,
-            'stability_ep{ep}.pickle'.format(
-                ep = ep,
-            )
-        ), 'wb')
-        pickle.dump(stability, pkl)
-        pkl.close()
-        fig8, ax8 = plt.subplots(1,1,figsize = (5,5))
-        ax8.plot(stability)
-        ax8.set_ylabel('stability reward')
-        ax8.set_xlabel('steps')
-        fig8.savefig(os.path.join(
-            model_dir,
-            'stability_ep{ep}.png'.format(
-                ep = ep,
-            )
-        ))
-
-        pkl = open(os.path.join(
-            model_dir,
             'COT_ep{ep}.pickle'.format(
                 ep = ep,
             )
@@ -1046,19 +968,6 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner.load_actor(
-        'weights/actor_pretrain/exp22/pretrain_actor/actor_pretrained_pretrain_actor_22_27.ckpt'
-    )
-    #learner._pretrain_loop(
-    #    learner._pretrain_actor_action_loss_only, args.experiment, 'weights/actor_pretrain', 'pretrain_actor', 4
-    #)
-    #learner.pretrain_actor(args.experiment)
-    """
-    learner.load_actor(
-        'weights/actor_pretrain/exp13/pretrain_actor/actor_pretrained_pretrain_actor_13_120.ckpt'
-    )
-    """
-    #"""
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -1075,4 +984,3 @@ if __name__ == '__main__':
         os.mkdir(critic_path)
 
     learner.learn(path, experiment = args.experiment)
-    #"""
