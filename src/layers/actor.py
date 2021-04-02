@@ -76,22 +76,24 @@ class ParamNet(tf.keras.layers.Layer):
         super(ParamNet, self).__init__(trainable, name)
 
         self.combine_dense = tf.keras.Sequential(name = 'combine_dense')
-        for units in units_combine:
+        for i, units in enumerate(units_combine):
             self.combine_dense.add(
                 tf.keras.layers.Dense(
                     units = units,
                     activation = activation_combine,
-                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'param_net_combine_dense_{i}'.format(i = i)
                 )
             )
 
         self.mu_layers = tf.keras.Sequential(name = 'mu_dense')
-        for units in units_mu:
+        for i, units in enumerate(units_mu):
             self.mu_layers.add(
                 tf.keras.layers.Dense(
                     units = units,
                     activation = activation_mu,
-                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'mu_dense_{i}'.format(i = i)
                 )
             )
         self.mu_layers.add(
@@ -104,12 +106,13 @@ class ParamNet(tf.keras.layers.Layer):
         )
 
         self.mean_layers = tf.keras.Sequential(name = 'mean_dense')
-        for units in units_mean:
+        for i, units in enumerate(units_mean):
             self.mean_layers.add(
                 tf.keras.layers.Dense(
                     units = units,
                     activation = activation_mean,
-                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'mean_dense_{i}'.format(i = i)
                 )
             )
         self.mean_layers.add(
@@ -122,12 +125,13 @@ class ParamNet(tf.keras.layers.Layer):
         )
 
         self.omega_layers = tf.keras.Sequential(name = 'omega_dense')
-        for units in units_omega:
+        for i, units in enumerate(units_omega):
             self.omega_layers.add(
                 tf.keras.layers.Dense(
                     units = units,
                     activation = activation_omega,
-                    kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'omega_dense_{i}'.format(i = i)
                 )
             )
         self.omega_layers.add(
