@@ -2783,3 +2783,309 @@ Traceback (most recent call last):
   File "learn.py", line 682, in learn
     self.desired_motion[j + 1]
 NameError: name 'j' is not defined
+2021-04-02 19:25:13.702134: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+[DDPG] Building the actor model
+2021-04-02 19:25:17.389799: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-02 19:25:17.391531: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-02 19:25:17.476848: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.477712: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-02 19:25:17.477751: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-02 19:25:17.481496: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-02 19:25:17.481707: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-02 19:25:17.483254: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-02 19:25:17.483678: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-02 19:25:17.487548: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-02 19:25:17.488518: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-02 19:25:17.488769: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-02 19:25:17.488974: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.489940: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.490728: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-02 19:25:17.491096: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-02 19:25:17.491322: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-02 19:25:17.491496: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.492275: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-02 19:25:17.492297: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-02 19:25:17.492368: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-02 19:25:17.492413: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-02 19:25:17.492453: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-02 19:25:17.492494: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-02 19:25:17.492532: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-02 19:25:17.492570: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-02 19:25:17.492609: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-02 19:25:17.492728: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.493653: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:17.494417: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-02 19:25:17.494456: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-02 19:25:18.293769: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-02 19:25:18.293807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-02 19:25:18.293819: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-02 19:25:18.294226: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:18.295272: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:18.296083: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-02 19:25:18.296733: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617391523.006015973, 14039.180000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617391523.006900936, 14039.181000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617391523.007002880, 14039.181000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617391524.186443403, 14040.355000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617391524.629537443, 14040.796000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617391525.030244973, 14041.195000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617391525.436675149, 14041.596000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-02 19:25:51.286253: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-02 19:25:51.963505: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward -0.24946710467338562 Critic Loss 0.2435522824525833
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward -0.22919729351997375 Critic Loss 0.21415671706199646
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward -0.49316614866256714 Critic Loss 0.22598294913768768
+[DDPG] Episode 0 Step 3
+[DDPG] Total Reward -0.14282900094985962 Critic Loss 0.1963673084974289
+[DDPG] Episode 0 Step 4
+[DDPG] Total Reward -0.30997177958488464 Critic Loss 0.1520824283361435
+[DDPG] Episode 0 Step 5
+[DDPG] Total Reward -0.1798185557126999 Critic Loss 0.16861993074417114
+[DDPG] Episode 0 Step 6
+[DDPG] Total Reward -0.2578607499599457 Critic Loss 0.17103038728237152
+[DDPG] Episode 0 Step 7
+[DDPG] Total Reward -0.22236335277557373 Critic Loss 0.19583278894424438
+[DDPG] Episode 0 Step 8
+[DDPG] Total Reward -0.16698740422725677 Critic Loss 0.18829558789730072
+[DDPG] Episode 0 Step 9
+[DDPG] Total Reward -0.24430309236049652 Critic Loss 0.19190241396427155
+[DDPG] Episode 0 Step 10
+[DDPG] Total Reward -0.5562079548835754 Critic Loss 0.21520371735095978
+[DDPG] Episode 0 Step 11
+[DDPG] Total Reward -0.3102964460849762 Critic Loss 0.22976864874362946
+[DDPG] Episode 0 Step 12
+[DDPG] Total Reward -0.22637207806110382 Critic Loss 0.2245819866657257
+[DDPG] Episode 0 Step 13
+[DDPG] Total Reward -0.42252400517463684 Critic Loss 0.2244924157857895
+[DDPG] Episode 0 Step 14
+[DDPG] Total Reward -0.943156898021698 Critic Loss 0.2818852365016937
+[DDPG] Episode 0 Step 15
+[DDPG] Total Reward -0.13748976588249207 Critic Loss 0.27395740151405334
+[DDPG] Episode 0 Step 16
+[DDPG] Total Reward -0.22885696589946747 Critic Loss 0.2806704044342041
+[DDPG] Episode 0 Step 17
+[DDPG] Total Reward -0.12475267052650452 Critic Loss 0.2552783191204071
+[DDPG] Episode 0 Step 18
+[DDPG] Total Reward -0.2876952588558197 Critic Loss 0.26233699917793274
+[DDPG] Episode 0 Step 19
+[DDPG] Total Reward -0.18478502333164215 Critic Loss 0.21248742938041687
+[DDPG] Episode 0 Step 20
+[DDPG] Total Reward -0.24820345640182495 Critic Loss 0.22033868730068207
+[DDPG] Episode 0 Step 21
+[DDPG] Total Reward -0.22304962575435638 Critic Loss 0.22842125594615936
+[DDPG] Episode 0 Step 22
+[DDPG] Total Reward -0.41882601380348206 Critic Loss 0.22548361122608185
+[DDPG] Episode 0 Step 23
+[DDPG] Total Reward -5.083192825317383 Critic Loss 1.2943646907806396
+[DDPG] Episode 0 Step 24
+[DDPG] Total Reward -5.419820308685303 Critic Loss 2.6983373165130615
+[DDPG] Episode 0 Step 25
+[DDPG] Total Reward -5.543942451477051 Critic Loss 4.218035697937012
+[DDPG] Episode 0 Step 26
+[DDPG] Total Reward -5.404375076293945 Critic Loss 5.38527250289917
+[DDPG] Episode 0 Step 27
+[DDPG] Total Reward -5.535940170288086 Critic Loss 6.348934650421143
+[DDPG] Episode 0 Step 28
+[DDPG] Total Reward -5.310579299926758 Critic Loss 7.109585762023926
+[DDPG] Episode 0 Step 29
+[DDPG] Total Reward -5.467097759246826 Critic Loss 8.195204734802246
+[DDPG] Episode 0 Step 30
+[DDPG] Total Reward -5.6401777267456055 Critic Loss 9.136031150817871
+[DDPG] Episode 0 Step 31
+[DDPG] Total Reward -5.613687515258789 Critic Loss 9.489215850830078
+[DDPG] Episode 0 Step 32
+[DDPG] Total Reward -5.296085357666016 Critic Loss 10.608823776245117
+[DDPG] Episode 0 Step 33
+[DDPG] Total Reward -5.439024448394775 Critic Loss 11.23244857788086
+[DDPG] Episode 0 Step 34
+[DDPG] Total Reward -5.600898742675781 Critic Loss 11.755684852600098
+[DDPG] Episode 0 Step 35
+[DDPG] Total Reward -5.579615116119385 Critic Loss 12.264331817626953
+[DDPG] Episode 0 Step 36
+[DDPG] Total Reward -5.7210001945495605 Critic Loss 12.957329750061035
+[DDPG] Episode 0 Step 37
+[DDPG] Total Reward -5.645997047424316 Critic Loss 13.552515983581543
+[DDPG] Episode 0 Step 38
+[DDPG] Total Reward -5.508616924285889 Critic Loss 14.453715324401855
+[DDPG] Episode 0 Step 39
+[DDPG] Total Reward -5.645051002502441 Critic Loss 14.744351387023926
+[DDPG] Episode 0 Step 40
+[DDPG] Total Reward -5.8333539962768555 Critic Loss 15.563417434692383
+[DDPG] Episode 0 Step 41
+[DDPG] Total Reward -5.90020751953125 Critic Loss 16.031124114990234
+[DDPG] Episode 0 Step 42
+[DDPG] Total Reward -5.555449485778809 Critic Loss 16.203428268432617
+[DDPG] Episode 0 Step 43
+[DDPG] Total Reward -5.642317771911621 Critic Loss 16.735107421875
+[DDPG] Episode 0 Step 44
+[DDPG] Total Reward -5.747104167938232 Critic Loss 17.346519470214844
+[DDPG] Episode 0 Step 45
+[DDPG] Total Reward -5.655636310577393 Critic Loss 16.94965934753418
+[DDPG] Episode 0 Step 46
+[DDPG] Total Reward -5.8499579429626465 Critic Loss 17.785499572753906
+[DDPG] Episode 0 Step 47
+[DDPG] Total Reward -5.9537811279296875 Critic Loss 18.480762481689453
+[DDPG] Episode 0 Step 48
+[DDPG] Total Reward -5.445173740386963 Critic Loss 17.055862426757812
+[DDPG] Episode 0 Step 49
+[DDPG] Total Reward -5.5690507888793945 Critic Loss 19.09628677368164
+[DDPG] Episode 0 Step 50
+[DDPG] Total Reward -5.838418006896973 Critic Loss 19.49043846130371
+[DDPG] Episode 0 Step 51
+[DDPG] Total Reward -5.452471733093262 Critic Loss 19.590587615966797
+[DDPG] Episode 0 Step 52
+[DDPG] Total Reward -5.651852130889893 Critic Loss 19.860803604125977
+[DDPG] Episode 0 Step 53
+[DDPG] Total Reward -5.571247577667236 Critic Loss 19.580900192260742
+[DDPG] Episode 0 Step 54
+[DDPG] Total Reward -5.396501541137695 Critic Loss 20.303028106689453
+[DDPG] Episode 0 Step 55
+[DDPG] Total Reward -5.36639404296875 Critic Loss 20.292490005493164
+[DDPG] Episode 0 Step 56
+[DDPG] Total Reward -5.713434219360352 Critic Loss 20.881454467773438
+[DDPG] Episode 0 Step 57
+[DDPG] Total Reward -5.539181232452393 Critic Loss 21.110549926757812
+[DDPG] Episode 0 Step 58
+[DDPG] Total Reward -5.55286979675293 Critic Loss 21.329147338867188
+[DDPG] Episode 0 Step 59
+[DDPG] Total Reward -5.751848220825195 Critic Loss 21.564807891845703
+[DDPG] Episode 0 Step 60
+[DDPG] Total Reward -5.224801540374756 Critic Loss 21.71949577331543
+[DDPG] Episode 0 Step 61
+[DDPG] Total Reward -5.132925987243652 Critic Loss 21.915283203125
+[DDPG] Episode 0 Step 62
+[DDPG] Total Reward -5.552237510681152 Critic Loss 21.812318801879883
+[DDPG] Episode 0 Step 63
+[DDPG] Total Reward -5.158877372741699 Critic Loss 21.916118621826172
+[DDPG] Episode 0 Step 64
+[DDPG] Total Reward -5.3013482093811035 Critic Loss 22.170991897583008
+[DDPG] Episode 0 Step 65
+[DDPG] Total Reward -5.4570088386535645 Critic Loss 22.513978958129883
+[DDPG] Episode 0 Step 66
+[DDPG] Total Reward -5.31941032409668 Critic Loss 22.51032829284668
+[DDPG] Episode 0 Step 67
+[DDPG] Total Reward -5.303152561187744 Critic Loss 22.878808975219727
+[DDPG] Episode 0 Step 68
+[DDPG] Total Reward -5.24329948425293 Critic Loss 23.01462745666504
+[DDPG] Episode 0 Step 69
+[DDPG] Total Reward -5.1574625968933105 Critic Loss 22.132062911987305
+[DDPG] Episode 0 Step 70
+[DDPG] Total Reward -5.42363977432251 Critic Loss 21.946531295776367
+[DDPG] Episode 0 Step 71
+[DDPG] Total Reward -5.463196277618408 Critic Loss 22.07834243774414
+[DDPG] Episode 0 Step 72
+[DDPG] Total Reward -5.384139537811279 Critic Loss 22.270387649536133
+[DDPG] Episode 0 Step 73
+[DDPG] Total Reward -5.451951503753662 Critic Loss 22.735082626342773
+[DDPG] Episode 0 Step 74
+[DDPG] Total Reward -5.273468017578125 Critic Loss 22.804433822631836
+[DDPG] Episode 0 Step 75
+[DDPG] Total Reward -5.379364967346191 Critic Loss 23.040864944458008
+[DDPG] Episode 0 Step 76
+[DDPG] Total Reward -6.05125617980957 Critic Loss 23.3232479095459
+[DDPG] Episode 0 Step 77
+[DDPG] Total Reward -5.564168453216553 Critic Loss 23.493471145629883
+[DDPG] Episode 0 Step 78
+[DDPG] Total Reward -5.531434059143066 Critic Loss 23.59455108642578
+[DDPG] Episode 0 Step 79
+[DDPG] Total Reward -5.651857376098633 Critic Loss 23.712793350219727
+[DDPG] Episode 0 Step 80
+[DDPG] Total Reward -5.970942974090576 Critic Loss 23.876157760620117
+[DDPG] Episode 0 Step 81
+[DDPG] Total Reward -6.367724418640137 Critic Loss 24.115821838378906
+[DDPG] Episode 0 Step 82
+[DDPG] Total Reward -5.939223289489746 Critic Loss 24.255775451660156
+[DDPG] Episode 0 Step 83
+[DDPG] Total Reward -6.036685943603516 Critic Loss 24.415157318115234
+[DDPG] Episode 0 Step 84
+[DDPG] Total Reward -5.783658027648926 Critic Loss 24.531692504882812
+[DDPG] Episode 0 Step 85
+[DDPG] Total Reward -5.709864139556885 Critic Loss 24.6322021484375
+[DDPG] Episode 0 Step 86
+[DDPG] Total Reward -5.722530841827393 Critic Loss 24.72909927368164
+[DDPG] Episode 0 Step 87
+[DDPG] Total Reward -5.818040370941162 Critic Loss 24.843109130859375
+[DDPG] Episode 0 Step 88
+[DDPG] Total Reward -5.752089500427246 Critic Loss 24.941944122314453
+[DDPG] Episode 0 Step 89
+[DDPG] Total Reward -5.832614898681641 Critic Loss 25.05486297607422
+[DDPG] Episode 0 Step 90
+[DDPG] Total Reward -5.646154880523682 Critic Loss 25.13179588317871
+[DDPG] Episode 0 Step 91
+[DDPG] Total Reward -6.24951696395874 Critic Loss 25.293001174926758
+[DDPG] Episode 0 Step 92
+[DDPG] Total Reward -6.469773769378662 Critic Loss 25.473215103149414
+[DDPG] Episode 0 Step 93
+[DDPG] Total Reward -5.742745876312256 Critic Loss 25.555606842041016
+[DDPG] Episode 0 Step 94
+[DDPG] Total Reward -6.045279502868652 Critic Loss 25.673324584960938
+[DDPG] Episode 0 Step 95
+[DDPG] Total Reward -5.938640594482422 Critic Loss 25.773008346557617
+[DDPG] Episode 0 Step 96
+[DDPG] Total Reward -5.625051975250244 Critic Loss 25.83057975769043
+[DDPG] Episode 0 Step 97
+[DDPG] Total Reward -5.656588077545166 Critic Loss 25.89645004272461
+[DDPG] Episode 0 Step 98
+[DDPG] Total Reward -5.838520050048828 Critic Loss 25.9799861907959
+[DDPG] Episode 0 Step 99
+[DDPG] Total Reward -6.060509204864502 Critic Loss 26.085485458374023
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1
+[DDPG] Episode 1 Step 0
+[DDPG] Total Reward -5.761622905731201 Critic Loss 26.138986587524414
+[DDPG] Episode 1 Step 1
+[DDPG] Total Reward -5.041889190673828 Critic Loss 25.964250564575195
+[DDPG] Episode 1 Step 2
+[DDPG] Total Reward -5.0392913818359375 Critic Loss 26.583179473876953
+[DDPG] Episode 1 Step 3
+[DDPG] Total Reward -5.051112651824951 Critic Loss 25.787826538085938
+[DDPG] Episode 1 Step 4
+[DDPG] Total Reward -5.043994903564453 Critic Loss 25.787710189819336
+[DDPG] Episode 1 Step 5
+[DDPG] Total Reward -5.063057899475098 Critic Loss 26.449134826660156
+[DDPG] Episode 1 Step 6
+[DDPG] Total Reward -5.035569667816162 Critic Loss 26.21994400024414
+[DDPG] Episode 1 Step 7
+[DDPG] Total Reward -5.093303680419922 Critic Loss 25.840017318725586
+[DDPG] Episode 1 Step 8
+[DDPG] Total Reward -5.131871700286865 Critic Loss 26.031208038330078
+[DDPG] Episode 1 Step 9
+[DDPG] Total Reward -5.1425604820251465 Critic Loss 26.340858459472656
+[DDPG] Episode 1 Step 10
+[DDPG] Total Reward -5.183686256408691 Critic Loss 27.021730422973633
+[DDPG] Episode 1 Step 11
+[DDPG] Total Reward -5.189820766448975 Critic Loss 26.124849319458008
+[DDPG] Episode 1 Step 12
+[DDPG] Total Reward -5.221809387207031 Critic Loss 25.52777099609375
+[DDPG] Episode 1 Step 13
+[DDPG] Total Reward -5.220898628234863 Critic Loss 25.824735641479492
+[DDPG] Episode 1 Step 14
+[DDPG] Total Reward -5.240776062011719 Critic Loss 26.185791015625
+[DDPG] Episode 1 Step 15
+[DDPG] Total Reward -5.244987964630127 Critic Loss 26.52239418029785
