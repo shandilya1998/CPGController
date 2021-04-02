@@ -22847,3 +22847,1557 @@ log file: /home/ubuntu/.ros/log/f9ba2196-93c7-11eb-bdf5-7fcbab077750/gazebo-1*.l
 shutting down processing monitor...
 ... shutting down processing monitor complete
 [1mdone[0m
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+... logging to /home/ubuntu/.ros/log/f9ba2196-93c7-11eb-bdf5-7fcbab077750/roslaunch-ip-172-31-36-108-45445.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch
+[1mstarted roslaunch server http://ip-172-31-36-108:42777/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /joint_state_publisher/source_list: ['quadruped/joint...
+ * /move_group/allow_trajectory_execution: False
+ * /move_group/back_left_leg/default_planner_config: SBL
+ * /move_group/back_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_left_leg/projection_evaluator: joints(back_left_...
+ * /move_group/back_right_leg/default_planner_config: SBL
+ * /move_group/back_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_right_leg/projection_evaluator: joints(back_right...
+ * /move_group/base/default_planner_config: SBL
+ * /move_group/base/planner_configs: ['AnytimePathShor...
+ * /move_group/capabilities: 
+ * /move_group/disable_capabilities: 
+ * /move_group/front_left_leg/default_planner_config: SBL
+ * /move_group/front_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_left_leg/projection_evaluator: joints(front_left...
+ * /move_group/front_right_leg/default_planner_config: SBL
+ * /move_group/front_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_right_leg/projection_evaluator: joints(front_righ...
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/planner_configs/AnytimePathShortening/hybridize: True
+ * /move_group/planner_configs/AnytimePathShortening/max_hybrid_paths: 24
+ * /move_group/planner_configs/AnytimePathShortening/num_planners: 4
+ * /move_group/planner_configs/AnytimePathShortening/planners: 
+ * /move_group/planner_configs/AnytimePathShortening/shortcut: True
+ * /move_group/planner_configs/AnytimePathShortening/type: geometric::Anytim...
+ * /move_group/planner_configs/BFMT/balanced: 0
+ * /move_group/planner_configs/BFMT/cache_cc: 1
+ * /move_group/planner_configs/BFMT/extended_fmt: 1
+ * /move_group/planner_configs/BFMT/heuristics: 1
+ * /move_group/planner_configs/BFMT/nearest_k: 1
+ * /move_group/planner_configs/BFMT/num_samples: 1000
+ * /move_group/planner_configs/BFMT/optimality: 1
+ * /move_group/planner_configs/BFMT/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMT/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECE/range: 0.0
+ * /move_group/planner_configs/BKPIECE/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiEST/range: 0.0
+ * /move_group/planner_configs/BiEST/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRT/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRT/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRT/init_temperature: 100
+ * /move_group/planner_configs/BiTRRT/range: 0.0
+ * /move_group/planner_configs/BiTRRT/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRT/type: geometric::BiTRRT
+ * /move_group/planner_configs/EST/goal_bias: 0.05
+ * /move_group/planner_configs/EST/range: 0.0
+ * /move_group/planner_configs/EST/type: geometric::EST
+ * /move_group/planner_configs/FMT/cache_cc: 1
+ * /move_group/planner_configs/FMT/extended_fmt: 1
+ * /move_group/planner_configs/FMT/heuristics: 0
+ * /move_group/planner_configs/FMT/nearest_k: 1
+ * /move_group/planner_configs/FMT/num_samples: 1000
+ * /move_group/planner_configs/FMT/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMT/type: geometric::FMT
+ * /move_group/planner_configs/KPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECE/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECE/range: 0.0
+ * /move_group/planner_configs/KPIECE/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECE/range: 0.0
+ * /move_group/planner_configs/LBKPIECE/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRT/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRT/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRT/range: 0.0
+ * /move_group/planner_configs/LBTRRT/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRM/range: 0.0
+ * /move_group/planner_configs/LazyPRM/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstar/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDST/type: geometric::PDST
+ * /move_group/planner_configs/PRM/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRM/type: geometric::PRM
+ * /move_group/planner_configs/PRMstar/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjEST/goal_bias: 0.05
+ * /move_group/planner_configs/ProjEST/range: 0.0
+ * /move_group/planner_configs/ProjEST/type: geometric::ProjEST
+ * /move_group/planner_configs/RRT/goal_bias: 0.05
+ * /move_group/planner_configs/RRT/range: 0.0
+ * /move_group/planner_configs/RRT/type: geometric::RRT
+ * /move_group/planner_configs/RRTConnect/range: 0.0
+ * /move_group/planner_configs/RRTConnect/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTstar/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstar/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstar/range: 0.0
+ * /move_group/planner_configs/RRTstar/type: geometric::RRTstar
+ * /move_group/planner_configs/SBL/range: 0.0
+ * /move_group/planner_configs/SBL/type: geometric::SBL
+ * /move_group/planner_configs/SPARS/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARS/max_failures: 1000
+ * /move_group/planner_configs/SPARS/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARS/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARS/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwo/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwo/max_failures: 5000
+ * /move_group/planner_configs/SPARStwo/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwo/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwo/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDE/degree: 16
+ * /move_group/planner_configs/STRIDE/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDE/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDE/max_degree: 18
+ * /move_group/planner_configs/STRIDE/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDE/min_degree: 12
+ * /move_group/planner_configs/STRIDE/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDE/range: 0.0
+ * /move_group/planner_configs/STRIDE/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDE/use_projected_distance: 0
+ * /move_group/planner_configs/TRRT/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRT/goal_bias: 0.05
+ * /move_group/planner_configs/TRRT/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRT/k_constant: 0.0
+ * /move_group/planner_configs/TRRT/max_states_failed: 10
+ * /move_group/planner_configs/TRRT/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRT/range: 0.0
+ * /move_group/planner_configs/TRRT/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRT/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /quadruped/back_left_leg_controller/joints: ['back_left_leg1_...
+ * /quadruped/back_left_leg_controller/type: position_controll...
+ * /quadruped/back_right_leg_controller/joints: ['back_right_leg1...
+ * /quadruped/back_right_leg_controller/type: position_controll...
+ * /quadruped/front_left_leg_controller/joints: ['front_left_leg1...
+ * /quadruped/front_left_leg_controller/type: position_controll...
+ * /quadruped/front_right_leg_controller/joints: ['front_right_leg...
+ * /quadruped/front_right_leg_controller/type: position_controll...
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/p: 300
+ * /quadruped/generic_hw_control_loop/cycle_time_error_threshold: 0.01
+ * /quadruped/generic_hw_control_loop/loop_hz: 100
+ * /quadruped/hardware_interface/joints: ['back_left_leg3_...
+ * /quadruped/hardware_interface/sim_control_mode: 1
+ * /quadruped/joint_state_controller/publish_rate: 100
+ * /quadruped/joint_state_controller/type: joint_state_contr...
+ * /quadruped/moveit_sim_hw_interface/joint_model_group: todo_group_name
+ * /quadruped/moveit_sim_hw_interface/joint_model_group_pose: todo_state_name
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/back_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/default_acceleration_scaling_factor: 0.1
+ * /robot_description_planning/default_velocity_scaling_factor: 0.1
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_velocity: 10
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 60.0
+ * /rosdistro: noetic
+ * /rosversion: 1.15.9
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    move_group (moveit_ros_move_group/move_group)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    urdf_spawner (gazebo_ros/spawn_model)
+  /quadruped/
+    controller_spawner (controller_manager/spawner)
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/ros/noetic/lib/moveit_ros_move_group/move_group...
+(No debugging symbols found in /opt/ros/noetic/lib/moveit_ros_move_group/move_group)
+/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/gdb_settings.gdb: No such file or directory.
+Starting program: /opt/ros/noetic/lib/moveit_ros_move_group/move_group --debug __name:=move_group __log:=/home/ubuntu/.ros/log/f9ba2196-93c7-11eb-bdf5-7fcbab077750/move_group-7.log
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[31m[ERROR] [1617391516.328670036, 14032.810000000]: A controller named 'front_left_leg_controller' was already loaded inside the controller manager[0m
+[31m[ERROR] [1617391516.571446225, 14033.008000000]: SpawnModel: Failure - model name quadruped already exist.[0m
+[ERROR] [1617391516.579825, 14033.008000]: Spawn service failed. Exiting.
+[New Thread 0x7ffff0da7700 (LWP 45637)]
+[New Thread 0x7ffff05a6700 (LWP 45638)]
+[New Thread 0x7fffefda5700 (LWP 45639)]
+[New Thread 0x7fffef5a4700 (LWP 45640)]
+[New Thread 0x7fffeeda3700 (LWP 45641)]
+[New Thread 0x7fffee5a2700 (LWP 45642)]
+[33m[ WARN] [1617391517.556936224]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[New Thread 0x7fffedd52700 (LWP 45643)]
+[New Thread 0x7fffed551700 (LWP 45644)]
+[33m[ WARN] [1617391517.720751000]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead[0m
+[31m[ERROR] [1617391517.721550127]: Failed to find 3D sensor plugin parameters for octomap generation[0m
+[New Thread 0x7fffecd50700 (LWP 45645)]
+[New Thread 0x7fffcf8cf700 (LWP 45648)]
+[New Thread 0x7fffcf0ce700 (LWP 45649)]
+[New Thread 0x7fffce8cd700 (LWP 45650)]
+[New Thread 0x7fffce02c700 (LWP 45651)]
+[New Thread 0x7fffcd82b700 (LWP 45652)]
+[0m[ INFO] [1617391517.555742519]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617391517.556827416]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1617391517.707913337]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1617391517.712296090]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1617391517.712328083]: Starting planning scene monitor[0m
+[0m[ INFO] [1617391517.715057221]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1617391517.715096821]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1617391517.717540801]: Listening to '/collision_object'[0m
+[0m[ INFO] [1617391517.719986902]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1617391517.734294024]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1617391518.123756347, 14034.340000000]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1617391518.134029153, 14034.350000000]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1617391518.134566056, 14034.351000000]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1617391518.135020473, 14034.351000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617391518.136606604, 14034.353000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617391518.137641571, 14034.354000000]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1617391518.138563979, 14034.355000000]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1617391518.138618736, 14034.355000000]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1617391518.139738003, 14034.356000000]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1617391518.139784833, 14034.356000000]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1617391518.139806719, 14034.356000000]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1617391518.139827116, 14034.356000000]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1617391518.139840831, 14034.356000000]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1617391518.337335174, 14034.536000000]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1617391518.337401995, 14034.536000000]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1617391518.337423084, 14034.536000000]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0m[31m[ERROR] [1617391525.912996195, 14042.042000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391548.761785459, 14063.593000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.175211440, 14067.689000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.264746459, 14067.776000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.348519913, 14067.850000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.397325928, 14067.878000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.435618084, 14067.898000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.476164577, 14067.920000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.511252742, 14067.939000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.565546122, 14067.981000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.622684498, 14068.034000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391553.679775532, 14068.089000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.457481062, 14076.264000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.494587223, 14076.280000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.542049610, 14076.307000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.589754277, 14076.352000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.648469583, 14076.408000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.711753783, 14076.468000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.782025757, 14076.537000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.863591790, 14076.615000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.926220674, 14076.676000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391562.990731870, 14076.737000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.589848747, 14084.705000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.655409851, 14084.770000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.723071033, 14084.837000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.759628574, 14084.871000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.812772791, 14084.923000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.855556961, 14084.965000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.934531370, 14085.025000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391571.992119199, 14085.053000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391572.029201802, 14085.072000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391572.073043933, 14085.099000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.408252042, 14092.935000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.499453594, 14093.024000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.560858553, 14093.083000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.624318053, 14093.146000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.697747866, 14093.219000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.757541082, 14093.276000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.846020909, 14093.363000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.911365605, 14093.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391580.963499163, 14093.456000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391581.006845334, 14093.476000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.248158978, 14101.124000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.314832365, 14101.169000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.372975340, 14101.224000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.442968495, 14101.291000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.499650206, 14101.346000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.586242633, 14101.430000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.644884616, 14101.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.710354196, 14101.547000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.785589120, 14101.620000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391589.861394059, 14101.694000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.581612731, 14109.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.619866265, 14109.833000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.666094119, 14109.864000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.707154355, 14109.897000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.761401148, 14109.938000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.802823989, 14109.971000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.869176994, 14110.034000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391598.929190829, 14110.093000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391599.003442511, 14110.162000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391599.071240684, 14110.228000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391607.771366115, 14118.277000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391607.852384116, 14118.356000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391607.908396247, 14118.409000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391607.969427773, 14118.468000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.018036094, 14118.515000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.073336732, 14118.568000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.127918118, 14118.622000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.205943127, 14118.697000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.271428828, 14118.760000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391608.328531195, 14118.815000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391616.699415466, 14126.608000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391616.768573540, 14126.674000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391616.843244481, 14126.745000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391616.911394842, 14126.812000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391616.975109033, 14126.874000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391617.038881852, 14126.938000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391617.095022154, 14126.992000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391617.162947988, 14127.057000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391617.214296842, 14127.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391617.308122401, 14127.190000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.490338595, 14134.836000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.558907108, 14134.901000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.617592966, 14134.959000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.703538196, 14135.042000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.788244167, 14135.125000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.851020025, 14135.185000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.896807023, 14135.228000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391625.961578444, 14135.291000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391626.043914263, 14135.369000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391626.121983058, 14135.444000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.316911116, 14143.020000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.404134194, 14143.105000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.462633546, 14143.162000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.519005370, 14143.218000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.572922037, 14143.269000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.635092487, 14143.330000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.706026172, 14143.398000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.775599137, 14143.465000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.830675535, 14143.518000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391634.893017952, 14143.578000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.706503635, 14151.731000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.769777862, 14151.791000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.821118720, 14151.841000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.872111113, 14151.891000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.922814175, 14151.942000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391643.999003067, 14152.016000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391644.056854600, 14152.073000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391644.126972146, 14152.140000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391644.195583897, 14152.206000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391644.253530724, 14152.260000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.102308244, 14160.462000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.177815206, 14160.534000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.231483929, 14160.587000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.302366020, 14160.655000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.358223689, 14160.710000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.416967303, 14160.766000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.480351282, 14160.827000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.534340116, 14160.880000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.595741179, 14160.940000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391653.654511347, 14160.987000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.268286350, 14167.972000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.311815602, 14167.996000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.368144689, 14168.050000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.427012616, 14168.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.500851794, 14168.180000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.594480424, 14168.272000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.649594625, 14168.325000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.724770326, 14168.397000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.785134052, 14168.457000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391661.856829980, 14168.525000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.356377620, 14176.400000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.389231336, 14176.425000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.453348864, 14176.486000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.520852433, 14176.553000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.590737172, 14176.622000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.673161315, 14176.703000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.728557209, 14176.757000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.786620686, 14176.813000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.875546022, 14176.901000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391670.922945226, 14176.945000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391679.828907990, 14185.289000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391679.866869768, 14185.307000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391679.913297025, 14185.348000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391679.987515145, 14185.421000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.046224379, 14185.478000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.106228300, 14185.536000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.156077617, 14185.581000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.206033557, 14185.628000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.282633808, 14185.703000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391680.369737349, 14185.788000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.143501589, 14194.004000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.218195295, 14194.077000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.275463351, 14194.114000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.319559594, 14194.138000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.363487420, 14194.161000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.421823426, 14194.198000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.461744095, 14194.228000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.515293548, 14194.281000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.563797154, 14194.327000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391689.630824812, 14194.391000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391698.834039634, 14202.945000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391698.888185229, 14202.978000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391698.927589854, 14203.003000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391698.964167897, 14203.030000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.017781495, 14203.079000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.074698464, 14203.134000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.150425380, 14203.206000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.220850687, 14203.273000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.290096306, 14203.341000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391699.368040329, 14203.415000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.093331568, 14211.490000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.160231691, 14211.555000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.234692743, 14211.627000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.298652365, 14211.689000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.368219500, 14211.758000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.445500763, 14211.834000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.523939025, 14211.911000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.580438491, 14211.966000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.656919992, 14212.040000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391708.717195390, 14212.100000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.600330629, 14220.366000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.670390612, 14220.435000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.733272048, 14220.498000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.805891785, 14220.569000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.883883680, 14220.645000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391717.935654570, 14220.696000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391718.001849758, 14220.761000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391718.071645270, 14220.828000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391718.135544667, 14220.890000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391718.193115760, 14220.947000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391726.796046327, 14228.967000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391726.861625114, 14229.030000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391726.920357368, 14229.088000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391726.980625912, 14229.147000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.056640165, 14229.219000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.119794703, 14229.281000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.185077062, 14229.343000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.239890444, 14229.396000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.296066489, 14229.451000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391727.350920122, 14229.504000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.186787735, 14237.763000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.250695125, 14237.825000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.332704419, 14237.905000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.419945468, 14237.990000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.492837438, 14238.061000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.549375521, 14238.117000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.614316201, 14238.180000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.661763267, 14238.224000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.725353569, 14238.287000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391736.809804815, 14238.368000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.318092809, 14246.247000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.365422327, 14246.293000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.445713941, 14246.371000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.510830705, 14246.435000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.570527286, 14246.492000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.652305007, 14246.572000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.725219284, 14246.643000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.798594496, 14246.715000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.873937560, 14246.789000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391745.941988901, 14246.856000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.614288545, 14254.962000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.658707639, 14254.989000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.701600356, 14255.019000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.756505989, 14255.057000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.783348125, 14255.074000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.840163164, 14255.128000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.915039840, 14255.201000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391754.984881834, 14255.269000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391755.065547760, 14255.347000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391755.137876664, 14255.418000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.446257989, 14263.208000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.517450176, 14263.277000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.569378042, 14263.327000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.627604370, 14263.385000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.699041309, 14263.455000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.776800175, 14263.532000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.847318421, 14263.601000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.898158293, 14263.650000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391763.961542083, 14263.712000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391764.051203013, 14263.783000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391772.868995348, 14272.026000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391772.927257080, 14272.083000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391772.986622323, 14272.141000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.056906006, 14272.209000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.123688485, 14272.274000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.158416755, 14272.308000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.214854600, 14272.364000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.278223675, 14272.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.347020977, 14272.494000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391773.395036761, 14272.540000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.304867843, 14279.949000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.363155402, 14279.995000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.407635667, 14280.018000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.442012153, 14280.038000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.469627795, 14280.055000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.501601930, 14280.081000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.552526544, 14280.131000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.610112922, 14280.188000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.673050020, 14280.250000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391781.726433188, 14280.302000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.272979735, 14288.338000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.340763380, 14288.405000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.402648902, 14288.466000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.459720306, 14288.521000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.528234160, 14288.588000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.577382970, 14288.636000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.636725825, 14288.695000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.691102497, 14288.748000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.744123239, 14288.800000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391790.849611953, 14288.890000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.328860442, 14295.879000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.402059133, 14295.934000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.483296289, 14295.996000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.527923225, 14296.039000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.595587622, 14296.104000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.661159354, 14296.168000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.715231006, 14296.221000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.773329706, 14296.277000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.854973561, 14296.357000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391798.928092317, 14296.429000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.643424560, 14304.690000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.707854042, 14304.752000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.798307172, 14304.823000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.882901394, 14304.885000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.923466259, 14304.915000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.947751740, 14304.928000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391807.990269237, 14304.968000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391808.034408012, 14305.010000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391808.084086550, 14305.059000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391808.146308619, 14305.120000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391816.845220001, 14313.315000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391816.932496142, 14313.399000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391816.969564284, 14313.425000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.022838214, 14313.464000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.065475822, 14313.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.106171714, 14313.517000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.147413073, 14313.551000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.222387932, 14313.626000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.269203610, 14313.671000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391817.310697820, 14313.712000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.208373171, 14322.060000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.289129849, 14322.142000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.349713019, 14322.202000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.398983183, 14322.251000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.462833195, 14322.312000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.524399114, 14322.372000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.591862682, 14322.437000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.653565924, 14322.498000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.698165395, 14322.542000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391826.744222846, 14322.588000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.114524988, 14329.479000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.175577899, 14329.539000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.226864881, 14329.589000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.288270522, 14329.649000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.342546630, 14329.702000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.397493105, 14329.755000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.462855877, 14329.818000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.519057618, 14329.873000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.568260620, 14329.921000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391834.617951381, 14329.969000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391842.967092134, 14337.710000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.043804231, 14337.784000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.100530983, 14337.840000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.153213868, 14337.892000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.212969090, 14337.950000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.266589002, 14338.002000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.318225463, 14338.053000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.358786339, 14338.093000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.416982359, 14338.150000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391843.456026222, 14338.187000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.407764663, 14345.707000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.447233705, 14345.735000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.488659053, 14345.763000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.543870202, 14345.804000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.617780710, 14345.875000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.666374612, 14345.922000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.722918035, 14345.978000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.775435625, 14346.028000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.823272541, 14346.075000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391851.877284829, 14346.128000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391859.842459681, 14353.673000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391859.898003088, 14353.727000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391859.950959926, 14353.778000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.016844145, 14353.842000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.079911839, 14353.904000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.133446190, 14353.957000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.174949087, 14353.997000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.214430422, 14354.036000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.266206798, 14354.087000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391860.333427205, 14354.153000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.634383840, 14361.918000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.698930047, 14361.980000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.755169501, 14362.035000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.822426305, 14362.101000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.892261921, 14362.170000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391868.958107642, 14362.235000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391869.023581040, 14362.299000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391869.094177860, 14362.369000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391869.159182429, 14362.433000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391869.231155907, 14362.503000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391876.875605824, 14369.629000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391876.948364760, 14369.700000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.002970938, 14369.754000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.051479003, 14369.801000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.120713899, 14369.869000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.176927847, 14369.923000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.247240801, 14369.992000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.314827181, 14370.058000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.381785487, 14370.123000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391877.442321909, 14370.183000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.450833647, 14377.621000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.532133014, 14377.700000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.585020708, 14377.752000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.639581444, 14377.805000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.697673231, 14377.862000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.763199123, 14377.926000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.811399020, 14377.973000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.883626423, 14378.043000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391885.937575390, 14378.096000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391886.006581735, 14378.163000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.049017944, 14385.685000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.089604991, 14385.708000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.126256949, 14385.729000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.161358865, 14385.741000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.189376136, 14385.758000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.226252546, 14385.793000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.278149579, 14385.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.346378735, 14385.912000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.414752510, 14385.978000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391894.471053539, 14386.032000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.518330506, 14393.662000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.574549072, 14393.718000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.622235808, 14393.764000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.681350022, 14393.822000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.736641424, 14393.876000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.787541917, 14393.925000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.857205607, 14393.994000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.926537547, 14394.062000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391902.968866489, 14394.104000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391903.036334381, 14394.158000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.638491965, 14402.234000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.706949387, 14402.301000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.773750081, 14402.361000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.805525610, 14402.374000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.837803590, 14402.388000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.876634169, 14402.406000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.913221628, 14402.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.945354706, 14402.450000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391911.995947170, 14402.497000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391912.062464766, 14402.562000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.226048077, 14410.284000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.296656928, 14410.353000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.345351168, 14410.400000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.392922692, 14410.446000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.451179531, 14410.504000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.509690264, 14410.560000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.574127620, 14410.616000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.616996879, 14410.649000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.652067243, 14410.668000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391920.681545329, 14410.682000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391928.740089192, 14418.357000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391928.800823732, 14418.417000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391928.864819635, 14418.480000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391928.928699537, 14418.542000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391928.981240347, 14418.593000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391929.036245751, 14418.648000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391929.101223454, 14418.712000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391929.168156117, 14418.778000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391929.217582902, 14418.827000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391929.278968292, 14418.888000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391937.751505655, 14426.899000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391937.809806475, 14426.955000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391937.859287253, 14427.004000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391937.908964284, 14427.052000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391937.976691621, 14427.119000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391938.042932160, 14427.184000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391938.093504018, 14427.234000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391938.162748525, 14427.303000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391938.227088490, 14427.366000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391938.284974984, 14427.423000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.591038476, 14435.228000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.642844593, 14435.279000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.710621040, 14435.346000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.759107303, 14435.394000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.822078111, 14435.455000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.884629933, 14435.517000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.937388435, 14435.569000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391946.995075688, 14435.625000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391947.047937852, 14435.677000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391947.118064763, 14435.746000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.688176227, 14442.830000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.737901968, 14442.879000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.798119708, 14442.938000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.853160731, 14442.992000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.918004790, 14443.056000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391954.954490954, 14443.091000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391955.022272952, 14443.157000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391955.068014311, 14443.201000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391955.122323357, 14443.255000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391955.177783815, 14443.310000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.102217621, 14450.869000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.131348017, 14450.898000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.175441984, 14450.932000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.225820145, 14450.968000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.291435816, 14451.015000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.344636356, 14451.069000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.395042965, 14451.118000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.446846001, 14451.169000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.512330389, 14451.234000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391963.573583828, 14451.295000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391970.839331859, 14458.179000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391970.902439356, 14458.240000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391970.957282654, 14458.294000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391970.994356078, 14458.330000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.058519589, 14458.393000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.103005014, 14458.437000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.144115228, 14458.477000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.184582645, 14458.516000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.233999349, 14458.564000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391971.302571174, 14458.632000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.105930990, 14466.003000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.147180460, 14466.035000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.204708706, 14466.082000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.246090112, 14466.122000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.309199765, 14466.184000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.377326958, 14466.252000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.447988744, 14466.322000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.520545423, 14466.395000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.582970926, 14466.456000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391979.636089420, 14466.509000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.575739677, 14474.068000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.628932191, 14474.120000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.674557201, 14474.165000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.725308845, 14474.215000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.789691976, 14474.269000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.833759444, 14474.304000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.880335228, 14474.339000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.936891581, 14474.384000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391987.986267785, 14474.422000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391988.026598811, 14474.460000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.504530002, 14482.520000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.579149436, 14482.585000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.610770325, 14482.604000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.647627083, 14482.626000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.686135180, 14482.652000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.725963452, 14482.680000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.775679082, 14482.726000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.819898254, 14482.769000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.876875252, 14482.824000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617391996.922435681, 14482.868000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.494634714, 14490.962000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.550681616, 14491.009000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.607808338, 14491.064000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.648808179, 14491.104000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.703061679, 14491.157000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.758116207, 14491.211000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.809399225, 14491.262000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.857730267, 14491.309000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.911909758, 14491.363000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392005.968270865, 14491.418000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392013.939512814, 14498.966000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392013.986946646, 14499.013000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.045384875, 14499.071000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.114246720, 14499.138000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.160579764, 14499.172000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.202829788, 14499.198000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.240037546, 14499.219000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.266683693, 14499.236000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.298337219, 14499.261000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392014.352506929, 14499.312000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.443718138, 14506.911000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.503865028, 14506.971000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.566967520, 14507.034000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.627129225, 14507.093000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.680611371, 14507.146000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.752638618, 14507.218000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.828204635, 14507.293000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.884916133, 14507.349000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.933177974, 14507.394000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392022.977848945, 14507.438000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.508055237, 14514.578000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.563653636, 14514.633000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.613350597, 14514.683000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.654211943, 14514.722000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.703439243, 14514.771000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.772006180, 14514.839000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.834965151, 14514.902000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.896408089, 14514.962000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392030.968636574, 14515.033000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392031.024179709, 14515.088000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.166897144, 14522.862000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.210784710, 14522.891000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.252046481, 14522.918000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.297788544, 14522.951000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.334870873, 14522.987000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.374313316, 14523.026000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.419977005, 14523.070000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.455297450, 14523.105000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.524918635, 14523.174000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392039.580003322, 14523.228000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.315804222, 14530.558000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.368275459, 14530.610000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.421702138, 14530.663000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.470326119, 14530.710000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.521367119, 14530.760000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.578621608, 14530.817000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.629427952, 14530.866000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.674892868, 14530.911000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.735139468, 14530.971000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392047.785364472, 14531.020000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.200718267, 14538.893000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.255629302, 14538.946000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.307875971, 14538.996000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.355126700, 14539.042000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.413932640, 14539.100000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.478414477, 14539.164000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.539705808, 14539.223000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.598657991, 14539.280000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.654953796, 14539.333000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392056.702704532, 14539.370000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392064.781967020, 14547.023000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392064.841225703, 14547.081000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392064.897212291, 14547.135000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392064.948841178, 14547.186000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.016888881, 14547.253000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.074700894, 14547.310000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.120238587, 14547.354000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.175299654, 14547.409000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.229933321, 14547.463000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392065.272386066, 14547.505000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.651088288, 14555.340000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.704337846, 14555.393000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.752296922, 14555.440000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.800803648, 14555.487000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.854379405, 14555.537000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.930195315, 14555.612000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392073.984065236, 14555.664000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392074.049986483, 14555.729000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392074.113441208, 14555.791000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392074.172552511, 14555.849000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.752310847, 14563.997000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.818317991, 14564.045000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.858604066, 14564.070000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.895064625, 14564.093000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.914327544, 14564.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392082.967589861, 14564.158000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392083.034362166, 14564.222000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392083.099132517, 14564.284000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392083.148259528, 14564.333000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392083.188827170, 14564.372000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.098500721, 14572.782000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.162521316, 14572.846000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.214223885, 14572.897000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.278540829, 14572.959000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.349377213, 14573.029000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.407766249, 14573.086000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.483660667, 14573.160000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.538831348, 14573.214000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.602056330, 14573.254000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392092.647858394, 14573.283000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.440040278, 14581.556000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.512931652, 14581.628000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.560399968, 14581.675000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.611457440, 14581.726000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.666130756, 14581.779000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.723733035, 14581.835000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.776993580, 14581.887000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.844732756, 14581.953000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.902978923, 14581.995000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392101.950813411, 14582.026000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392110.830167039, 14590.321000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392110.887772524, 14590.362000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392110.921045795, 14590.384000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392110.956124406, 14590.407000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392110.992194535, 14590.442000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392111.034434157, 14590.483000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392111.078354324, 14590.524000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392111.134975233, 14590.580000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392111.197112503, 14590.640000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392111.250334933, 14590.693000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392119.874060808, 14598.751000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392119.937170574, 14598.812000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.002545543, 14598.876000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.073940261, 14598.946000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.136557613, 14599.007000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.188948758, 14599.058000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.264340761, 14599.133000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.311867928, 14599.180000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.379741091, 14599.247000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392120.442059939, 14599.308000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.699456063, 14607.049000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.752576538, 14607.083000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.797326082, 14607.125000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.847256217, 14607.173000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.919741316, 14607.244000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392128.971714645, 14607.296000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392129.028707600, 14607.350000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392129.078120192, 14607.399000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392129.131682131, 14607.451000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392129.188485835, 14607.506000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.396468307, 14615.252000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.458499547, 14615.298000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.523145727, 14615.355000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.574633100, 14615.406000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.653458580, 14615.483000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.718216602, 14615.547000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.781699741, 14615.610000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.835092061, 14615.662000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.878759809, 14615.705000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392137.954839240, 14615.778000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.604193837, 14623.866000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.686748161, 14623.948000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.755349244, 14624.016000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.820049842, 14624.079000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.883809563, 14624.142000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392146.947630412, 14624.205000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392147.028845006, 14624.284000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392147.069218857, 14624.323000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392147.126454088, 14624.380000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392147.185505120, 14624.437000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.093989945, 14632.858000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.164523234, 14632.927000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.214112515, 14632.974000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.269747425, 14633.029000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.331553177, 14633.088000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.387021364, 14633.142000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.436845044, 14633.191000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.513776302, 14633.267000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.582645604, 14633.335000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392156.642558679, 14633.394000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.354346918, 14641.598000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.418687862, 14641.661000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.480700612, 14641.722000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.550856658, 14641.790000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.600138233, 14641.839000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.665171612, 14641.902000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.728273241, 14641.965000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.780512496, 14642.017000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.831822651, 14642.068000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392165.880504123, 14642.116000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.323473417, 14650.033000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.380806310, 14650.089000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.445087581, 14650.151000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.515776842, 14650.220000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.573643015, 14650.278000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.622668148, 14650.325000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.668119306, 14650.370000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.715432436, 14650.417000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.750902142, 14650.451000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392174.793597906, 14650.493000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392183.960233886, 14659.149000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.027098719, 14659.213000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.096878777, 14659.282000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.190284839, 14659.367000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.254752562, 14659.415000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.286430366, 14659.437000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.321313730, 14659.461000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.352351713, 14659.481000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.363526742, 14659.486000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392184.404974796, 14659.522000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.127568750, 14668.806000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.219836539, 14668.888000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.287180018, 14668.934000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.334022161, 14668.954000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.374783023, 14668.981000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.420992578, 14669.025000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.455850860, 14669.057000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.536693308, 14669.136000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.615758983, 14669.213000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392194.666556403, 14669.262000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.168567398, 14677.193000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.210657240, 14677.215000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.238433326, 14677.239000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.293445797, 14677.291000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.350851147, 14677.347000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.429938598, 14677.425000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.489466831, 14677.482000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.549222083, 14677.540000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.604330416, 14677.594000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392203.651734380, 14677.641000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.064983296, 14685.489000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.119650434, 14685.540000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.182390399, 14685.601000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.243021793, 14685.659000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.281963365, 14685.696000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.335811955, 14685.749000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.397564603, 14685.810000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.450677607, 14685.862000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.503993293, 14685.915000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392212.550303462, 14685.961000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.186266040, 14694.243000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.228651027, 14694.267000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.268078679, 14694.289000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.315520312, 14694.334000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.364298803, 14694.381000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.424602951, 14694.440000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.470131748, 14694.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.523961545, 14694.538000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.578370264, 14694.592000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392221.637941453, 14694.649000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.146397311, 14702.746000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.181262155, 14702.766000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.238797940, 14702.807000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.293359953, 14702.859000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.345922143, 14702.909000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.401608925, 14702.964000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.451624496, 14703.013000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.509886475, 14703.070000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.558632457, 14703.118000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392230.599663074, 14703.158000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392238.983840813, 14711.182000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.084648897, 14711.270000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.146858513, 14711.317000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.208638831, 14711.363000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.254971778, 14711.397000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.301683949, 14711.442000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.345677101, 14711.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.391537875, 14711.530000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.435668669, 14711.573000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392239.489098777, 14711.626000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392247.827202608, 14719.554000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392247.862192289, 14719.573000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392247.898502797, 14719.591000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392247.945406088, 14719.624000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392247.984178938, 14719.656000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392248.038818256, 14719.708000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392248.102797002, 14719.771000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392248.157000239, 14719.824000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392248.203196452, 14719.868000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392248.247276206, 14719.911000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.439164664, 14727.725000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.492224062, 14727.777000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.542822748, 14727.826000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.610861148, 14727.889000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.653648883, 14727.925000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.682352513, 14727.949000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.718400492, 14727.973000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.759764891, 14727.999000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.807592187, 14728.036000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392256.841226482, 14728.069000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.151148878, 14735.937000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.200707634, 14735.986000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.240494380, 14736.025000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.283040520, 14736.067000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.328620554, 14736.112000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.381952613, 14736.165000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.443897558, 14736.226000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.500364278, 14736.282000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.555673198, 14736.336000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392265.614034538, 14736.394000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.186299815, 14744.526000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.229412496, 14744.568000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.270930868, 14744.609000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.318188252, 14744.655000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.358333914, 14744.695000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.419062016, 14744.755000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.482073612, 14744.808000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.527739828, 14744.835000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.567410849, 14744.853000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392274.594604466, 14744.866000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.302299073, 14753.160000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.375974978, 14753.233000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.423962417, 14753.280000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.495946234, 14753.342000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.532944540, 14753.365000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.568591586, 14753.383000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.596531520, 14753.396000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.636964130, 14753.416000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.681048741, 14753.458000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392283.736594903, 14753.512000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.239444138, 14761.655000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.315863822, 14761.731000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.364670594, 14761.779000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.419379773, 14761.833000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.478895265, 14761.891000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.538260664, 14761.950000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.578871798, 14761.990000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.643049585, 14762.053000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.687200619, 14762.096000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392292.740532295, 14762.149000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.114739197, 14770.051000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.175640186, 14770.112000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.224637010, 14770.159000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.279283852, 14770.213000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.341472751, 14770.274000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.413699075, 14770.346000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.469413322, 14770.401000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.523175893, 14770.454000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.574111341, 14770.504000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392301.645695365, 14770.572000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392309.964246504, 14778.406000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.013014086, 14778.453000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.050351102, 14778.490000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.106225494, 14778.545000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.163162130, 14778.602000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.227589982, 14778.665000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.278672989, 14778.714000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.325234246, 14778.760000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.382869351, 14778.817000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392310.448450136, 14778.881000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392318.795150973, 14786.772000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392318.862134327, 14786.838000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392318.923745594, 14786.899000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392318.975792142, 14786.950000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.029515232, 14787.004000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.066693602, 14787.040000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.121067463, 14787.094000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.181747688, 14787.154000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.229501094, 14787.201000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392319.323983072, 14787.290000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.001559120, 14795.502000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.061922843, 14795.562000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.112885940, 14795.611000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.154938619, 14795.653000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.196587028, 14795.694000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.259438815, 14795.756000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.315655529, 14795.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.368072241, 14795.863000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.417303038, 14795.912000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392328.461087963, 14795.955000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392336.944148368, 14803.992000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.003461582, 14804.050000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.063551482, 14804.108000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.122835847, 14804.167000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.170848664, 14804.214000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.228296038, 14804.271000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.282051242, 14804.324000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.331965364, 14804.373000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.381065227, 14804.421000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392337.440687347, 14804.480000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392345.819382042, 14812.370000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392345.884782352, 14812.434000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392345.949370698, 14812.498000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.021763791, 14812.569000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.090333562, 14812.637000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.140273715, 14812.686000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.186258087, 14812.731000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.236018821, 14812.780000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.307332900, 14812.850000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392346.352542951, 14812.894000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392354.935792590, 14821.008000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392354.989600768, 14821.061000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.047038317, 14821.118000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.093582128, 14821.164000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.149872586, 14821.220000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.194275804, 14821.262000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.258025200, 14821.325000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.315055877, 14821.381000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.377738248, 14821.443000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392355.448852647, 14821.513000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.090050106, 14829.795000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.139748628, 14829.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.184644387, 14829.888000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.250567532, 14829.953000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.305574776, 14830.007000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.359341343, 14830.060000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.425827599, 14830.114000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.458155464, 14830.129000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.486720905, 14830.141000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392364.519960451, 14830.153000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.326051003, 14838.505000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.373956924, 14838.551000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.421605091, 14838.597000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.477083690, 14838.652000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.532219956, 14838.685000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.566064470, 14838.708000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.602200843, 14838.735000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.642657380, 14838.764000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.693778102, 14838.803000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392373.739458062, 14838.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.610505116, 14846.328000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.645966054, 14846.345000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.700689121, 14846.379000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.749823242, 14846.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.803448189, 14846.480000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.857483323, 14846.533000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.907498643, 14846.581000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392381.957062311, 14846.630000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392382.026114993, 14846.698000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392382.082213716, 14846.754000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.555539266, 14854.829000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.615284555, 14854.888000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.663012683, 14854.935000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.708264362, 14854.980000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.767454076, 14855.038000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.813844545, 14855.084000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.858819583, 14855.128000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.902085618, 14855.170000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.948741443, 14855.216000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392390.998687316, 14855.266000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392399.735726218, 14863.534000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392399.784756375, 14863.582000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392399.844252921, 14863.641000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392399.905260531, 14863.701000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392399.948936477, 14863.744000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392400.017391736, 14863.812000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392400.064500904, 14863.859000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392400.126876540, 14863.913000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392400.169897376, 14863.942000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392400.217201169, 14863.970000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.125778197, 14872.448000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.199226397, 14872.521000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.263289294, 14872.584000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.317459402, 14872.636000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.377400151, 14872.696000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.435638970, 14872.753000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.485945908, 14872.802000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.542649024, 14872.857000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.602015482, 14872.916000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392409.652552626, 14872.965000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.285057342, 14881.266000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.358644493, 14881.338000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.410880607, 14881.373000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.467204226, 14881.408000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.496680399, 14881.424000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.534632520, 14881.444000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.576543146, 14881.475000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.614226016, 14881.512000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.673978181, 14881.570000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392418.735194071, 14881.631000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.253621220, 14889.843000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.313576182, 14889.902000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.359910944, 14889.948000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.411394437, 14889.999000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.486279672, 14890.063000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.529139728, 14890.092000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.570894291, 14890.121000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.616770319, 14890.148000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.647239488, 14890.167000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392427.678377778, 14890.203000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.287666773, 14898.482000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.346535274, 14898.541000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.394498322, 14898.588000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.442665392, 14898.635000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.496513658, 14898.688000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.537683178, 14898.728000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.587577789, 14898.772000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.612797516, 14898.780000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.663426766, 14898.816000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392436.707449140, 14898.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392446.890780259, 14908.570000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.572387330, 14912.081000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.612103671, 14912.101000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.647191843, 14912.121000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.687256659, 14912.148000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.739360332, 14912.198000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.806026854, 14912.263000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.864369070, 14912.319000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.933900231, 14912.387000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392450.990507578, 14912.443000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392451.046673801, 14912.499000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.188740353, 14921.165000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.249312387, 14921.224000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.321938890, 14921.295000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.382016474, 14921.353000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.453969440, 14921.423000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.525100575, 14921.493000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.590896744, 14921.557000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.654688878, 14921.620000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.722275850, 14921.686000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392460.788736437, 14921.751000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.446116677, 14929.928000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.513714449, 14929.994000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.567116809, 14930.046000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.637803435, 14930.114000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.687402204, 14930.162000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.747041373, 14930.220000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.819384554, 14930.291000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.889976660, 14930.360000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.941916325, 14930.411000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392469.988828567, 14930.457000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.021022358, 14939.028000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.100738289, 14939.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.156775240, 14939.162000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.227277616, 14939.231000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.291387372, 14939.294000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.347704272, 14939.349000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.415904552, 14939.416000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.488833186, 14939.488000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.553212694, 14939.552000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392479.611836630, 14939.609000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392488.933046205, 14948.436000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392488.994538460, 14948.496000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.050895115, 14948.552000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.115209002, 14948.608000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.211597470, 14948.682000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.257525964, 14948.712000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.310035175, 14948.747000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.353468372, 14948.777000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.407340485, 14948.831000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392489.469926141, 14948.893000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.176229896, 14957.049000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.249017612, 14957.114000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.305928662, 14957.170000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.363364500, 14957.226000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.417387317, 14957.279000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.491754004, 14957.351000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.552356848, 14957.409000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.611117120, 14957.467000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.669203106, 14957.522000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392498.734371771, 14957.587000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.111474872, 14966.435000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.173041297, 14966.495000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.230569902, 14966.551000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.297751958, 14966.617000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.353389080, 14966.670000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.404619740, 14966.720000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.464364463, 14966.778000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.513024993, 14966.825000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.561259165, 14966.872000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392508.611670493, 14966.921000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.287971039, 14975.101000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.354303228, 14975.166000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.412966238, 14975.222000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.480827370, 14975.289000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.549640594, 14975.356000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.605721518, 14975.411000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.668649748, 14975.472000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.711455455, 14975.513000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.768846608, 14975.570000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392517.821418076, 14975.621000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.410851191, 14984.761000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.472602834, 14984.822000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.522928098, 14984.871000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.574887751, 14984.922000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.637764094, 14984.977000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.676435306, 14984.997000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.708392362, 14985.014000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.744119922, 14985.033000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.769599539, 14985.043000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392527.818285492, 14985.084000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.442669988, 14993.190000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.476588496, 14993.209000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.514101662, 14993.229000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.557936290, 14993.259000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.610233328, 14993.304000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.662410925, 14993.355000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.712184978, 14993.403000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.754131601, 14993.443000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.826887626, 14993.514000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392536.889145922, 14993.575000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.432226655, 15002.694000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.494891899, 15002.756000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.553388949, 15002.814000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.632398454, 15002.891000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.693195405, 15002.952000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.765996251, 15003.023000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.826041953, 15003.080000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.876996700, 15003.131000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392546.948465330, 15003.201000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392547.000990621, 15003.253000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.124898238, 15011.828000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.198851025, 15011.900000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.253245455, 15011.951000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.310882978, 15012.007000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.359635909, 15012.054000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.433803823, 15012.127000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.494978786, 15012.187000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.561719687, 15012.252000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.642389524, 15012.331000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392556.710504486, 15012.398000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.204907952, 15021.482000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.290338407, 15021.561000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.350857631, 15021.592000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.381279030, 15021.604000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.420121349, 15021.622000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.466449851, 15021.656000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.500858882, 15021.689000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.556422415, 15021.742000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.619174852, 15021.803000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392566.672513321, 15021.854000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392575.885794157, 15030.644000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392575.954299950, 15030.710000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.014146591, 15030.769000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.067564104, 15030.822000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.126312866, 15030.879000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.191497368, 15030.943000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.254336507, 15031.005000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.300664423, 15031.050000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.354276168, 15031.103000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392576.410292974, 15031.159000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392585.703084756, 15040.031000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392585.770258542, 15040.097000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392585.826592087, 15040.152000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392585.886438008, 15040.210000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392585.955153973, 15040.278000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392586.021952675, 15040.342000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392586.081474075, 15040.401000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392586.148275576, 15040.467000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392586.202381533, 15040.520000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392586.254152017, 15040.570000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392595.770189221, 15049.590000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392595.828283615, 15049.641000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392595.881428115, 15049.692000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392595.939155344, 15049.749000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392595.991090943, 15049.800000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392596.039641216, 15049.847000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392596.107248078, 15049.913000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392596.170116326, 15049.974000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392596.228207531, 15050.031000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392596.275953778, 15050.078000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.601059338, 15058.994000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.664542446, 15059.056000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.719529473, 15059.108000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.778965519, 15059.167000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.849032757, 15059.235000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.913719745, 15059.297000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392605.972070697, 15059.354000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392606.024269792, 15059.405000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392606.096468020, 15059.477000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1617392606.133909011, 15059.512000000]: Can't accept new commands. Controller is not running.[0m
+[New Thread 0x7fffcd02a700 (LWP 49872)]
+[0m[ INFO] [1617391517.416810320]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1617391517.423262034]: waitForService: Service [/gazebo_gui/set_physics_properties] has not been advertised, waiting...[0m
