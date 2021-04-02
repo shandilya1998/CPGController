@@ -344,7 +344,7 @@ class AllLegs:
                     B = contact
             return [A, B]
         else:
-            return []
+            return [fr_contact, bl_contact]
 
     def get_leg_handle(self, leg):
         if leg == self.leg_name_lst[0]:
@@ -439,9 +439,14 @@ class Quadruped:
         self.joint_name_lst = self.params['joint_name_lst']
 
         self.starting_pos = self.params['starting_pos']
+        self.history_osc = np.repeat(
+            np.expand_dims(self.osc_state, 0),
+            2 * self.params['rnn_steps'] - 1,
+            0
+        )
         self.history = np.repeat(
             np.expand_dims(self.starting_pos, 0),
-            self.params['rnn_steps'] - 1,
+            2 * self.params['rnn_steps'] - 1,
             0
         )
 
@@ -559,7 +564,7 @@ class Quadruped:
         self.stability = 0.0
 
         self._reset()
-        rospy.sleep(5.0)
+        rospy.sleep(10.0)
         current_pose = self.kinematics.get_current_end_effector_fk()
         A, B = self.all_legs.get_AB()
         A = self.get_contact_ob(A['leg_name'], current_pose)
@@ -600,8 +605,8 @@ class Quadruped:
         self.motion_state_set = True
 
     def create_init_osc_state(self):
-        r = np.ones((self.params['units_osc'],))
-        phi = np.zeros((self.params['units_osc'],))
+        r = np.ones((self.params['units_osc'],), dtype = np.float32)
+        phi = np.zeros((self.params['units_osc'],), dtype = np.float32)
         z = r * np.exp(1j * phi)
         x = np.real(z)
         y = np.imag(z)
@@ -979,10 +984,8 @@ class Quadruped:
     def set_observation(self, action, desired_motion):
         self.action, self.osc_state = action
         self.action = self.action[0]
-        self.osc_state = self.osc_state[0]
-        if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
-            self.reward += -5.0
-        self.osc_state = self.osc_state[0]
+        self.osc_state = self.osc_state[0].astype('float32')
+        self.action = np.clip(self.action, -np.pi/3, np.pi/3)
         self.all_legs.move(self.action.tolist())
         self.delta = rospy.get_rostime().to_sec() - self.time
         self.time = rospy.get_rostime().to_sec()
@@ -998,7 +1001,7 @@ class Quadruped:
             self.linear_acc
         ]).astype('float32')
 
-        self.motion_state = desired_motion
+        self.motion_state = desired_motion.astype('float32')
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
@@ -1020,6 +1023,9 @@ class Quadruped:
     def set_history(self, desired_motion):
         self.history = np.concatenate(
             [self.history[1:], np.expand_dims(self.action, 0)], 0
+        )
+        self.history_osc = np.concatenate(
+            [self.history_osc[1:], np.expand_dims(self.osc_state, 0)], 0
         )
         self.history_pos = np.concatenate(
             [
@@ -1132,7 +1138,7 @@ class Quadruped:
         if vd == 0:
             vd = 1e-8
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)
-        self.set_support_lines()
+        #self.set_support_lines()
         self.set_history(desired_motion)
         return [
             self.motion_state,
@@ -1149,6 +1155,9 @@ class Quadruped:
 
     def get_history(self):
         return tf.convert_to_tensor(np.expand_dims(self.history, 0))
+
+    def get_osc_history(self):
+        return tf.convert_to_tensor(np.expand_dims(self.history_osc, 0))
 
     def start(self, count):
         rospy.spin()

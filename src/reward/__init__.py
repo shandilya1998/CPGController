@@ -75,7 +75,7 @@ class FitnessFunction:
             p_e = 0
         P = np.sum(joint_torque * 5.0/472.22) + p_e
         COT = P/(mass * np.linalg.norm(g) * np.linalg.norm(v_real))
-        return COT
+        return -1 * COT
 
     def motion_reward(self, history_pos, history_vel, history_desired_motion,\
             pos, last_pos, desired_motion):
@@ -86,12 +86,12 @@ class FitnessFunction:
             pos = history_pos[-1*(i+1)] - history_pos[-1*(i+2)]
             if np.linalg.norm(pos) != 0:
                 pos = pos / np.linalg.norm(pos)
-            sum_1 += np.square(pos - history_desired_motion[-1 * (i+1), :3])
+            #sum_1 += np.square(pos - history_desired_motion[-1 * (i+1), :3])
             sum_2 += np.square(history_vel[
                 -1 * (i+1)
             ] - history_desired_motion[
                     -1 * (i+1), 3:
             ])
 
-        motion = np.sqrt(np.sum(sum_1)) + np.sqrt(np.sum(sum_2)) - sum_3
+        motion = sum_3 -np.sqrt(np.sum(sum_1))
         return motion

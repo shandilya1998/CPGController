@@ -88,16 +88,18 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
                 _action,
                 desired_motion
             )
-            reward -= self.quadruped.get_COT()
-            reward -= self.quadruped.get_motion_reward()
-        reward += self.quadruped.get_stability_reward()
+            reward += self.quadruped.get_COT()
+            reward += self.quadruped.get_motion_reward()
+        #reward += self.quadruped.get_stability_reward()
+        action[0] = swap_batch_timestep(action[0])
+        action[1] = swap_batch_timestep(action[1])
         observation = [
             tf.expand_dims(
                 tf.convert_to_tensor(ob),
                 0
             ) for ob in observation
         ]
-
+        reward = tf.convert_to_tensor(reward, dtype = tf.dtypes.float32)
         step_type = tfa.trajectories.time_step.StepType.MID
         self._episode_ended = last_step
         if last_step:

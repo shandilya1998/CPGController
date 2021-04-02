@@ -33,7 +33,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 40,
+    'rnn_steps'                   : 10,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -87,6 +87,7 @@ action_spec = [
     ),
    tf.TensorSpec(
        shape = (
+           params['rnn_steps'],
            params['units_osc'] * 2,
        ),
        dtype = tf.dtypes.float32,
@@ -104,8 +105,16 @@ reward_spec = [
 
 history_spec = tf.TensorSpec(
     shape = (
-        params['rnn_steps'] - 1,
+        2 * params['rnn_steps'] - 1,
         params['action_dim']
+    ),
+    dtype = tf.dtypes.float32
+)
+
+history_osc_spec = tf.TensorSpec(
+    shape = (
+        2 * params['rnn_steps'] - 1,
+        2* params['units_osc']
     ),
     dtype = tf.dtypes.float32
 )
@@ -116,6 +125,7 @@ data_spec.extend(observation_spec)
 data_spec.extend(action_spec)
 data_spec.extend(reward_spec)
 data_spec.append(history_spec)
+data_spec.append(history_osc_spec)
 
 data_spec.extend([
     tf.TensorSpec(
@@ -130,7 +140,8 @@ specs = {
     'reward_spec' : reward_spec,
     'action_spec' : action_spec,
     'data_spec' : data_spec,
-    'history_spec' : history_spec
+    'history_spec' : history_spec,
+    'history_osc_spec' : history_osc_spec
 }
 
 params.update(specs)
