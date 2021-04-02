@@ -144,7 +144,7 @@ class ParamNet(tf.keras.layers.Layer):
         state = self.combine_dense(state)
         mu = self.mu_layers(state)
         mean = self.mean_layers(state)
-        omega = self.omega_layers(state)
+        omega = self.omega_layers(inputs[0])
         return [state, omega, mu, mean]
 
 def swap_batch_timestep(input_t):
