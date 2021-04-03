@@ -545,11 +545,17 @@ class Quadruped:
 
         self.mass = self.get_total_mass()
         self.force = np.zeros((3,))
+        self.force.fill(1e-8)
         self.torque = np.zeros((3,))
+        self.torque.fill(1e-8)
         self.com = np.zeros((3,))
+        self.com.fill(1e-8)
         self.v_exp = np.zeros((3,))
+        self.v_exp.fill(1e-8)
         self.v_real = np.zeros((3,))
+        self.v_real.fill(1e-8)
         self.pos = np.zeros((3,))
+        self.pos.fill(1e-8)
         self.last_pos = self.pos
         self.eta = 1e8
 
@@ -794,6 +800,7 @@ class Quadruped:
 
     def reset(self):
         self._reset()
+        rospy.sleep(1.0)
         start = time.time()
         self.reward = 0.0
         if not self.osc_state_set:
@@ -896,6 +903,9 @@ class Quadruped:
         self.com = self.get_com()
         current_pose = self.kinematics.get_current_end_effector_fk()
         AB = self.all_legs.get_AB()
+        if AB:
+            self.upright = False
+            AB = [self.A[1], self.B[1]]
         A, B = AB
         A = self.get_contact_ob(A['leg_name'], current_pose)
         B = self.get_contact_ob(B['leg_name'], current_pose)
@@ -1116,7 +1126,7 @@ class Quadruped:
                 self.mass,
                 self.gravity
             )
-            self.reward += self.stability
+            self.reward += np.nan_to_num(self.stability)
             if self.compute_reward.zmp.support_plane.flag:
                 self.reward += -5.0
             if math.isnan(self.reward):
@@ -1132,6 +1142,7 @@ class Quadruped:
             a.numpy() for a in action
         ]
         self.set_observation(action, desired_motion)
+        rospy.sleep(15.0/60.0)
         self.force = self.mass * self.linear_acc
         self.torque = self.get_moment()
         vd = np.linalg.norm(self.v_exp)
