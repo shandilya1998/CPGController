@@ -213,7 +213,7 @@ pretraining = {
 
 num_data = len(pretraining['Tst'])
 params.update(pretraining)
-bs = 1125
+bs = 45
 params.update({
     'num_data' : 135 * params['rnn_steps'] / bs,
     'pretrain_bs': bs
