@@ -642,20 +642,24 @@ class Learner():
         plt.close()
 
     def _add_noise(self, action):
+        # noise theta and sigma scaled by 0.1 for exp5
         self._noise[0] = max(self.epsilon, 0) * self.OU.function(
             action[0],
             0.0,
-            0.15,
-            0.2
+            0.015,
+            0.02
         )
         self._noise[1] = max(self.epsilon, 0) * self.OU.function(
             action[1],
             0.0,
-            0.15,
-            0.2
+            0.015,
+            0.02
         )
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
+
+    def learn_a2c(self, model_dir, experiment):
+        ep = 0
 
     def learn(self, model_dir, experiment):
         ep = 0
@@ -1009,7 +1013,7 @@ if __name__ == '__main__':
     #    args.out_path,
     #)
     #"""
-    learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
+    #learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))

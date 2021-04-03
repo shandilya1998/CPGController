@@ -33,7 +33,7 @@ class ActorNetwork(object):
         grads = tape.gradient(
             action,
             self.model.trainable_variables,
-            [-grad for grad in q_grads]
+            [-1 * grad for grad in q_grads]
         )
         self.optimizer.apply_gradients(
             zip(

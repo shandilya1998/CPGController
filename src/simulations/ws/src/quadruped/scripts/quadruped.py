@@ -307,8 +307,10 @@ class AllLegs:
             contacts.append(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
-        if len(contacts) == 1 or len(contacts) == 0:
-            return contacts
+        if len(contacts) == 1:
+            B = copy.deepcopy(contacts[0])
+            B['position'] = B['position'] + 1e-8
+            return contacts + [B]
         elif len(contacts) == 2:
             return contacts
         elif len(contacts) == 3:
@@ -342,7 +344,7 @@ class AllLegs:
                     B = contact
             return [A, B]
         else:
-            return [fr_contact, bl_contact]
+            return contacts
 
     def get_leg_handle(self, leg):
         if leg == self.leg_name_lst[0]:
@@ -571,6 +573,8 @@ class Quadruped:
         rospy.sleep(10.0)
         current_pose = self.kinematics.get_current_end_effector_fk()
         A, B = self.all_legs.get_AB()
+        self.A_init = A
+        self.B_init = B
         A = self.get_contact_ob(A['leg_name'], current_pose)
         B = self.get_contact_ob(B['leg_name'], current_pose)
         def get_other_leg(name):
@@ -905,7 +909,7 @@ class Quadruped:
         AB = self.all_legs.get_AB()
         if AB:
             self.upright = False
-            AB = [self.A[1], self.B[1]]
+            AB = [self.A_init, self.B_init]
         A, B = AB
         A = self.get_contact_ob(A['leg_name'], current_pose)
         B = self.get_contact_ob(B['leg_name'], current_pose)
@@ -990,6 +994,9 @@ class Quadruped:
             self.upright = False
             self.reward += -5.0
 
+    def set_last_pos(self):
+        self.last_pos = self.pos
+
     def set_observation(self, action, desired_motion):
         self.action, self.osc_state = action
         self.action = self.action[0]
@@ -1013,7 +1020,6 @@ class Quadruped:
 
         rospy.wait_for_service('/gazebo/get_model_state')
         model_state = self.get_model_state_proxy(self.get_model_state_req)
-        self.last_pos = self.pos
         self.pos = np.array([
             model_state.pose.position.x,
             model_state.pose.position.y,
