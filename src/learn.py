@@ -115,7 +115,7 @@ class SignalDataGen:
 
 class Learner():
     def __init__(self, params, experiment, create_data = False):
-        np.seterr(all='raise')
+        np.seterr(all='ignore')
         self.params = params
         self.actor = ActorNetwork(params)
         self.critic = CriticNetwork(params)
@@ -641,9 +641,25 @@ class Learner():
         fig.savefig(name)
         plt.close()
 
+    def _add_noise(self, action):
+        self._noise[0] = max(self.epsilon, 0) * self.OU.function(
+            action[0],
+            0.0,
+            0.15,
+            0.2
+        )
+        self._noise[1] = max(self.epsilon, 0) * self.OU.function(
+            action[1],
+            0.0,
+            0.15,
+            0.2
+        )
+        self._action[0] = action[0] + self._noise[0]
+        self._action[1] = action[1] + self._noise[1]
+
     def learn(self, model_dir, experiment):
         ep = 0
-        epsilon = 1
+        self.epsilon = 1
         self._noise_init = [
                     tf.expand_dims(tf.zeros(
                         spec.shape,
@@ -675,10 +691,10 @@ class Learner():
             tot_loss = 0.0
             break_loop = False
             while(step < self.params['max_steps'] and not break_loop):
-                epsilon -= 1/self.params['EXPLORE']
+                self.epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                [out, osc], [omega, mu, mean, state]=self.actor.model(self._state)
+                [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
                 out = out * tf.repeat(
                     tf.expand_dims(mu, 1),
                     self.params['rnn_steps'],
@@ -689,24 +705,12 @@ class Learner():
                     axis = 1
                 )
                 action_original = [out, osc]
-                self._noise[0] = max(epsilon, 0) * self.OU.function(
-                    action_original[0],
-                    0.0,
-                    0.15,
-                    0.2
-                )
-                self._noise[1] = max(epsilon, 0) * self.OU.function(
-                    action_original[1],
-                    0.0,
-                    0.15,
-                    0.2
-                )
-                self._action[0] = action_original[0] + self._noise[0]
-                self._action[1] = action_original[1] + self._noise[1]
+                self._add_noise(action_original)
+                
                 if math.isnan(np.sum(self._action[0].numpy())):
                     print('[DDPG] Action value NaN. Ending Episode')
                     break_loop = True
-                start = time.time()
+                
                 self._history = self.env.quadruped.get_history()
                 self._history_osc = self.env.quadruped.get_osc_history()
                 reward = 0.0
