@@ -20,9 +20,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import math
 
-#gpus = tf.config.experimental.list_physical_devices('GPU')
-#for gpu in gpus:
-#    tf.config.experimental.set_memory_growth(gpu, True)
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
 
 class SignalDataGen:
     def __init__(self, params):
@@ -479,7 +479,7 @@ class Learner():
             loss_mean = self.mse_mean(y[3], mean)
             loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss_omega = self.mse_omega(y[1], omega)
-            loss = loss_mu + loss_action + loss_mean
+            loss = loss_mu + loss_action + loss_mean + loss_omega
 
         grads = tape.gradient(
             loss,
@@ -596,8 +596,8 @@ class Learner():
         return loss, [loss_action, loss_omega, loss_mu]
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
-        encoder = self.actor.create_encoder(self.params)
-        self.actor.set_model(encoder)
+        #encoder = self.actor.create_encoder(self.params)
+        #self.actor.set_model(encoder)
         #self._pretrain_loop(
         #    self._pretrain_encoder, 
         #    experiment, 
@@ -605,13 +605,13 @@ class Learner():
         #    'pretrain_enc',
         #    epochs = 40
         #)
-        self.actor.model.load_weights(os.path.join(
-            checkpoint_dir, 'exp23/pretrain_enc', 'actor_pretrained_pretrain_enc_23_39.ckpt'
-        ))
+        #self.actor.model.load_weights(os.path.join(
+        #    checkpoint_dir, 'exp23/pretrain_enc', 'actor_pretrained_pretrain_enc_23_39.ckpt'
+        #))
 
         #encoder =  self.actor.make_untrainable(self.actor.model)
-        model, _, _ = self.actor.create_actor_network(params, self.actor.model)#encoder)
-        self.actor.set_model(model)
+        #model, _, _ = self.actor.create_actor_network(params, self.actor.model)#encoder)
+        #self.actor.set_model(model)
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.001,
