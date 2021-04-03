@@ -307,10 +307,8 @@ class AllLegs:
             contacts.append(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
-        if len(contacts) == 1:
-            B = copy.deepcopy(contacts[0])
-            B['position'] += 1e-8
-            return [contacts[0], B]
+        if len(contacts) == 1 or len(contacts) == 0:
+            return contacts
         elif len(contacts) == 2:
             return contacts
         elif len(contacts) == 3:
@@ -1061,7 +1059,8 @@ class Quadruped:
             self.joint_velocity,
             self.v_real,
             self.mass,
-            self.gravity
+            self.gravity,
+            self.delta
         )
         return self.COT
 
@@ -1127,6 +1126,7 @@ class Quadruped:
         return self.reward
 
     def step(self, action, desired_motion):
+        now = rospy.get_rostime().to_sec() 
         self.reward = 0.0
         action = [
             a.numpy() for a in action
@@ -1142,6 +1142,7 @@ class Quadruped:
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)
         self.set_support_lines()
         self.set_history(desired_motion)
+        self.delta = rospy.get_rostime().to_sec() - now
         return [
             self.motion_state,
             self.robot_state,
