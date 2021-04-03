@@ -678,7 +678,7 @@ class Learner():
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
-                [out, osc], [omega, mu, mean]=self.actor.model(self._state)
+                [out, osc], [omega, mu, mean, state]=self.actor.model(self._state)
                 out = out * tf.repeat(
                     tf.expand_dims(mu, 1),
                     self.params['rnn_steps'],
@@ -780,7 +780,7 @@ class Learner():
                 history_next = tf.concat(history_next, 0)
                 history_osc_next = tf.concat(history_osc_next, 0)
                 next_states = [tf.concat(state, 0) for state in next_states]
-                [out, osc], [o, m, mn] = self.actor.target_model(next_states)
+                [out, osc], [o, m, mn, st] = self.actor.target_model(next_states)
                 out = out * tf.repeat(
                     tf.expand_dims(m, 1),
                     self.params['rnn_steps'],
@@ -808,7 +808,7 @@ class Learner():
                     history, history_osc, y)
                 critic_loss.append(loss.numpy())
                 tot_loss += loss.numpy()
-                a_for_grad, [omega_, mu_, mean_] = self.actor.model(states)
+                a_for_grad, [omega_, mu_, mean_, state_] = self.actor.model(states)
                 a_for_grad[0] = a_for_grad[0] * tf.repeat(
                     tf.expand_dims(mu_, 1),
                     self.params['rnn_steps'],
@@ -1000,11 +1000,12 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner.pretrain_actor(
-        args.experiment,
-        args.out_path,
-    )
-    """
+    #learner.pretrain_actor(
+    #    args.experiment,
+    #    args.out_path,
+    #)
+    #"""
+    #learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -1021,4 +1022,4 @@ if __name__ == '__main__':
         os.mkdir(critic_path)
 
     learner.learn(path, experiment = args.experiment)
-    """
+    #"""

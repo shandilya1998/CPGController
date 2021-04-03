@@ -1103,8 +1103,8 @@ class Quadruped:
                 self.B[1],
                 self.A[0],
                 self.B[0],
-                self.A[1],
-                self.B[1],
+                self.A[-1],
+                self.B[-1],
             )
             self.d1, self.d2, self.d3, self.stability = \
                 self.compute_reward.stability_reward(

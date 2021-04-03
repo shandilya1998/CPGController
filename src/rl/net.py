@@ -20,7 +20,7 @@ class ActorNetwork(object):
 
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
-            action, [omega, mu, mean] = self.model(states)
+            action, [omega, mu, mean, state] = self.model(states)
             action[0] = action[0] * tf.repeat(
                 tf.expand_dims(mu, 1),
                 self.params['rnn_steps'],
