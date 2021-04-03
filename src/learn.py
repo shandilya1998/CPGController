@@ -152,7 +152,7 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.0005,
+            0.001,
             decay_steps=60,
             decay_rate=0.95
         )
@@ -311,7 +311,17 @@ class Learner():
         ).prefetch(tf.data.AUTOTUNE)
         return dataset
 
-    def _pretrain_loop(self, grad_update, experiment, checkpoint_dir, name, start = 0):
+    def _pretrain_loop(
+        self, 
+        grad_update, 
+        experiment, 
+        checkpoint_dir, 
+        name, 
+        epochs = None, 
+        start = 0
+    ):
+        if epochs is None:
+            epochs = self.params['train_episode_count']
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e20
@@ -369,7 +379,7 @@ class Learner():
         dataset = self.load_dataset()
         print('[Actor] Dataset {ds}'.format(ds = dataset))
         print('[Actor] Starting Actor Pretraining')
-        for episode in range(start, self.params['train_episode_count']):
+        for episode in range(start, epochs):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
             total_loss_action = 0.0
@@ -391,7 +401,7 @@ class Learner():
                 total_loss_mu += loss_mu
                 total_loss_omega += loss_omega
                 num += 1
-                if step > 25:
+                if step > 100:
                     break
             end = time.time()
             avg_loss = total_loss / num
@@ -487,35 +497,39 @@ class Learner():
 
     def _pretrain_encoder(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, mu, mean] = self.actor.model(x)
-            y_pred = _action[0]
+            state, omega, mu, mean = self.actor.model(x)
             loss_mu = self.mse_mu(y[2], mu)
             loss_mean = self.mse_mean(y[3], mean)
             loss_omega = self.mse_omega(y[1], omega)
-            loss_action = self.actor._pretrain_loss(y[0], y_pred)
             loss = loss_omega + loss_mu + loss_mean
 
-        vars_encoder = []
-        for var in self.actor.model.trainable_variables:
-            if 'motion_state_encoder' in var.name:
-                vars_encoder.append(var)
         grads = tape.gradient(
             loss,
-            vars_encoder
+            self.actor.model.trainable_variables
         )
         #self.print_grads(self.actor.model.trainable_variables, grads_action)
         self.pretrain_actor_optimizer.apply_gradients(
             zip(
                 grads,
-                vars_encoder
+                self.actor.model.trainable_variables
             )
         )
-        return loss, [loss_action, loss_omega, loss_mu]
+        return loss, [0.0, loss_omega, loss_mu]
 
     def _pretrain_actor_action_loss_only(self, x, y):
         with tf.GradientTape(persistent=True) as tape:
-            _action, [omega, mu, mean] = self.actor.model(x)
+            _action, [omega, mu, mean, state] = self.actor.model(x)
             y_pred = _action[0]
+            """
+            print('state')
+            print(state)
+            print('omega')
+            print(omega)
+            print('y_pred')
+            print(y_pred)
+            print('osc')
+            print(_action[1])
+            """
             loss_mu = self.mse_mu(y[2], mu)
             loss_mean = self.mse_mean(y[3], mean)
             loss_omega = self.mse_omega(y[1], omega)
@@ -523,7 +537,7 @@ class Learner():
             loss = loss_mu + loss_mean + loss_action
 
         grads = tape.gradient(
-            loss,
+            loss_action,
             self.actor.model.trainable_variables
         )
         #self.print_grads(self.actor.model.trainable_variables, grads_action)
@@ -582,12 +596,25 @@ class Learner():
         return loss, [loss_action, loss_omega, loss_mu]
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
-        self._pretrain_loop(
-            self._pretrain_encoder, experiment, checkpoint_dir, 'pretrain_enc'
-        )
+        encoder = self.actor.create_encoder(self.params)
+        self.actor.set_model(encoder)
+        #self._pretrain_loop(
+        #    self._pretrain_encoder, 
+        #    experiment, 
+        #    checkpoint_dir, 
+        #    'pretrain_enc',
+        #    epochs = 40
+        #)
+        self.actor.model.load_weights(os.path.join(
+            checkpoint_dir, 'exp{exp}/pretrain_enc'.format(exp= experiment), 'actor_pretrained_pretrain_enc_23_39.ckpt'
+        ))
+
+        encoder =  self.actor.make_untrainable(self.actor.model)
+        model, _, _ = self.actor.create_actor_network(params, encoder)
+        self.actor.set_model(model)
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.0005,
+            0.001,
             decay_steps=70,
             decay_rate=0.95
         )
@@ -596,7 +623,7 @@ class Learner():
         )
 
         self._pretrain_loop(
-            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_actor'
+            self._pretrain_actor_action_loss_only, experiment, checkpoint_dir, 'pretrain_actor'
         )
 
     def load_actor(self, path):
@@ -973,11 +1000,9 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner._pretrain_loop(
-        learner._pretrain_segments,
+    learner.pretrain_actor(
         args.experiment,
         args.out_path,
-        'pretrain_actor'
     )
     """
     path = os.path.join(args.out_path, 'exp{exp}'.format(

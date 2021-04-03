@@ -75,19 +75,15 @@ class HopfOscillator(tf.keras.layers.Layer):
         real_state = inputs[0][:, :input_dim]
         imag_state = inputs[0][:, input_dim:]
 
-        r2 = tf.math.add(
+        r = tf.math.sqrt(tf.math.add(
             tf.math.square(real_state),
             tf.math.square(imag_state)
-        )
+        ))
+        phi = tf.math.atan2(imag_state, real_state) + inputs[1] * self.dt
+        r = r + (inputs[2] - tf.math.square(r)) * r * self.dt
 
-        real_state = real_state + (
-            -inputs[1] * self.range * imag_state + (inputs[2] - r2) * real_state
-        ) * self.dt
-
-        imag_state = imag_state + (
-            inputs[1] * self.range * real_state + (inputs[2] - r2) * imag_state
-        ) * self.dt
-
+        real_state = r * tf.math.cos(phi)
+        imag_state = r * tf.math.sin(phi)
         Z = tf.concat([real_state, imag_state], -1)
 
         return Z

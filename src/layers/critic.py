@@ -20,14 +20,14 @@ class Critic(tf.keras.Model):
         units_osc,
         units_lstm,
         units_out,
-        activation_combine = 'tanh',
-        activation_robot_state = 'tanh',
-        activation_motion_state = 'tanh',
-        activation_action_input = 'tanh',
-        activation_osc = 'tanh',
+        activation_combine = 'elu',
+        activation_robot_state = 'elu',
+        activation_motion_state = 'elu',
+        activation_action_input = 'elu',
+        activation_osc = 'elu',
         activation_lstm = 'tanh',
         recurrent_activation_lstm = 'sigmoid',
-        activation_out = 'tanh',
+        activation_out = 'elu',
         training = True
     ):
         super(Critic, self).__init__()

@@ -53,8 +53,7 @@ class ActorNetwork(object):
                 (1 - self.TAU)* actor_target_weights[i]
         self.target_model.set_weights(actor_target_weights)
 
-    def create_actor_network(self, params):
-        print('[DDPG] Building the actor model')
+    def create_encoder(self, params, trainable = True):
         S = [
             tf.keras.Input(
                 shape = spec.shape,
@@ -62,16 +61,31 @@ class ActorNetwork(object):
             ) for spec in params['observation_spec']
         ]
 
-        motion_encoder, robot_encoder = actor.get_encoders(params)
-        param_net = actor.get_param_net(params)
-        motion_state = motion_encoder(S[0])
-        robot_state = robot_encoder(S[1])
-        [A, omega, mu, mean] = param_net([motion_state, robot_state])
+        encoder = actor.get_state_encoder(params, trainable)
+        [state, omega, mu, mean] = encoder(S[:2])
+        model = tf.keras.Model(inputs = S, outputs = [state, omega, mu, mean]) 
+        return model
+
+    def make_untrainable(self, model):
+        for layer in model.layers:
+            layer.trainable = False
+        return model
+
+    def set_model(self, model):
+        self.model = model
+
+    def create_actor_network(self, params, encoder = None):
+        print('[DDPG] Building the actor model')
+        if encoder is None:
+            encoder = self.create_encoder(params)
+        
+        state, omega, mu, mean = encoder.outputs
+
         [action, z_out] = actor.get_complex_mlp(params)(
-            [S[2], A, omega]
+            [encoder.inputs[2], state, omega]
         )
-        outputs = [[action, z_out], [omega, mu, mean]]
-        model = tf.keras.Model(inputs = S, outputs = outputs)
+        outputs = [[action, z_out], [omega, mu, mean, state]]
+        model = tf.keras.Model(inputs = encoder.inputs, outputs = outputs)
         return model, model.trainable_weights, model.inputs
 
 class CriticNetwork(object):
