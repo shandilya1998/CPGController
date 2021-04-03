@@ -152,7 +152,7 @@ class Learner():
         if create_data:
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.005,
+            0.0005,
             decay_steps=60,
             decay_rate=0.95
         )
@@ -272,7 +272,11 @@ class Learner():
             np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True, fix_imports=True)
 
     def load_dataset(self):
-        Y =np.load('data/pretrain/Y.npy', allow_pickle = True, fix_imports=True)
+        Y = np.load(
+            'data/pretrain/Y.npy',
+            allow_pickle = True,
+            fix_imports=True
+        )[:, :self.params['rnn_steps'], :]
         time.sleep(3)
         num_data = Y.shape[0]
         Y = tf.convert_to_tensor(Y)
@@ -544,11 +548,14 @@ class Learner():
         vars_encoder = []
         vars_remainder = []
         for var in self.actor.model.trainable_variables:
-            if 'motion_state_encoder' in var.name:
+            if 'motion' in var.name or 'omega' in var.name:
+                vars_encoder.append(var)
+            elif 'mean' in var.name or 'mu' in var.name:
+                vars_encoder.append(var)
+            elif 'robot' in var.name or 'param' in var.name:
                 vars_encoder.append(var)
             else:
                 vars_remainder.append(var)
-        """
         grads = tape.gradient(
             loss_enc,
             vars_encoder
@@ -560,7 +567,6 @@ class Learner():
                 vars_encoder
             )
         )
-        """
         grads = tape.gradient(
             loss_action,
             vars_remainder
@@ -581,7 +587,7 @@ class Learner():
         )
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.005,
+            0.0005,
             decay_steps=70,
             decay_rate=0.95
         )
@@ -967,6 +973,13 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
+    learner._pretrain_loop(
+        learner._pretrain_segments,
+        args.experiment,
+        args.out_path,
+        'pretrain_actor'
+    )
+    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -983,3 +996,4 @@ if __name__ == '__main__':
         os.mkdir(critic_path)
 
     learner.learn(path, experiment = args.experiment)
+    """

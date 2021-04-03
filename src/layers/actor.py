@@ -105,6 +105,25 @@ class ParamNet(tf.keras.layers.Layer):
             )
         )
 
+        self.A_layers = tf.keras.Sequential(name = 'mu_dense')
+        for i, units in enumerate(units_mu):
+            self.A_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_mu,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'A_dense_{i}'.format(i = i)
+                )
+            )
+        self.A_layers.add(
+            tf.keras.layers.Dense(
+                units = units_osc,
+                activation = tf.keras.activations.linear,
+                name = 'A_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
+        )
+
         self.mean_layers = tf.keras.Sequential(name = 'mean_dense')
         for i, units in enumerate(units_mean):
             self.mean_layers.add(
@@ -149,7 +168,8 @@ class ParamNet(tf.keras.layers.Layer):
         mu = self.mu_layers(state)
         mean = self.mean_layers(state)
         omega = self.omega_layers(inputs[0])
-        return [state, omega, mu, mean]
+        A = self.A_layers(state)
+        return [A, omega, mu, mean]
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -198,11 +218,6 @@ class ComplexRNN(tf.keras.Model):
                 )
             )
 
-        self.gru_cell = ComplexGRUCell(
-            units = units_combine[-1],
-            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
-        )
-
         self.units_osc = units_osc
         self.osc = HopfOscillator(
             units = units_osc,
@@ -210,18 +225,16 @@ class ComplexRNN(tf.keras.Model):
         )
 
     def build(self, input_shapes):
-        self.z_shape, self.state_shape, self.omega_shape = input_shapes
-        self.osc.build([self.z_shape, self.omega_shape])
-        self.gru_cell.build(self.z_shape)
+        self.z_shape, self.A_shape, self.omega_shape = input_shapes
+        self.osc.build([self.z_shape, self.omega_shape, self.A_shape])
         self.built = True
 
     def call(self, inputs):
-        z, state, omega = inputs
+        z, A, omega = inputs
         out = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
         Z = tf.TensorArray(tf.dtypes.float32, size = 0, dynamic_size=True)
         step = tf.constant(0)
-        z_out = self.osc([z, omega])
-        o, state = self.gru_cell(z_out, state)
+        z_out = self.osc([z, omega, A])
         o = self.output_mlp(z_out)
         out = out.write(
             step,
@@ -233,7 +246,7 @@ class ComplexRNN(tf.keras.Model):
         )
         step = tf.math.add(step, tf.constant(1))
 
-        def cond(out, Z, step, z, state):
+        def cond(out, Z, step, z):
             return tf.math.less(
                 step,
                 tf.constant(
@@ -242,15 +255,15 @@ class ComplexRNN(tf.keras.Model):
                 )
             )
 
-        def body(out, Z, step, z, state):
+        def body(out, Z, step, z):
             inputs = [
                 z,
                 omega,
+                A
             ]
 
             z = self.osc(inputs)
-            o, state = self.gru_cell(z, state)
-            o = self.output_mlp(o)
+            o = self.output_mlp(z)
 
             out = out.write(
                 step,
@@ -262,9 +275,9 @@ class ComplexRNN(tf.keras.Model):
             )
 
             step = tf.math.add(step, tf.constant(1))
-            return out, Z, step, z, state
+            return out, Z, step, z
 
-        out, Z, step, _, _ = tf.while_loop(cond, body,[out,Z,step,z_out,state])
+        out, Z, step, _ = tf.while_loop(cond, body,[out,Z,step,z_out])
 
         out = out.stack()
         Z = Z.stack()
@@ -285,7 +298,7 @@ class ComplexRNN(tf.keras.Model):
             ),
             name='ensure_shape_critic_time_distributed_out'
         )
-        
+
         out = 2 * out[:, :, :self.out_dim]
         return [out, Z]
 

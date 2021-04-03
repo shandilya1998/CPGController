@@ -26,6 +26,7 @@ class HopfOscillator(tf.keras.layers.Layer):
     def build(self, input_shape):
         self.state_input_shape = input_shape[0]
         self.omega_input_shape = input_shape[1]
+        self.A_input_shape = input_shape[2]
 
         last_dim_state = tf.compat.dimension_value(
             self.state_input_shape[-1]
@@ -33,18 +34,25 @@ class HopfOscillator(tf.keras.layers.Layer):
         last_dim_omega = tf.compat.dimension_value(
             self.omega_input_shape[-1]
         )
+        last_dim_A = tf.compat.dimension_value(
+            self.A_input_shape[-1]
+        )
 
         self._2pi = tf.constant(
             2*np.pi, dtype = tf.dtypes.float32
         )
 
 
-        if last_dim_state is None or last_dim_omega is None:
+        if last_dim_state is None or last_dim_omega is None or last_dim_A is None:
             raise ValueError('The last dimension of the inputs to `HopfOscillator` '
                 'should be defined. Found `None`.')
         if last_dim_state != 2*self.units:
             raise ValueError('The last dimension of the state inputs to `HopfOscillator` '
                 'should be equal to number of units. Found `{dim}`.'.format(dim = last_dim_state))
+
+        if last_dim_A != self.units:
+            raise ValueError('The last dimension of the state inputs to `HopfOscillator` '
+                'should be equal to number of units. Found `{dim}`.'.format(dim = last_dim_A))
 
         if last_dim_omega != 1:
             raise ValueError('The last dimension of the omega inputs to `HopfOscillator` '
@@ -73,11 +81,11 @@ class HopfOscillator(tf.keras.layers.Layer):
         )
 
         real_state = real_state + (
-            -inputs[1] * self.range * imag_state + (1 - r2) * real_state
+            -inputs[1] * self.range * imag_state + (inputs[2] - r2) * real_state
         ) * self.dt
 
         imag_state = imag_state + (
-            inputs[1] * self.range * real_state + (1 - r2) * imag_state
+            inputs[1] * self.range * real_state + (inputs[2] - r2) * imag_state
         ) * self.dt
 
         Z = tf.concat([real_state, imag_state], -1)
