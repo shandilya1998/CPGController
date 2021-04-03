@@ -674,7 +674,7 @@ class Learner():
             step = 0
             tot_loss = 0.0
             break_loop = False
-            while(step < self.params['max_steps'] or break_loop):
+            while(step < self.params['max_steps'] and not break_loop):
                 epsilon -= 1/self.params['EXPLORE']
                 self._action = self.env._action_init
                 self._noise = self._noise_init
@@ -1005,7 +1005,7 @@ if __name__ == '__main__':
     #    args.out_path,
     #)
     #"""
-    #learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
+    learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
