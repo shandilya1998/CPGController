@@ -1334,3 +1334,100 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Total Reward -4.438690185546875 Critic Loss 158.6110382080078
 [DDPG] Episode 85 Step 3
 [DDPG] Total Reward -8.34579086303711 Critic Loss 128.88888549804688
+[DDPG] Episode 85 Step 4
+[DDPG] Total Reward -7.880019664764404 Critic Loss 160.2191162109375
+[DDPG] Episode 85 Step 5
+[DDPG] Total Reward -6.740883827209473 Critic Loss 154.2852783203125
+[DDPG] Episode 85 Step 6
+[DDPG] Total Reward -6.0175395011901855 Critic Loss 157.24130249023438
+[DDPG] Episode 85 Step 7
+[DDPG] Total Reward -8.189156532287598 Critic Loss 164.85960388183594
+[DDPG] Episode 85 Step 8
+[DDPG] Total Reward -7.718606472015381 Critic Loss 136.47616577148438
+[DDPG] Episode 85 Step 9
+[DDPG] Total Reward -8.118432998657227 Critic Loss 150.79681396484375
+[DDPG] Episode 85 Step 10
+[DDPG] Total Reward -6.72296142578125 Critic Loss 132.39297485351562
+[DDPG] Episode 85 Step 11
+[DDPG] Total Reward -10.305563926696777 Critic Loss 141.48233032226562
+[DDPG] Episode 85 Step 12
+[DDPG] Total Reward -7.753734588623047 Critic Loss 136.2869873046875
+[DDPG] Episode 85 Step 13
+[DDPG] Total Reward -9.502494812011719 Critic Loss 151.20704650878906
+[DDPG] Episode 85 Step 14
+[DDPG] Total Reward -12.664865493774414 Critic Loss 117.42493438720703
+[DDPG] Episode 85 Step 15
+[DDPG] Total Reward -8.48084831237793 Critic Loss 135.11138916015625
+[DDPG] Episode 85 Step 16
+[DDPG] Total Reward -6.561122894287109 Critic Loss 150.60403442382812
+[DDPG] Episode 85 Step 17
+[DDPG] Total Reward -4.8062591552734375 Critic Loss 136.54190063476562
+[DDPG] Episode 85 Step 18
+[DDPG] Total Reward -5.038695335388184 Critic Loss 138.59169006347656
+[DDPG] Episode 85 Step 19
+[DDPG] Total Reward -5.180696487426758 Critic Loss 150.41665649414062
+[DDPG] Episode 85 Step 20
+[DDPG] Total Reward -6.443019390106201 Critic Loss 148.3615264892578
+[DDPG] Episode 85 Step 21
+[DDPG] Total Reward -7.7688984870910645 Critic Loss 142.4893341064453
+[DDPG] Episode 85 Step 22
+[DDPG] Total Reward -12.168658256530762 Critic Loss 131.82623291015625
+[DDPG] Episode 85 Step 23
+[DDPG] Total Reward -5.106220722198486 Critic Loss 131.01841735839844
+[DDPG] Episode 85 Step 24
+[DDPG] Total Reward -3.76606822013855 Critic Loss 138.90025329589844
+[DDPG] Episode 85 Step 25
+[DDPG] Total Reward -4.158605575561523 Critic Loss 138.54200744628906
+[DDPG] Episode 85 Step 26
+[DDPG] Total Reward -8.32471752166748 Critic Loss 140.94505310058594
+[DDPG] Episode 85 Step 27
+[DDPG] Total Reward -14.07640266418457 Critic Loss 133.20654296875
+[DDPG] Episode 85 Step 28
+[DDPG] Total Reward -10.709657669067383 Critic Loss 166.3748779296875
+[DDPG] Episode 85 Step 29
+[DDPG] Total Reward -14.33397388458252 Critic Loss 123.10464477539062
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 86
+[DDPG] Episode 86 Step 0
+[DDPG] Total Reward -7.513638973236084 Critic Loss 156.59658813476562
+[DDPG] Episode 86 Step 1
+[DDPG] Total Reward -6.007810115814209 Critic Loss 143.043212890625
+[DDPG] Episode 86 Step 2
+[DDPG] Total Reward -5.829403877258301 Critic Loss 140.58119201660156
+[DDPG] Episode 86 Step 3
+[DDPG] Total Reward -7.679064750671387 Critic Loss 143.1229248046875
+[DDPG] Episode 86 Step 4
+[DDPG] Total Reward -6.699650287628174 Critic Loss 120.54553985595703
+[DDPG] Episode 86 Step 5
+[DDPG] Total Reward -8.08249282836914 Critic Loss 125.9043960571289
+[DDPG] Episode 86 Step 6
+[DDPG] Total Reward -15.100120544433594 Critic Loss 166.5666046142578
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 87
+Traceback (most recent call last):
+  File "learn.py", line 1001, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 720, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1160, in step
+    self.set_support_lines()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 967, in set_support_lines
+    AB = self.all_legs.get_AB()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 300, in get_AB
+    fr_contact, fl_contact, br_contact, bl_contact = self.get_all_contacts()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 294, in get_all_contacts
+    self.fl_contact = self.front_left.get_processed_contact_state()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 169, in get_processed_contact_state
+    torque = np.mean(
+  File "<__array_function__ internals>", line 5, in mean
+  File "/usr/lib/python3/dist-packages/numpy/core/fromnumeric.py", line 3256, in mean
+    return _methods._mean(a, axis=axis, dtype=dtype,
+  File "/usr/lib/python3/dist-packages/numpy/core/_methods.py", line 153, in _mean
+    ret = um.true_divide(
+FloatingPointError: underflow encountered in true_divide
