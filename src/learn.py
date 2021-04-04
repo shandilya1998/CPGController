@@ -596,22 +596,22 @@ class Learner():
         return loss, [loss_action, loss_omega, loss_mu]
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
-        #encoder = self.actor.create_encoder(self.params)
-        #self.actor.set_model(encoder)
-        #self._pretrain_loop(
-        #    self._pretrain_encoder, 
-        #    experiment, 
-        #    checkpoint_dir, 
-        #    'pretrain_enc',
-        #    epochs = 40
-        #)
-        #self.actor.model.load_weights(os.path.join(
-        #    checkpoint_dir, 'exp23/pretrain_enc', 'actor_pretrained_pretrain_enc_23_39.ckpt'
-        #))
+        encoder = self.actor.create_encoder(self.params)
+        self.actor.set_model(encoder)
+        self._pretrain_loop(
+            self._pretrain_encoder, 
+            experiment, 
+            checkpoint_dir, 
+            'pretrain_enc',
+            epochs = 40
+        )
+        self.actor.model.load_weights(os.path.join(
+            checkpoint_dir, 'exp23/pretrain_enc', 'actor_pretrained_pretrain_enc_23_39.ckpt'
+        ))
 
-        #encoder =  self.actor.make_untrainable(self.actor.model)
-        #model, _, _ = self.actor.create_actor_network(params, self.actor.model)#encoder)
-        #self.actor.set_model(model)
+        encoder =  self.actor.make_untrainable(self.actor.model)
+        model, _, _ = self.actor.create_actor_network(params, self.actor.model)#encoder)
+        self.actor.set_model(model)
 
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.001,
@@ -680,7 +680,7 @@ class Learner():
         total_critic_loss = []
         rewards = []
         total_reward = []
-        steps = []
+        _steps_ = []
         COT = []
         motion = []
         self.mass = self.env.quadruped.mass
@@ -820,7 +820,7 @@ class Learner():
                 self.save(model_dir, ep, rewards, total_reward, \
                     total_critic_loss, critic_loss, COT, motion)
 
-            steps.append(step + 1)
+            _steps_.append(step + 1)
             ep += 1
             total_reward.append(self.total_reward)
             total_critic_loss.append(tot_loss)
@@ -977,10 +977,10 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    #learner.pretrain_actor(
-    #    args.experiment,
-    #    args.out_path,
-    #)
+    learner.pretrain_actor(
+        args.experiment,
+        args.out_path,
+    )
     #"""
     #learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
