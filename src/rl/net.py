@@ -21,17 +21,8 @@ class ActorNetwork(object):
     def train(self, states, q_grads):
         with tf.GradientTape() as tape:
             action, [omega, mu, mean, state] = self.model(states)
-            action[0] = action[0] * tf.repeat(
-                tf.expand_dims(mu, 1),
-                self.params['rnn_steps'],
-                axis = 1
-            ) + tf.repeat(
-                tf.expand_dims(mean, 1),
-                self.params['rnn_steps'],
-                axis = 1
-            )
         grads = tape.gradient(
-            action,
+            action + [mu, mean],
             self.model.trainable_variables,
             [-1 * grad for grad in q_grads]
         )
@@ -96,26 +87,26 @@ class CriticNetwork(object):
         self.action_size = params['action_dim']
 
         # Now create the model
-        self.model, self.action, self.state, self.history = \
+        self.model, self.action, self.state = \
             self.create_critic_network(params)
-        self.target_model, self.target_action, self.target_state, \
-            self.target_history = self.create_critic_network(params)
+        self.target_model, self.target_action, self.target_state = \
+            self.create_critic_network(params)
         self.optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.LEARNING_RATE
         )
         self.mse =tf.keras.losses.MeanSquaredError()
 
-    def q_grads(self, states, actions, history, history_osc):
+    def q_grads(self, states, actions, mu, mean):
         with tf.GradientTape() as tape:
-            tape.watch(actions)
-            inputs = states + actions + [history, history_osc]
+            watch = actions + [mu, mean]
+            tape.watch(watch)
+            inputs = states + actions + [mu, mean]
             q_values = self.model(inputs)
-            q_values = tf.squeeze(q_values)
-        return tape.gradient(q_values, actions)
+        return tape.gradient(q_values, watch)
 
-    def train(self, states, actions, history, history_osc, y):
+    def train(self, states, actions, mu, mean, y):
         with tf.GradientTape() as tape:
-            inputs = states + actions + [history, history_osc]
+            inputs = states + actions + [mu, mean]
             y_pred = self.model(inputs)
             loss = self.loss(y, y_pred)
         critic_grads = tape.gradient(
@@ -156,23 +147,23 @@ class CriticNetwork(object):
             ) for spec in params['action_spec']
         ]
 
-        history = tf.keras.Input(
-            shape = params['history_spec'].shape,
-            dtype = params['history_spec'].dtype
+        mu = tf.keras.Input(
+            shape = (params['action_dim'],),
+            dtype = params['action_spec'][0].dtype
         )
 
-        history_osc = tf.keras.Input(
-            shape = params['history_osc_spec'].shape,
-            dtype = params['history_spec'].dtype
+        mean = tf.keras.Input(
+            shape = (params['action_dim'],),
+            dtype = params['action_spec'][0].dtype
         )
 
-        inputs = S + A + [history, history_osc]
+        inputs = S + A + [mu, mean]
 
         cr = critic.get_critic(params)
         out = cr(inputs)
         model = tf.keras.Model(
-            inputs = [S, A, history, history_osc],
+            inputs = [S, A, mu, mean],
             outputs = out
         )
 
-        return model, A, S, history
+        return model, A, S

@@ -83,7 +83,13 @@ class Critic(tf.keras.Model):
 
     def call(self, inputs):
         motion_state, robot_state, osc_state, \
-            action, osc, history, history_osc = inputs
+            action, osc, mu, mean = inputs
+        steps = action.shape[1]
+        action = action * tf.repeat(
+            tf.expand_dims(mu, 1), steps, 1
+        ) + tf.repeat(
+            tf.expand_dims(mean, 1), steps, 1
+        )
         motion_state = self.motion_state_dense(motion_state)
         robot_state = self.robot_state_dense(robot_state)
         osc_size = osc.shape[-1] // 2
@@ -92,13 +98,6 @@ class Critic(tf.keras.Model):
             robot_state
         ], -1)
         state = self.combine_dense(state)
-
-        ta_history = tf.TensorArray(
-            tf.dtypes.float32, size = 0, dynamic_size = True
-        )
-        history = swap_batch_timestep(history)
-        history = history[-1 * self.steps + 1:]
-        ta_history.unstack(history)
 
         ta_action = tf.TensorArray(
             tf.dtypes.float32,
@@ -116,33 +115,11 @@ class Critic(tf.keras.Model):
         osc = swap_batch_timestep(osc)
         ta_osc.unstack(osc)
 
-        ta_history_osc = tf.TensorArray(
+        out = tf.TensorArray(
             tf.dtypes.float32,
             size = 0,
             dynamic_size = True
         )
-        history_osc = swap_batch_timestep(history_osc)
-        history_osc = history_osc[-1 * self.steps + 1:, :, :]
-        ta_history_osc.unstack(history_osc)
-
-        step = tf.constant(0, dtype = tf.dtypes.int32)
-        def cond(out, h, c, step):
-            return tf.math.less(
-                step,
-                self.steps-1
-            )
-
-        def body(out, h, c, step):
-            inp1 = ta_history.read(step)
-            inp2 = ta_history_osc.read(step)
-            inp2 = self.osc_dense_real(inp2[:, :osc_size])
-            inp3 = self.osc_dense_imag(inp2[:, osc_size:])
-            inp = tf.concat([inp1, inp2, inp3], -1)
-            out, [h, c] = self.lstm(inp, [h, c])
-            step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
-            return out, h, c, step
-
-        out, h, c, step = tf.while_loop(cond, body, [state, state, state, step])
 
         step = tf.constant(0, dtype = tf.dtypes.int32)
         def cond(out, h, c, step):
@@ -157,12 +134,18 @@ class Critic(tf.keras.Model):
             inp2 = self.osc_dense_real(inp2[:, :osc_size])
             inp3 = self.osc_dense_imag(inp2[:, osc_size:])
             inp = tf.concat([inp1, inp2, inp3], -1)
-            out, [h, c] = self.lstm(inp, [h, c])
+            o, [h, c] = self.lstm(inp, [h, c])
+            out = out.write(
+                step,
+                o
+            )
             step = tf.math.add(step, tf.constant(1, tf.dtypes.int32))
             return out, h, c, step
 
-        out, h, c, step = tf.while_loop(cond, body, [out, h, c, step])
-
+        out, h, c, step = tf.while_loop(cond, body, [out, state, state, step])
+        out = out.stack()
+        out = swap_batch_timestep(out)
+        out = tf.math.reduce_max(out, 1)
         out = self.out_dense(out)
         return out
 
