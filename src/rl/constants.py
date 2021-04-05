@@ -33,7 +33,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 10,
+    'rnn_steps'                   : 350,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -194,7 +194,7 @@ robot_data = {
 
 params.update(robot_data)
 
-Tsw = [i for i in range(20, 200, 4)]
+Tsw = [i for i in range(80, 260, 4)]
 Tsw = Tsw + Tsw + Tsw
 Tst = [i*3 for i in Tsw]
 Tst = Tsw + Tst + Tst
