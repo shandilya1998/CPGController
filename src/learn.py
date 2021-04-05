@@ -100,7 +100,7 @@ class SignalDataGen:
 
     def preprocess(self, signal):
         mean = np.mean(signal, axis = 0)
-        mu = np.abs(signal.max(axis = 0))
+        mu = np.abs(signal).max(axis = 0)
         signal = (signal - mean) / mu
         return signal, mean, mu
 
@@ -186,10 +186,6 @@ class Learner():
         rng = np.arange(1, self.params['units_osc'] + 1)
         x, y = z[:self.params['units_osc']], z[self.params['units_osc']:]
         rng = omega * rng
-        print(x)
-        print(y)
-        print(np.square(x))
-        print(np.square(y))
         mod = (mu - (np.square(x) + np.square(y)))
         x = x + (
             np.multiply(
@@ -224,7 +220,12 @@ class Learner():
             y = y * np.pi / 180
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
+                if np.isinf(ac).any():
+                    print('Inf in unprocessed')
                 y_, mean, mu = self.signal_gen.preprocess(y)
+                if np.isinf(y_).any():
+                    print('Inf')
+                    break
                 mu = mu / (np.pi/3)
                 actions = np.expand_dims(y_[i + 1: i + 1 + self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
