@@ -18,7 +18,7 @@ for j in tqdm(range(0, num, 6000)):
     steps = y.shape[0]
     mean = MEAN[j]
     mu = MU[j]
-    y = y * mu + mean
+    y = y * mu * np.pi / 3 + mean
     fig, ax = plt.subplots(4,1, figsize = (5,20))
     for i in range(4):
         ax[i].plot(time, y[:, 3 * i], 'g', label = 'ankle')
