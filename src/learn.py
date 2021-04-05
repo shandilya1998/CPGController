@@ -89,12 +89,9 @@ class SignalDataGen:
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
                 motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
-                mu = np.array([theta_k, theta_k / 5, theta_h], dtype = np.float32)
-                mu = [mu for i in range(4)]
-                mu =  np.concatenate(mu, 0)
                 freq = np.float32(self.get_ff(signal[:, 2], 'fft'))
                 self.data.append(
-                    [signal, motion, freq, mu]
+                    [signal, motion, freq]
                 )
         self.num_data = len(self.data)
         print('[Actor] Number of Data Points: {num}'.format(
@@ -103,15 +100,14 @@ class SignalDataGen:
 
     def preprocess(self, signal):
         mean = np.mean(signal, axis = 0)
-        signal = signal - mean
-        signal = signal/(np.abs(signal.max(axis = 0)))
-        return signal, mean
+        mu = np.abs(signal.max(axis = 0))
+        signal = (signal - mean) / mu
+        return signal, mean, mu
 
     def generator(self):
         for batch in range(self.num_data):
-            y, x, f, mu = self.data[batch]
-            mu = np.expand_dims(mu, 0)
-            yield y, x, f, mu
+            y, x, f = self.data[batch]
+            yield y, x, f
 
 class Learner():
     def __init__(self, params, experiment, create_data = False):
@@ -223,13 +219,13 @@ class Learner():
         Y = []
         MEAN = []
         X = [[] for j in range(len(self.params['observation_spec']))]
-        for y, x, f, mu in tqdm(self.signal_gen.generator()):
-            mu = (mu * np.pi / 180 ) / (np.pi/3)
+        for y, x, f in tqdm(self.signal_gen.generator()):
             f = f * 2 * np.pi
             y = y * np.pi / 180
             for i in range(self.params['rnn_steps']):
                 ac = y[i]
-                y_, mean = self.signal_gen.preprocess(y)
+                y_, mean, mu = self.signal_gen.preprocess(y)
+                mu = mu / (np.pi/3)
                 actions = np.expand_dims(y_[i + 1: i + 1 + self.params['rnn_steps']], 0)
                 self.env.quadruped.all_legs.move(ac)
                 self.env.quadruped.set_motion_state(x)
@@ -238,7 +234,7 @@ class Learner():
                     X[j].append(s)
                 Y.append(actions)
                 F.append(np.array([[f]], dtype = np.float32))
-                MU.append(mu)
+                MU.append(np.expand_dims(mu, 0))
                 self.env.quadruped._hopf_oscillator(
                     f,
                     np.ones((self.params['units_osc'],)),
