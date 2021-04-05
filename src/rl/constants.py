@@ -197,7 +197,7 @@ params.update(robot_data)
 Tsw = [i for i in range(80, 260, 4)]
 Tsw = Tsw + Tsw + Tsw
 Tst = [i*3 for i in Tsw]
-Tst = Tsw + Tst + Tst
+Tst = Tst + Tst + Tst
 theta_h = [30 for i in range(len(Tsw))] + [45 for i in range(len(Tsw))] + \
         [60 for i in range(len(Tsw))]
 theta_k = [30 for i in range(len(Tsw))] + [30 for i in range(len(Tsw))] + \
