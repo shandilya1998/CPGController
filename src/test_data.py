@@ -13,7 +13,7 @@ MEAN = np.load(os.path.join(f, 'MU.npy'))
 num = Y.shape[0]
 time = np.arange(Y.shape[1])
 
-for j in tqdm(range(0, num, 225)):
+for j in tqdm(range(0, num, 6000)):
     y = Y[j]
     steps = y.shape[0]
     mean = MEAN[j]
