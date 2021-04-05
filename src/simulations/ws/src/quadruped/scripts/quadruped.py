@@ -1152,8 +1152,10 @@ class Quadruped:
         self.force = self.mass * self.linear_acc
         self.torque = self.get_moment()
         vd = np.linalg.norm(self.v_exp)
+        """
         if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
             self.reward += -5.0
+        """
         if vd == 0:
             vd = 1e-8
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)
