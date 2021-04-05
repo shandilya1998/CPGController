@@ -88,7 +88,7 @@ class SignalDataGen:
                 signal, _ = self.signal_gen.get_signal()
                 signal = signal[:, 1:].astype(np.float32)
                 v = self.signal_gen.compute_v((0.1+0.015)*2.2)
-                motion = np.array([1, 0, 0, v, 0 ,0], dtype = np.float32)
+                motion = np.array([0, -1, 0, 0, -1 * v ,0], dtype = np.float32)
                 freq = np.float32(self.get_ff(signal[:, 2], 'fft'))
                 self.data.append(
                     [signal, motion, freq]
