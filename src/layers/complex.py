@@ -276,14 +276,14 @@ class ComplexGRUCell(tf.keras.layers.Layer):
         self._gate_real_kernel = self.add_weight(
             shape=_gate_kernel_shape,
             initializer=real_init,
-            name='real_kernel',
+            name='real_kernel_gru_gate',
             regularizer=self.kernel_regularizer,
             constraint=self.kernel_constraint
         )
         self._gate_imag_kernel = self.add_weight(
             shape=_gate_kernel_shape,
             initializer=imag_init,
-            name='imag_kernel',
+            name='imag_kernel_gru_gate',
             regularizer=self.kernel_regularizer,
             constraint=self.kernel_constraint
         )
@@ -292,7 +292,7 @@ class ComplexGRUCell(tf.keras.layers.Layer):
             self._gate_bias = self.add_weight(
                 shape=(4 * self.units,),
                 initializer=self.bias_initializer,
-                name='bias',
+                name='bias_gru_gate',
                 regularizer=self.bias_regularizer,
                 constraint=self.bias_constraint
             )
@@ -328,14 +328,14 @@ class ComplexGRUCell(tf.keras.layers.Layer):
         self._candidate_real_kernel = self.add_weight(
             shape=_candidate_kernel_shape,
             initializer=real_init,
-            name='real_kernel',
+            name='real_kernel_gru_candidate',
             regularizer=self.kernel_regularizer,
             constraint=self.kernel_constraint
         )
         self._candidate_imag_kernel = self.add_weight(
             shape=_candidate_kernel_shape,
             initializer=imag_init,
-            name='imag_kernel',
+            name='imag_kernel_gru_candidate',
             regularizer=self.kernel_regularizer,
             constraint=self.kernel_constraint
         )
@@ -344,7 +344,7 @@ class ComplexGRUCell(tf.keras.layers.Layer):
             self._candidate_bias = self.add_weight(
                 shape=(2 * self.units,),
                 initializer=self.bias_initializer,
-                name='bias',
+                name='bias_gru_candidate',
                 regularizer=self.bias_regularizer,
                 constraint=self.bias_constraint
             )
