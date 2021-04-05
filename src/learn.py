@@ -599,14 +599,10 @@ class Learner():
             self._pretrain_encoder, 
             experiment, 
             checkpoint_dir, 
-            'pretrain_enc',
-            epochs = 40
+            'pretrain_enc'
         )
-        self.actor.model.load_weights(os.path.join(
-            checkpoint_dir, 'exp23/pretrain_enc', 'actor_pretrained_pretrain_enc_23_39.ckpt'
-        ))
 
-        encoder =  self.actor.make_untrainable(self.actor.model)
+        #encoder =  self.actor.make_untrainable(self.actor.model)
         model, _, _ = self.actor.create_actor_network(params, self.actor.model)#encoder)
         self.actor.set_model(model)
 
@@ -713,11 +709,14 @@ class Learner():
                     steps,
                     axis = 1
                 )
-
-                self.current_time_step = self.env.step(
-                    [action, self._action[1]],
-                    self.desired_motion[step + 1]
-                )
+                try:
+                    self.current_time_step = self.env.step(
+                        [action, self._action[1]],
+                        self.desired_motion[step + 1]
+                    )
+                except FloatingPointError:
+                    break_loop = True
+                    continue
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
                 start = time.time()
@@ -974,12 +973,11 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner.pretrain_actor(
-        args.experiment,
-        args.out_path,
-    )
-    #"""
-    #learner.load_actor('weights/actor_pretrain/exp23/pretrain_actor/actor_pretrained_pretrain_actor_23_60.ckpt')
+    #learner.pretrain_actor(
+    #    25,
+    #    'weights/actor_pretrain',
+    #)
+    learner.load_actor('weights/actor_pretrain/exp25/pretrain_actor/actor_pretrained_pretrain_actor_25_15.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
