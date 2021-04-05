@@ -83,19 +83,19 @@ class Signal:
         out[:, 0] = t
         phases = []
         t = int(self.T - 2 * self.Tsw)
-        out[:, 3] = -signal[t : self.N + t, 0]
+        out[:, 3] = signal[t : self.N + t, 0]
         out[:, 2] = signal[t : self.N + t, 1]
         out[:, 1] = signal[t : self.N + t, 2]
         t = int(self.T)
-        out[:, 6] = signal[t : self.N + t, 0]
+        out[:, 6] = -signal[t : self.N + t, 0]
         out[:, 5] = signal[t : self.N + t, 1]
         out[:, 4] = signal[t : self.N + t, 2]
         t = int(self.T - self.Tsw)
-        out[:, 9] = -signal[t : self.N + t, 0]
+        out[:, 9] = signal[t : self.N + t, 0]
         out[:, 8] = signal[t : self.N + t, 1]
         out[:, 7] = signal[t : self.N + t, 2]
         t = int(self.T - 3 * self.Tsw)
-        out[:, 12] = signal[t : self.N + t, 0]
+        out[:, 12] = -signal[t : self.N + t, 0]
         out[:, 11] = signal[t : self.N + t, 1]
         out[:, 10] = signal[t : self.N + t, 2]
         return out, phases
