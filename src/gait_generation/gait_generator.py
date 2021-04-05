@@ -77,7 +77,7 @@ class Signal:
         elif 0.75 > self.beta >=0.5:
             return self.get_trot(signal)
 
-    def get_trot(self, signal):
+    def get_creep(self, signal):
         out = np.zeros((self.N, 13))
         t = np.arange(0, self.N) * self.dt
         out[:, 0] = t
@@ -100,7 +100,7 @@ class Signal:
         out[:, 10] = signal[t : self.N + t, 2]
         return out, phases
 
-    def get_creep(self, signal):
+    def get_trot(self, signal):
         out = np.zeros((self.N, 13))
         t = np.arange(0, self.N) * self.dt
         out[:, 0] = t
