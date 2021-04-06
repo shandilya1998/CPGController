@@ -691,6 +691,7 @@ class Learner():
             self._action = self.env._action_init
             self._noise = self._noise_init
             while(step < self.params['max_steps'] and not break_loop):
+                start = time.time()
                 [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
                 self._params = [mu, mean]
                 action_original = [out, osc]
@@ -731,10 +732,11 @@ class Learner():
                 rewards.append(self.current_time_step.reward.numpy())
                 self.replay_buffer.add_batch(experience)
                 self._state = self.current_time_step.observation
-                print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f}'.format(
+                print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                     ep = ep,
                     step = step,
-                    reward = self.current_time_step.reward.numpy()
+                    reward = self.current_time_step.reward.numpy(),
+                    time = time.time() - start
                 ))
                 step += 1
                 if self.current_time_step.step_type == \
