@@ -1955,3 +1955,26 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Episode 0 Step 7 Reward 7.22611
 [DDPG] Episode 0 Step 8 Reward 10.94103
 [DDPG] Episode 0 Step 9 Reward 12.97322
+[DDPG] Episode 0 Step 10 Reward 7.52334
+[DDPG] Episode 0 Step 11 Reward 10.87756
+[DDPG] Episode 0 Step 12 Reward 0.52832
+[DDPG] Episode 0 Step 13 Reward 5.22947
+[DDPG] Episode 0 Step 14 Reward 2.25355
+[DDPG] Episode 0 Step 15 Reward 6.66835
+[DDPG] Episode 0 Step 16 Reward 8.95630
+[DDPG] Episode 0 Step 17 Reward 10.62698
+[DDPG] Episode 0 Step 18 Reward 14.01542
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    os.mkdir(critic_path)
+  File "learn.py", line 713, in learn
+    try:
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1152, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request

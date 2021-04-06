@@ -5491,4 +5491,53 @@ You can start planning now!
 [0m[ INFO] [1617714716.050743778, 0.162000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1617714716.050777630, 0.162000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1617714716.061637892, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
-[0m[ INFO] [
+[0m[ INFO] [[0m[ INFO] [1617714712.324359941]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1617714712.327136067]: waitForService: Service [/gazebo_gui/set_physics_properties] has not been advertised, waiting...[0m
+[New Thread 0x7fffc8ff9700 (LWP 262205)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe280, rem=0x7fffffffe290)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 252619] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+1617714716.061675798, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg2_joint[0m
+[0m[ INFO] [1617714716.061800315, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg3_joint[0m
+[0m[ INFO] [1617714716.061832924, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg1_joint[0m
+[0m[ INFO] [1617714716.061875657, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg2_joint[0m
+[0m[ INFO] [1617714716.061903250, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg3_joint[0m
+[0m[ INFO] [1617714716.061921052, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg1_joint[0m
+[0m[ INFO] [1617714716.061939199, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg2_joint[0m
+[0m[ INFO] [1617714716.061958471, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg3_joint[0m
+[0m[ INFO] [1617714716.061989049, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg1_joint[0m
+[0m[ INFO] [1617714716.062019197, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg2_joint[0m
+[0m[ INFO] [1617714716.062049461, 0.162000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg3_joint[0m
+[0m[ INFO] [1617714716.062082893, 0.162000000]: Starting GazeboRosJointStatePublisher Plugin (ns = /quadruped/)!, parent name: quadruped[0m
+[INFO] [1617714711.477236, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1617714716.305173, 0.401000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1617714716.308941, 0.405000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1617714716.311512, 0.406000]: Loading controller: front_right_leg_controller
+[INFO] [1617714716.361922, 0.455000]: Loading controller: front_left_leg_controller
+[INFO] [1617714716.383957, 0.478000]: Loading controller: back_right_leg_controller
+[INFO] [1617714716.403834, 0.498000]: Loading controller: back_left_leg_controller
+[INFO] [1617714716.424803, 0.519000]: Loading controller: joint_state_controller
+[INFO] [1617714716.431704, 0.526000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617714716.437376, 0.531000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617715794.231444, 1025.328000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1617715794.233264, 1025.329000]: Stopping all controllers...
+[INFO] [1617715794.247742, 1025.340000]: Unloading all loaded controllers...
+[INFO] [1617715794.248829, 1025.340000]: Trying to unload joint_state_controller
+[INFO] [1617715794.256549, 1025.344000]: Succeeded in unloading joint_state_controller
+[INFO] [1617715794.257873, 1025.345000]: Trying to unload back_left_leg_controller
+[INFO] [1617715794.276590, 1025.359000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1617715794.277770, 1025.360000]: Trying to unload back_right_leg_controller
+[INFO] [1617715794.286982, 1025.366000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1617715794.288022, 1025.366000]: Trying to unload front_left_leg_controller
+[INFO] [1617715794.303580, 1025.377000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1617715794.304681, 1025.377000]: Trying to unload front_right_leg_controller
+[INFO] [1617715794.313159, 1025.384000]: Succeeded in unloading front_right_leg_controller
