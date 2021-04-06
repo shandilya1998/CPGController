@@ -27,9 +27,9 @@ params = {
     'LRA'                         : 1e-5,
     'LRC'                         : 1e-5,
     'EXPLORE'                     : 100000,
-    'train_episode_count'         : 2000,
+    'train_episode_count'         : 25000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 50,
+    'max_steps'                   : 20,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
