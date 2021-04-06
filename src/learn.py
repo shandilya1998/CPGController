@@ -691,7 +691,7 @@ class Learner():
             self._action = self.env._action_init
             self._noise = self._noise_init
             while(step < self.params['max_steps'] and not break_loop):
-                start = time.time()
+                start = time.perf_counter()
                 [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
                 self._params = [mu, mean]
                 action_original = [out, osc]
@@ -736,7 +736,7 @@ class Learner():
                     ep = ep,
                     step = step,
                     reward = self.current_time_step.reward.numpy(),
-                    time = time.time() - start
+                    time = time.perf_counter() - start
                 ))
                 step += 1
                 if self.current_time_step.step_type == \
