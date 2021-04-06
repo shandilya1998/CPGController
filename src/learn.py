@@ -690,6 +690,7 @@ class Learner():
             self.epsilon -= 1/self.params['EXPLORE']
             self._action = self.env._action_init
             self._noise = self._noise_init
+            start = None
             while(step < self.params['max_steps'] and not break_loop):
                 start = time.perf_counter()
                 [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
@@ -720,7 +721,6 @@ class Learner():
                     continue
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
-                start = time.time()
                 experience = [
                     self._state,
                     self._action,
@@ -738,6 +738,7 @@ class Learner():
                     reward = self.current_time_step.reward.numpy(),
                     time = time.perf_counter() - start
                 ))
+                start = None
                 step += 1
                 if self.current_time_step.step_type == \
                     tfa.trajectories.time_step.StepType.LAST:
