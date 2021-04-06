@@ -1158,7 +1158,7 @@ class Quadruped:
         if vd == 0:
             vd = 1e-8
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)
-        self.set_support_lines()
+        #self.set_support_lines()
         self.set_history(desired_motion)
         self.delta = rospy.get_rostime().to_sec() - now
         return [
