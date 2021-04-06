@@ -1,0 +1,1452 @@
+2021-04-06 04:59:11.850133: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 04:59:15.762131: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 04:59:15.764923: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 04:59:15.847126: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.848578: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 04:59:15.848622: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 04:59:15.854254: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 04:59:15.854381: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 04:59:15.856186: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 04:59:15.856580: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 04:59:15.861195: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 04:59:15.862459: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 04:59:15.862757: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 04:59:15.862975: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.864288: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.865375: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 04:59:15.881197: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 04:59:15.881501: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 04:59:15.881742: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.882878: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 04:59:15.882909: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 04:59:15.883022: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 04:59:15.883070: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 04:59:15.883136: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 04:59:15.883196: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 04:59:15.883240: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 04:59:15.883283: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 04:59:15.883326: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 04:59:15.883473: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.884515: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:15.885412: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 04:59:15.885456: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 04:59:16.872611: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 04:59:16.872647: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 04:59:16.872658: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 04:59:16.873004: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:16.874018: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:16.874733: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 04:59:16.875398: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617685177.254175950, 24877.282000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617685177.254984902, 24877.283000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617685177.255021943, 24877.283000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+Traceback (most recent call last):
+  File "learn.py", line 975, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "learn.py", line 123, in __init__
+    self.env = Env(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 43, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 457, in __init__
+    self.kinematics = Kinematics(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 21, in __init__
+    self.front_right_leg = moveit_commander.MoveGroupCommander(
+  File "/opt/ros/noetic/lib/python3/dist-packages/moveit_commander/move_group.py", line 53, in __init__
+    self._g = _moveit_move_group_interface.MoveGroupInterface(name, robot_description, ns, wait_for_servers)
+RuntimeError: Unable to connect to move_group action server 'pickup' within allotted time (5s)
+2021-04-06 05:00:01.064722: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:04.831426: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:00:04.832454: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 05:00:04.884078: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.884872: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:00:04.884910: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:04.888308: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:00:04.888410: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:00:04.889864: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:00:04.890175: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:00:04.893832: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:00:04.894661: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:00:04.894844: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:00:04.894992: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.895862: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.896455: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 05:00:04.907768: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 05:00:04.908017: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:00:04.908207: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.908995: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:00:04.909022: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:04.909113: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:00:04.909167: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:00:04.909198: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:00:04.909235: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:00:04.909283: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:00:04.909327: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:00:04.909372: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:00:04.909530: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.910572: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:04.911313: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 05:00:04.911359: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:05.646223: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 05:00:05.646260: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 05:00:05.646272: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 05:00:05.646579: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:05.647479: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:05.648240: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:05.648900: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617685209.331994662, 24908.998000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617685209.332870745, 24908.999000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617685209.332929984, 24908.999000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617685210.607795333, 24910.271000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617685210.866363698, 24910.529000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617685211.473132111, 24911.130000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617685211.874282980, 24911.529000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 683, in learn
+    self.current_time_step = self.env.reset()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 55, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 806, in reset
+    self._reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 778, in _reset
+    rospy.wait_for_service('/gazebo/pause_physics')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-04-06 05:00:44.268580: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:47.574521: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:00:47.575866: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 05:00:47.724930: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.728644: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:00:47.728690: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:47.744400: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:00:47.744555: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:00:47.755712: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:00:47.756168: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:00:47.761014: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:00:47.763746: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:00:47.763984: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:00:47.764785: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.766411: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.768341: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 05:00:47.802546: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 05:00:47.802793: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:00:47.803079: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.805320: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:00:47.805358: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:47.806289: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:00:47.806472: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:00:47.806557: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:00:47.806630: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:00:47.806701: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:00:47.806767: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:00:47.806831: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:00:47.807011: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.807957: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:47.808726: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 05:00:47.808763: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:00:48.622735: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 05:00:48.622783: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 05:00:48.622796: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 05:00:48.623176: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:48.623979: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:48.624763: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:00:48.625419: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617685252.278458744, 24951.094000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617685252.279764365, 24951.096000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617685252.279825742, 24951.096000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617685253.460714056, 24952.273000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617685253.855890573, 24952.667000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617685254.256652189, 24953.067000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617685254.659153706, 24953.467000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-06 05:01:19.989658: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:01:20.623472: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward -0.020938154309988022 Critic Loss 0.12229468673467636
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward 1.7882931232452393 Critic Loss 1.6479525566101074
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward 2.0068843364715576 Critic Loss 2.393542528152466
+[DDPG] Episode 0 Step 3
+[DDPG] Total Reward 1.4970659017562866 Critic Loss 2.3189027309417725
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 560, in connect
+    self.socket.connect((dest_addr, dest_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 509, in call
+    transport.connect(dest_addr, dest_port, service_uri)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 589, in connect
+    raise TransportInitError(str(e)) #re-raise i/o error
+rospy.exceptions.TransportInitError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 713, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1160, in step
+    self.set_support_lines()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 970, in set_support_lines
+    current_pose = self.kinematics.get_end_effector_fk(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 84, in get_end_effector_fk
+    msg = self.compute_fk_proxy(
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 512, in call
+    raise ServiceException("unable to connect to service: %s"%e)
+rospy.service.ServiceException: unable to connect to service: [Errno 111] Connection refused
+2021-04-06 05:04:03.871542: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:04:06.982741: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:04:06.985027: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 05:04:07.076849: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.077765: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:04:07.077805: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:04:07.084484: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:04:07.084670: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:04:07.086305: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:04:07.086738: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:04:07.090855: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:04:07.091907: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:04:07.092161: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:04:07.092369: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.093382: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.094224: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 05:04:07.138390: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 05:04:07.138635: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:04:07.140102: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.141647: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:04:07.141679: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:04:07.141838: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:04:07.141926: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:04:07.141984: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:04:07.142669: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:04:07.142761: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:04:07.142814: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:04:07.142865: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:04:07.143026: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.145199: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:07.146721: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 05:04:07.146767: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:04:08.035852: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 05:04:08.035906: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 05:04:08.035920: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 05:04:08.036343: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:08.037344: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:08.038205: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:04:08.038990: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617685451.734374107, 25140.875000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617685451.735246273, 25140.875000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617685451.735298980, 25140.876000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617685453.001757400, 25142.140000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617685453.342795865, 25142.480000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617685453.744379862, 25142.880000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617685454.147187616, 25143.281000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-06 05:04:39.695134: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:04:40.394962: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward -0.7606289982795715 Critic Loss 1.054658055305481
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward 1.001470923423767 Critic Loss 0.8924945592880249
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward 1.2861177921295166 Critic Loss 1.044452428817749
+[DDPG] Episode 0 Step 3
+[DDPG] Total Reward 0.8475698828697205 Critic Loss 0.9679844379425049
+[DDPG] Episode 0 Step 4
+[DDPG] Total Reward -0.8146758079528809 Critic Loss 0.988998532295227
+[DDPG] Episode 0 Step 5
+[DDPG] Total Reward -0.4267660677433014 Critic Loss 0.8996119499206543
+[DDPG] Episode 0 Step 6
+[DDPG] Total Reward 0.4272715151309967 Critic Loss 0.8011212944984436
+[DDPG] Episode 0 Step 7
+[DDPG] Total Reward 1.3202136754989624 Critic Loss 0.8937090635299683
+[DDPG] Episode 0 Step 8
+[DDPG] Total Reward 0.8395825624465942 Critic Loss 0.8451844453811646
+[DDPG] Episode 0 Step 9
+[DDPG] Total Reward 0.2385118007659912 Critic Loss 0.7343231439590454
+[DDPG] Episode 0 Step 10
+[DDPG] Total Reward -0.27835536003112793 Critic Loss 0.7052550911903381
+[DDPG] Episode 0 Step 11
+[DDPG] Total Reward 0.3300509452819824 Critic Loss 0.6649305820465088
+[DDPG] Episode 0 Step 12
+[DDPG] Total Reward 0.7947471737861633 Critic Loss 0.6421041488647461
+[DDPG] Episode 0 Step 13
+[DDPG] Total Reward 1.1674606800079346 Critic Loss 0.6613165736198425
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 560, in connect
+    self.socket.connect((dest_addr, dest_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 509, in call
+    transport.connect(dest_addr, dest_port, service_uri)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 589, in connect
+    raise TransportInitError(str(e)) #re-raise i/o error
+rospy.exceptions.TransportInitError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 713, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1160, in step
+    self.set_support_lines()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 970, in set_support_lines
+    current_pose = self.kinematics.get_end_effector_fk(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 84, in get_end_effector_fk
+    msg = self.compute_fk_proxy(
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 512, in call
+    raise ServiceException("unable to connect to service: %s"%e)
+rospy.service.ServiceException: unable to connect to service: [Errno 111] Connection refused
+2021-04-06 05:13:17.035417: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:13:20.456929: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:13:20.458070: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 05:13:20.558279: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.561285: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:13:20.561334: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:13:20.572927: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:13:20.573532: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:13:20.577444: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:13:20.579203: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:13:20.590143: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:13:20.592259: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:13:20.593764: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:13:20.593988: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.596368: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.598790: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 05:13:20.630788: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 05:13:20.631030: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:13:20.631350: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.632410: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:13:20.632580: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:13:20.632736: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:13:20.632820: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:13:20.632877: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:13:20.632935: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:13:20.632984: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:13:20.633032: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:13:20.633083: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:13:20.633250: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.634640: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:20.635721: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 05:13:20.635782: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:13:21.492144: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 05:13:21.492189: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 05:13:21.492198: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 05:13:21.492587: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:21.493381: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:21.494142: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:13:21.494890: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617686005.084042611, 25664.430000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617686005.084876610, 25664.431000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617686005.084927738, 25664.431000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617686006.222310817, 25665.565000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617686006.532429919, 25665.868000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617686006.935135215, 25666.269000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617686007.134716384, 25666.468000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-06 05:13:53.959650: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:13:54.562143: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward 1.4325114488601685 Critic Loss 2.2842931747436523
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward 9.318511962890625 Critic Loss 44.74603271484375
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward -6.035755157470703 Critic Loss 41.54457092285156
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 713, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1151, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-04-06 05:20:38.447770: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:20:41.895206: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:20:41.896460: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 05:20:41.994737: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:41.997063: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:20:41.997114: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:20:42.006972: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:20:42.007300: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:20:42.010663: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:20:42.011095: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:20:42.017715: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:20:42.018748: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:20:42.019012: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:20:42.019558: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.020668: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.021564: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 05:20:42.034474: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 05:20:42.034716: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 05:20:42.034910: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.035876: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 05:20:42.035908: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:20:42.036030: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:20:42.036092: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 05:20:42.036143: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 05:20:42.036192: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 05:20:42.036240: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 05:20:42.036289: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 05:20:42.036337: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 05:20:42.036491: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.037530: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.038300: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 05:20:42.038342: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 05:20:42.839705: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 05:20:42.839741: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 05:20:42.839753: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 05:20:42.840079: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.840888: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.841576: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 05:20:42.842196: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617686446.471070336, 26082.398000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617686446.472154209, 26082.402000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617686446.472476276, 26082.403000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617686447.645864578, 26083.572000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617686448.036320237, 26083.957000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617686448.639044722, 26084.556000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617686449.041488173, 26084.957000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-06 05:21:16.258074: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 05:21:16.888785: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward 2.317758560180664 Critic Loss 5.493439197540283
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward 8.860918045043945 Critic Loss 41.20982360839844
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward -5.037796974182129 Critic Loss 35.937477111816406
+[DDPG] Episode 0 Step 3
+[DDPG] Total Reward 11.21972942352295 Critic Loss 58.338897705078125
+[DDPG] Episode 0 Step 4
+[DDPG] Total Reward -0.5740931630134583 Critic Loss 47.23844528198242
+[DDPG] Episode 0 Step 5
+[DDPG] Total Reward 6.259008884429932 Critic Loss 46.018463134765625
+[DDPG] Episode 0 Step 6
+[DDPG] Total Reward 7.888316631317139 Critic Loss 47.58489227294922
+[DDPG] Episode 0 Step 7
+[DDPG] Total Reward -5.243860721588135 Critic Loss 44.79252624511719
+[DDPG] Episode 0 Step 8
+[DDPG] Total Reward 11.156885147094727 Critic Loss 53.86710739135742
+[DDPG] Episode 0 Step 9
+[DDPG] Total Reward -0.41447749733924866 Critic Loss 49.052364349365234
+[DDPG] Episode 0 Step 10
+[DDPG] Total Reward 5.428914546966553 Critic Loss 47.478065490722656
+[DDPG] Episode 0 Step 11
+[DDPG] Total Reward 10.462844848632812 Critic Loss 51.84588623046875
+[DDPG] Episode 0 Step 12
+[DDPG] Total Reward -7.837201118469238 Critic Loss 52.42589569091797
+[DDPG] Episode 0 Step 13
+[DDPG] Total Reward 6.750293254852295 Critic Loss 51.86941146850586
+[DDPG] Episode 0 Step 14
+[DDPG] Total Reward 1.7610853910446167 Critic Loss 49.14472579956055
+[DDPG] Episode 0 Step 15
+[DDPG] Total Reward 4.5185394287109375 Critic Loss 47.6864013671875
+[DDPG] Episode 0 Step 16
+[DDPG] Total Reward 9.063862800598145 Critic Loss 49.16521072387695
+[DDPG] Episode 0 Step 17
+[DDPG] Total Reward 0.17787623405456543 Critic Loss 46.13820266723633
+[DDPG] Episode 0 Step 18
+[DDPG] Total Reward -1.621123194694519 Critic Loss 43.59404754638672
+[DDPG] Episode 0 Step 19
+[DDPG] Total Reward 6.657832145690918 Critic Loss 44.08887481689453
+[DDPG] Episode 0 Step 20
+[DDPG] Total Reward -0.8472004532814026 Critic Loss 42.472476959228516
+[DDPG] Episode 0 Step 21
+[DDPG] Total Reward 5.516092300415039 Critic Loss 41.969173431396484
+[DDPG] Episode 0 Step 22
+[DDPG] Total Reward 9.831205368041992 Critic Loss 43.690181732177734
+[DDPG] Episode 0 Step 23
+[DDPG] Total Reward -8.298989295959473 Critic Loss 44.48564529418945
+[DDPG] Episode 0 Step 24
+[DDPG] Total Reward 6.654469013214111 Critic Loss 44.562931060791016
+[DDPG] Episode 0 Step 25
+[DDPG] Total Reward -0.07023793458938599 Critic Loss 43.375755310058594
+[DDPG] Episode 0 Step 26
+[DDPG] Total Reward 6.60435152053833 Critic Loss 43.692508697509766
+[DDPG] Episode 0 Step 27
+[DDPG] Total Reward 7.657191276550293 Critic Loss 43.712486267089844
+[DDPG] Episode 0 Step 28
+[DDPG] Total Reward 0.28321781754493713 Critic Loss 41.894378662109375
+[DDPG] Episode 0 Step 29
+[DDPG] Total Reward -0.4268839359283447 Critic Loss 40.22489547729492
+[DDPG] Episode 0 Step 30
+[DDPG] Total Reward 4.086151123046875 Critic Loss 39.98745346069336
+[DDPG] Episode 0 Step 31
+[DDPG] Total Reward 1.1689703464508057 Critic Loss 39.225189208984375
+[DDPG] Episode 0 Step 32
+[DDPG] Total Reward 3.2695953845977783 Critic Loss 38.274147033691406
+[DDPG] Episode 0 Step 33
+[DDPG] Total Reward 9.011621475219727 Critic Loss 38.9870719909668
+[DDPG] Episode 0 Step 34
+[DDPG] Total Reward -6.670050621032715 Critic Loss 38.79913330078125
+[DDPG] Episode 0 Step 35
+[DDPG] Total Reward 6.07512903213501 Critic Loss 38.920894622802734
+[DDPG] Episode 0 Step 36
+[DDPG] Total Reward -0.6134369969367981 Critic Loss 38.427398681640625
+[DDPG] Episode 0 Step 37
+[DDPG] Total Reward 6.349915027618408 Critic Loss 38.762821197509766
+[DDPG] Episode 0 Step 38
+[DDPG] Total Reward 7.181314945220947 Critic Loss 38.546932220458984
+[DDPG] Episode 0 Step 39
+[DDPG] Total Reward 0.08787593990564346 Critic Loss 37.31018829345703
+[DDPG] Episode 0 Step 40
+[DDPG] Total Reward -2.5377979278564453 Critic Loss 36.388397216796875
+[DDPG] Episode 0 Step 41
+[DDPG] Total Reward 0.43807679414749146 Critic Loss 36.000732421875
+[DDPG] Episode 0 Step 42
+[DDPG] Total Reward 3.3874359130859375 Critic Loss 35.783447265625
+[DDPG] Episode 0 Step 43
+[DDPG] Total Reward 2.768503189086914 Critic Loss 34.99136734008789
+[DDPG] Episode 0 Step 44
+[DDPG] Total Reward 7.798969745635986 Critic Loss 35.13833999633789
+[DDPG] Episode 0 Step 45
+[DDPG] Total Reward -4.837045669555664 Critic Loss 34.569969177246094
+[DDPG] Episode 0 Step 46
+[DDPG] Total Reward 3.0478193759918213 Critic Loss 34.222694396972656
+[DDPG] Episode 0 Step 47
+[DDPG] Total Reward -1.286673903465271 Critic Loss 34.04630661010742
+[DDPG] Episode 0 Step 48
+[DDPG] Total Reward 4.41706657409668 Critic Loss 33.965579986572266
+[DDPG] Episode 0 Step 49
+[DDPG] Total Reward 6.195310592651367 Critic Loss 33.56938934326172
+[DDPG] Episode 0 Step 50
+[DDPG] Total Reward -0.2762184143066406 Critic Loss 32.69548797607422
+[DDPG] Episode 0 Step 51
+[DDPG] Total Reward -1.3356716632843018 Critic Loss 31.99104118347168
+[DDPG] Episode 0 Step 52
+[DDPG] Total Reward -1.8978796005249023 Critic Loss 31.777122497558594
+[DDPG] Episode 0 Step 53
+[DDPG] Total Reward 4.871403217315674 Critic Loss 31.870092391967773
+[DDPG] Episode 0 Step 54
+[DDPG] Total Reward -0.6086747646331787 Critic Loss 31.26923370361328
+[DDPG] Episode 0 Step 55
+[DDPG] Total Reward 4.756972312927246 Critic Loss 30.787841796875
+[DDPG] Episode 0 Step 56
+[DDPG] Total Reward -3.4173717498779297 Critic Loss 30.25968360900879
+[DDPG] Episode 0 Step 57
+[DDPG] Total Reward 1.259604573249817 Critic Loss 29.8608341217041
+[DDPG] Episode 0 Step 58
+[DDPG] Total Reward 0.31718888878822327 Critic Loss 29.715608596801758
+[DDPG] Episode 0 Step 59
+[DDPG] Total Reward 5.567420959472656 Critic Loss 29.941068649291992
+[DDPG] Episode 0 Step 60
+[DDPG] Total Reward -0.8335855603218079 Critic Loss 29.049240112304688
+[DDPG] Episode 0 Step 61
+[DDPG] Total Reward -0.03410988673567772 Critic Loss 28.43727684020996
+[DDPG] Episode 0 Step 62
+[DDPG] Total Reward -1.0617014169692993 Critic Loss 27.924440383911133
+[DDPG] Episode 0 Step 63
+[DDPG] Total Reward -1.0875511169433594 Critic Loss 27.75615692138672
+[DDPG] Episode 0 Step 64
+[DDPG] Total Reward 6.287689208984375 Critic Loss 28.213106155395508
+[DDPG] Episode 0 Step 65
+[DDPG] Total Reward -6.449650287628174 Critic Loss 28.358901977539062
+[DDPG] Episode 0 Step 66
+[DDPG] Total Reward 5.552919387817383 Critic Loss 28.07545280456543
+[DDPG] Episode 0 Step 67
+[DDPG] Total Reward -2.521050214767456 Critic Loss 27.575420379638672
+[DDPG] Episode 0 Step 68
+[DDPG] Total Reward -0.5685992240905762 Critic Loss 27.290023803710938
+[DDPG] Episode 0 Step 69
+[DDPG] Total Reward 2.119915246963501 Critic Loss 27.291330337524414
+[DDPG] Episode 0 Step 70
+[DDPG] Total Reward 3.1737077236175537 Critic Loss 27.238569259643555
+[DDPG] Episode 0 Step 71
+[DDPG] Total Reward -1.1252213716506958 Critic Loss 26.549339294433594
+[DDPG] Episode 0 Step 72
+[DDPG] Total Reward 4.320174694061279 Critic Loss 26.26261329650879
+[DDPG] Episode 0 Step 73
+[DDPG] Total Reward -0.1475556641817093 Critic Loss 25.818359375
+[DDPG] Episode 0 Step 74
+[DDPG] Total Reward -4.583079814910889 Critic Loss 25.968046188354492
+[DDPG] Episode 0 Step 75
+[DDPG] Total Reward 10.128560066223145 Critic Loss 27.181692123413086
+[DDPG] Episode 0 Step 76
+[DDPG] Total Reward -7.9824981689453125 Critic Loss 27.620237350463867
+[DDPG] Episode 0 Step 77
+[DDPG] Total Reward 1.2362117767333984 Critic Loss 27.06819725036621
+[DDPG] Episode 0 Step 78
+[DDPG] Total Reward 1.0770479440689087 Critic Loss 26.625213623046875
+[DDPG] Episode 0 Step 79
+[DDPG] Total Reward -2.5783777236938477 Critic Loss 26.428924560546875
+[DDPG] Episode 0 Step 80
+[DDPG] Total Reward 2.0140416622161865 Critic Loss 26.391414642333984
+[DDPG] Episode 0 Step 81
+[DDPG] Total Reward 1.3682427406311035 Critic Loss 26.280296325683594
+[DDPG] Episode 0 Step 82
+[DDPG] Total Reward 5.012200832366943 Critic Loss 25.96332359313965
+[DDPG] Episode 0 Step 83
+[DDPG] Total Reward 2.277022123336792 Critic Loss 25.57908058166504
+[DDPG] Episode 0 Step 84
+[DDPG] Total Reward 4.097911834716797 Critic Loss 25.384809494018555
+[DDPG] Episode 0 Step 85
+[DDPG] Total Reward -3.0662331581115723 Critic Loss 25.39559555053711
+[DDPG] Episode 0 Step 86
+[DDPG] Total Reward 6.815726280212402 Critic Loss 25.84420394897461
+[DDPG] Episode 0 Step 87
+[DDPG] Total Reward -7.856273174285889 Critic Loss 26.1308536529541
+[DDPG] Episode 0 Step 88
+[DDPG] Total Reward -2.345864772796631 Critic Loss 25.736547470092773
+[DDPG] Episode 0 Step 89
+[DDPG] Total Reward 1.345429539680481 Critic Loss 25.519763946533203
+[DDPG] Episode 0 Step 90
+[DDPG] Total Reward -4.411011219024658 Critic Loss 25.63865089416504
+[DDPG] Episode 0 Step 91
+[DDPG] Total Reward -15.867297172546387 Critic Loss 27.919189453125
+[DDPG] Episode 0 Step 92
+[DDPG] Total Reward 3.1350114345550537 Critic Loss 27.770627975463867
+[DDPG] Episode 0 Step 93
+[DDPG] Total Reward -0.578531801700592 Critic Loss 27.64773178100586
+[DDPG] Episode 0 Step 94
+[DDPG] Total Reward -8.156658172607422 Critic Loss 27.877986907958984
+[DDPG] Episode 0 Step 95
+[DDPG] Total Reward 1.5114651918411255 Critic Loss 27.55399513244629
+[DDPG] Episode 0 Step 96
+[DDPG] Total Reward 6.684337615966797 Critic Loss 27.8466854095459
+[DDPG] Episode 0 Step 97
+[DDPG] Total Reward -0.3479562997817993 Critic Loss 27.550844192504883
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1
+[DDPG] Episode 1 Step 0
+[DDPG] Total Reward -7.525890827178955 Critic Loss 27.927711486816406
+[DDPG] Episode 1 Step 1
+[DDPG] Total Reward -1.5940254926681519 Critic Loss 27.501079559326172
+[DDPG] Episode 1 Step 2
+[DDPG] Total Reward -3.6686618328094482 Critic Loss 27.809595108032227
+[DDPG] Episode 1 Step 3
+[DDPG] Total Reward -0.8329466581344604 Critic Loss 27.94173812866211
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 2
+[DDPG] Episode 2 Step 0
+[DDPG] Total Reward -8.206452369689941 Critic Loss 27.839235305786133
+[DDPG] Episode 2 Step 1
+[DDPG] Total Reward -8.060491561889648 Critic Loss 28.347976684570312
+[DDPG] Episode 2 Step 2
+[DDPG] Total Reward -1.8223332166671753 Critic Loss 28.43303680419922
+[DDPG] Episode 2 Step 3
+[DDPG] Total Reward -33.13849639892578 Critic Loss 39.6029052734375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 3
+[DDPG] Episode 3 Step 0
+[DDPG] Total Reward -11.188961029052734 Critic Loss 41.45973587036133
+[DDPG] Episode 3 Step 1
+[DDPG] Total Reward -17.50484275817871 Critic Loss 41.839378356933594
+[DDPG] Episode 3 Step 2
+[DDPG] Total Reward -12.38646411895752 Critic Loss 32.18754959106445
+[DDPG] Episode 3 Step 3
+[DDPG] Total Reward -55.74990463256836 Critic Loss 64.09510803222656
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4
+[DDPG] Episode 4 Step 0
+[DDPG] Total Reward -46.34090805053711 Critic Loss 95.80577087402344
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 5
+[DDPG] Episode 5 Step 0
+[DDPG] Total Reward -44.22812271118164 Critic Loss 93.01404571533203
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 6
+[DDPG] Episode 6 Step 0
+[DDPG] Total Reward -48.78255844116211 Critic Loss 114.85037231445312
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 7
+[DDPG] Episode 7 Step 0
+[DDPG] Total Reward -48.880306243896484 Critic Loss 162.2541961669922
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 8
+[DDPG] Episode 8 Step 0
+[DDPG] Total Reward -50.005287170410156 Critic Loss 163.95840454101562
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 9
+[DDPG] Episode 9 Step 0
+[DDPG] Total Reward -50.35008239746094 Critic Loss 187.54441833496094
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 10
+[DDPG] Episode 10 Step 0
+[DDPG] Total Reward -0.3028554320335388 Critic Loss 211.88650512695312
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 11
+[DDPG] Episode 11 Step 0
+[DDPG] Total Reward 31.36266326904297 Critic Loss 221.46632385253906
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 12
+[DDPG] Episode 12 Step 0
+[DDPG] Total Reward -14.485095977783203 Critic Loss 173.60276794433594
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 13
+[DDPG] Episode 13 Step 0
+[DDPG] Total Reward -25.512435913085938 Critic Loss 187.12718200683594
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 14
+[DDPG] Episode 14 Step 0
+[DDPG] Total Reward -29.274681091308594 Critic Loss 218.08847045898438
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 15
+[DDPG] Episode 15 Step 0
+[DDPG] Total Reward -16.35066032409668 Critic Loss 240.06536865234375
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 16
+[DDPG] Episode 16 Step 0
+[DDPG] Total Reward -12.885353088378906 Critic Loss 186.84194946289062
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 17
+[DDPG] Episode 17 Step 0
+[DDPG] Total Reward -20.770706176757812 Critic Loss 216.5375213623047
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 18
+[DDPG] Episode 18 Step 0
+[DDPG] Total Reward -19.222070693969727 Critic Loss 183.35311889648438
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 19
+[DDPG] Episode 19 Step 0
+[DDPG] Total Reward -13.57358455657959 Critic Loss 186.3363494873047
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 20
+[DDPG] Episode 20 Step 0
+[DDPG] Total Reward -16.904930114746094 Critic Loss 195.7644500732422
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 21
+[DDPG] Episode 21 Step 0
+[DDPG] Total Reward -20.76438331604004 Critic Loss 227.96995544433594
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 22
+[DDPG] Episode 22 Step 0
+[DDPG] Total Reward -18.838281631469727 Critic Loss 195.61074829101562
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 23
+[DDPG] Episode 23 Step 0
+[DDPG] Total Reward -23.05943489074707 Critic Loss 174.6719512939453
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 24
+[DDPG] Episode 24 Step 0
+[DDPG] Total Reward -23.182212829589844 Critic Loss 249.0958251953125
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 25
+[DDPG] Episode 25 Step 0
+[DDPG] Total Reward -24.501068115234375 Critic Loss 211.1375732421875
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 26
+[DDPG] Episode 26 Step 0
+[DDPG] Total Reward -24.767847061157227 Critic Loss 242.9644775390625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 27
+[DDPG] Episode 27 Step 0
+[DDPG] Total Reward -27.1502628326416 Critic Loss 231.62501525878906
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 28
+[DDPG] Episode 28 Step 0
+[DDPG] Total Reward -30.55686378479004 Critic Loss 232.27127075195312
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 29
+[DDPG] Episode 29 Step 0
+[DDPG] Total Reward -32.803401947021484 Critic Loss 228.94448852539062
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 30
+[DDPG] Episode 30 Step 0
+[DDPG] Total Reward -35.3620491027832 Critic Loss 237.83016967773438
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 31
+[DDPG] Episode 31 Step 0
+[DDPG] Total Reward -36.861595153808594 Critic Loss 236.4931182861328
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 32
+[DDPG] Episode 32 Step 0
+[DDPG] Total Reward -40.75779724121094 Critic Loss 204.18936157226562
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 33
+[DDPG] Episode 33 Step 0
+[DDPG] Total Reward -45.157623291015625 Critic Loss 228.57208251953125
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 34
+[DDPG] Episode 34 Step 0
+[DDPG] Total Reward -31.83103370666504 Critic Loss 306.5680847167969
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 35
+[DDPG] Episode 35 Step 0
+[DDPG] Total Reward -38.58720397949219 Critic Loss 215.97410583496094
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 36
+[DDPG] Episode 36 Step 0
+[DDPG] Total Reward -49.304588317871094 Critic Loss 324.3140869140625
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 37
+[DDPG] Episode 37 Step 0
+[DDPG] Total Reward -51.90415954589844 Critic Loss 353.9839782714844
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 38
+[DDPG] Episode 38 Step 0
+[DDPG] Total Reward -54.89592361450195 Critic Loss 365.1891784667969
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 39
+[DDPG] Episode 39 Step 0
+[DDPG] Total Reward -38.52691650390625 Critic Loss 309.3463439941406
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 40
+[DDPG] Episode 40 Step 0
+[DDPG] Total Reward -49.61716842651367 Critic Loss 404.1823425292969
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 41
+[DDPG] Episode 41 Step 0
+[DDPG] Total Reward -55.18115234375 Critic Loss 366.7602233886719
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 42
+[DDPG] Episode 42 Step 0
+[DDPG] Total Reward -65.59681701660156 Critic Loss 389.9133605957031
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 43
+[DDPG] Episode 43 Step 0
+[DDPG] Total Reward -57.95055389404297 Critic Loss 469.191162109375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 44
+[DDPG] Episode 44 Step 0
+[DDPG] Total Reward -27.340087890625 Critic Loss 475.09429931640625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 45
+[DDPG] Episode 45 Step 0
+[DDPG] Total Reward -26.344520568847656 Critic Loss 468.2918701171875
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 46
+[DDPG] Episode 46 Step 0
+[DDPG] Total Reward -38.3630485534668 Critic Loss 442.46875
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 47
+[DDPG] Episode 47 Step 0
+[DDPG] Total Reward -39.63179016113281 Critic Loss 479.1148681640625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 48
+[DDPG] Episode 48 Step 0
+[DDPG] Total Reward -31.210281372070312 Critic Loss 486.1093444824219
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 49
+[DDPG] Episode 49 Step 0
+[DDPG] Total Reward -22.589096069335938 Critic Loss 533.3084716796875
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 50
+[DDPG] Episode 50 Step 0
+[DDPG] Total Reward -22.92301368713379 Critic Loss 407.73077392578125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 51
+[DDPG] Episode 51 Step 0
+[DDPG] Total Reward -22.482765197753906 Critic Loss 393.61749267578125
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 52
+[DDPG] Episode 52 Step 0
+[DDPG] Total Reward -16.037023544311523 Critic Loss 470.54156494140625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 53
+[DDPG] Episode 53 Step 0
+[DDPG] Total Reward -18.983253479003906 Critic Loss 439.9013366699219
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 54
+[DDPG] Episode 54 Step 0
+[DDPG] Total Reward -27.66632080078125 Critic Loss 441.51910400390625
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 55
+[DDPG] Episode 55 Step 0
+[DDPG] Total Reward -18.61273765563965 Critic Loss 474.37078857421875
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 56
+[DDPG] Episode 56 Step 0
+[DDPG] Total Reward -16.728933334350586 Critic Loss 486.6598815917969
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 57
+[DDPG] Episode 57 Step 0
+[DDPG] Total Reward -10.527722358703613 Critic Loss 430.7880859375
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 58
+[DDPG] Episode 58 Step 0
+[DDPG] Total Reward -12.481377601623535 Critic Loss 416.0238037109375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 59
+[DDPG] Episode 59 Step 0
+[DDPG] Total Reward -13.406046867370605 Critic Loss 512.6100463867188
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 60
+[DDPG] Episode 60 Step 0
+[DDPG] Total Reward -10.69043254852295 Critic Loss 463.0810546875
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 61
+[DDPG] Episode 61 Step 0
+[DDPG] Total Reward -10.253896713256836 Critic Loss 474.91973876953125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 62
+[DDPG] Episode 62 Step 0
+[DDPG] Total Reward -10.697887420654297 Critic Loss 407.7706298828125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 63
+[DDPG] Episode 63 Step 0
+[DDPG] Total Reward -11.229759216308594 Critic Loss 438.5975036621094
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 64
+[DDPG] Episode 64 Step 0
+[DDPG] Total Reward -8.001436233520508 Critic Loss 474.7010192871094
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 65
+[DDPG] Episode 65 Step 0
+[DDPG] Total Reward -12.46986198425293 Critic Loss 378.4552001953125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 66
+[DDPG] Episode 66 Step 0
+[DDPG] Total Reward -6.013757705688477 Critic Loss 439.6468505859375
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 67
+[DDPG] Episode 67 Step 0
+[DDPG] Total Reward -13.215812683105469 Critic Loss 408.9249267578125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 68
+[DDPG] Episode 68 Step 0
+[DDPG] Total Reward -13.123249053955078 Critic Loss 422.5389709472656
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 69
+[DDPG] Episode 69 Step 0
+[DDPG] Total Reward -16.234237670898438 Critic Loss 482.5020751953125
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 70
+[DDPG] Episode 70 Step 0
+[DDPG] Total Reward -20.55532455444336 Critic Loss 392.6714172363281
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 71
+[DDPG] Episode 71 Step 0
+[DDPG] Total Reward -18.6895751953125 Critic Loss 461.3215637207031
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 72
+[DDPG] Episode 72 Step 0
+[DDPG] Total Reward -24.241283416748047 Critic Loss 463.205322265625
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 73
+[DDPG] Episode 73 Step 0
+[DDPG] Total Reward -1.6095744371414185 Critic Loss 415.1231689453125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 74
+[DDPG] Episode 74 Step 0
+[DDPG] Total Reward -1.363287091255188 Critic Loss 391.802978515625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 75
+[DDPG] Episode 75 Step 0
+[DDPG] Total Reward -0.6736195087432861 Critic Loss 393.58233642578125
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 76
+[DDPG] Episode 76 Step 0
+[DDPG] Total Reward -0.30008405447006226 Critic Loss 369.31976318359375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 77
+[DDPG] Episode 77 Step 0
+[DDPG] Total Reward -2.1832213401794434 Critic Loss 439.43487548828125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 78
+[DDPG] Episode 78 Step 0
+[DDPG] Total Reward -2.7890665531158447 Critic Loss 487.0878601074219
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 79
+[DDPG] Episode 79 Step 0
+[DDPG] Total Reward -1.9640042781829834 Critic Loss 471.3307800292969
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 80
+[DDPG] Episode 80 Step 0
+[DDPG] Total Reward -0.5385386943817139 Critic Loss 466.7281494140625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 81
+[DDPG] Episode 81 Step 0
+[DDPG] Total Reward -2.674349546432495 Critic Loss 400.5247802734375
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 82
+[DDPG] Episode 82 Step 0
+[DDPG] Total Reward -0.4090101420879364 Critic Loss 432.7929382324219
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 83
+[DDPG] Episode 83 Step 0
+[DDPG] Total Reward -0.7960752248764038 Critic Loss 414.9232177734375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 84
+[DDPG] Episode 84 Step 0
+[DDPG] Total Reward -1.9610322713851929 Critic Loss 391.2486572265625
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 85
+[DDPG] Episode 85 Step 0
+[DDPG] Total Reward -0.1766398698091507 Critic Loss 283.2347717285156
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 86
+[DDPG] Episode 86 Step 0
+[DDPG] Total Reward -0.13849827647209167 Critic Loss 501.91558837890625
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 87
+[DDPG] Episode 87 Step 0
+[DDPG] Total Reward -1.2138948440551758 Critic Loss 311.89263916015625
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 88
+[DDPG] Episode 88 Step 0
+[DDPG] Total Reward -1.8529517650604248 Critic Loss 450.1778259277344
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 89
+[DDPG] Episode 89 Step 0
+[DDPG] Total Reward -1.3183107376098633 Critic Loss 334.5518798828125
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 90
+[DDPG] Episode 90 Step 0
+[DDPG] Total Reward -1.1515871286392212 Critic Loss 338.280029296875
+[DDPG] Starting Next Episode
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 91
+[DDPG] Episode 91 Step 0
+[DDPG] Total Reward -1.1256330013275146 Critic Loss 334.9114990234375
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 92
+[DDPG] Episode 92 Step 0
+[DDPG] Total Reward -0.3530471920967102 Critic Loss 372.1372375488281
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "learn.py", line 996, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 683, in learn
+    self.current_time_step = self.env.reset()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 55, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 806, in reset
+    self._reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 778, in _reset
+    rospy.wait_for_service('/gazebo/pause_physics')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-04-06 11:51:51.988454: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 11:51:54.919900: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 11:51:54.921040: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-06 11:51:54.965716: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.966292: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 11:51:54.966312: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 11:51:54.969027: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 11:51:54.969132: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 11:51:54.970245: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 11:51:54.970516: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 11:51:54.973324: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 11:51:54.973980: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 11:51:54.974166: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 11:51:54.974297: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.975003: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.975583: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-06 11:51:54.983582: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-06 11:51:54.983811: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-06 11:51:54.983953: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.984539: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-06 11:51:54.984554: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 11:51:54.984629: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 11:51:54.984673: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-06 11:51:54.984707: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-06 11:51:54.984750: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-06 11:51:54.984786: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-06 11:51:54.984819: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-06 11:51:54.984853: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-06 11:51:54.984935: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.985545: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:54.986077: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-06 11:51:54.986105: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-06 11:51:55.643399: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-06 11:51:55.643436: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-06 11:51:55.643443: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-06 11:51:55.643737: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:55.644502: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:55.645136: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-06 11:51:55.645688: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617709920.478439381, 1.648000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617709920.479469517, 1.649000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617709920.479523449, 1.649000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617709921.574057105, 2.739000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617709922.450970112, 3.602000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617709923.251983295, 4.402000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617709924.057673637, 5.200000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+2021-04-06 11:52:31.106132: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-06 11:52:31.716997: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Episode 0 Step 0
+[DDPG] Total Reward 3.3605988025665283 Critic Loss 10.931591987609863
+[DDPG] Episode 0 Step 1
+[DDPG] Total Reward 5.852639675140381 Critic Loss 21.880006790161133
+[DDPG] Episode 0 Step 2
+[DDPG] Total Reward 0.7370121479034424 Critic Loss 14.688618659973145
+[DDPG] Episode 0 Step 3
+[DDPG] Total Reward 6.270048141479492 Critic Loss 20.728557586669922
+[DDPG] Episode 0 Step 4
+[DDPG] Total Reward 2.521751642227173 Critic Loss 17.962383270263672
+[DDPG] Episode 0 Step 5
+[DDPG] Total Reward 9.408661842346191 Critic Loss 29.354772567749023
+[DDPG] Episode 0 Step 6
+[DDPG] Total Reward -3.916522979736328 Critic Loss 27.232467651367188
+[DDPG] Episode 0 Step 7
+[DDPG] Total Reward 9.369751930236816 Critic Loss 34.77619934082031
+[DDPG] Episode 0 Step 8
+[DDPG] Total Reward 2.085663318634033 Critic Loss 31.53644561767578
+[DDPG] Episode 0 Step 9
+[DDPG] Total Reward 10.212027549743652 Critic Loss 38.48563766479492
+[DDPG] Episode 0 Step 10
+[DDPG] Total Reward -3.9519827365875244 Critic Loss 36.261714935302734
+[DDPG] Episode 0 Step 11
+[DDPG] Total Reward 7.999398231506348 Critic Loss 38.73413848876953
+[DDPG] Episode 0 Step 12
+[DDPG] Total Reward 5.05814790725708 Critic Loss 37.77645492553711
+[DDPG] Episode 0 Step 13
+[DDPG] Total Reward 8.389018058776855 Critic Loss 39.687320709228516
+[DDPG] Episode 0 Step 14
+[DDPG] Total Reward 1.7036466598510742 Critic Loss 37.144142150878906
+[DDPG] Episode 0 Step 15
+[DDPG] Total Reward 3.7384791374206543 Critic Loss 35.94681167602539
+[DDPG] Episode 0 Step 16
+[DDPG] Total Reward 7.242514133453369 Critic Loss 36.96586227416992
+[DDPG] Episode 0 Step 17
+[DDPG] Total Reward 2.7198257446289062 Critic Loss 34.86081314086914
+[DDPG] Episode 0 Step 18
+[DDPG] Total Reward 8.971793174743652 Critic Loss 37.51505661010742
+[DDPG] Episode 0 Step 19
+[DDPG] Total Reward 1.7575639486312866 Critic Loss 35.91691970825195
+[DDPG] Episode 0 Step 20
+[DDPG] Total Reward 10.61056137084961 Critic Loss 39.364871978759766
+[DDPG] Episode 0 Step 21
+[DDPG] Total Reward -4.674497604370117 Critic Loss 38.33232116699219
+[DDPG] Episode 0 Step 22
+[DDPG] Total Reward 6.097008228302002 Critic Loss 38.545860290527344
+[DDPG] Episode 0 Step 23
+[DDPG] Total Reward 8.215811729431152 Critic Loss 39.76137924194336
+[DDPG] Episode 0 Step 24
+[DDPG] Total Reward 3.010416030883789 Critic Loss 38.186256408691406
+[DDPG] Episode 0 Step 25
+[DDPG] Total Reward 7.775210857391357 Critic Loss 39.339534759521484
+[DDPG] Episode 0 Step 26
+[DDPG] Total Reward 2.2880682945251465 Critic Loss 38.064884185791016
+[DDPG] Episode 0 Step 27
+[DDPG] Total Reward 9.388691902160645 Critic Loss 39.50479507446289
+[DDPG] Episode 0 Step 28
+[DDPG] Total Reward 0.4628465175628662 Critic Loss 38.45560073852539

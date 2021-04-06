@@ -977,7 +977,7 @@ if __name__ == '__main__':
     #    25,
     #    'weights/actor_pretrain',
     #)
-    learner.load_actor('weights/actor_pretrain/exp25/pretrain_actor/actor_pretrained_pretrain_actor_25_15.ckpt')
+    learner.load_actor('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))

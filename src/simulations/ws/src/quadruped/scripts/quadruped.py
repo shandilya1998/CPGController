@@ -804,6 +804,7 @@ class Quadruped:
 
     def reset(self):
         self._reset()
+        self.upright = True
         rospy.sleep(1.0)
         start = time.time()
         self.reward = 0.0
