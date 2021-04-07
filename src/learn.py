@@ -675,6 +675,10 @@ class Learner():
         total_reward = []
         _steps_ = []
         COT = []
+        stability = []
+        d1 = []
+        d2 = []
+        d3 = []
         motion = []
         self.mass = self.env.quadruped.mass
         self.gravity = self.env.quadruped.gravity
@@ -731,6 +735,10 @@ class Learner():
                     self.current_time_step.observation,
                     self.current_time_step.step_type
                 ]
+                stability.append(self.env.quadruped.stability)
+                d1.append(self.env.quadruped.d1)
+                d2.append(self.env.quadruped.d2)
+                d3.append(self.env.quadruped.d3)
                 rewards.append(self.current_time_step.reward.numpy())
                 self.total_reward += self.current_time_step.reward.numpy()
                 self.replay_buffer.add_batch(experience)
@@ -839,7 +847,7 @@ class Learner():
             total_critic_loss.append(tot_loss)
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
-            critic_loss, COT, motion):
+            critic_loss, COT, motion, stability, d1, d2, d3):
         print('\n[DDPG] Saving Model')
         self.actor.model.save_weights(
             os.path.join(
@@ -966,7 +974,7 @@ class Learner():
         pkl.close()
         fig10, ax10 = plt.subplots(1,1,figsize = (5,5))
         ax10.plot(motion)
-        ax10.set_ylabel('motion deviation')
+        ax10.set_ylabel('motion')
         ax10.set_xlabel('steps')
         fig10.savefig(os.path.join(
             model_dir,
@@ -974,6 +982,83 @@ class Learner():
                 ep = ep,
             )
         ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'stability_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(stability, pkl)
+        pkl.close()
+        fig11, ax11 = plt.subplots(1,1,figsize = (5,5))
+        ax11.plot(stability)
+        ax11.set_ylabel('stability')
+        ax11.set_xlabel('steps')
+        fig11.savefig(os.path.join(
+            model_dir,
+            'stability_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd1_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d1, pkl)
+        pkl.close()
+        fig12, ax12 = plt.subplots(1,1,figsize = (5,5))
+        ax12.plot(stability)
+        ax12.set_ylabel('d1')
+        ax12.set_xlabel('steps')
+        fig12.savefig(os.path.join(
+            model_dir,
+            'd1_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd2_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d1, pkl)
+        pkl.close()
+        fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
+        ax13.plot(stability)
+        ax13.set_ylabel('d2')
+        ax13.set_xlabel('steps')
+        fig13.savefig(os.path.join(
+            model_dir,
+            'd2_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd3_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d3, pkl)
+        pkl.close()
+        fig14, ax14 = plt.subplots(1,1,figsize = (5,5))
+        ax14.plot(stability)
+        ax14.set_ylabel('d3')
+        ax14.set_xlabel('steps')
+        fig14.savefig(os.path.join(
+            model_dir,
+            'd3_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
         plt.close('all')
 
 if __name__ == '__main__':

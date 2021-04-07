@@ -1,15 +1,14 @@
-#from learn import *
-#from rl.constants import params
+from learn import *
+from rl.constants import params
 import numpy as np
 from gait_generation import gait_generator as gg
 import matplotlib.pyplot as plt
 
-params = {}
 params['rnn_steps'] = 10000
 params['dt'] = 0.001
 signal_gen = gg.Signal(params['rnn_steps'], params['dt'])
 
-signal_gen.build(100, 300, 45, 30)
+signal_gen.build(300, 900, 45, 30)
 signal, phases = signal_gen.get_signal()
 t = signal[:, 0]
 signal = signal[:, 1:] * np.pi/180
@@ -33,7 +32,7 @@ print(np.max(signal))
 
 
 
-#learner = Learner(params, False)
+learner = Learner(params, 27 , False)
 """
 dataset = learner.load_dataset()
 step,(x,y) = next(enumerate(dataset))
@@ -48,11 +47,13 @@ print(y.shape)
 osc = y[3]
 print(osc.shape)
 """
-"""
-for i in range(params['rnn_steps']):
-    learner.env.quadruped.all_legs.move(
-            signal[i].tolist()
-    )
+
+for j in range(5):
+    learner.env.quadruped.reset()
+    for i in range(params['rnn_steps']):
+        learner.env.quadruped.all_legs.move(
+                signal[i].tolist()
+        )
 #"""
 """
 from gait_generation import gait_generator as gg
