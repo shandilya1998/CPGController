@@ -728,3 +728,559 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Resetting Environment
 [DDPG] Starting Episode 1
 [DDPG] Episode 1 Step 0 Reward 2.59323 Time 7.51651
+[DDPG] Episode 1 Step 1 Reward 19.71170 Time 7.34254
+[DDPG] Episode 1 Step 2 Reward 21.02929 Time 7.23187
+[DDPG] Episode 1 Step 3 Reward 21.65531 Time 7.44908
+[DDPG] Episode 1 Step 4 Reward 21.33016 Time 7.61924
+[DDPG] Episode 1 Step 5 Reward 20.75356 Time 7.51410
+[DDPG] Episode 1 Step 6 Reward 20.13746 Time 7.45925
+[DDPG] Episode 1 Step 7 Reward 20.20164 Time 7.59431
+[DDPG] Episode 1 Step 8 Reward 20.09504 Time 7.33487
+[DDPG] Episode 1 Step 9 Reward 20.10207 Time 7.15292
+[DDPG] Episode 1 Step 10 Reward 20.22828 Time 7.62843
+[DDPG] Episode 1 Step 11 Reward 20.42332 Time 7.42975
+[DDPG] Episode 1 Step 12 Reward 20.23927 Time 7.32181
+[DDPG] Episode 1 Step 13 Reward 20.24099 Time 7.40295
+[DDPG] Episode 1 Step 14 Reward 19.89462 Time 7.62902
+[DDPG] Episode 1 Step 15 Reward 19.82328 Time 7.44763
+[DDPG] Episode 1 Step 16 Reward 19.74757 Time 7.40630
+[DDPG] Episode 1 Step 17 Reward 19.84957 Time 7.50739
+[DDPG] Episode 1 Step 18 Reward 19.82517 Time 7.53649
+[DDPG] Episode 1 Step 19 Reward 19.93738 Time 7.49775
+[DDPG] Episode 1 Step 20 Reward 20.01583 Time 7.52142
+[DDPG] Episode 1 Step 21 Reward 20.03320 Time 7.53978
+[DDPG] Episode 1 Step 22 Reward 20.08737 Time 7.44570
+[DDPG] Episode 1 Step 23 Reward 20.11257 Time 7.58199
+[DDPG] Episode 1 Step 24 Reward 20.13414 Time 7.49607
+[DDPG] Episode 1 Step 25 Reward 20.06853 Time 7.28319
+[DDPG] Episode 1 Step 26 Reward 20.16742 Time 7.32771
+[DDPG] Episode 1 Step 27 Reward 20.12445 Time 7.75067
+[DDPG] Episode 1 Step 28 Reward 19.89175 Time 7.22704
+[DDPG] Episode 1 Step 29 Reward 19.86330 Time 7.51516
+[DDPG] Episode 1 Step 30 Reward 19.96747 Time 7.59017
+[DDPG] Episode 1 Step 31 Reward 19.88990 Time 7.46337
+[DDPG] Episode 1 Step 32 Reward 19.94089 Time 7.67048
+Traceback (most recent call last):
+  File "learn.py", line 1149, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 770, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1147, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-04-07 12:08:38.977368: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-07 12:08:41.673512: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-07 12:08:41.674579: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-07 12:08:41.729226: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.730046: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-07 12:08:41.730077: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-07 12:08:41.733694: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-07 12:08:41.733848: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-07 12:08:41.735376: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-07 12:08:41.735740: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-07 12:08:41.739558: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-07 12:08:41.740440: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-07 12:08:41.740638: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-07 12:08:41.740796: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.741726: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.742512: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-07 12:08:41.753573: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-07 12:08:41.753782: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-07 12:08:41.753947: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.754736: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-07 12:08:41.754759: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-07 12:08:41.754829: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-07 12:08:41.754895: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-07 12:08:41.754945: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-07 12:08:41.754984: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-07 12:08:41.755031: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-07 12:08:41.755072: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-07 12:08:41.755110: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-07 12:08:41.755225: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.756115: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:41.756934: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-07 12:08:41.756976: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-07 12:08:42.469790: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-07 12:08:42.469821: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-07 12:08:42.469829: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-07 12:08:42.470122: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:42.470810: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:42.471405: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-07 12:08:42.471940: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1617797326.891068432, 1.477000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617797326.891919890, 1.478000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1617797326.891972087, 1.478000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1617797328.070091510, 2.652000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1617797329.029849466, 3.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1617797329.832763503, 4.401000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1617797330.636038869, 5.201000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Pretraining Test
+2021-04-07 12:09:15.768090: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-07 12:09:16.363305: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Step 0 Reward 175.24355 Time 8.25567
+[DDPG] Step 1 Reward 180.94696 Time 7.54534
+[DDPG] Step 2 Reward 180.70375 Time 7.81691
+[DDPG] Step 3 Reward 180.75153 Time 7.80534
+[DDPG] Step 4 Reward 180.23909 Time 7.72828
+[DDPG] Step 5 Reward 180.90388 Time 7.28111
+[DDPG] Step 6 Reward 181.01562 Time 7.51408
+[DDPG] Step 7 Reward 180.93851 Time 7.75448
+[DDPG] Step 8 Reward 179.99713 Time 7.63323
+[DDPG] Step 9 Reward 179.10141 Time 7.77172
+[DDPG] Step 10 Reward 180.92314 Time 7.86971
+[DDPG] Step 11 Reward 180.64131 Time 7.75364
+[DDPG] Step 12 Reward 180.85825 Time 7.55215
+[DDPG] Step 13 Reward 180.87459 Time 7.88548
+[DDPG] Step 14 Reward 180.96947 Time 7.49946
+[DDPG] Step 15 Reward 180.52974 Time 7.73784
+[DDPG] Step 16 Reward 180.77899 Time 7.84292
+[DDPG] Step 17 Reward 180.55821 Time 7.44102
+[DDPG] Step 18 Reward 180.69229 Time 7.41942
+[DDPG] Step 19 Reward 180.72874 Time 7.50354
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 0
+[DDPG] Episode 0 Step 0 Reward -6.15655 Time 7.59373
+[DDPG] Episode 0 Step 1 Reward -1.21235 Time 7.83203
+[DDPG] Episode 0 Step 2 Reward -0.26463 Time 7.15675
+[DDPG] Episode 0 Step 3 Reward -0.26507 Time 7.40600
+[DDPG] Episode 0 Step 4 Reward -0.42523 Time 7.84319
+[DDPG] Episode 0 Step 5 Reward -1.26292 Time 7.35303
+[DDPG] Episode 0 Step 6 Reward -0.44656 Time 7.44247
+[DDPG] Episode 0 Step 7 Reward -0.40517 Time 7.85725
+[DDPG] Episode 0 Step 8 Reward -0.55348 Time 7.51430
+[DDPG] Episode 0 Step 9 Reward -0.60195 Time 7.84753
+[DDPG] Episode 0 Step 10 Reward -0.56166 Time 7.42333
+[DDPG] Episode 0 Step 11 Reward -0.63914 Time 7.58695
+[DDPG] Episode 0 Step 12 Reward -0.42494 Time 7.63785
+[DDPG] Episode 0 Step 13 Reward -0.54237 Time 7.28806
+[DDPG] Episode 0 Step 14 Reward -0.53321 Time 7.44296
+[DDPG] Episode 0 Step 15 Reward -0.49754 Time 7.58448
+[DDPG] Episode 0 Step 16 Reward -0.53497 Time 7.11510
+[DDPG] Episode 0 Step 17 Reward -0.27922 Time 7.41656
+[DDPG] Episode 0 Step 18 Reward -0.53528 Time 7.34659
+[DDPG] Episode 0 Step 19 Reward -0.29166 Time 7.69611
+[DDPG] Episode 0 Step 20 Reward -0.23918 Time 7.68300
+[DDPG] Episode 0 Step 21 Reward -0.27764 Time 7.71531
+[DDPG] Episode 0 Step 22 Reward -0.38242 Time 7.35766
+[DDPG] Episode 0 Step 23 Reward -0.26108 Time 7.79607
+[DDPG] Episode 0 Step 24 Reward -0.43518 Time 7.73652
+[DDPG] Episode 0 Step 25 Reward -0.36764 Time 7.27187
+[DDPG] Episode 0 Step 26 Reward -0.30183 Time 7.64215
+[DDPG] Episode 0 Step 27 Reward -0.57006 Time 7.59050
+[DDPG] Episode 0 Step 28 Reward -0.25885 Time 7.58512
+[DDPG] Episode 0 Step 29 Reward -0.38282 Time 7.91283
+[DDPG] Episode 0 Step 30 Reward -0.43331 Time 7.39413
+[DDPG] Episode 0 Step 31 Reward -0.36674 Time 7.55048
+[DDPG] Episode 0 Step 32 Reward -0.41233 Time 7.70983
+[DDPG] Episode 0 Step 33 Reward -0.37413 Time 7.54360
+[DDPG] Episode 0 Step 34 Reward -0.48132 Time 7.80962
+[DDPG] Episode 0 Step 35 Reward -0.39258 Time 7.67543
+[DDPG] Episode 0 Step 36 Reward -0.24257 Time 7.90382
+[DDPG] Episode 0 Step 37 Reward -0.29612 Time 7.72074
+[DDPG] Episode 0 Step 38 Reward -0.45005 Time 7.69892
+[DDPG] Episode 0 Step 39 Reward -0.38195 Time 7.55390
+[DDPG] Episode 0 Step 40 Reward -0.54249 Time 7.72689
+[DDPG] Episode 0 Step 41 Reward -0.33271 Time 7.49434
+[DDPG] Episode 0 Step 42 Reward -0.37761 Time 7.48145
+[DDPG] Episode 0 Step 43 Reward -0.30889 Time 7.84506
+[DDPG] Episode 0 Step 44 Reward -0.51381 Time 7.56933
+[DDPG] Episode 0 Step 45 Reward -0.53711 Time 7.74699
+[DDPG] Episode 0 Step 46 Reward -0.30605 Time 7.60114
+[DDPG] Episode 0 Step 47 Reward -0.39082 Time 7.48331
+[DDPG] Episode 0 Step 48 Reward -0.36399 Time 7.80603
+[DDPG] Episode 0 Step 49 Reward -0.24207 Time 7.46227
+[DDPG] Critic Loss 1.069822072982788
+[DDPG] Total Reward -27.65722 Avg Critic Loss 1.06982 Time 7.59168
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1
+[DDPG] Episode 1 Step 0 Reward -6.26590 Time 7.60690
+[DDPG] Episode 1 Step 1 Reward -0.52374 Time 7.44025
+[DDPG] Episode 1 Step 2 Reward -0.37916 Time 7.89123
+[DDPG] Episode 1 Step 3 Reward -0.44167 Time 7.21069
+[DDPG] Episode 1 Step 4 Reward -0.50435 Time 7.75891
+[DDPG] Episode 1 Step 5 Reward -0.38729 Time 7.71439
+[DDPG] Episode 1 Step 6 Reward -0.64527 Time 7.31346
+[DDPG] Episode 1 Step 7 Reward -0.57287 Time 7.08809
+[DDPG] Episode 1 Step 8 Reward -0.66935 Time 7.43496
+[DDPG] Episode 1 Step 9 Reward -0.93547 Time 7.47626
+[DDPG] Episode 1 Step 10 Reward -0.51681 Time 7.46860
+[DDPG] Episode 1 Step 11 Reward -0.42162 Time 7.62658
+[DDPG] Episode 1 Step 12 Reward -0.31355 Time 7.64357
+[DDPG] Episode 1 Step 13 Reward -0.47755 Time 7.58126
+[DDPG] Episode 1 Step 14 Reward -0.46767 Time 7.58632
+[DDPG] Episode 1 Step 15 Reward -0.23854 Time 7.38610
+[DDPG] Episode 1 Step 16 Reward -0.32285 Time 7.25338
+[DDPG] Episode 1 Step 17 Reward -0.21312 Time 7.31666
+[DDPG] Episode 1 Step 18 Reward -0.29936 Time 7.41525
+[DDPG] Episode 1 Step 19 Reward -0.40401 Time 7.19857
+[DDPG] Episode 1 Step 20 Reward -0.41084 Time 7.20308
+[DDPG] Episode 1 Step 21 Reward -0.35527 Time 7.52500
+[DDPG] Episode 1 Step 22 Reward -0.29961 Time 7.23780
+[DDPG] Episode 1 Step 23 Reward -0.43690 Time 7.45028
+[DDPG] Episode 1 Step 24 Reward -0.36419 Time 7.58472
+[DDPG] Episode 1 Step 25 Reward -0.49225 Time 7.43419
+[DDPG] Episode 1 Step 26 Reward -0.22868 Time 7.35804
+[DDPG] Episode 1 Step 27 Reward -0.33894 Time 7.43617
+[DDPG] Episode 1 Step 28 Reward -0.39167 Time 7.48453
+[DDPG] Episode 1 Step 29 Reward -0.37556 Time 7.32866
+[DDPG] Episode 1 Step 30 Reward -0.34761 Time 7.52846
+[DDPG] Episode 1 Step 31 Reward -0.49904 Time 7.37444
+[DDPG] Episode 1 Step 32 Reward -0.20202 Time 7.43144
+[DDPG] Episode 1 Step 33 Reward -0.24070 Time 7.35946
+[DDPG] Episode 1 Step 34 Reward -0.32545 Time 7.34150
+[DDPG] Episode 1 Step 35 Reward -0.45843 Time 7.27183
+[DDPG] Episode 1 Step 36 Reward -0.39207 Time 7.45556
+[DDPG] Episode 1 Step 37 Reward -0.42014 Time 7.11145
+[DDPG] Episode 1 Step 38 Reward -0.37048 Time 7.39713
+[DDPG] Episode 1 Step 39 Reward -0.52833 Time 7.33898
+[DDPG] Episode 1 Step 40 Reward -0.50365 Time 7.37841
+[DDPG] Episode 1 Step 41 Reward -0.54772 Time 7.33898
+[DDPG] Episode 1 Step 42 Reward -0.47686 Time 7.42235
+[DDPG] Episode 1 Step 43 Reward -0.37229 Time 7.29197
+[DDPG] Episode 1 Step 44 Reward -0.35167 Time 7.27723
+[DDPG] Episode 1 Step 45 Reward -0.34651 Time 7.38248
+[DDPG] Episode 1 Step 46 Reward -0.20579 Time 7.30598
+[DDPG] Episode 1 Step 47 Reward -0.31695 Time 7.18077
+[DDPG] Episode 1 Step 48 Reward -0.27591 Time 7.33936
+[DDPG] Episode 1 Step 49 Reward -0.33450 Time 7.46146
+[DDPG] Critic Loss 1.0670783519744873
+[DDPG] Total Reward -26.21017 Avg Critic Loss 1.06708 Time 9.12768
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 2
+[DDPG] Episode 2 Step 0 Reward -7.25213 Time 7.39721
+[DDPG] Episode 2 Step 1 Reward -0.61791 Time 7.39711
+[DDPG] Episode 2 Step 2 Reward -0.41947 Time 7.37635
+[DDPG] Episode 2 Step 3 Reward -0.65224 Time 7.25835
+[DDPG] Episode 2 Step 4 Reward -0.64200 Time 7.41168
+[DDPG] Episode 2 Step 5 Reward -0.47051 Time 7.52228
+[DDPG] Episode 2 Step 6 Reward -0.29743 Time 7.46805
+[DDPG] Episode 2 Step 7 Reward -0.52611 Time 7.34631
+[DDPG] Episode 2 Step 8 Reward -0.64799 Time 7.29671
+[DDPG] Episode 2 Step 9 Reward -0.32792 Time 7.32668
+[DDPG] Episode 2 Step 10 Reward -0.33973 Time 7.38309
+[DDPG] Episode 2 Step 11 Reward -0.20186 Time 7.53864
+[DDPG] Episode 2 Step 12 Reward -0.30368 Time 7.41719
+[DDPG] Episode 2 Step 13 Reward -0.33509 Time 7.28255
+[DDPG] Episode 2 Step 14 Reward -0.24421 Time 7.52914
+[DDPG] Episode 2 Step 15 Reward -0.20371 Time 7.37896
+[DDPG] Episode 2 Step 16 Reward -0.36185 Time 7.42830
+[DDPG] Episode 2 Step 17 Reward -0.25557 Time 7.52317
+[DDPG] Episode 2 Step 18 Reward -0.26788 Time 7.41393
+[DDPG] Episode 2 Step 19 Reward -0.32994 Time 7.32664
+[DDPG] Episode 2 Step 20 Reward -0.32003 Time 7.47247
+[DDPG] Episode 2 Step 21 Reward -0.21082 Time 7.37768
+[DDPG] Episode 2 Step 22 Reward -0.47785 Time 7.35773
+[DDPG] Episode 2 Step 23 Reward -0.26457 Time 7.25560
+[DDPG] Episode 2 Step 24 Reward -0.17678 Time 7.22945
+[DDPG] Episode 2 Step 25 Reward -0.22145 Time 7.43615
+[DDPG] Episode 2 Step 26 Reward -0.20141 Time 7.46268
+[DDPG] Episode 2 Step 27 Reward -0.31629 Time 7.45406
+[DDPG] Episode 2 Step 28 Reward -0.22231 Time 7.30997
+[DDPG] Episode 2 Step 29 Reward -0.24504 Time 7.34107
+[DDPG] Episode 2 Step 30 Reward -0.28340 Time 7.38026
+[DDPG] Episode 2 Step 31 Reward -0.33236 Time 7.34454
+[DDPG] Episode 2 Step 32 Reward -0.14133 Time 7.32148
+[DDPG] Episode 2 Step 33 Reward -0.22006 Time 7.48088
+[DDPG] Episode 2 Step 34 Reward -0.30898 Time 7.38156
+[DDPG] Episode 2 Step 35 Reward -0.34523 Time 7.37014
+[DDPG] Episode 2 Step 36 Reward -0.25854 Time 7.57904
+[DDPG] Episode 2 Step 37 Reward -0.36589 Time 7.35276
+[DDPG] Episode 2 Step 38 Reward -0.26191 Time 7.38370
+[DDPG] Episode 2 Step 39 Reward -0.29279 Time 7.38611
+[DDPG] Episode 2 Step 40 Reward -0.30959 Time 7.31588
+[DDPG] Episode 2 Step 41 Reward -0.16034 Time 7.40001
+[DDPG] Episode 2 Step 42 Reward -0.08851 Time 7.61262
+[DDPG] Episode 2 Step 43 Reward -0.24108 Time 7.39291
+[DDPG] Episode 2 Step 44 Reward -0.27485 Time 7.31457
+[DDPG] Episode 2 Step 45 Reward -0.29433 Time 7.31432
+[DDPG] Episode 2 Step 46 Reward -0.28896 Time 7.47110
+[DDPG] Episode 2 Step 47 Reward -0.45561 Time 7.28834
+[DDPG] Episode 2 Step 48 Reward -0.41149 Time 7.47747
+[DDPG] Episode 2 Step 49 Reward -0.43318 Time 7.36205
+[DDPG] Critic Loss 1.1305464506149292
+[DDPG] Total Reward -23.12221 Avg Critic Loss 1.13055 Time 10.27351
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 3
+[DDPG] Episode 3 Step 0 Reward -8.78008 Time 7.22134
+[DDPG] Episode 3 Step 1 Reward -0.87367 Time 7.39003
+[DDPG] Episode 3 Step 2 Reward -1.63725 Time 7.37770
+[DDPG] Episode 3 Step 3 Reward -0.79074 Time 7.36870
+[DDPG] Episode 3 Step 4 Reward -0.99261 Time 7.41069
+[DDPG] Episode 3 Step 5 Reward -0.34014 Time 7.33435
+[DDPG] Episode 3 Step 6 Reward -1.14569 Time 7.35338
+[DDPG] Episode 3 Step 7 Reward -1.38782 Time 7.37051
+[DDPG] Episode 3 Step 8 Reward -2.94304 Time 7.23746
+[DDPG] Episode 3 Step 9 Reward -1.67799 Time 7.29665
+[DDPG] Episode 3 Step 10 Reward -2.10119 Time 7.26869
+[DDPG] Episode 3 Step 11 Reward -2.04730 Time 7.29799
+[DDPG] Episode 3 Step 12 Reward -1.91701 Time 7.41168
+[DDPG] Episode 3 Step 13 Reward -1.99559 Time 7.27977
+[DDPG] Episode 3 Step 14 Reward -1.47794 Time 7.21542
+[DDPG] Episode 3 Step 15 Reward -1.21865 Time 7.21417
+[DDPG] Episode 3 Step 16 Reward -1.75140 Time 7.12045
+[DDPG] Episode 3 Step 17 Reward -1.80333 Time 7.39929
+[DDPG] Episode 3 Step 18 Reward -1.44366 Time 7.37627
+[DDPG] Episode 3 Step 19 Reward -0.89461 Time 7.43647
+[DDPG] Episode 3 Step 20 Reward -1.00641 Time 7.48818
+[DDPG] Episode 3 Step 21 Reward -0.96690 Time 7.30901
+[DDPG] Episode 3 Step 22 Reward -1.01277 Time 7.43897
+[DDPG] Episode 3 Step 23 Reward -1.18448 Time 7.39446
+[DDPG] Episode 3 Step 24 Reward -1.31392 Time 7.47893
+[DDPG] Episode 3 Step 25 Reward -2.05005 Time 7.44566
+[DDPG] Episode 3 Step 26 Reward -1.07741 Time 7.36564
+[DDPG] Episode 3 Step 27 Reward -1.05257 Time 7.43265
+[DDPG] Episode 3 Step 28 Reward -1.41468 Time 7.35975
+[DDPG] Episode 3 Step 29 Reward -0.86904 Time 7.30015
+[DDPG] Episode 3 Step 30 Reward -1.08456 Time 7.39014
+[DDPG] Episode 3 Step 31 Reward -1.02024 Time 7.35856
+[DDPG] Episode 3 Step 32 Reward -1.07248 Time 7.36895
+[DDPG] Episode 3 Step 33 Reward -1.44387 Time 7.20830
+[DDPG] Episode 3 Step 34 Reward -1.35868 Time 7.24924
+[DDPG] Episode 3 Step 35 Reward -1.52467 Time 7.37239
+[DDPG] Episode 3 Step 36 Reward -1.06854 Time 7.37463
+[DDPG] Episode 3 Step 37 Reward -1.01254 Time 7.38204
+[DDPG] Episode 3 Step 38 Reward -1.26842 Time 7.40294
+[DDPG] Episode 3 Step 39 Reward -1.90561 Time 7.35100
+[DDPG] Episode 3 Step 40 Reward -1.25740 Time 7.26155
+[DDPG] Episode 3 Step 41 Reward -2.52897 Time 7.29685
+[DDPG] Episode 3 Step 42 Reward -1.43610 Time 7.26569
+[DDPG] Episode 3 Step 43 Reward -0.71929 Time 7.28670
+[DDPG] Episode 3 Step 44 Reward -1.35056 Time 7.31935
+[DDPG] Episode 3 Step 45 Reward -1.15223 Time 7.17197
+[DDPG] Episode 3 Step 46 Reward -1.12476 Time 7.32695
+[DDPG] Episode 3 Step 47 Reward -1.05367 Time 7.40825
+[DDPG] Episode 3 Step 48 Reward -0.86728 Time 7.30742
+[DDPG] Episode 3 Step 49 Reward -0.95441 Time 7.33259
+[DDPG] Critic Loss 1.817609429359436
+[DDPG] Total Reward -74.37221 Avg Critic Loss 1.81761 Time 10.73133
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4
+[DDPG] Episode 4 Step 0 Reward -11.23159 Time 7.40841
+[DDPG] Episode 4 Step 1 Reward -1.65482 Time 7.55696
+[DDPG] Episode 4 Step 2 Reward -1.84482 Time 7.31065
+[DDPG] Episode 4 Step 3 Reward -1.37622 Time 7.37650
+[DDPG] Episode 4 Step 4 Reward -1.04700 Time 7.39929
+[DDPG] Episode 4 Step 5 Reward -1.66773 Time 7.39160
+[DDPG] Episode 4 Step 6 Reward -1.58798 Time 7.17262
+[DDPG] Episode 4 Step 7 Reward -1.55231 Time 7.20220
+[DDPG] Episode 4 Step 8 Reward -2.39829 Time 7.31733
+[DDPG] Episode 4 Step 9 Reward -1.75626 Time 7.27152
+[DDPG] Episode 4 Step 10 Reward -1.80925 Time 7.18763
+[DDPG] Episode 4 Step 11 Reward -1.43890 Time 7.23877
+[DDPG] Episode 4 Step 12 Reward -1.35962 Time 7.25224
+[DDPG] Episode 4 Step 13 Reward -1.51295 Time 7.31965
+[DDPG] Episode 4 Step 14 Reward -1.69270 Time 7.25006
+[DDPG] Episode 4 Step 15 Reward -1.30149 Time 7.29477
+[DDPG] Episode 4 Step 16 Reward -1.94266 Time 7.25648
+[DDPG] Episode 4 Step 17 Reward -2.02318 Time 7.39714
+[DDPG] Episode 4 Step 18 Reward -2.05844 Time 7.21120
+[DDPG] Episode 4 Step 19 Reward -1.61216 Time 7.23428
+[DDPG] Episode 4 Step 20 Reward -1.32147 Time 7.32837
+[DDPG] Episode 4 Step 21 Reward -1.40158 Time 7.27640
+[DDPG] Episode 4 Step 22 Reward -1.57773 Time 7.23701
+[DDPG] Episode 4 Step 23 Reward -1.61774 Time 7.26862
+[DDPG] Episode 4 Step 24 Reward -1.79753 Time 7.23157
+[DDPG] Episode 4 Step 25 Reward -1.53503 Time 7.25182
+[DDPG] Episode 4 Step 26 Reward -1.52102 Time 7.23406
+[DDPG] Episode 4 Step 27 Reward -1.91238 Time 7.30043
+[DDPG] Episode 4 Step 28 Reward -2.14146 Time 7.30589
+[DDPG] Episode 4 Step 29 Reward -1.52412 Time 7.11858
+[DDPG] Episode 4 Step 30 Reward -1.45859 Time 7.31737
+[DDPG] Episode 4 Step 31 Reward -1.68814 Time 7.25959
+[DDPG] Episode 4 Step 32 Reward -1.14194 Time 7.15445
+[DDPG] Episode 4 Step 33 Reward -1.20687 Time 7.27940
+[DDPG] Episode 4 Step 34 Reward -1.81079 Time 7.26149
+[DDPG] Episode 4 Step 35 Reward -2.16373 Time 7.13743
+[DDPG] Episode 4 Step 36 Reward -2.09417 Time 7.36650
+[DDPG] Episode 4 Step 37 Reward -1.64269 Time 7.32746
+[DDPG] Episode 4 Step 38 Reward -1.46186 Time 7.19618
+[DDPG] Episode 4 Step 39 Reward -1.44707 Time 7.23665
+[DDPG] Episode 4 Step 40 Reward -1.99962 Time 7.27433
+[DDPG] Episode 4 Step 41 Reward -1.58088 Time 7.44198
+[DDPG] Episode 4 Step 42 Reward -1.78232 Time 7.20189
+[DDPG] Episode 4 Step 43 Reward -1.54850 Time 7.14873
+[DDPG] Episode 4 Step 44 Reward -1.51423 Time 7.25433
+[DDPG] Episode 4 Step 45 Reward -1.59179 Time 7.29593
+[DDPG] Episode 4 Step 46 Reward -1.95214 Time 7.39257
+[DDPG] Episode 4 Step 47 Reward -1.71101 Time 7.28860
+[DDPG] Episode 4 Step 48 Reward -1.49756 Time 7.29736
+[DDPG] Episode 4 Step 49 Reward -1.49759 Time 7.20237
+[DDPG] Critic Loss 2.6074349880218506
+[DDPG] Total Reward -92.00991 Avg Critic Loss 2.60743 Time 11.22501
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 5
+[DDPG] Episode 5 Step 0 Reward -18.73356 Time 7.37074
+[DDPG] Episode 5 Step 1 Reward -3.49929 Time 7.30230
+[DDPG] Episode 5 Step 2 Reward -3.33790 Time 7.32858
+[DDPG] Episode 5 Step 3 Reward -4.69223 Time 7.24852
+[DDPG] Episode 5 Step 4 Reward -1.32402 Time 7.25806
+[DDPG] Episode 5 Step 5 Reward -2.57293 Time 7.27731
+[DDPG] Episode 5 Step 6 Reward -2.22014 Time 7.40931
+[DDPG] Episode 5 Step 7 Reward -1.72655 Time 7.33729
+[DDPG] Episode 5 Step 8 Reward -2.47132 Time 7.25901
+[DDPG] Episode 5 Step 9 Reward -1.99152 Time 7.31566
+[DDPG] Episode 5 Step 10 Reward -1.19902 Time 7.30614
+[DDPG] Episode 5 Step 11 Reward -2.01678 Time 7.33112
+[DDPG] Episode 5 Step 12 Reward -1.63630 Time 7.23253
+[DDPG] Episode 5 Step 13 Reward -1.49018 Time 7.24394
+[DDPG] Episode 5 Step 14 Reward -1.41638 Time 7.25849
+[DDPG] Episode 5 Step 15 Reward -1.90440 Time 7.21767
+[DDPG] Episode 5 Step 16 Reward -1.99079 Time 7.38163
+[DDPG] Episode 5 Step 17 Reward -2.16238 Time 7.28753
+[DDPG] Episode 5 Step 18 Reward -1.79096 Time 7.27893
+[DDPG] Episode 5 Step 19 Reward -2.21057 Time 7.23887
+[DDPG] Episode 5 Step 20 Reward -2.15142 Time 7.26573
+[DDPG] Episode 5 Step 21 Reward -1.89314 Time 7.43320
+[DDPG] Episode 5 Step 22 Reward -1.88825 Time 7.23623
+[DDPG] Episode 5 Step 23 Reward -1.16469 Time 7.13554
+[DDPG] Episode 5 Step 24 Reward -2.61479 Time 7.21615
+[DDPG] Episode 5 Step 25 Reward -1.97570 Time 7.21006
+[DDPG] Episode 5 Step 26 Reward -1.77215 Time 7.28491
+[DDPG] Episode 5 Step 27 Reward -1.88401 Time 7.20586
+[DDPG] Episode 5 Step 28 Reward -1.54188 Time 7.28987
+[DDPG] Episode 5 Step 29 Reward -1.61223 Time 7.26449
+[DDPG] Episode 5 Step 30 Reward -5.17122 Time 7.41949
+[DDPG] Episode 5 Step 31 Reward -1.55620 Time 7.26238
+[DDPG] Episode 5 Step 32 Reward -1.61154 Time 7.22716
+[DDPG] Episode 5 Step 33 Reward -1.58245 Time 7.32109
+[DDPG] Episode 5 Step 34 Reward -1.39443 Time 7.24598
+[DDPG] Episode 5 Step 35 Reward -1.46885 Time 7.24224
+[DDPG] Episode 5 Step 36 Reward -1.40351 Time 7.26160
+[DDPG] Episode 5 Step 37 Reward -1.29978 Time 7.13124
+[DDPG] Episode 5 Step 38 Reward -1.58069 Time 7.22102
+[DDPG] Episode 5 Step 39 Reward -1.78127 Time 7.29953
+[DDPG] Episode 5 Step 40 Reward -2.17442 Time 7.39782
+[DDPG] Episode 5 Step 41 Reward -1.57407 Time 7.22391
+[DDPG] Episode 5 Step 42 Reward -1.43194 Time 7.32033
+[DDPG] Episode 5 Step 43 Reward -1.75813 Time 7.26969
+[DDPG] Episode 5 Step 44 Reward -3.35040 Time 7.15636
+[DDPG] Episode 5 Step 45 Reward -1.70141 Time 7.30810
+[DDPG] Episode 5 Step 46 Reward -1.66516 Time 7.13561
+[DDPG] Episode 5 Step 47 Reward -2.46854 Time 7.25069
+[DDPG] Episode 5 Step 48 Reward -1.30601 Time 7.26899
+[DDPG] Episode 5 Step 49 Reward -1.86869 Time 7.23965
+[DDPG] Critic Loss 4.181510925292969
+[DDPG] Total Reward -117.03422 Avg Critic Loss 4.18151 Time 12.10971
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 6
+[DDPG] Episode 6 Step 0 Reward -29.48413 Time 7.52167
+[DDPG] Episode 6 Step 1 Reward -3.54096 Time 7.20310
+[DDPG] Episode 6 Step 2 Reward -6.78160 Time 7.29254
+[DDPG] Episode 6 Step 3 Reward -3.27816 Time 7.25226
+[DDPG] Episode 6 Step 4 Reward -6.51092 Time 7.23006
+[DDPG] Episode 6 Step 5 Reward -7.28183 Time 7.19283
+[DDPG] Episode 6 Step 6 Reward -3.32244 Time 7.22980
+[DDPG] Episode 6 Step 7 Reward -3.07336 Time 7.23187
+[DDPG] Episode 6 Step 8 Reward -2.77544 Time 7.36150
+[DDPG] Episode 6 Step 9 Reward -7.70094 Time 7.26922
+[DDPG] Episode 6 Step 10 Reward -7.81284 Time 7.13860
+[DDPG] Episode 6 Step 11 Reward -7.40906 Time 7.17480
+[DDPG] Episode 6 Step 12 Reward -7.52854 Time 7.32915
+[DDPG] Episode 6 Step 13 Reward -6.92995 Time 7.22075
+[DDPG] Episode 6 Step 14 Reward -7.22759 Time 7.35154
+[DDPG] Episode 6 Step 15 Reward -7.55025 Time 7.28236
+[DDPG] Episode 6 Step 16 Reward -6.61068 Time 7.12570
+[DDPG] Episode 6 Step 17 Reward -7.25129 Time 7.23022
+[DDPG] Episode 6 Step 18 Reward -6.52184 Time 7.26542
+[DDPG] Episode 6 Step 19 Reward -7.21470 Time 7.20074
+[DDPG] Episode 6 Step 20 Reward -7.14159 Time 7.22444
+[DDPG] Episode 6 Step 21 Reward -6.79135 Time 7.11102
+[DDPG] Episode 6 Step 22 Reward -7.26912 Time 7.25499
+[DDPG] Episode 6 Step 23 Reward -8.78447 Time 7.21805
+[DDPG] Episode 6 Step 24 Reward -7.26012 Time 7.20465
+[DDPG] Episode 6 Step 25 Reward -7.89990 Time 7.14585
+[DDPG] Episode 6 Step 26 Reward -6.98374 Time 7.20525
+[DDPG] Episode 6 Step 27 Reward -7.02358 Time 7.09918
+[DDPG] Episode 6 Step 28 Reward -6.96165 Time 7.30148
+[DDPG] Episode 6 Step 29 Reward -7.22077 Time 7.24382
+[DDPG] Episode 6 Step 30 Reward -7.12977 Time 7.16052
+[DDPG] Episode 6 Step 31 Reward -7.26564 Time 7.19498
+[DDPG] Episode 6 Step 32 Reward -6.95732 Time 7.29946
+[DDPG] Episode 6 Step 33 Reward -8.19097 Time 7.41754
+[DDPG] Episode 6 Step 34 Reward -7.29053 Time 7.30071
+[DDPG] Episode 6 Step 35 Reward -7.13611 Time 7.24195
+[DDPG] Episode 6 Step 36 Reward -6.63985 Time 7.26111
+[DDPG] Episode 6 Step 37 Reward -7.23143 Time 7.42918
+[DDPG] Episode 6 Step 38 Reward -8.69589 Time 7.21681
+[DDPG] Episode 6 Step 39 Reward -7.88927 Time 7.26999
+[DDPG] Episode 6 Step 40 Reward -7.35803 Time 7.20225
+[DDPG] Episode 6 Step 41 Reward -7.13463 Time 7.25289
+[DDPG] Episode 6 Step 42 Reward -6.87237 Time 7.38404
+[DDPG] Episode 6 Step 43 Reward -6.74475 Time 7.23912
+[DDPG] Episode 6 Step 44 Reward -6.91430 Time 7.30714
+[DDPG] Episode 6 Step 45 Reward -7.47106 Time 7.27866
+[DDPG] Episode 6 Step 46 Reward -7.20579 Time 7.22998
+[DDPG] Episode 6 Step 47 Reward -8.35505 Time 7.14957
+[DDPG] Episode 6 Step 48 Reward -8.32980 Time 7.27674
+[DDPG] Episode 6 Step 49 Reward -7.35957 Time 7.11254
+[DDPG] Critic Loss 13.260351181030273
+[DDPG] Total Reward -367.31491 Avg Critic Loss 13.26035 Time 12.62296
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 7
+[DDPG] Episode 7 Step 0 Reward -59.45831 Time 7.30277
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 7 Step 1 Reward -63.37528 Time 7.21515
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 34.57328796386719
+[DDPG] Total Reward -122.83359 Avg Critic Loss 34.57329 Time 10.15659
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 8
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 8 Step 0 Reward -47.38107 Time 7.10981
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 40.84864044189453
+[DDPG] Total Reward -47.38107 Avg Critic Loss 40.84864 Time 10.61087
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 9
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 9 Step 0 Reward -77.84731 Time 7.20247
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 58.00034713745117
+[DDPG] Total Reward -77.84731 Avg Critic Loss 58.00035 Time 2.58863
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "learn.py", line 1149, in <module>
+    learner.learn(path, experiment = args.experiment)
+  File "learn.py", line 739, in learn
+    self.current_time_step = self.env.reset()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 55, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 806, in reset
+    self._reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 778, in _reset
+    rospy.wait_for_service('/gazebo/pause_physics')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
