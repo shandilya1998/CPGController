@@ -69,7 +69,6 @@ class ActorNetwork(object):
         print('[DDPG] Building the actor model')
         if encoder is None:
             encoder = self.create_encoder(params)
-        
         state, omega, mu, mean = encoder.outputs
 
         [action, z_out] = actor.get_complex_mlp(params)(
