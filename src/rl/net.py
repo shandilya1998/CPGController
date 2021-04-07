@@ -65,6 +65,16 @@ class ActorNetwork(object):
     def set_model(self, model):
         self.model = model
 
+    def create_ac_actor(self, params, actor):
+        inputs = actor.inputs
+        [out, osc], [omega, mu, mean, state] = actor.outputs
+        m = tf.keras.layers.Dense(
+            units = 25,
+            activation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )
+        sigma = 
+
     def create_actor_network(self, params, encoder = None):
         print('[DDPG] Building the actor model')
         if encoder is None:
@@ -128,6 +138,58 @@ class CriticNetwork(object):
 
     def loss(self, y_true, y_pred):
         return self.mse(y_true, y_pred)
+
+    def create_value_net(self, params):
+        S = [
+            tf.keras.Input(
+                shape = spec.shape,•
+                dtype = spec.dtype
+            ) for spec in params['observation_spec']
+        ]
+
+        motion_state = tf.keras.layers.Dense(
+            units = params['units_motion_state_critic'],
+            activation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+        )(S[0])
+
+        robot_state = tf.keras.layers.Dense(
+            units = params['units_robot_state_critic'],
+            acivation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )(S[1]])
+
+        osc_size = S[-1].shape[-1]
+        osc_state_real = tf.keras.layers.Dense(
+            units = params['units_osc'],
+            acivation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )(S[2][:, :osc_size ])
+
+        osc_state_imag = tf.keras.layers.Dense(
+            units = params['units_osc'],
+            acivation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )(S[2][:, osc_size:])
+
+        state = tf.keras.layers.Dense(
+            units = 30,
+            actvation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )(tf.concat([
+            motion_state,
+            robot_state,
+            osc_state_real,
+            osc_state_imag
+        ], -1))
+
+        V = tf.keras.layers.Dense(
+            units = params['action_dim'],
+            activation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+        )
+        model = tf.keras.Model(inputs = S, outputs = [V])
+        return model
 
     def create_critic_network(self, params):
         print('[DDPG] Building the critic model')
