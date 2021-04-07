@@ -839,7 +839,8 @@ class Learner():
             ))
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
                 self.save(model_dir, ep, rewards, total_reward, \
-                    total_critic_loss, critic_loss, COT, motion)
+                    total_critic_loss, critic_loss, COT, motion, \
+                    stability, d1, d2, d3)
 
             _steps_.append(step + 1)
             ep += 1
