@@ -682,6 +682,56 @@ class Learner():
         motion = []
         self.mass = self.env.quadruped.mass
         self.gravity = self.env.quadruped.gravity
+
+        self._action = self.env._action_init
+        self._noise = self._noise_init
+        self.env.set_motion_state(self.desired_motion[0])
+        self.current_time_step = self.env.reset()
+        self._state = self.current_time_step.observation
+        print('[DDPG] Starting Pretraining Test')
+        self._state = self.current_time_step.observation
+        self.total_reward = 0.0
+        step = 0
+        tot_loss = 0.0
+        break_loop = False
+        self.epsilon -= 1/self.params['EXPLORE']
+        start = None
+        while(step < 20 and not break_loop):
+            start = time.perf_counter()
+            [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
+            self._params = [mu, mean]
+            action_original = [out, osc]
+            self._add_noise(action_original)
+
+            if math.isnan(np.sum(self._action[0].numpy())):
+                print('[DDPG] Action value NaN. Ending Episode')
+                break_loop = True
+            steps = self._action[0].shape[1]
+            action = self._action[0] * tf.repeat(
+                tf.expand_dims(self._params[0], 1),
+                steps,
+                axis = 1
+            ) + tf.repeat(
+                tf.expand_dims(self._params[1], 1),
+                steps,
+                axis = 1
+            )
+            try:
+                self.current_time_step = self.env.step(
+                    [action, self._action[1]],
+                    self.desired_motion[step + 1]
+                )
+            except FloatingPointError:
+                print('[DDPG] Floating Point Error in reward computation')
+                break_loop = True
+                continue
+            print('[DDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
+                step = step,
+                reward = self.current_time_step.reward.numpy(),
+                time = time.perf_counter() - start
+            ))
+            step += 1
+
         while ep < self.params['train_episode_count']:
             self._action = self.env._action_init
             self._noise = self._noise_init
@@ -832,7 +882,7 @@ class Learner():
                 print('[DDPG] Critic Loss {loss}'.format(
                     loss = loss.numpy(),
                 ))
-            print('[DDPG] Total Reward {reward} Avg Critic Loss {loss} Time {time:.5f}'.format(
+                print('[DDPG] Total Reward {reward:.5f} Avg Critic Loss {loss:.5f} Time {time:.5f}'.format(
                 reward = self.total_reward,
                 loss = tot_loss / num_iter,
                 time = time.perf_counter() - start
