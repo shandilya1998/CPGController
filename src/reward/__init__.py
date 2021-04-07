@@ -65,7 +65,7 @@ class FitnessFunction:
 
         d1 = d_edge
         d2 = ((self.params['L'] + self.params['W']) / 8) * sinT
-        d3 =((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt
+        d3 = np.sum(((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt)
         stability = np.sum(d1 - d2 - d3)
         return d1, d2, d3, stability
 
