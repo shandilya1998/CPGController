@@ -190,8 +190,6 @@ class Leg:
                 ] for state in states],
                 0
             )
-        if not flag:
-            print(states)
 
         contact_state = {
             'force' : force,
@@ -303,20 +301,12 @@ class AllLegs:
         contacts = []
         if fr_contact['flag']:
             contacts.append(fr_contact)
-        else:
-            print(fr_contact)
         if fl_contact['flag']:
             contacts.append(fl_contact)
-        else:
-            print(fl_contact)
         if br_contact['flag']:
             contacts.append(br_contact)
-        else:
-            print(br_contact)
         if bl_contact['flag']:
             contacts.append(bl_contact)
-        else:
-            print(bl_contact)
         if len(contacts) == 1:
             B = copy.deepcopy(contacts[0])
             B['position'] = B['position'] + 1e-8
