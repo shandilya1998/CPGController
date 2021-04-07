@@ -622,6 +622,7 @@ class Learner():
     def load_actor(self, path):
         print('[DDPG] Loading Actor Weights')
         self.actor.model.load_weights(path)
+        self.actor.target_model.load_weights(path)
 
     def plot_y(self, y, name):
         time = np.arange(y.shape[0])
