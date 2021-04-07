@@ -697,7 +697,7 @@ class Learner():
         break_loop = False
         self.epsilon -= 1/self.params['EXPLORE']
         start = None
-        while(step < 20 and not break_loop):
+        while(step < 5 and not break_loop):
             start = time.perf_counter()
             [out, osc], [omega, mu, mean, state] = self.actor.model(self._state)
             self._params = [mu, mean]
