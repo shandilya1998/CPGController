@@ -726,6 +726,7 @@ class Learner():
                 print('[DDPG] Floating Point Error in reward computation')
                 break_loop = True
                 continue
+            self._state = self.current_time_step.observation
             print('[DDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                 step = step,
                 reward = self.current_time_step.reward.numpy(),
