@@ -679,8 +679,11 @@ class Learner():
         self.mass = self.env.quadruped.mass
         self.gravity = self.env.quadruped.gravity
         while ep < self.params['train_episode_count']:
+            self._action = self.env._action_init
+            self._noise = self._noise_init
             self.env.set_motion_state(self.desired_motion[0])
             self.current_time_step = self.env.reset()
+            self._state = self.current_time_step.observation
             print('[DDPG] Starting Episode {i}'.format(i = ep))
             self._state = self.current_time_step.observation
             self.total_reward = 0.0
@@ -688,8 +691,6 @@ class Learner():
             tot_loss = 0.0
             break_loop = False
             self.epsilon -= 1/self.params['EXPLORE']
-            self._action = self.env._action_init
-            self._noise = self._noise_init
             start = None
             while(step < self.params['max_steps'] and not break_loop):
                 start = time.perf_counter()
@@ -717,6 +718,7 @@ class Learner():
                         self.desired_motion[step + 1]
                     )
                 except FloatingPointError:
+                    print('[DDPG] Floating Point Error in reward computation')
                     break_loop = True
                     continue
                 motion.append(self.env.quadruped.r_motion)
@@ -730,6 +732,7 @@ class Learner():
                     self.current_time_step.step_type
                 ]
                 rewards.append(self.current_time_step.reward.numpy())
+                self.total_reward += self.current_time_step.reward.numpy()
                 self.replay_buffer.add_batch(experience)
                 self._state = self.current_time_step.observation
                 print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
@@ -744,78 +747,89 @@ class Learner():
                     tfa.trajectories.time_step.StepType.LAST:
                     print('[DDPG] Starting Next Episode')
                     break_loop = True
-            batch = self.replay_buffer.get_next(
-                self.params['BATCH_SIZE']
-            )
-            states = [[] for i in range(
-                len(
-                    self.params['observation_spec']
+            start = None
+            start = time.perf_counter()
+            num_iter = self.replay_buffer.num_experiences // self.params['BATCH_SIZE']
+            if num_iter == 0:
+                num_iter = 1
+            elif num_iter > 4:
+                num_iter = 4
+            for i in range(num_iter):
+                batch = self.replay_buffer.get_next(
+                    self.params['BATCH_SIZE']
                 )
-            )]
-            actions = [[] for i in range(
-                len(
-                    self.params['action_spec']
-                )
-            )]
-            params = [[] for i in range(len(self._params))]
-            next_states = [[] for i in range(
-                len(
-                    self.params['observation_spec']
-                )
-            )]
-            rewards = []
-            step_types = []
-            for item in batch:
-                state = item[0]
-                action = item[1]
-                param = item[2]
-                rewards.append(item[3])
-                next_state = item[4]
-                step_types.append(item[5])
-                for i, s in enumerate(state):
-                    states[i].append(s)
-                for i, p in enumerate(param):
-                    params[i].append(p)
-                for i, a in enumerate(action):
-                    actions[i].append(a)
-                for i, s in enumerate(next_state):
-                    next_states[i].append(s)
-            states = [tf.concat(state, 0) for state in states]
-            actions = [tf.concat(action, 0) for action in actions]
-            params = [tf.concat(param, 0) for param in params]
-            #rewards = tf.concat(rewards, 0)
-            next_states = [tf.concat(state, 0) for state in next_states]
-            [out, osc],[o, m, mn, st] = self.actor.target_model(next_states)
-            ac = [out, osc]
-            inputs = next_states + ac + [m, mn]
-            target_q_values = self.critic.target_model(inputs)
-            y = [tf.repeat(reward, self.params['action_dim'])\
-                for reward in rewards]
-            y = [
-                y[k] + self.params['GAMMA'] * target_q_values[k] \
-                    if step_types[k] != \
-                    tfa.trajectories.time_step.StepType.LAST \
-                else y[k] for k in range(len(y))
-            ]
-            y = tf.concat([
-                tf.expand_dims(_y, 0) for _y in y
-            ], 0)
-            loss = self.critic.train(states, actions, params[0], \
-                params[1], y)
-            critic_loss.append(loss.numpy())
-            tot_loss += loss.numpy()
-            a_for_grad,[omega_,mu_,mean_, state_] = self.actor.model(states)
-            q_grads = self.critic.q_grads(states, a_for_grad, \
-                mu_, mean_)
-            self.actor.train(states, q_grads)
-            self.actor.target_train()
-            self.critic.target_train()
-            self.total_reward += self.current_time_step.reward
-            print('[DDPG] Total Reward {reward} Critic Loss {loss}'.format(
-                reward = self.current_time_step.reward,
-                loss = loss.numpy()
+                states = [[] for i in range(
+                    len(
+                        self.params['observation_spec']
+                    )
+                )]
+                actions = [[] for i in range(
+                    len(
+                        self.params['action_spec']
+                    )
+                )]
+                params = [[] for i in range(len(self._params))]
+                next_states = [[] for i in range(
+                    len(
+                        self.params['observation_spec']
+                    )
+                )]
+                rewards = []
+                step_types = []
+                for item in batch:
+                    state = item[0]
+                    action = item[1]
+                    param = item[2]
+                    rewards.append(item[3])
+                    next_state = item[4]
+                    step_types.append(item[5])
+                    for i, s in enumerate(state):
+                        states[i].append(s)
+                    for i, p in enumerate(param):
+                        params[i].append(p)
+                    for i, a in enumerate(action):
+                        actions[i].append(a)
+                    for i, s in enumerate(next_state):
+                        next_states[i].append(s)
+                states = [tf.concat(state, 0) for state in states]
+                actions = [tf.concat(action, 0) for action in actions]
+                params = [tf.concat(param, 0) for param in params]
+                #rewards = tf.concat(rewards, 0)
+                next_states = [tf.concat(state, 0) for state in next_states]
+                [out, osc],[o, m, mn, st] = self.actor.target_model(next_states)
+                ac = [out, osc]
+                inputs = next_states + ac + [m, mn]
+                target_q_values = self.critic.target_model(inputs)
+                y = [tf.repeat(reward, self.params['action_dim'])\
+                    for reward in rewards]
+                y = [
+                    y[k] + self.params['GAMMA'] * target_q_values[k] \
+                        if step_types[k] != \
+                        tfa.trajectories.time_step.StepType.LAST \
+                    else y[k] for k in range(len(y))
+                ]
+                y = tf.concat([
+                    tf.expand_dims(_y, 0) for _y in y
+                ], 0)
+                loss = self.critic.train(states, actions, params[0], \
+                    params[1], y)
+                critic_loss.append(loss.numpy())
+                tot_loss += loss.numpy()
+                a_for_grad,[omega_,mu_,mean_, state_] = self.actor.model(states)
+                q_grads = self.critic.q_grads(states, a_for_grad, \
+                    mu_, mean_)
+                self.actor.train(states, q_grads)
+                self.actor.target_train()
+                self.critic.target_train()
+                print('[DDPG] Critic Loss {loss}'.format(
+                    loss = loss.numpy(),
+                ))
+            print('[DDPG] Total Reward {reward} Avg Critic Loss {loss} Time {time:.5f}'.format(
+                reward = self.total_reward,
+                loss = tot_loss / num_iter,
+                time = time.perf_counter() - start
             ))
-            if ep % 500 == 0:
+            if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
                 self.save(model_dir, ep, rewards, total_reward, \
                     total_critic_loss, critic_loss, COT, motion)
 

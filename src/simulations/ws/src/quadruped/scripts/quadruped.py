@@ -808,10 +808,7 @@ class Quadruped:
         rospy.sleep(1.0)
         start = time.time()
         self.reward = 0.0
-        if not self.osc_state_set:
-            self.osc_state = self.create_init_osc_state()
-        else:
-            self.osc_state_set = False
+        self.osc_state = self.create_init_osc_state()
         self.history = np.repeat(
             np.expand_dims(self.starting_pos, 0),
             2 * self.params['rnn_steps'] - 1,
@@ -826,6 +823,7 @@ class Quadruped:
             model_state.pose.position.y,
             model_state.pose.position.z
         ], dtype = np.float32)
+        self.last_pos = self.pos - 1e-8
         self.history_pos = np.zeros(
             shape = (2 * self.params['rnn_steps'] - 1, 3),
             dtype = np.float32
@@ -846,13 +844,6 @@ class Quadruped:
             self.angular_vel,
             self.linear_acc
         ])
-        if not self.motion_state_set:
-            self.motion_state = np.zeros(
-                shape = self.motion_state_shape,
-                dtype = self.motion_state_dtype
-            )
-        else:
-            self.motion_state_set = False
         self.joint_torque = self.all_legs.get_all_torques()
         self.history_joint_torque = np.zeros(
             shape = (2 * self.params['rnn_steps'] - 1, self.nb_joints),
@@ -909,6 +900,7 @@ class Quadruped:
         current_pose = self.kinematics.get_current_end_effector_fk()
         AB = self.all_legs.get_AB()
         if AB:
+            print('[DDPG] Error in Resetting End Training')
             self.upright = False
             AB = [self.A_init, self.B_init]
         A, B = AB
@@ -1093,6 +1085,7 @@ class Quadruped:
         return self.r_motion
 
     def get_stability_reward(self):
+        reward = 0.0
         if self.upright:
             t_1 = max(self.A_time[0], self.B_time[0])
             t_2 = max(self.A_time[-1], self.B_time[-1])
@@ -1110,7 +1103,7 @@ class Quadruped:
                 v_real = self.A[1]['v_real']
                 v_exp = self.A[1]['v_exp']
             if self.Tb == 0:
-                self.reward += -5.0
+                reward += -5.0
                 return
             self.compute_reward.build(
                 self.t,
@@ -1133,17 +1126,17 @@ class Quadruped:
                 self.mass,
                 self.gravity
             )
-            self.reward += np.nan_to_num(self.stability)
+            reward += np.nan_to_num(self.stability)
             if self.compute_reward.zmp.support_plane.flag:
-                self.reward += -5.0
-            if math.isnan(self.reward):
-                self.reward += -5.0
+                reward += -5.0
+            if math.isnan(reward):
+                reward += -5.0
         else:
-            self.reward += -5.0
-        return self.reward
+            reward += -5.0
+        return reward
 
     def step(self, action, desired_motion):
-        now = rospy.get_rostime().to_sec() 
+        now = rospy.get_rostime().to_sec()
         self.reward = 0.0
         action = [
             a.numpy() for a in action
