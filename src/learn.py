@@ -639,13 +639,13 @@ class Learner():
         self._noise[0] = max(self.epsilon, 0) * self.OU.function(
             action[0],
             0.0,
-            0.015,
+            0.15,
             0.02
         )
         self._noise[1] = max(self.epsilon, 0) * self.OU.function(
             action[1],
             0.0,
-            0.015,
+            0.15,
             0.02
         )
         self._action[0] = action[0] + self._noise[0]
@@ -1012,7 +1012,7 @@ class Learner():
         pickle.dump(d1, pkl)
         pkl.close()
         fig12, ax12 = plt.subplots(1,1,figsize = (5,5))
-        ax12.plot(stability)
+        ax12.plot(d1)
         ax12.set_ylabel('d1')
         ax12.set_xlabel('steps')
         fig12.savefig(os.path.join(
@@ -1031,7 +1031,7 @@ class Learner():
         pickle.dump(d1, pkl)
         pkl.close()
         fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
-        ax13.plot(stability)
+        ax13.plot(d2)
         ax13.set_ylabel('d2')
         ax13.set_xlabel('steps')
         fig13.savefig(os.path.join(
@@ -1050,7 +1050,7 @@ class Learner():
         pickle.dump(d3, pkl)
         pkl.close()
         fig14, ax14 = plt.subplots(1,1,figsize = (5,5))
-        ax14.plot(stability)
+        ax14.plot(d3)
         ax14.set_ylabel('d3')
         ax14.set_xlabel('steps')
         fig14.savefig(os.path.join(
