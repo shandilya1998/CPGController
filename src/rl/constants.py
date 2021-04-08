@@ -222,11 +222,11 @@ params.update({
 
 params_ars = {
     'nb_steps'                    : 1000,
-    'episode_length'              : 100,
-    'learning_rate'               : 0.02,
-    'nb_directions'               : 16,
-    'rnn_steps'                   : 10,
-    'nb_best_directions'          : 16,
-    'noise'                       : 0.03,
+    'episode_length'              : 250,
+    'learning_rate'               : 0.001,
+    'nb_directions'               : 10,
+    'rnn_steps'                   : 5,
+    'nb_best_directions'          : 7,
+    'noise'                       : 0.003,
     'seed'                        : 1,
 }

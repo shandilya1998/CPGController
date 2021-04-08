@@ -6,6 +6,12 @@ from rl.constants import params, params_ars
 from rl.net import ActorNetwork
 import tf_agents as tfa
 import time
+import argparse
+import os
+from tqdm import tqdm
+import pickle
+import matplotlib.pyplot as plt
+import matplotlib
 
 class HP:
     def __init__(self, params, params_ars):
@@ -15,7 +21,7 @@ class HP:
 class Policy:
     def __init__(self, params):
         self.params = params
-        self.net = ActorNetwork(params, create_target = False)
+        self.net = ActorNetwork(params, create_target = False).model
 
     def evaluate(self, states, delta = None, direction = None):
         weights = self.net.trainable_variables
@@ -23,14 +29,17 @@ class Policy:
             return self.net(states)
         elif direction == 'positive':
             for i in range(len(weights)):
-                weights[i] += self.params['noise'] * delta[i]
+                weights[i] = weights[i] + self.params['noise'] * delta[i]
             self.net.set_weights(weights)
             return self.net(states)
         else:
             for i in range(len(weights)):
-                weights[i] -= self.params['noise'] * delta[i]
+                weights[i] = weights[i] - self.params['noise'] * delta[i]
             self.net.set_weights(weights)
             return self.net(states)
+
+    def load_weights(self, path):
+        self.net.load_weights(path)
 
     def sample_deltas(self):
         deltas = []
@@ -48,12 +57,13 @@ class Policy:
         weights = self.net.trainable_variables
         for r_pos, r_neg, d in rollouts:
             for i in range(len(weights)):
-                weights[i] += scale * (r_pos - r_neg) * d[i]
+                weights[i] = weights[i] + scale * (r_pos - r_neg) * d[i]
         self.net.set_weights(weights)
 
 class Learner:
     def __init__(self, params, params_ars, experiment, \
             desired_motion_path = 'data/pretrain/X_0.npy'):
+        matplotlib.use('Agg')
         self.experiment = experiment
         self.params = HP(params, params_ars).params
         self.policy = Policy(self.params)
@@ -71,7 +81,7 @@ class Learner:
             tf.expand_dims(x[0], 0),
             self.params['episode_length'] + 1,
             0
-        )
+        ).numpy()
         self.rewards = []
         self.total_reward = []
         self.COT = []
@@ -96,7 +106,9 @@ class Learner:
     def test_policy(self):
         self.current_time_step = self.env.reset()
         self._state = self.current_time_step.observation
-        while(step < 5 and not break_loop):
+        step = 0
+        break_loop = False
+        while(step < 2 and not break_loop):
             start = time.perf_counter()
             [out, osc], [omega, mu, mean, state] = self.policy.net(self._state)
             self._params = [mu, mean]
@@ -120,13 +132,19 @@ class Learner:
                 break_loop = True
                 continue
             self._state = self.current_time_step.observation
+            print('[ARS] Step {step} Reward {reward:.5f} Time {t:.5f}'.format(
+                step = step,
+                reward = self.current_time_step.reward.numpy(),
+                t = time.perf_counter() - start
+            ))
             step += 1
 
     def explore(self, delta = None, direction = None):
         self.current_time_step = self.env.reset()
         num_plays = 0
-        sum_reward = 0.0
+        sum_rewards = 0.0
         step = 0
+        break_loop = False
         while(step < self.params['episode_length'] and not break_loop):
             [out, osc], [omega, mu, mean, state] = self.policy.evaluate(
                 self.current_time_step.observation, delta, direction
@@ -170,7 +188,7 @@ class Learner:
 
     def learn(self, model_dir, experiment):
         self.test_policy()
-        for step in range(self.params['nb_steps']):
+        for ep in range(self.params['nb_steps']):
             start = time.perf_counter()
             deltas = self.policy.sample_deltas()
             positive_rewards = [0.0] * self.params['nb_directions']
@@ -183,7 +201,7 @@ class Learner:
                 )
 
             for k in range(self.params['nb_directions']):
-                positive_rewards[k] = self.explore(
+                negative_rewards[k] = self.explore(
                     delta = deltas[k],
                     direction = 'negative'
                 )
@@ -207,20 +225,20 @@ class Learner:
             self.policy.update(rollouts, sigma_r)
 
             reward_evaluation = self.explore()
-            self.total_reward.append(reward_evaluate)
+            self.total_reward.append(reward_evaluation)
             print('[ARS] Step {step} Reward {reward:.5f} Time {t:.5f}'.format(
-                step = step,
+                step = ep,
                 reward = reward_evaluation,
-                time = time.perf_counter() - start
+                t = time.perf_counter() - start
             ))
-            if step % self.params['TEST_AFTER_N_EPISODES'] == 0:
+            if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
                 self.save(model_dir, ep, self.rewards, self.total_reward, \
                     self.COT, self.motion, self.stability, \
                     self.d1, self.d2, self.d3)
 
     def save(self, model_dir, ep, rewards, total_reward, COT, motion, \
             d1, d2, d3, stability):
-        print('\n[ARS] Saving Model')
+        print('[ARS] Saving Model')
         self.policy.net.save_weights(
             os.path.join(
                 model_dir,
@@ -400,6 +418,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     learner = Learner(params, params_ars, args.experiment)
 
+    learner.policy.load_weights('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
+
+    if not os.path.exists(args.out_path):
+        os.mkdir(args.out_path)
+
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -407,7 +430,7 @@ if __name__ == '__main__':
         os.mkdir(path)
 
     policy_path = os.path.join(path, 'policy')
-    if not os.path.exists(actor_path):
-        os.mkdir(actor_path)
+    if not os.path.exists(policy_path):
+        os.mkdir(policy_path)
 
     learner.learn(path, experiment = args.experiment)
