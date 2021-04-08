@@ -2709,3 +2709,106 @@ Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 [New Thread 0x7fffcf8cf700 (LWP 43173)]
 [New Thread 0x7fffcf0ce700 (LWP 43174)]
 [New Thread 0x7fffce8cd700 (LWP 43175)]
+[New Thread 0x7fffce02c700 (LWP 43176)]
+[New Thread 0x7fffcd82b700 (LWP 43177)]
+[0m[ INFO] [1617904581.405834038]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617904581.406843229]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1617904581.743751247]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1617904581.755443598]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1617904581.755478066]: Starting planning scene monitor[0m
+[0m[ INFO] [1617904581.758593795]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1617904581.758620554]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1617904581.763004620]: Listening to '/collision_object'[0m
+[0m[ INFO] [1617904581.770405550]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1617904581.799221883]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1617904582.711324035]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1617904582.722471629]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1617904582.724114292]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1617904582.725152699]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617904582.725654180]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617904582.726823937]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1617904582.727638612]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1617904582.727688838]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1617904582.727704859]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1617904582.727716479]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1617904582.727727745]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1617904582.727738154]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1617904582.727748229]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1617904582.927688470]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1617904582.927744814]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1617904582.927763135]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0m[0m[ INFO] [1617904582.412249521]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1617904582.417869934]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[0m[ INFO] [1617904583.107509578]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[ INFO] [1617904583.201474278, 0.001000000]: Physics dynamic reconfigure ready.[0m
+[1;33mWarning [Model.cc:212][0m Non-unique names detected in XML children of model with name[quadruped].
+[0m[ INFO] [1617904584.237076446, 0.001000000]: <initialOrientationAsReference> is unset, using default value of false to comply with REP 145 (world as orientation reference)[0m
+[0m[ INFO] [1617904584.237254832, 0.001000000]: <robotNamespace> set to: /quadruped/[0m
+[0m[ INFO] [1617904584.237357671, 0.001000000]: <topicName> set to: imu[0m
+[0m[ INFO] [1617904584.237430949, 0.001000000]: <frameName> set to: imu_link[0m
+[0m[ INFO] [1617904584.237525757, 0.001000000]: <updateRateHZ> set to: 100[0m
+[0m[ INFO] [1617904584.237602552, 0.001000000]: <gaussianNoise> set to: 0[0m
+[0m[ INFO] [1617904584.237677391, 0.001000000]: <xyzOffset> set to: 0 0 0[0m
+[0m[ INFO] [1617904584.237825621, 0.001000000]: <rpyOffset> set to: 0 -0 0[0m
+[0m[ INFO] [1617904584.453491832, 0.001000000]: Loading gazebo_ros_control plugin[0m
+[0m[ INFO] [1617904584.453974178, 0.001000000]: Starting gazebo_ros_control plugin in namespace: /quadruped[0m
+[0m[ INFO] [1617904584.454920105, 0.001000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [/robot_description] on the ROS param server.[0m
+[0m[ INFO] [1617904585.140232519, 0.001000000]: Loaded gazebo_ros_control.[0m
+[0m[ INFO] [1617904585.163207315, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg3][0m
+[0m[ INFO] [1617904585.163307204, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.166772722, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg2][0m
+[0m[ INFO] [1617904585.166811065, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.169666694, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg1][0m
+[0m[ INFO] [1617904585.169700682, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.171351472, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg3][0m
+[0m[ INFO] [1617904585.171516560, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.174059032, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg2][0m
+[0m[ INFO] [1617904585.174381434, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.176051335, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg1][0m
+[0m[ INFO] [1617904585.176081419, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.177411840, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg3][0m
+[0m[ INFO] [1617904585.177440967, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.179239060, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg2][0m
+[0m[ INFO] [1617904585.179273285, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.180581776, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg1][0m
+[0m[ INFO] [1617904585.180611456, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.182074536, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg3][0m
+[0m[ INFO] [1617904585.182329909, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.183640009, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg2][0m
+[0m[ INFO] [1617904585.183671649, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.185295649, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
+[0m[ INFO] [1617904585.185328159, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617904585.200497992, 0.001000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
+[0m[ INFO] [
