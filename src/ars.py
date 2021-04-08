@@ -422,7 +422,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     learner = Learner(params, params_ars, args.experiment)
 
-    learner.policy.load_weights('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
+    #learner.policy.load_weights('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
 
     if not os.path.exists(args.out_path):
         os.mkdir(args.out_path)
