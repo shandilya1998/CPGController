@@ -671,7 +671,7 @@ class Learner():
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
 
-    def learn(self, model_dir, experiment):
+    def learn(self, model_dir, experiment, start_epoch = 0):
         ep = 0
         self.epsilon = 1
         self._noise_init = [
@@ -749,6 +749,125 @@ class Learner():
                 time = time.perf_counter() - start
             ))
             step += 1
+
+        ep = start_epoch
+        if ep != 0:
+            self.actor.model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'actor',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.actor.target_model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'actor',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.critic.model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'critic',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.critic.target_model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'critic',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            pkl = open(os.path.join(
+                model_dir,
+                'rewards_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            rewards = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'total_reward_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            total_reward = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'critic_loss_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            critic_loss = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'total_critic_loss_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            total_critic_loss = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'COT_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            COT = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'motion_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            motion = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'stability_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            stability = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd1_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d1 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd2_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d2 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd3_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d3 = pickle.load(pkl)
+            pkl.close()
 
         while ep < self.params['train_episode_count']:
             self._action = self.env._action_init
@@ -1090,7 +1209,7 @@ class Learner():
                 ep = ep,
             )
         ), 'wb')
-        pickle.dump(d1, pkl)
+        pickle.dump(d2, pkl)
         pkl.close()
         fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
         ax13.plot(d2)
@@ -1136,6 +1255,12 @@ if __name__ == '__main__':
         type = str,
         help = 'Path to output directory'
     )
+    parser.add_argument(
+        '--start',
+        type = int,
+        help = 'start epoch',
+        default = 0
+    )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
     #learner.pretrain_actor(
@@ -1158,5 +1283,5 @@ if __name__ == '__main__':
     if not os.path.exists(critic_path):
         os.mkdir(critic_path)
 
-    learner.learn(path, experiment = args.experiment)
+    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
     #"""
