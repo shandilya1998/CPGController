@@ -13,6 +13,10 @@ import pickle
 import matplotlib.pyplot as plt
 import matplotlib
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+
 class HP:
     def __init__(self, params, params_ars):
         self.params = params
