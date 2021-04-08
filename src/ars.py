@@ -190,9 +190,86 @@ class Learner:
                 break_loop = True
         return sum_rewards
 
-    def learn(self, model_dir, experiment):
+    def learn(self, model_dir, experiment, start_epoch = 0):
         self.test_policy()
-        for ep in range(self.params['nb_steps']):
+        ep = start_epoch
+        if ep != 0:
+            self.policy.net.load_weights(
+                os.path.join(
+                    model_dir,
+                    'policy',
+                    'policy_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            pkl = open(os.path.join(
+                model_dir,
+                'rewards_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.rewards = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'total_reward_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.total_reward = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'COT_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.COT = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'motion_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.motion = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'stability_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.stability = pickle.load(pkl)
+            pkl.close()
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd1_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.d1 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd2_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.d2 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd3_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            self.d3 = pickle.load(pkl)
+            pkl.close()
+
+        while (ep < self.params['nb_steps']):
             start = time.perf_counter()
             deltas = self.policy.sample_deltas()
             positive_rewards = [0.0] * self.params['nb_directions']
@@ -239,6 +316,7 @@ class Learner:
                 self.save(model_dir, ep, self.rewards, self.total_reward, \
                     self.COT, self.motion, self.stability, \
                     self.d1, self.d2, self.d3)
+            ep += 1
 
     def save(self, model_dir, ep, rewards, total_reward, COT, motion, \
             d1, d2, d3, stability):
@@ -373,7 +451,7 @@ class Learner:
                 ep = ep,
             )
         ), 'wb')
-        pickle.dump(d1, pkl)
+        pickle.dump(d2, pkl)
         pkl.close()
         fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
         ax13.plot(d2)
@@ -419,6 +497,12 @@ if __name__ == '__main__':
         type = str,
         help = 'Path to output directory'
     )
+    parser.add_argument(
+        '--start',
+        type = int,
+        help = 'start epoch',
+        default = 0
+    )
     args = parser.parse_args()
     learner = Learner(params, params_ars, args.experiment)
 
@@ -437,4 +521,4 @@ if __name__ == '__main__':
     if not os.path.exists(policy_path):
         os.mkdir(policy_path)
 
-    learner.learn(path, experiment = args.experiment)
+    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
