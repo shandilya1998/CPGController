@@ -2,7 +2,7 @@ import tensorflow as tf
 from layers import actor, critic
 
 class ActorNetwork(object):
-    def __init__(self, params):
+    def __init__(self, params, create_target = True):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
@@ -10,8 +10,9 @@ class ActorNetwork(object):
         #Now create the model
         self.model , self.weights, self.state = \
             self.create_actor_network(params)
-        self.target_model, self.target_weights, self.target_state = \
-            self.create_actor_network(params)
+        if create_target:
+            self.target_model, self.target_weights, self.target_state = \
+                self.create_actor_network(params)
         self.optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.LEARNING_RATE
         )
