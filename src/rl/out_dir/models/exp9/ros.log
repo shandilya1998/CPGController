@@ -9731,3 +9731,483 @@ You can start planning now!
 [0m[ INFO] [1617830136.680792245, 0.116000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1617830136.687361743, 0.116000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
 [0m[ INFO] [
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe290, rem=0x7fffffffe2a0)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 60683] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1617870283.333992, 34797.045000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1617830134.798307, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1617830136.917444, 0.349000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1617830136.921407, 0.352000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1617830136.925560, 0.355000]: Loading controller: front_right_leg_controller
+[INFO] [1617830136.971650, 0.382000]: Loading controller: front_left_leg_controller
+[INFO] [1617830137.000527, 0.409000]: Loading controller: back_right_leg_controller
+[INFO] [1617830137.026499, 0.435000]: Loading controller: back_left_leg_controller
+[INFO] [1617830137.048393, 0.457000]: Loading controller: joint_state_controller
+[INFO] [1617830137.058496, 0.467000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617830137.062651, 0.471000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617870268.280883, 34796.959000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1617870268.285305, 34796.962000]: Stopping all controllers...
+[INFO] [1617870268.317512, 34796.983000]: Unloading all loaded controllers...
+[INFO] [1617870268.318707, 34796.984000]: Trying to unload joint_state_controller
+[INFO] [1617870268.333652, 34796.992000]: Succeeded in unloading joint_state_controller
+[INFO] [1617870268.334920, 34796.993000]: Trying to unload back_left_leg_controller
+[INFO] [1617870268.362199, 34797.009000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1617870268.364604, 34797.009000]: Trying to unload back_right_leg_controller
+[INFO] [1617870268.389750, 34797.032000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1617870268.390941, 34797.032000]: Trying to unload front_left_leg_controller
+[31m[gazebo_gui-3] process has died [pid 60657, exit code 134, cmd /opt/ros/noetic/lib/gazebo_ros/gzclient __name:=gazebo_gui __log:=/home/ubuntu/.ros/log/6322aaaa-97e6-11eb-8423-cd174b0b5f1a/gazebo_gui-3.log].
+log file: /home/ubuntu/.ros/log/6322aaaa-97e6-11eb-8423-cd174b0b5f1a/gazebo_gui-3*.log[0m
+[31m[quadruped/controller_spawner-5] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [60637][0m
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11311
+[1msetting /run_id to 6322aaaa-97e6-11eb-8423-cd174b0b5f1a[0m
+[1mprocess[rosout-1]: started with pid [60647][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [60654][0m
+[1mprocess[gazebo_gui-3]: started with pid [60657][0m
+[1mprocess[urdf_spawner-4]: started with pid [60662][0m
+[1mprocess[quadruped/controller_spawner-5]: started with pid [60665][0m
+[1mprocess[joint_state_publisher-6]: started with pid [60666][0m
+[1mprocess[robot_state_publisher-7]: started with pid [60667][0m
+[1mprocess[move_group-8]: started with pid [60668][0m
+[1m[urdf_spawner-4] process has finished cleanly
+log file: /home/ubuntu/.ros/log/6322aaaa-97e6-11eb-8423-cd174b0b5f1a/urdf_spawner-4*.log[0m
+[move_group-8] killing on exit
+[robot_state_publisher-7] killing on exit
+[joint_state_publisher-6] killing on exit
+[quadruped/controller_spawner-5] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+... logging to /home/ubuntu/.ros/log/711b732c-9844-11eb-8423-cd174b0b5f1a/roslaunch-ip-172-31-36-108-314871.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch
+[1mstarted roslaunch server http://ip-172-31-36-108:40655/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /joint_state_publisher/source_list: ['quadruped/joint...
+ * /move_group/allow_trajectory_execution: False
+ * /move_group/back_left_leg/default_planner_config: SBL
+ * /move_group/back_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_left_leg/projection_evaluator: joints(back_left_...
+ * /move_group/back_right_leg/default_planner_config: SBL
+ * /move_group/back_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_right_leg/projection_evaluator: joints(back_right...
+ * /move_group/base/default_planner_config: SBL
+ * /move_group/base/planner_configs: ['AnytimePathShor...
+ * /move_group/capabilities: 
+ * /move_group/disable_capabilities: 
+ * /move_group/front_left_leg/default_planner_config: SBL
+ * /move_group/front_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_left_leg/projection_evaluator: joints(front_left...
+ * /move_group/front_right_leg/default_planner_config: SBL
+ * /move_group/front_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_right_leg/projection_evaluator: joints(front_righ...
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/planner_configs/AnytimePathShortening/hybridize: True
+ * /move_group/planner_configs/AnytimePathShortening/max_hybrid_paths: 24
+ * /move_group/planner_configs/AnytimePathShortening/num_planners: 4
+ * /move_group/planner_configs/AnytimePathShortening/planners: 
+ * /move_group/planner_configs/AnytimePathShortening/shortcut: True
+ * /move_group/planner_configs/AnytimePathShortening/type: geometric::Anytim...
+ * /move_group/planner_configs/BFMT/balanced: 0
+ * /move_group/planner_configs/BFMT/cache_cc: 1
+ * /move_group/planner_configs/BFMT/extended_fmt: 1
+ * /move_group/planner_configs/BFMT/heuristics: 1
+ * /move_group/planner_configs/BFMT/nearest_k: 1
+ * /move_group/planner_configs/BFMT/num_samples: 1000
+ * /move_group/planner_configs/BFMT/optimality: 1
+ * /move_group/planner_configs/BFMT/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMT/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECE/range: 0.0
+ * /move_group/planner_configs/BKPIECE/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiEST/range: 0.0
+ * /move_group/planner_configs/BiEST/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRT/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRT/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRT/init_temperature: 100
+ * /move_group/planner_configs/BiTRRT/range: 0.0
+ * /move_group/planner_configs/BiTRRT/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRT/type: geometric::BiTRRT
+ * /move_group/planner_configs/EST/goal_bias: 0.05
+ * /move_group/planner_configs/EST/range: 0.0
+ * /move_group/planner_configs/EST/type: geometric::EST
+ * /move_group/planner_configs/FMT/cache_cc: 1
+ * /move_group/planner_configs/FMT/extended_fmt: 1
+ * /move_group/planner_configs/FMT/heuristics: 0
+ * /move_group/planner_configs/FMT/nearest_k: 1
+ * /move_group/planner_configs/FMT/num_samples: 1000
+ * /move_group/planner_configs/FMT/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMT/type: geometric::FMT
+ * /move_group/planner_configs/KPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECE/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECE/range: 0.0
+ * /move_group/planner_configs/KPIECE/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECE/range: 0.0
+ * /move_group/planner_configs/LBKPIECE/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRT/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRT/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRT/range: 0.0
+ * /move_group/planner_configs/LBTRRT/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRM/range: 0.0
+ * /move_group/planner_configs/LazyPRM/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstar/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDST/type: geometric::PDST
+ * /move_group/planner_configs/PRM/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRM/type: geometric::PRM
+ * /move_group/planner_configs/PRMstar/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjEST/goal_bias: 0.05
+ * /move_group/planner_configs/ProjEST/range: 0.0
+ * /move_group/planner_configs/ProjEST/type: geometric::ProjEST
+ * /move_group/planner_configs/RRT/goal_bias: 0.05
+ * /move_group/planner_configs/RRT/range: 0.0
+ * /move_group/planner_configs/RRT/type: geometric::RRT
+ * /move_group/planner_configs/RRTConnect/range: 0.0
+ * /move_group/planner_configs/RRTConnect/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTstar/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstar/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstar/range: 0.0
+ * /move_group/planner_configs/RRTstar/type: geometric::RRTstar
+ * /move_group/planner_configs/SBL/range: 0.0
+ * /move_group/planner_configs/SBL/type: geometric::SBL
+ * /move_group/planner_configs/SPARS/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARS/max_failures: 1000
+ * /move_group/planner_configs/SPARS/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARS/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARS/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwo/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwo/max_failures: 5000
+ * /move_group/planner_configs/SPARStwo/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwo/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwo/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDE/degree: 16
+ * /move_group/planner_configs/STRIDE/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDE/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDE/max_degree: 18
+ * /move_group/planner_configs/STRIDE/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDE/min_degree: 12
+ * /move_group/planner_configs/STRIDE/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDE/range: 0.0
+ * /move_group/planner_configs/STRIDE/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDE/use_projected_distance: 0
+ * /move_group/planner_configs/TRRT/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRT/goal_bias: 0.05
+ * /move_group/planner_configs/TRRT/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRT/k_constant: 0.0
+ * /move_group/planner_configs/TRRT/max_states_failed: 10
+ * /move_group/planner_configs/TRRT/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRT/range: 0.0
+ * /move_group/planner_configs/TRRT/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRT/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /quadruped/back_left_leg_controller/joints: ['back_left_leg1_...
+ * /quadruped/back_left_leg_controller/type: position_controll...
+ * /quadruped/back_right_leg_controller/joints: ['back_right_leg1...
+ * /quadruped/back_right_leg_controller/type: position_controll...
+ * /quadruped/front_left_leg_controller/joints: ['front_left_leg1...
+ * /quadruped/front_left_leg_controller/type: position_controll...
+ * /quadruped/front_right_leg_controller/joints: ['front_right_leg...
+ * /quadruped/front_right_leg_controller/type: position_controll...
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/p: 300
+ * /quadruped/generic_hw_control_loop/cycle_time_error_threshold: 0.01
+ * /quadruped/generic_hw_control_loop/loop_hz: 100
+ * /quadruped/hardware_interface/joints: ['back_left_leg3_...
+ * /quadruped/hardware_interface/sim_control_mode: 1
+ * /quadruped/joint_state_controller/publish_rate: 100
+ * /quadruped/joint_state_controller/type: joint_state_contr...
+ * /quadruped/moveit_sim_hw_interface/joint_model_group: todo_group_name
+ * /quadruped/moveit_sim_hw_interface/joint_model_group_pose: todo_state_name
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/back_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/default_acceleration_scaling_factor: 0.1
+ * /robot_description_planning/default_velocity_scaling_factor: 0.1
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_velocity: 10
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 60.0
+ * /rosdistro: noetic
+ * /rosversion: 1.15.9
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    move_group (moveit_ros_move_group/move_group)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    urdf_spawner (gazebo_ros/spawn_model)
+  /quadruped/
+    controller_spawner (controller_manager/spawner)
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/ros/noetic/lib/moveit_ros_move_group/move_group...
+(No debugging symbols found in /opt/ros/noetic/lib/moveit_ros_move_group/move_group)
+/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/gdb_settings.gdb: No such file or directory.
+Starting program: /opt/ros/noetic/lib/moveit_ros_move_group/move_group --debug __name:=move_group __log:=/home/ubuntu/.ros/log/711b732c-9844-11eb-8423-cd174b0b5f1a/move_group-7.log
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff0da7700 (LWP 315014)]
+[New Thread 0x7ffff05a6700 (LWP 315015)]
+[New Thread 0x7fffefda5700 (LWP 315016)]
+[New Thread 0x7fffef5a4700 (LWP 315017)]
+[New Thread 0x7fffeeda3700 (LWP 315018)]
+[New Thread 0x7fffee5a2700 (LWP 315019)]
+[33m[ WARN] [1617870533.613108261]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[New Thread 0x7fffedd52700 (LWP 315044)]
+[New Thread 0x7fffed551700 (LWP 315045)]
+[33m[ WARN] [1617870533.864858246]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead[0m
+[31m[ERROR] [1617870533.865334916]: Failed to find 3D sensor plugin parameters for octomap generation[0m
+[New Thread 0x7fffecd50700 (LWP 315046)]
+[New Thread 0x7fffcf8cf700 (LWP 315059)]
+[New Thread 0x7fffcf0ce700 (LWP 315063)]
+[New Thread 0x7fffce8cd700 (LWP 315064)]
+[New Thread 0x7fffce02c700 (LWP 315078)]
+[New Thread 0x7fffcd82b700 (LWP 315079)]
+[0m[ INFO] [1617870533.610987235]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1617870533.612964391]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1617870533.850770208]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1617870533.854776993]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1617870533.854819875]: Starting planning scene monitor[0m
+[0m[ INFO] [1617870533.857283900]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1617870533.857326737]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1617870533.861761831]: Listening to '/collision_object'[0m
+[0m[ INFO] [1617870533.864359991]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1617870533.873319968]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1617870534.281898102]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1617870534.292709077]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1617870534.293237898]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1617870534.293723203]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617870534.294212866]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1617870534.294700761]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1617870534.295164717]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1617870534.295215087]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1617870534.295230896]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1617870534.295242896]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1617870534.295253574]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1617870534.295264330]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1617870534.295275013]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1617870534.514662229]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1617870534.514726122]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1617870534.514775294]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0m[0m[ INFO] [1617870533.721602833]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1617870533.726749640]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[0m[ INFO] [1617870534.385352351]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[ INFO] [1617870534.453209306, 0.022000000]: Physics dynamic reconfigure ready.[0m
+[1;33mWarning [Model.cc:212][0m Non-unique names detected in XML children of model with name[quadruped].
+[0m[ INFO] [1617870535.121232673, 0.295000000]: <initialOrientationAsReference> is unset, using default value of false to comply with REP 145 (world as orientation reference)[0m
+[0m[ INFO] [1617870535.121364352, 0.295000000]: <robotNamespace> set to: /quadruped/[0m
+[0m[ INFO] [1617870535.121432209, 0.295000000]: <topicName> set to: imu[0m
+[0m[ INFO] [1617870535.121482939, 0.295000000]: <frameName> set to: imu_link[0m
+[0m[ INFO] [1617870535.121542798, 0.295000000]: <updateRateHZ> set to: 100[0m
+[0m[ INFO] [1617870535.121602328, 0.295000000]: <gaussianNoise> set to: 0[0m
+[0m[ INFO] [1617870535.121724517, 0.295000000]: <xyzOffset> set to: 0 0 0[0m
+[0m[ INFO] [1617870535.121807269, 0.295000000]: <rpyOffset> set to: 0 -0 0[0m
+[0m[ INFO] [1617870535.217320138, 0.295000000]: Loading gazebo_ros_control plugin[0m
+[0m[ INFO] [1617870535.217475206, 0.295000000]: Starting gazebo_ros_control plugin in namespace: /quadruped[0m
+[0m[ INFO] [1617870535.217924990, 0.295000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [/robot_description] on the ROS param server.[0m
+[0m[ INFO] [1617870535.721721159, 0.295000000]: Loaded gazebo_ros_control.[0m
+[0m[ INFO] [1617870535.733367444, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg3][0m
+[0m[ INFO] [1617870535.733699822, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.735267174, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg2][0m
+[0m[ INFO] [1617870535.735304391, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.736708424, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg1][0m
+[0m[ INFO] [1617870535.736757992, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.740354091, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg3][0m
+[0m[ INFO] [1617870535.740394265, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.744224709, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg2][0m
+[0m[ INFO] [1617870535.744291111, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.747812951, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg1][0m
+[0m[ INFO] [1617870535.747851646, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.750700262, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg3][0m
+[0m[ INFO] [1617870535.750751422, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.753587802, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg2][0m
+[0m[ INFO] [1617870535.753621057, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.758923642, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg1][0m
+[0m[ INFO] [1617870535.759020254, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.765719114, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg3][0m
+[0m[ INFO] [1617870535.765757055, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.769871738, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg2][0m
+[0m[ INFO] [1617870535.769910618, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.771059022, 0.295000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
+[0m[ INFO] [1617870535.771098040, 0.295000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1617870535.830658859, 0.295000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
+[0m[ INFO] [

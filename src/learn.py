@@ -899,7 +899,6 @@ class Learner():
                 loss = tot_loss,
                 time = time.perf_counter() - start
             ))
-            ep += 1
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
                 self.save(model_dir, ep, rewards, total_reward, \
                     total_critic_loss, critic_loss, COT, motion, \
@@ -908,6 +907,7 @@ class Learner():
             _steps_.append(step + 1)
             total_reward.append(self.total_reward)
             total_critic_loss.append(tot_loss)
+            ep += 1
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
             critic_loss, COT, motion, stability, d1, d2, d3):
@@ -1142,7 +1142,7 @@ if __name__ == '__main__':
     #    25,
     #    'weights/actor_pretrain',
     #)
-    #learner.load_actor('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
+    learner.load_actor('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
