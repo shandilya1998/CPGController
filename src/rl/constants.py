@@ -218,3 +218,15 @@ params.update({
     'num_data' : 135 * params['rnn_steps'] / bs,
     'pretrain_bs': bs
 })
+
+
+params_ars = {
+    'nb_steps'                    : 1000,
+    'episode_length'              : 100,
+    'learning_rate'               : 0.02,
+    'nb_directions'               : 16,
+    'rnn_steps'                   : 10,
+    'nb_best_directions'          : 16,
+    'noise'                       : 0.03,
+    'seed'                        : 1,
+}
