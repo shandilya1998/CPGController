@@ -18,7 +18,7 @@ params = {
     'units_robot_state_critic'    : 78,
     'units_motion_state_critic'   : 30,
     'units_history'               : 24,
-    'BATCH_SIZE'                  : 100,
+    'BATCH_SIZE'                  : 200,
     'BUFFER_SIZE'                 : 10000,
     'GAMMA'                       : 0.99,
     'TEST_AFTER_N_EPISODES'       : 25,
@@ -29,7 +29,7 @@ params = {
     'EXPLORE'                     : 1000,
     'train_episode_count'         : 5000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 1000,
+    'max_steps'                   : 150,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
