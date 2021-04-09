@@ -2,7 +2,7 @@ from rl.constants import params
 import rospy
 from rl.net import ActorNetwork, CriticNetwork
 from rl.env import Env
-from rl.replay_buffer import ReplayBuffer, OU
+from rl.replay_buffer import ReplayBuffer, OU, PER
 import tf_agents as tfa
 import tensorflow as tf
 import numpy as np
@@ -671,7 +671,9 @@ class Learner():
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
 
-    def learn(self, model_dir, experiment, start_epoch = 0):
+    def learn(self, model_dir, experiment, start_epoch = 0, rb = 'normal'):
+        if rb == 'per':
+            self.replay_buffer = PER(self.params)
         ep = 0
         self.epsilon = 1
         self._noise_init = [
