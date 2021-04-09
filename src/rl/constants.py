@@ -29,11 +29,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 150,
+    'max_steps'                   : 75,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 1,
+    'rnn_steps'                   : 10,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -75,6 +75,17 @@ observation_spec = [
         name = 'oscillator state'
     ),
 ]
+
+params_spec = [
+    tf.TensorSpec(
+        shape = ( 
+            params['rnn_steps'],
+            params['action_dim']
+        ),  
+        dtype = tf.dtypes.float32,
+        name = 'quadruped action'
+    )
+] * 2
 
 action_spec = [
     tf.TensorSpec(
@@ -123,9 +134,9 @@ history_osc_spec = tf.TensorSpec(
 data_spec = []
 data_spec.extend(observation_spec)
 data_spec.extend(action_spec)
+data_spec.extend(params_spec)
 data_spec.extend(reward_spec)
-data_spec.append(history_spec)
-data_spec.append(history_osc_spec)
+data_spec.append(observation_spec)
 
 data_spec.extend([
     tf.TensorSpec(
@@ -230,3 +241,14 @@ params_ars = {
     'noise'                       : 0.0003,
     'seed'                        : 1,
 }
+
+params_per = {
+    'alpha'                       : 0.6,
+    'epsilon'                     : 1.0,
+    'beta_init'                   : 0.4,
+    'beta_final'                  : 1.0,
+    'beta_final_at'                : params['train_episode_count'],
+    'step_size'                   : params['LRA'] / 4
+}
+
+params.update(params_per)

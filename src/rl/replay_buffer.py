@@ -3,6 +3,7 @@ from collections import deque
 import numpy as np
 import random
 import tf_agents as tfa
+from rl.sum_tree import SumTree
 
 class OU(object):
     def function(self, x, mu, theta, sigma):
@@ -91,3 +92,88 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
                 sample_batch_size
             )
         ) 
+
+class PER(ReplayBuffer):
+    def __init__(self, params):
+        super(PER, self).__init__(params)
+        self.alpha = params['alpha']
+        self.betaInit = params['beta_init']
+        self.betaFinal = params['beta_final']
+        self.betaFinalAt = params['beta_final_at']
+        self.priorityTree = SumTree(self.alpha, self.capacity)
+        self.curStep = 0.0
+        self.beta = 0.0
+        self.impSamplingWeights = []
+        self.sampledMemIndexes = []
+
+    def add_batch(self, experience):
+        ReplayBuffer.add_batch(self, experience)
+        self.priorityTree.addNew(self.priorityTree.getMaxPriority())
+
+    def betaAnneal(self, sess):
+        pass
+        ff = max(
+            0, 
+            (
+                self.betaFinal - self.betaInit
+            ) * (
+                self.betaFinalAt - self.curStep
+            ) / self.betaFinalAt
+        )
+        bt = self.betaFinal - ff
+        self.beta = bt
+
+    def getISW(self):
+        return self.impSamplingWeights
+
+    def update(self,deltas):
+        for i,memIdx in enumerate(self.sampledMemIndexes):
+            new_priority  = math.fabs(deltas[i]) + self.epsilon
+            self.priorityTree.updateTree(memIdx, new_priority)
+
+    def get_next(self, batch_size):
+        pTotal = self.priorityTree.getSigmaPriority()
+        pTot_by_k = int(pTotal // batch_size)
+        self.sampledMemIndexes = []
+        self.impSamplingWeights = []
+
+        for j in range(batch_size):
+            lower_bound = j * (pTot_by_k)
+            upper_bound =  (j+1) * (pTot_by_k)
+            sampledVal = random.sample(range(lower_bound,upper_bound),1)
+
+            sampledMemIdx, sampledPriority = \
+                self.priorityTree.getSelectedLeaf(sampledVal[0])
+
+            self.sampledMemIndexes.append(sampledMemIdx)
+            assert sampledPriority !=0.0, \
+                "Can't progress with a sampled priority = ZERO!"
+
+            sampledProb  = (
+                sampledPriority ** self.alpha
+            ) / self.priorityTree.getSigmaPriority(withAlpha= True)
+
+            impSampleWt = (
+                self.capacity * sampledProb
+            ) ** (-1 * self.beta)
+            self.impSamplingWeights.append(impSampleWt)
+
+        maxISW = max(self.impSamplingWeights)
+        self.impSamplingWeights[:] = [
+            x / maxISW for x in self.impSamplingWeights
+        ]
+
+        out = []
+        for idx in self.sampledMemIndexes:
+            out.append(self.buffer[idx])
+
+        return out
+
+    def clear(self):
+        ReplayBuffer.clear(self)
+        self.curStep = 0.0
+        self.beta = 0.0
+        self.impSamplingWeights = []
+        self.sampledMemIndexes = []
+
+
