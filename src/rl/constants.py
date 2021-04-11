@@ -15,7 +15,7 @@ params = {
     'units_mu'                    : [45, 60, 30, 20],
     'units_mean'                  : [45, 60, 30, 20],
     'units_omega'                 : [45, 60, 30, 10],
-    'units_robot_state_critic'    : 78,
+    'units_robot_state_critic'    : 152,
     'units_motion_state_critic'   : 30,
     'units_history'               : 24,
     'BATCH_SIZE'                  : 200,
@@ -33,7 +33,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 10,
+    'rnn_steps'                   : 350,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',

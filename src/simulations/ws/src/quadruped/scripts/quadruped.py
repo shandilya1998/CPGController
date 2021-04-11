@@ -601,6 +601,7 @@ class Quadruped:
         self.com = self.get_com()
         self.counter = 0
         params = self.get_physics_params_proxy()
+        self.joint_torque = self.all_legs.get_all_torques()
         self.gravity = np.array([
             params.gravity.x,
             params.gravity.y,
@@ -845,6 +846,7 @@ class Quadruped:
 
         self.last_joint = self.joint_position
         diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
+        self.joint_torque = self.all_legs.get_all_torques()
         self.robot_state = np.concatenate([
             np.sin(self.joint_position),
             np.sin(diff_joint),
@@ -860,7 +862,6 @@ class Quadruped:
             self.com,
             self.gravity
         ]).reshape(self.robot_state_shape)
-        self.joint_torque = self.all_legs.get_all_torques()
         self.history_joint_torque = np.zeros(
             shape = (2 * self.params['rnn_steps'] - 1, self.nb_joints),
             dtype = np.float32
@@ -1019,22 +1020,6 @@ class Quadruped:
             self.delta = self.dt
         diff_joint = self.joint_position - self.last_joint
 
-        self.robot_state = np.concatenate([
-            np.sin(self.joint_position),
-            np.sin(diff_joint),
-            self.orientation,
-            self.angular_vel,
-            self.joint_torque,
-            self.joint_velocity,
-            self.v_real,
-            self.pos,
-            self.last_pos,
-            self.force,
-            self.torque,
-            self.com,
-            self.gravity
-        ]).astype('float32')
-
         self.motion_state = desired_motion.astype('float32')
 
         rospy.wait_for_service('/gazebo/get_model_state')
@@ -1051,6 +1036,21 @@ class Quadruped:
             model_state.twist.linear.y,
             model_state.twist.linear.z
         ], dtype = np.float32)
+        self.robot_state = np.concatenate([
+            np.sin(self.joint_position),
+            np.sin(diff_joint),
+            self.orientation,
+            self.angular_vel,
+            self.joint_torque,
+            self.joint_velocity,
+            self.v_real,
+            self.pos,
+            self.last_pos,
+            self.force,
+            self.torque,
+            self.com,
+            self.gravity
+        ]).astype('float32')
         self.v_exp =  desired_motion[3:6]
 
     def set_history(self, desired_motion):
