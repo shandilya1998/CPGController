@@ -1836,3 +1836,77 @@ log file: /home/ubuntu/.ros/log/57693778-99d6-11eb-9c3d-811c38a477a5/urdf_spawne
 shutting down processing monitor...
 ... shutting down processing monitor complete
 [1mdone[0m
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe260, rem=0x7fffffffe270)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 49407] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+sJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
+[0m[ INFO] [1617989460.098569763, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg2_joint[0m
+[0m[ INFO] [1617989460.098600420, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg3_joint[0m
+[0m[ INFO] [1617989460.098619662, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg1_joint[0m
+[0m[ INFO] [1617989460.100866417, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg2_joint[0m
+[0m[ INFO] [1617989460.100889245, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: front_left_leg3_joint[0m
+[0m[ INFO] [1617989460.100905192, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg1_joint[0m
+[0m[ INFO] [1617989460.101575838, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg2_joint[0m
+[0m[ INFO] [1617989460.101620774, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_right_leg3_joint[0m
+[0m[ INFO] [1617989460.101635465, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg1_joint[0m
+[0m[ INFO] [1617989460.101657897, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg2_joint[0m
+[0m[ INFO] [1617989460.101684494, 0.188000000]: GazeboRosJointStatePublisher is going to publish joint: back_left_leg3_joint[0m
+[0m[ INFO] [1617989460.101705852, 0.188000000]: Starting GazeboRosJointStatePublisher Plugin (ns = /quadruped/)!, parent name: quadruped[0m
+[INFO] [1617989441.489127, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1617989459.932159, 0.188000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1617989459.959559, 0.188000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1617989460.006708, 0.188000]: Loading controller: front_right_leg_controller
+[INFO] [1617989460.265260, 0.223000]: Loading controller: front_left_leg_controller
+[INFO] [1617989460.480676, 0.264000]: Loading controller: back_right_leg_controller
+[INFO] [1617989460.675946, 0.310000]: Loading controller: back_left_leg_controller
+[INFO] [1617989460.792679, 0.340000]: Loading controller: joint_state_controller
+[INFO] [1617989460.855270, 0.357000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617989460.878376, 0.362000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618131285.217281, 25957.361000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618131285.219211, 25957.362000]: Stopping all controllers...
+[INFO] [1618131285.229357, 25957.372000]: Unloading all loaded controllers...
+[INFO] [1618131285.230376, 25957.373000]: Trying to unload joint_state_controller
+[INFO] [1618131285.235195, 25957.377000]: Succeeded in unloading joint_state_controller
+[INFO] [1618131285.237169, 25957.379000]: Trying to unload back_left_leg_controller
+[INFO] [1618131285.251511, 25957.393000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618131285.252937, 25957.395000]: Trying to unload back_right_leg_controller
+[INFO] [1618131285.259667, 25957.401000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1618131285.260575, 25957.402000]: Trying to unload front_left_leg_controller
+[INFO] [1618131285.267522, 25957.409000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1618131285.268450, 25957.410000]: Trying to unload front_right_leg_controller
+[INFO] [1618131285.274177, 25957.416000]: Succeeded in unloading front_right_leg_controller
+
+auto-starting new master
+[1mprocess[master]: started with pid [49353][0m
+[1mROS_MASTER_URI=http://localhost:11360[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11360
+[1msetting /run_id to 3bc006a0-9959-11eb-9c3d-811c38a477a5[0m
+[1mprocess[rosout-1]: started with pid [49369][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [49378][0m
+[1mprocess[urdf_spawner-3]: started with pid [49380][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [49381][0m
+[1mprocess[joint_state_publisher-5]: started with pid [49383][0m
+[1mprocess[robot_state_publisher-6]: started with pid [49385][0m
+[1mprocess[move_group-7]: started with pid [49387][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/3bc006a0-9959-11eb-9c3d-811c38a477a5/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[robot_state_publisher-6] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

@@ -861,4 +861,67 @@ You can start planning now!
 [0m[ INFO] [1617982693.978235559, 0.180000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1617982693.978400053, 0.180000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1617982694.020909072, 0.180000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
-[0m[ INFO] [
+[0m[ INFO] [[New Thread 0x7fffcd02a700 (LWP 802323)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe250, rem=0x7fffffffe260)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 6051] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1618131262.127685, 20794.739000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1617982681.556225, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1617982693.968873, 0.180000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1617982693.992686, 0.180000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1617982694.014255, 0.180000]: Loading controller: front_right_leg_controller
+[INFO] [1617982694.149421, 0.215000]: Loading controller: front_left_leg_controller
+[INFO] [1617982694.257849, 0.247000]: Loading controller: back_right_leg_controller
+[INFO] [1617982694.436161, 0.292000]: Loading controller: back_left_leg_controller
+[INFO] [1617982694.606378, 0.343000]: Loading controller: joint_state_controller
+[INFO] [1617982694.628748, 0.350000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617982694.650439, 0.356000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618131247.093357, 20794.668000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618131247.096152, 20794.669000]: Stopping all controllers...
+[INFO] [1618131247.114408, 20794.682000]: Unloading all loaded controllers...
+[INFO] [1618131247.116686, 20794.683000]: Trying to unload joint_state_controller
+[INFO] [1618131247.129679, 20794.693000]: Succeeded in unloading joint_state_controller
+[INFO] [1618131247.130916, 20794.694000]: Trying to unload back_left_leg_controller
+[INFO] [1618131247.153965, 20794.710000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618131247.155743, 20794.711000]: Trying to unload back_right_leg_controller
+[INFO] [1618131247.170152, 20794.721000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1618131247.171326, 20794.721000]: Trying to unload front_left_leg_controller
+[INFO] [1618131247.185993, 20794.730000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1618131247.187030, 20794.730000]: Trying to unload front_right_leg_controller
+[31m[quadruped/controller_spawner-4] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [5987][0m
+[1mROS_MASTER_URI=http://localhost:11350[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11350
+[1msetting /run_id to 859c7a2a-9949-11eb-9c3d-811c38a477a5[0m
+[1mprocess[rosout-1]: started with pid [6006][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [6016][0m
+[1mprocess[urdf_spawner-3]: started with pid [6017][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [6019][0m
+[1mprocess[joint_state_publisher-5]: started with pid [6020][0m
+[1mprocess[robot_state_publisher-6]: started with pid [6022][0m
+[1mprocess[move_group-7]: started with pid [6024][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/859c7a2a-9949-11eb-9c3d-811c38a477a5/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

@@ -1729,4 +1729,59 @@ Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 [92m
 You can start planning now!
 
-[0m
+[0m[New Thread 0x7fffcd02a700 (LWP 802093)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe250, rem=0x7fffffffe260)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3527] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[INFO] [1617982451.562516, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1617982451.578075, 0.000000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1617982451.590932, 94.227000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1617982451.600786, 94.228000]: Loading controller: front_right_leg_controller
+[INFO] [1617982451.644475, 94.244000]: Loading controller: front_left_leg_controller
+[INFO] [1617982451.709519, 94.280000]: Loading controller: back_right_leg_controller
+[INFO] [1617982451.785963, 94.325000]: Loading controller: back_left_leg_controller
+[INFO] [1617982451.878152, 94.349000]: Loading controller: joint_state_controller
+[INFO] [1617982451.893832, 94.360000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1617982451.909658, 94.371000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618131218.872859, 22651.471000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618131218.874532, 22651.471000]: Stopping all controllers...
+[INFO] [1618131218.905197, 22651.478000]: Unloading all loaded controllers...
+[INFO] [1618131218.906622, 22651.478000]: Trying to unload joint_state_controller
+[INFO] [1618131218.933041, 22651.483000]: Succeeded in unloading joint_state_controller
+[INFO] [1618131218.934230, 22651.483000]: Trying to unload back_left_leg_controller
+[INFO] [1618131218.971761, 22651.490000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618131218.973485, 22651.490000]: Trying to unload back_right_leg_controller
+[INFO] [1618131219.017761, 22651.503000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1618131219.018926, 22651.503000]: Trying to unload front_left_leg_controller
+[INFO] [1618131219.045553, 22651.510000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1618131219.046987, 22651.510000]: Trying to unload front_right_leg_controller
+[INFO] [1618131219.070803, 22651.513000]: Succeeded in unloading front_right_leg_controller
+[31m[urdf_spawner-2] process has died [pid 3500, exit code 1, cmd /opt/ros/noetic/lib/gazebo_ros/spawn_model -param robot_description -urdf -model quadruped __name:=urdf_spawner __log:=/home/ubuntu/.ros/log/bde6f546-9948-11eb-9c3d-811c38a477a5/urdf_spawner-2.log].
+log file: /home/ubuntu/.ros/log/bde6f546-9948-11eb-9c3d-811c38a477a5/urdf_spawner-2*.log[0m
+[31m[gazebo-1] process has died [pid 3498, exit code 255, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/bde6f546-9948-11eb-9c3d-811c38a477a5/gazebo-1.log].
+log file: /home/ubuntu/.ros/log/bde6f546-9948-11eb-9c3d-811c38a477a5/gazebo-1*.log[0m
+
+[1mROS_MASTER_URI=http://localhost:11342[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11342
+[1mprocess[gazebo-1]: started with pid [3498][0m
+[1mprocess[urdf_spawner-2]: started with pid [3500][0m
+[1mprocess[quadruped/controller_spawner-3]: started with pid [3501][0m
+[1mprocess[joint_state_publisher-4]: started with pid [3504][0m
+[1mprocess[robot_state_publisher-5]: started with pid [3506][0m
+[1mprocess[move_group-6]: started with pid [3507][0m
+[move_group-6] killing on exit
+[robot_state_publisher-5] killing on exit
+[joint_state_publisher-4] killing on exit
+[quadruped/controller_spawner-3] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
