@@ -648,7 +648,15 @@ class Quadruped:
             np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
-            self.linear_acc
+            self.joint_torque,
+            self.joint_velocity,
+            self.v_real,
+            self.pos,
+            self.last_pos,
+            self.force,
+            self.torque,
+            self.com,
+            self.gravity
         ]).reshape(self.robot_state_shape)
 
         return [
@@ -842,8 +850,16 @@ class Quadruped:
             np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
-            self.linear_acc
-        ])
+            self.joint_torque,
+            self.joint_velocity,
+            self.v_real,
+            self.pos,
+            self.last_pos,
+            self.force,
+            self.torque,
+            self.com,
+            self.gravity
+        ]).reshape(self.robot_state_shape)
         self.joint_torque = self.all_legs.get_all_torques()
         self.history_joint_torque = np.zeros(
             shape = (2 * self.params['rnn_steps'] - 1, self.nb_joints),
@@ -1008,7 +1024,15 @@ class Quadruped:
             np.sin(diff_joint),
             self.orientation,
             self.angular_vel,
-            self.linear_acc
+            self.joint_torque,
+            self.joint_velocity,
+            self.v_real,
+            self.pos,
+            self.last_pos,
+            self.force,
+            self.torque,
+            self.com,
+            self.gravity
         ]).astype('float32')
 
         self.motion_state = desired_motion.astype('float32')
@@ -1094,14 +1118,10 @@ class Quadruped:
             self.Tb = t_2 - t_1
             self.t = max(self.A_time[1], self.B_time[1])
             eta = self.A[1]['eta']
-            force = self.A[1]['force']
-            torque = self.A[1]['torque']
             v_real = self.A[1]['v_real']
             v_exp = self.A[1]['v_exp']
             if self.A_time[1] < self.B_time[1]:
                 eta = self.B[1]['eta']
-                force = self.A[1]['force']
-                torque = self.A[1]['torque']
                 v_real = self.A[1]['v_real']
                 v_exp = self.A[1]['v_exp']
             if self.Tb == 0:
@@ -1120,8 +1140,8 @@ class Quadruped:
             self.d1, self.d2, self.d3, self.stability = \
                 self.compute_reward.stability_reward(
                 self.com,
-                force,
-                torque,
+                self.force,
+                self.torque,
                 v_real,
                 v_exp,
                 eta,

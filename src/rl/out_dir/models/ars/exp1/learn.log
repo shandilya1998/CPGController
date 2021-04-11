@@ -25719,3 +25719,121 @@ Check clock synchronization if your are running ROS across multiple machines![0
 [DDPG] Resetting Environment
 [DDPG] Quadruped Not Upright
 [DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[ARS] Step 464 Reward -38.03088 Time 990.06012
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[ARS] Step 465 Reward -37.78674 Time 990.06426
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "ars.py", line 524, in <module>
+    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
+  File "ars.py", line 285, in learn
+    negative_rewards[k] = self.explore(
+  File "ars.py", line 147, in explore
+    self.current_time_step = self.env.reset()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 55, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 901, in reset
+    shape = (
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
