@@ -861,7 +861,7 @@ class Quadruped:
             self.torque,
             self.com,
             self.gravity
-        ]).reshape(self.robot_state_shape)
+        ]).astype('float32')
         self.history_joint_torque = np.zeros(
             shape = (2 * self.params['rnn_steps'] - 1, self.nb_joints),
             dtype = np.float32
