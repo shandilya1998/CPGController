@@ -638,10 +638,15 @@ class Learner():
             self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_actor'
         )
 
-    def load_actor(self, path):
+    def load_actor(self, path, path_target):
         print('[DDPG] Loading Actor Weights')
         self.actor.model.load_weights(path)
-        self.actor.target_model.load_weights(path)
+        self.actor.target_model.load_weights(path_target)
+
+    def load_critic(self, path, path_target):
+        print('[DDPG] Loading Actor Weights')
+        self.critic.model.load_weights(path)
+        self.critic.target_model.load_weights(path_target)
 
     def plot_y(self, y, name):
         time = np.arange(y.shape[0])
@@ -1043,11 +1048,31 @@ class Learner():
             )
         )
 
+        self.actor.target_model.save_weights(
+            os.path.join(
+                model_dir,
+                'actor',
+                'target_model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
         self.critic.model.save_weights(
             os.path.join(
                 model_dir,
                 'critic',
                 'model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        self.critic.model.save_weights(
+            os.path.join(
+                model_dir,
+                'critic',
+                'target_model_ep{ep}.ckpt'.format(
                     ep = ep,
                 )
             )
@@ -1264,13 +1289,12 @@ if __name__ == '__main__':
         default = 0
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, True)
+    learner = Learner(params, args.experiment, False)
     #learner.pretrain_actor(
     #    27,
     #    'weights/actor_pretrain',
     #)
     #learner.load_actor('weights/actor_pretrain/exp26/pretrain_actor/actor_pretrained_pretrain_actor_26_42.ckpt')
-    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))

@@ -69,7 +69,8 @@ class Learner:
             desired_motion_path = 'data/pretrain/X_0.npy'):
         matplotlib.use('Agg')
         self.experiment = experiment
-        self.params = HP(params, params_ars).params
+        self.hp = HP(params, params_ars)
+        self.params = self.hp.params
         self.policy = Policy(self.params)
         self.time_step_spec = tfa.trajectories.time_step.time_step_spec(
             observation_spec = self.params['observation_spec'],

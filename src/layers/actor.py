@@ -164,7 +164,7 @@ class ParamNet(tf.keras.layers.Layer):
         )
 
     def call(self, inputs):
-        state = tf.concat(inputs[1:], -1)
+        state = tf.concat(inputs, -1)
         state = self.combine_dense(state)
         mu = self.mu_layers(state)
         mean = self.mean_layers(state)

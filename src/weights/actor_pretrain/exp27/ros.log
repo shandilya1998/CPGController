@@ -1319,3 +1319,51 @@ You can start planning now!
 [0m[ INFO] [1618131732.289307409, 0.359000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618131732.295805656, 0.359000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
 [0m[ INFO] [[New Thread 0x7fffc8ff9700 (LWP 805424)]
+[33m[ WARN] [1618138634.209932498, 6885.470000000]: Shutdown request received.[0m
+[33m[ WARN] [1618138634.211071713, 6885.471000000]: Reason given for shutdown: [[/robot_state_publisher] Reason: new node registered with same name][0m
+[31m[ERROR] [1618138634.857178208, 6885.952000000]: SpawnModel: Failure - model name quadruped already exist.[0m
+[INFO] [1618131730.784904, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1618131732.307276, 0.369000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1618131732.320037, 0.382000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1618131732.331998, 0.394000]: Loading controller: front_right_leg_controller
+[INFO] [1618131732.364533, 0.426000]: Loading controller: front_left_leg_controller
+[INFO] [1618131732.388952, 0.447000]: Loading controller: back_right_leg_controller
+[INFO] [1618131732.428275, 0.486000]: Loading controller: back_left_leg_controller
+[INFO] [1618131732.460927, 0.516000]: Loading controller: joint_state_controller
+[INFO] [1618131732.468995, 0.524000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618131732.477607, 0.532000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+shutdown request: [/quadruped/controller_spawner] Reason: new node registered with same name
+[INFO] [1618138634.721771, 6885.871000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618138634.723863, 6885.872000]: Stopping all controllers...
+[INFO] [1618138634.729525, 6885.874000]: Unloading all loaded controllers...
+[INFO] [1618138634.730863, 6885.874000]: Trying to unload joint_state_controller
+[INFO] [1618138634.740635, 6885.883000]: Succeeded in unloading joint_state_controller
+[INFO] [1618138634.743430, 6885.885000]: Trying to unload back_left_leg_controller
+[INFO] [1618138634.777883, 6885.913000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618138634.779488, 6885.913000]: Trying to unload back_right_leg_controller
+[INFO] [1618138634.807871, 6885.930000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1618138634.809143, 6885.931000]: Trying to unload front_left_leg_controller
+[INFO] [1618138634.833245, 6885.944000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1618138634.834572, 6885.944000]: Trying to unload front_right_leg_controller
+[INFO] [1618138634.849086, 6885.950000]: Succeeded in unloading front_right_leg_controller
+[33m[ WARN] [1618138635.556853838, 6886.583000000]: Shutdown request received.[0m
+[33m[ WARN] [1618138635.556902639, 6886.583000000]: Reason given for shutdown: [[/move_group] Reason: new node registered with same name][0m
+[Thread 0x7fffeaffd700 (LWP 803669) exited]
+[Thread 0x7fffeb7fe700 (LWP 803668) exited]
+[Thread 0x7fffebfff700 (LWP 803667) exited]
+[Thread 0x7ffff0da7700 (LWP 803666) exited]
+[Thread 0x7fffea7fc700 (LWP 803670) exited]
+[Thread 0x7fffc97fa700 (LWP 803696) exited]
+[Thread 0x7fffcb7fe700 (LWP 803692) exited]
+[Thread 0x7fffe97fa700 (LWP 803673) exited]
+[Thread 0x7fffca7fc700 (LWP 803694) exited]
+[Thread 0x7fffc9ffb700 (LWP 803695) exited]
+[Thread 0x7fffe8ff9700 (LWP 803674) exited]
+[Thread 0x7fffcaffd700 (LWP 803693) exited]
+[Thread 0x7fffe9ffb700 (LWP 803671) exited]
+[Thread 0x7fffcbfff700 (LWP 803675) exited]
+[Thread 0x7fffc8ff9700 (LWP 805424) exited]
+[Inferior 1 (process 803559) exited normally]
+(gdb) quit
+[31m[ERROR] [1618138677.590768130, 6928.384000000]: SpawnModel: Failure - model name quadruped already exist.[0m
+[31m[ERROR] [1618138862.084086640, 7111.851000000]: SpawnModel: Failure - model name quadruped already exist.[0m

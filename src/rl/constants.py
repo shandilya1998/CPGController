@@ -33,7 +33,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 350,
+    'rnn_steps'                   : 20,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -233,10 +233,10 @@ params.update({
 
 params_ars = {
     'nb_steps'                    : 1000,
-    'episode_length'              : 250,
+    'episode_length'              : 125,
     'learning_rate'               : 0.001,
     'nb_directions'               : 12,
-    'rnn_steps'                   : 5,
+    'rnn_steps'                   : 20,
     'nb_best_directions'          : 7,
     'noise'                       : 0.0003,
     'seed'                        : 1,
