@@ -29,11 +29,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 75,
+    'max_steps'                   : 300,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 20,
+    'rnn_steps'                   : 1,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -233,7 +233,7 @@ params.update({
 
 params_ars = {
     'nb_steps'                    : 1000,
-    'episode_length'              : 125,
+    'episode_length'              : 75,
     'learning_rate'               : 0.001,
     'nb_directions'               : 12,
     'rnn_steps'                   : 20,
