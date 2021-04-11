@@ -89,11 +89,11 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
                 _action,
                 desired_motion
             )
-            reward +=  0.002 * self.quadruped.get_COT()
+            reward +=  0.02 * self.quadruped.get_COT()
             reward += self.quadruped.get_motion_reward()
         self.quadruped.set_support_lines()
         reward += 0.002 * self.quadruped.get_stability_reward()
-        reward += self.quadruped.reward
+        #reward += self.quadruped.reward
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
         observation = [
