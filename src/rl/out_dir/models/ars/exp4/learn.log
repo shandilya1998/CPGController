@@ -90,3 +90,63 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Resetting Environment
 [DDPG] Quadruped Not Upright
 [DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+[DDPG] Quadruped Not Upright
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 560, in connect
+    self.socket.connect((dest_addr, dest_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 509, in call
+    transport.connect(dest_addr, dest_port, service_uri)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 589, in connect
+    raise TransportInitError(str(e)) #re-raise i/o error
+rospy.exceptions.TransportInitError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "ars.py", line 525, in <module>
+    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
+  File "ars.py", line 286, in learn
+    negative_rewards[k] = self.explore(
+  File "ars.py", line 170, in explore
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 94, in _step
+    self.quadruped.set_support_lines()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 982, in set_support_lines
+    current_pose = self.kinematics.get_end_effector_fk(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 84, in get_end_effector_fk
+    msg = self.compute_fk_proxy(
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 512, in call
+    raise ServiceException("unable to connect to service: %s"%e)
+rospy.service.ServiceException: unable to connect to service: [Errno 111] Connection refused
