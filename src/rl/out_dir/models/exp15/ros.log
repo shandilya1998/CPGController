@@ -414,4 +414,40 @@ You can start planning now!
 [0m[ INFO] [1618225475.790952307, 0.190000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618225475.791112747, 0.190000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618225475.820164569, 0.190000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
-[0m[ INFO] [
+[0m[ INFO] [Exception ignored in: <gdb._GdbOutputFile object at 0x7fbd5a89f460>
+Traceback (most recent call last):
+  File "/usr/share/gdb/python/gdb/__init__.py", line 43, in flush
+    def flush(self):
+KeyboardInterrupt: 
+[31m[ERROR] [1618245384.946430666]: [registerService] Failed to contact master at [localhost:11317].  Retrying...[0m
+[31m[rosout-1] process has died [pid 14804, exit code -15, cmd /opt/ros/noetic/lib/rosout/rosout __name:=rosout __log:=/home/ubuntu/.ros/log/d3ad316e-9b7e-11eb-a632-f95a3a6820b8/rosout-1.log].
+log file: /home/ubuntu/.ros/log/d3ad316e-9b7e-11eb-a632-f95a3a6820b8/rosout-1*.log[0m
+[31m[gazebo-2] process has died [pid 14813, exit code -15, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/d3ad316e-9b7e-11eb-a632-f95a3a6820b8/gazebo-2.log].
+log file: /home/ubuntu/.ros/log/d3ad316e-9b7e-11eb-a632-f95a3a6820b8/gazebo-2*.log[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [14778][0m
+[1mROS_MASTER_URI=http://localhost:11317[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11317
+[1msetting /run_id to d3ad316e-9b7e-11eb-a632-f95a3a6820b8[0m
+[1mprocess[rosout-1]: started with pid [14804][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [14813][0m
+[1mprocess[urdf_spawner-3]: started with pid [14814][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [14817][0m
+[1mprocess[joint_state_publisher-5]: started with pid [14820][0m
+[1mprocess[robot_state_publisher-6]: started with pid [14821][0m
+[1mprocess[move_group-7]: started with pid [14822][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/d3ad316e-9b7e-11eb-a632-f95a3a6820b8/urdf_spawner-3*.log[0m
+[rosout-1] restarting process
+[1mprocess[rosout-1]: started with pid [117541][0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
