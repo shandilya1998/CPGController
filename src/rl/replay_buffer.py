@@ -173,4 +173,5 @@ class PER(ReplayBuffer):
         self.impSamplingWeights = []
         self.sampledMemIndexes = []
 
-
+    def set_priority_tree(self, tree):
+        self.priorityTree = tree
