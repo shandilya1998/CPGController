@@ -763,6 +763,7 @@ class Learner():
                 os.path.join(
                     model_dir,
                     'actor',
+                    'model',
                     'model_ep{ep}.ckpt'.format(
                         ep = ep,
                     )
@@ -772,7 +773,8 @@ class Learner():
                 os.path.join(
                     model_dir,
                     'actor',
-                    'model_ep{ep}.ckpt'.format(
+                    'target',
+                    'target_model_ep{ep}.ckpt'.format(
                         ep = ep,
                     )
                 )
@@ -781,6 +783,7 @@ class Learner():
                 os.path.join(
                     model_dir,
                     'critic',
+                    'model',
                     'model_ep{ep}.ckpt'.format(
                         ep = ep,
                     )
@@ -790,7 +793,8 @@ class Learner():
                 os.path.join(
                     model_dir,
                     'critic',
-                    'model_ep{ep}.ckpt'.format(
+                    'target',
+                    'target_model_ep{ep}.ckpt'.format(
                         ep = ep,
                     )
                 )
@@ -1042,6 +1046,7 @@ class Learner():
             os.path.join(
                 model_dir,
                 'actor',
+                'model',
                 'model_ep{ep}.ckpt'.format(
                     ep = ep,
                 )
@@ -1052,6 +1057,7 @@ class Learner():
             os.path.join(
                 model_dir,
                 'actor',
+                'target',
                 'target_model_ep{ep}.ckpt'.format(
                     ep = ep,
                 )
@@ -1062,6 +1068,7 @@ class Learner():
             os.path.join(
                 model_dir,
                 'critic',
+                'model',
                 'model_ep{ep}.ckpt'.format(
                     ep = ep,
                 )
@@ -1072,6 +1079,7 @@ class Learner():
             os.path.join(
                 model_dir,
                 'critic',
+                'target',
                 'target_model_ep{ep}.ckpt'.format(
                     ep = ep,
                 )
