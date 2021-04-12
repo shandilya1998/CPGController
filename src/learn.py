@@ -1305,10 +1305,10 @@ if __name__ == '__main__':
     learner.load_actor(
         'weights/actor_pretrain/exp28/pretrain_actor/actor_pretrained_pretrain_actor_28_84.ckpt',
         'weights/actor_pretrain/exp28/pretrain_actor/actor_pretrained_pretrain_actor_28_84.ckpt')
-    learner.load_actor('rl/out_dir/models/exp14/actor/model/model_ep1950.ckpt',
-        'rl/out_dir/models/exp14/actor/target/target_model_ep1950.ckpt')
-    learner.load_critic('rl/out_dir/models/exp14/critic/model/model_ep1950.ckpt',
-        'rl/out_dir/models/exp14/critic/target/target_model_ep1950.ckpt')
+    #learner.load_actor('rl/out_dir/models/exp14/actor/model/model_ep1950.ckpt',
+    #    'rl/out_dir/models/exp14/actor/target/target_model_ep1950.ckpt')
+    #learner.load_critic('rl/out_dir/models/exp14/critic/model/model_ep1950.ckpt',
+    #    'rl/out_dir/models/exp14/critic/target/target_model_ep1950.ckpt')
 
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
