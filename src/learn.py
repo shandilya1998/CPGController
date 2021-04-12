@@ -760,6 +760,15 @@ class Learner():
 
         ep = start_epoch
         if ep != 0:
+            if per:
+                path = os.path.join(
+                    model_dir,
+                    'per_tree.pickle'
+                )
+                pkl = open(path, 'rb')
+                tree = pickle.load(pkl)
+                pkl.close()
+                self.replay_buffer.set_priority_tree(tree)
             data_path = os.path.join(
                 model_dir,
                 'data.pickle'
@@ -1048,9 +1057,14 @@ class Learner():
                 time = time.perf_counter() - start
             ))
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
-                self.save(model_dir, ep, rewards, total_reward, \
-                    total_critic_loss, critic_loss, COT, motion, \
-                    stability, d1, d2, d3)
+                if not per:
+                    self.save(model_dir, ep, rewards, total_reward, \
+                        total_critic_loss, critic_loss, COT, motion, \
+                        stability, d1, d2, d3)
+                else:
+                    self.save(model_dir, ep, rewards, total_reward, \
+                        total_critic_loss, critic_loss, COT, motion, \
+                        stability, d1, d2, d3, tree)
 
             _steps_.append(step + 1)
             total_reward.append(self.total_reward)
@@ -1058,7 +1072,7 @@ class Learner():
             ep += 1
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
-            critic_loss, COT, motion, stability, d1, d2, d3):
+            critic_loss, COT, motion, stability, d1, d2, d3, tree = None):
         print('[DDPG] Saving Data')
         data_path = os.path.join(
             model_dir,
@@ -1069,6 +1083,16 @@ class Learner():
         pkl = open(data_path, 'wb')
         pickle.dump(self.replay_buffer.buffer, pkl)
         pkl.close()
+        if tree is not None:
+            path = os.path.join(
+                model_dir,
+                'per_tree.pickle'
+            )
+            if os.path.exists(path):
+                os.remove(path)
+            pkl = open(path, 'wb')
+            pickle.dump(tree, pkl)
+            pkl.close()
         print('[DDPG] Saving Model')
         self.actor.model.save_weights(
             os.path.join(
