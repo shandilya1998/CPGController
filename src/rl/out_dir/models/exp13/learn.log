@@ -8633,3 +8633,842 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Step 1 Reward -17.27178 Time 6.02456
 [DDPG] Quadruped Not Upright
 [DDPG] Step 2 Reward -26.80059 Time 5.98899
+[DDPG] Step 3 Reward -7.95185 Time 6.09681
+[DDPG] Quadruped Not Upright
+[DDPG] Step 4 Reward -21.87653 Time 6.07454
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 450
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 450 Step 0 Reward -54.20955 Time 6.09579
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2857.655517578125
+[DDPG] Total Reward -54.20955 Avg Critic Loss 2857.65552 Time 4.25532
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 451
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 451 Step 0 Reward -57.10114 Time 6.25408
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 3016.18310546875
+[DDPG] Total Reward -57.10114 Avg Critic Loss 3016.18311 Time 4.09601
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 452
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 452 Step 0 Reward -56.94548 Time 6.19759
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 3063.0283203125
+[DDPG] Total Reward -56.94548 Avg Critic Loss 3063.02832 Time 4.43342
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 453
+[DDPG] Episode 453 Step 0 Reward -45.79552 Time 6.05730
+[DDPG] Episode 453 Step 1 Reward -20.14305 Time 6.15224
+[DDPG] Episode 453 Step 2 Reward -16.11348 Time 6.26810
+[DDPG] Episode 453 Step 3 Reward -10.83321 Time 6.26491
+[DDPG] Episode 453 Step 4 Reward -11.03196 Time 6.12233
+[DDPG] Episode 453 Step 5 Reward -13.68606 Time 6.35197
+[DDPG] Episode 453 Step 6 Reward -10.11289 Time 6.29931
+[DDPG] Episode 453 Step 7 Reward -6.81186 Time 6.19761
+[DDPG] Episode 453 Step 8 Reward -7.29737 Time 6.14262
+[DDPG] Episode 453 Step 9 Reward -9.75784 Time 6.15260
+[DDPG] Episode 453 Step 10 Reward -6.91980 Time 6.30220
+[DDPG] Episode 453 Step 11 Reward -6.78279 Time 6.27637
+[DDPG] Episode 453 Step 12 Reward -8.93827 Time 6.15989
+[DDPG] Episode 453 Step 13 Reward -7.53121 Time 6.34097
+[DDPG] Episode 453 Step 14 Reward -7.36543 Time 6.18363
+[DDPG] Episode 453 Step 15 Reward -14.68670 Time 6.28282
+[DDPG] Episode 453 Step 16 Reward -9.76218 Time 6.23957
+[DDPG] Episode 453 Step 17 Reward -20.78727 Time 6.27262
+[DDPG] Episode 453 Step 18 Reward -9.08506 Time 6.17079
+[DDPG] Episode 453 Step 19 Reward -10.23531 Time 6.21796
+[DDPG] Episode 453 Step 20 Reward -15.57926 Time 6.29056
+[DDPG] Episode 453 Step 21 Reward -13.44516 Time 6.35670
+[DDPG] Episode 453 Step 22 Reward -8.30024 Time 6.34732
+[DDPG] Episode 453 Step 23 Reward -22.79391 Time 6.21361
+[DDPG] Episode 453 Step 24 Reward -16.89548 Time 6.26966
+[DDPG] Episode 453 Step 25 Reward -8.35667 Time 6.31148
+Traceback (most recent call last):
+  File "learn.py", line 1328, in <module>
+    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
+  File "learn.py", line 918, in learn
+    self.current_time_step = self.env.step(
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 72, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 88, in _step
+    observation =  self.quadruped.step(
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1167, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-04-12 06:22:14.446364: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(learn.py:1875): Gdk-CRITICAL **: 06:22:20.706: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+2021-04-12 06:22:21.183200: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-12 06:22:21.186683: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-12 06:22:21.266698: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.267524: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-12 06:22:21.267585: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-12 06:22:21.302182: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-12 06:22:21.302355: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-12 06:22:21.325702: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-12 06:22:21.335024: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-12 06:22:21.366441: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-12 06:22:21.373564: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-12 06:22:21.375689: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-12 06:22:21.375923: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.376844: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.378408: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+[DDPG] Building the actor model
+2021-04-12 06:22:21.393643: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-12 06:22:21.393945: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-12 06:22:21.394108: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.394834: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-12 06:22:21.394865: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-12 06:22:21.394974: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-12 06:22:21.395040: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-12 06:22:21.395097: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-12 06:22:21.395153: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-12 06:22:21.395205: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-12 06:22:21.395261: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-12 06:22:21.395348: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-12 06:22:21.395478: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.396320: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:21.397185: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-12 06:22:21.398095: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-12 06:22:23.076691: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-12 06:22:23.076736: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-12 06:22:23.076747: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-12 06:22:23.078969: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:23.079988: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:23.080809: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-12 06:22:23.081498: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618208546.879458673, 8.311000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618208546.880318097, 8.312000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618208546.880648068, 8.313000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618208548.153300677, 9.583000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618208548.972388637, 10.401000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618208549.774054092, 11.201000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618208550.575550854, 12.001000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Loading Actor Weights
+[DDPG] Loading Actor Weights
+[DDPG] Loading Actor Weights
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Pretraining Test
+2021-04-12 06:22:59.738358: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-12 06:23:01.010015: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Quadruped Not Upright
+[DDPG] Step 0 Reward -69.96928 Time 7.81908
+[DDPG] Quadruped Not Upright
+[DDPG] Step 1 Reward -24.62588 Time 6.18928
+[DDPG] Quadruped Not Upright
+[DDPG] Step 2 Reward -19.03584 Time 6.28495
+[DDPG] Quadruped Not Upright
+[DDPG] Step 3 Reward -35.50694 Time 6.26834
+[DDPG] Step 4 Reward -7.12181 Time 6.29777
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 450
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 450 Step 0 Reward -63.82918 Time 6.52074
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 3978.403564453125
+[DDPG] Total Reward -63.82918 Avg Critic Loss 3978.40356 Time 5.77335
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 451
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 451 Step 0 Reward -71.29442 Time 6.48315
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 4476.8125
+[DDPG] Total Reward -71.29442 Avg Critic Loss 4476.81250 Time 4.81367
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 452
+[DDPG] Episode 452 Step 0 Reward -47.03014 Time 6.72354
+[DDPG] Episode 452 Step 1 Reward -5.72684 Time 6.38739
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 452 Step 2 Reward -16.77693 Time 6.35439
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2290.24853515625
+[DDPG] Total Reward -69.53391 Avg Critic Loss 2290.24854 Time 4.98626
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 453
+[DDPG] Episode 453 Step 0 Reward -51.29019 Time 6.49897
+[DDPG] Episode 453 Step 1 Reward -13.91231 Time 6.32097
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 453 Step 2 Reward -24.45251 Time 6.34537
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1854.0484619140625
+[DDPG] Total Reward -89.65501 Avg Critic Loss 1854.04846 Time 5.15439
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 454
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 454 Step 0 Reward -52.89962 Time 6.44520
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1949.9913330078125
+[DDPG] Total Reward -52.89962 Avg Critic Loss 1949.99133 Time 5.06301
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 455
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 455 Step 0 Reward -48.40045 Time 6.21009
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1981.8251953125
+[DDPG] Total Reward -48.40045 Avg Critic Loss 1981.82520 Time 4.80879
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 456
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 456 Step 0 Reward -65.46206 Time 6.57153
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2182.079833984375
+[DDPG] Total Reward -65.46206 Avg Critic Loss 2182.07983 Time 4.99786
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 457
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 457 Step 0 Reward -45.59352 Time 6.15587
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2167.585205078125
+[DDPG] Total Reward -45.59352 Avg Critic Loss 2167.58521 Time 4.71630
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 458
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 458 Step 0 Reward -47.51662 Time 6.31125
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2168.848388671875
+[DDPG] Total Reward -47.51662 Avg Critic Loss 2168.84839 Time 5.04316
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 459
+[DDPG] Episode 459 Step 0 Reward -50.25862 Time 6.46711
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 459 Step 1 Reward -32.22993 Time 6.18683
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2113.69580078125
+[DDPG] Total Reward -82.48855 Avg Critic Loss 2113.69580 Time 4.97999
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 460
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 460 Step 0 Reward -53.57581 Time 6.18422
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2155.753173828125
+[DDPG] Total Reward -53.57581 Avg Critic Loss 2155.75317 Time 5.03887
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 461
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 461 Step 0 Reward -61.66029 Time 6.21030
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2246.911376953125
+[DDPG] Total Reward -61.66029 Avg Critic Loss 2246.91138 Time 5.08340
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 462
+[DDPG] Episode 462 Step 0 Reward -36.62630 Time 6.24829
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 462 Step 1 Reward -16.35984 Time 6.32684
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2093.515380859375
+[DDPG] Total Reward -52.98615 Avg Critic Loss 2093.51538 Time 5.15617
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 463
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 463 Step 0 Reward -57.62698 Time 6.47691
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2150.3408203125
+[DDPG] Total Reward -57.62698 Avg Critic Loss 2150.34082 Time 4.93059
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 464
+[DDPG] Episode 464 Step 0 Reward -51.15549 Time 6.54989
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 464 Step 1 Reward -32.60530 Time 6.26915
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2119.546630859375
+[DDPG] Total Reward -83.76078 Avg Critic Loss 2119.54663 Time 5.03422
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 465
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 465 Step 0 Reward -65.13445 Time 6.26744
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2207.363037109375
+[DDPG] Total Reward -65.13445 Avg Critic Loss 2207.36304 Time 5.02769
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 466
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 466 Step 0 Reward -49.05822 Time 6.26901
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2212.3984375
+[DDPG] Total Reward -49.05822 Avg Critic Loss 2212.39844 Time 5.19802
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 467
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 467 Step 0 Reward -56.60712 Time 6.55202
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2248.456787109375
+[DDPG] Total Reward -56.60712 Avg Critic Loss 2248.45679 Time 4.99364
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 468
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 468 Step 0 Reward -43.96361 Time 6.18891
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2233.583740234375
+[DDPG] Total Reward -43.96361 Avg Critic Loss 2233.58374 Time 5.35734
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 469
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 469 Step 0 Reward -54.89259 Time 6.46222
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2259.186279296875
+[DDPG] Total Reward -54.89259 Avg Critic Loss 2259.18628 Time 5.07157
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 470
+[DDPG] Episode 470 Step 0 Reward -37.82926 Time 6.27146
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 470 Step 1 Reward -16.70424 Time 6.29710
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2161.2265625
+[DDPG] Total Reward -54.53350 Avg Critic Loss 2161.22656 Time 5.08908
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 471
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 471 Step 0 Reward -58.91594 Time 6.48726
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2201.7197265625
+[DDPG] Total Reward -58.91594 Avg Critic Loss 2201.71973 Time 5.37574
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 472
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 472 Step 0 Reward -55.90477 Time 6.46200
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2228.5908203125
+[DDPG] Total Reward -55.90477 Avg Critic Loss 2228.59082 Time 5.31808
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 473
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 473 Step 0 Reward -62.15575 Time 6.15679
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2276.5283203125
+[DDPG] Total Reward -62.15575 Avg Critic Loss 2276.52832 Time 5.33709
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 474
+[DDPG] Episode 474 Step 0 Reward -53.10428 Time 6.46968
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 474 Step 1 Reward -17.02813 Time 6.34373
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2233.03759765625
+[DDPG] Total Reward -70.13240 Avg Critic Loss 2233.03760 Time 5.22851
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 475
+[DDPG] Episode 475 Step 0 Reward -43.43484 Time 6.50500
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 475 Step 1 Reward -15.34959 Time 6.32739
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2167.037353515625
+[DDPG] Total Reward -58.78443 Avg Critic Loss 2167.03735 Time 5.40642
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 476
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 476 Step 0 Reward -59.53406 Time 6.42733
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2201.63232421875
+[DDPG] Total Reward -59.53406 Avg Critic Loss 2201.63232 Time 5.38823
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 477
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 477 Step 0 Reward -52.91190 Time 6.52922
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2215.080078125
+[DDPG] Total Reward -52.91190 Avg Critic Loss 2215.08008 Time 5.45828
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 478
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 478 Step 0 Reward -62.20730 Time 6.38450
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2254.89208984375
+[DDPG] Total Reward -62.20730 Avg Critic Loss 2254.89209 Time 5.43705
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 479
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 479 Step 0 Reward -51.92593 Time 6.52090
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2263.779296875
+[DDPG] Total Reward -51.92593 Avg Critic Loss 2263.77930 Time 5.41188
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 480
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 480 Step 0 Reward -40.62964 Time 6.40816
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2247.165771484375
+[DDPG] Total Reward -40.62964 Avg Critic Loss 2247.16577 Time 5.14495
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 481
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 481 Step 0 Reward -46.43548 Time 6.58022
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2243.15576171875
+[DDPG] Total Reward -46.43548 Avg Critic Loss 2243.15576 Time 5.30801
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 482
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 482 Step 0 Reward -53.97853 Time 6.56275
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2256.662841796875
+[DDPG] Total Reward -53.97853 Avg Critic Loss 2256.66284 Time 5.11823
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 483
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 483 Step 0 Reward -52.36337 Time 6.24885
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 2265.7060546875
+[DDPG] Total Reward -52.36337 Avg Critic Loss 2265.70605 Time 5.32230
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 484
+[DDPG] Episode 484 Step 0 Reward -43.67410 Time 6.23129
+[DDPG] Episode 484 Step 1 Reward -15.59080 Time 6.51174
+[DDPG] Episode 484 Step 2 Reward -6.57538 Time 6.53255
+[DDPG] Episode 484 Step 3 Reward -20.22310 Time 6.57567
+[DDPG] Episode 484 Step 4 Reward -23.40373 Time 6.32772
+[DDPG] Episode 484 Step 5 Reward -14.88065 Time 6.47192
+[DDPG] Episode 484 Step 6 Reward -18.31026 Time 6.50825
+[DDPG] Episode 484 Step 7 Reward -24.19737 Time 6.47667
+[DDPG] Episode 484 Step 8 Reward -7.34075 Time 6.55549
+[DDPG] Episode 484 Step 9 Reward -19.39087 Time 6.37579
+[DDPG] Episode 484 Step 10 Reward -8.86136 Time 6.53213
+[DDPG] Episode 484 Step 11 Reward -18.51048 Time 6.40995
+[DDPG] Episode 484 Step 12 Reward -10.35435 Time 6.52379
+[DDPG] Episode 484 Step 13 Reward -21.19067 Time 6.51555
+[DDPG] Episode 484 Step 14 Reward -15.56807 Time 6.37900
+[DDPG] Episode 484 Step 15 Reward -10.89653 Time 6.55522
+[DDPG] Episode 484 Step 16 Reward -31.05852 Time 6.47726
+[DDPG] Episode 484 Step 17 Reward -18.15367 Time 6.44967
+[DDPG] Episode 484 Step 18 Reward -9.03441 Time 6.32222
+[DDPG] Episode 484 Step 19 Reward -23.49388 Time 6.54935
+[DDPG] Episode 484 Step 20 Reward -25.35225 Time 6.63671
+[DDPG] Episode 484 Step 21 Reward -21.01629 Time 6.47777
+[DDPG] Episode 484 Step 22 Reward -25.37784 Time 6.45755
+[DDPG] Episode 484 Step 23 Reward -29.04085 Time 6.53269
+[DDPG] Episode 484 Step 24 Reward -22.43835 Time 6.51189
+[DDPG] Episode 484 Step 25 Reward -24.60586 Time 6.48790
+[DDPG] Episode 484 Step 26 Reward -9.29212 Time 6.36223
+[DDPG] Episode 484 Step 27 Reward -21.70319 Time 6.45652
+[DDPG] Episode 484 Step 28 Reward -32.41632 Time 6.80311
+[DDPG] Episode 484 Step 29 Reward -13.79526 Time 6.47794
+[DDPG] Episode 484 Step 30 Reward -25.18487 Time 6.45768
+[DDPG] Episode 484 Step 31 Reward -18.29897 Time 6.56509
+[DDPG] Episode 484 Step 32 Reward -28.95375 Time 6.42001
+[DDPG] Episode 484 Step 33 Reward -8.73143 Time 6.49551
+[DDPG] Episode 484 Step 34 Reward -9.43711 Time 6.43709
+[DDPG] Episode 484 Step 35 Reward -22.08139 Time 6.49982
+[DDPG] Episode 484 Step 36 Reward -21.13442 Time 6.57261
+[DDPG] Episode 484 Step 37 Reward -22.20032 Time 6.38107
+[DDPG] Episode 484 Step 38 Reward -20.49021 Time 6.44290
+[DDPG] Episode 484 Step 39 Reward -14.94880 Time 6.38182
+[DDPG] Episode 484 Step 40 Reward -20.63072 Time 6.37820
+[DDPG] Episode 484 Step 41 Reward -9.47319 Time 6.42044
+[DDPG] Episode 484 Step 42 Reward -19.36300 Time 6.48856
+[DDPG] Episode 484 Step 43 Reward -40.89529 Time 6.48099
+[DDPG] Episode 484 Step 44 Reward -9.62690 Time 6.39664
+[DDPG] Episode 484 Step 45 Reward -23.79276 Time 6.46298
+[DDPG] Episode 484 Step 46 Reward -20.22500 Time 6.47294
+[DDPG] Episode 484 Step 47 Reward -19.76996 Time 6.52966
+[DDPG] Episode 484 Step 48 Reward -7.95582 Time 6.60359
+[DDPG] Episode 484 Step 49 Reward -19.30317 Time 6.37494
+[DDPG] Episode 484 Step 50 Reward -21.77870 Time 6.46014
+[DDPG] Episode 484 Step 51 Reward -17.54575 Time 6.43770
+[DDPG] Episode 484 Step 52 Reward -27.50711 Time 6.40574
+[DDPG] Episode 484 Step 53 Reward -8.43777 Time 6.51704
+[DDPG] Episode 484 Step 54 Reward -17.97592 Time 6.48807
+[DDPG] Episode 484 Step 55 Reward -22.61378 Time 6.51030
+[DDPG] Episode 484 Step 56 Reward -21.81873 Time 6.49121
+[DDPG] Episode 484 Step 57 Reward -24.34595 Time 6.51200
+[DDPG] Episode 484 Step 58 Reward -34.69550 Time 6.41297
+[DDPG] Episode 484 Step 59 Reward -9.69554 Time 6.51273
+[DDPG] Episode 484 Step 60 Reward -9.35945 Time 6.44801
+[DDPG] Episode 484 Step 61 Reward -21.53502 Time 6.47760
+[DDPG] Episode 484 Step 62 Reward -9.49782 Time 6.37574
+[DDPG] Episode 484 Step 63 Reward -8.00657 Time 6.44535
+[DDPG] Episode 484 Step 64 Reward -8.00376 Time 6.48388
+[DDPG] Episode 484 Step 65 Reward -7.78885 Time 6.47538
+[DDPG] Episode 484 Step 66 Reward -7.81941 Time 6.47906
+[DDPG] Episode 484 Step 67 Reward -9.19169 Time 6.45132
+[DDPG] Episode 484 Step 68 Reward -7.72807 Time 6.49317
+[DDPG] Episode 484 Step 69 Reward -7.67068 Time 6.48466
+[DDPG] Episode 484 Step 70 Reward -7.92423 Time 6.43594
+[DDPG] Episode 484 Step 71 Reward -9.16963 Time 6.46359
+[DDPG] Episode 484 Step 72 Reward -8.07763 Time 6.35839
+[DDPG] Episode 484 Step 73 Reward -7.97747 Time 6.38634
+[DDPG] Episode 484 Step 74 Reward -7.84271 Time 6.32305
+[DDPG] Critic Loss 1073.1898193359375
+[DDPG] Total Reward -1312.25209 Avg Critic Loss 1073.18982 Time 6.97915
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 485
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 485 Step 0 Reward -60.20338 Time 6.30731
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1093.453857421875
+[DDPG] Total Reward -60.20338 Avg Critic Loss 1093.45386 Time 6.56090
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 486
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 486 Step 0 Reward -65.59093 Time 6.55684
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1119.076416015625
+[DDPG] Total Reward -65.59093 Avg Critic Loss 1119.07642 Time 6.15831
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 487
+[DDPG] Episode 487 Step 0 Reward -40.80957 Time 6.57103
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 487 Step 1 Reward -24.93046 Time 6.34940
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1119.076904296875
+[DDPG] Total Reward -65.74002 Avg Critic Loss 1119.07690 Time 6.35859
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 488
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 488 Step 0 Reward -47.18735 Time 6.30325
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1127.3533935546875
+[DDPG] Total Reward -47.18735 Avg Critic Loss 1127.35339 Time 6.27255
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 489
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 489 Step 0 Reward -68.99907 Time 6.34946
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1155.3634033203125
+[DDPG] Total Reward -68.99907 Avg Critic Loss 1155.36340 Time 6.16256
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 490
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 490 Step 0 Reward -48.92857 Time 6.27104
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1164.5111083984375
+[DDPG] Total Reward -48.92857 Avg Critic Loss 1164.51111 Time 6.14863
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 491
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 491 Step 0 Reward -67.25043 Time 6.54862
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1190.0103759765625
+[DDPG] Total Reward -67.25043 Avg Critic Loss 1190.01038 Time 6.07080
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 492
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 492 Step 0 Reward -65.34080 Time 6.54462
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1213.218017578125
+[DDPG] Total Reward -65.34080 Avg Critic Loss 1213.21802 Time 6.66531
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 493
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 493 Step 0 Reward -61.93501 Time 6.47544
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1232.746337890625
+[DDPG] Total Reward -61.93501 Avg Critic Loss 1232.74634 Time 6.37833
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 494
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 494 Step 0 Reward -66.84908 Time 6.45647
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1256.7801513671875
+[DDPG] Total Reward -66.84908 Avg Critic Loss 1256.78015 Time 6.40437
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 495
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 495 Step 0 Reward -65.34515 Time 6.29200
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1278.946044921875
+[DDPG] Total Reward -65.34515 Avg Critic Loss 1278.94604 Time 6.09183
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 496
+[DDPG] Episode 496 Step 0 Reward -50.59567 Time 6.55392
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 496 Step 1 Reward -33.78242 Time 6.36058
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1287.048583984375
+[DDPG] Total Reward -84.37809 Avg Critic Loss 1287.04858 Time 6.42502
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 497
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 497 Step 0 Reward -46.61910 Time 6.28103
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1293.06982421875
+[DDPG] Total Reward -46.61910 Avg Critic Loss 1293.06982 Time 6.22235
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 498
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 498 Step 0 Reward -56.17003 Time 6.21943
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1306.1585693359375
+[DDPG] Total Reward -56.17003 Avg Critic Loss 1306.15857 Time 6.30177
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 499
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 499 Step 0 Reward -54.82378 Time 6.56097
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1317.97119140625
+[DDPG] Total Reward -54.82378 Avg Critic Loss 1317.97119 Time 6.51017
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 500
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 500 Step 0 Reward -60.53125 Time 6.38579
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1334.3485107421875
+[DDPG] Total Reward -60.53125 Avg Critic Loss 1334.34851 Time 6.38886
+
+[DDPG] Saving Model
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 501
+[DDPG] Episode 501 Step 0 Reward -37.37793 Time 6.52397
+[DDPG] Episode 501 Step 1 Reward -9.61080 Time 6.35080
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 501 Step 2 Reward -18.36932 Time 7.11665
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1318.513916015625
+[DDPG] Total Reward -65.35804 Avg Critic Loss 1318.51392 Time 5.17710
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 502
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 502 Step 0 Reward -42.02925 Time 8.81779
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1321.177490234375
+[DDPG] Total Reward -42.02925 Avg Critic Loss 1321.17749 Time 10.62355
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 503
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 503 Step 0 Reward -59.02360 Time 8.38087
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1335.702392578125
+[DDPG] Total Reward -59.02360 Avg Critic Loss 1335.70239 Time 12.49290
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 504
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 504 Step 0 Reward -60.16660 Time 8.03915
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1350.9630126953125
+[DDPG] Total Reward -60.16660 Avg Critic Loss 1350.96301 Time 12.83657
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 505
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 505 Step 0 Reward -59.02408 Time 7.75617
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1365.078369140625
+[DDPG] Total Reward -59.02408 Avg Critic Loss 1365.07837 Time 13.92221
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 506
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 506 Step 0 Reward -49.54721 Time 7.82776
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1372.00927734375
+[DDPG] Total Reward -49.54721 Avg Critic Loss 1372.00928 Time 13.05088
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 507
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 507 Step 0 Reward -59.09573 Time 8.51587
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1385.84326171875
+[DDPG] Total Reward -59.09573 Avg Critic Loss 1385.84326 Time 10.55698
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 508
+[DDPG] Episode 508 Step 0 Reward -45.42884 Time 8.32406
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 508 Step 1 Reward -16.36344 Time 8.46739
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1382.6156005859375
+[DDPG] Total Reward -61.79228 Avg Critic Loss 1382.61560 Time 9.63142
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 509
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 509 Step 0 Reward -53.33305 Time 8.45356
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1391.813720703125
+[DDPG] Total Reward -53.33305 Avg Critic Loss 1391.81372 Time 10.12035
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 510
+[DDPG] Episode 510 Step 0 Reward -47.03741 Time 8.39133
+[DDPG] Episode 510 Step 1 Reward -18.22542 Time 8.48256
+[DDPG] Episode 510 Step 2 Reward -9.18306 Time 8.62160
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 510 Step 3 Reward -26.84228 Time 8.59607
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1376.93115234375
+[DDPG] Total Reward -101.28818 Avg Critic Loss 1376.93115 Time 10.12726
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 511
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 511 Step 0 Reward -52.80850 Time 8.48679
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1385.509521484375
+[DDPG] Total Reward -52.80850 Avg Critic Loss 1385.50952 Time 10.40162
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 512
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 512 Step 0 Reward -59.01488 Time 8.51622
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1398.3880615234375
+[DDPG] Total Reward -59.01488 Avg Critic Loss 1398.38806 Time 10.06431
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 513
+[DDPG] Episode 513 Step 0 Reward -47.36901 Time 8.49716
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 513 Step 1 Reward -23.94018 Time 8.51933
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1398.19189453125
+[DDPG] Total Reward -71.30919 Avg Critic Loss 1398.19189 Time 10.32510
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 514
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 514 Step 0 Reward -62.07414 Time 8.38817
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1413.0560302734375
+[DDPG] Total Reward -62.07414 Avg Critic Loss 1413.05603 Time 10.48249
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 515
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 515 Step 0 Reward -52.18552 Time 8.74641
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1420.728515625
+[DDPG] Total Reward -52.18552 Avg Critic Loss 1420.72852 Time 9.91942
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 516
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 516 Step 0 Reward -54.96663 Time 8.22050
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1430.1380615234375
+[DDPG] Total Reward -54.96663 Avg Critic Loss 1430.13806 Time 10.02423
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 517
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 517 Step 0 Reward -55.70656 Time 8.52841
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1439.9310302734375
+[DDPG] Total Reward -55.70656 Avg Critic Loss 1439.93103 Time 10.73885
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 518
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 518 Step 0 Reward -47.01666 Time 8.36016
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1444.180419921875
+[DDPG] Total Reward -47.01666 Avg Critic Loss 1444.18042 Time 9.85235
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 519
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 519 Step 0 Reward -78.68542 Time 8.12416
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1472.4791259765625
+[DDPG] Total Reward -78.68542 Avg Critic Loss 1472.47913 Time 10.27615
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 520
+[DDPG] Episode 520 Step 0 Reward -43.77134 Time 8.35294
+[DDPG] Episode 520 Step 1 Reward -16.85441 Time 8.44561
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 520 Step 2 Reward -21.09913 Time 8.40521
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1461.5057373046875
+[DDPG] Total Reward -81.72487 Avg Critic Loss 1461.50574 Time 10.16728
+[DDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[DDPG] Starting Episode 521
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 521 Step 0 Reward -33.75422 Time 8.04563
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1459.2137451171875
+[DDPG] Total Reward -33.75422 Avg Critic Loss 1459.21375 Time 10.39022
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 522
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 522 Step 0 Reward -69.23386 Time 8.48984
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1478.349365234375
+[DDPG] Total Reward -69.23386 Avg Critic Loss 1478.34937 Time 8.08207
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 523
+[DDPG] Episode 523 Step 0 Reward -38.86612 Time 10.60697
+[DDPG] Episode 523 Step 1 Reward -6.58591 Time 11.28446
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 523 Step 2 Reward -32.86762 Time 10.72208
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1467.4290771484375
+[DDPG] Total Reward -78.31965 Avg Critic Loss 1467.42908 Time 7.04548
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 524
+[DDPG] Episode 524 Step 0 Reward -34.71029 Time 11.08439
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 524 Step 1 Reward -19.16492 Time 10.70942
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 1459.307861328125
+[DDPG] Total Reward -53.87520 Avg Critic Loss 1459.30786 Time 6.95091
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 525

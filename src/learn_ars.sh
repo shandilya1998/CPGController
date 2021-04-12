@@ -5,7 +5,7 @@ export GAZEBO_MASTER_URI=http://localhost:11316
 
 OUT_PATH="rl/out_dir/models/ars"
 EXPERIMENT=5
-START=50
+START=100
 
 nohup roslaunch quadruped quadruped_control.launch \
     >> $OUT_PATH/exp$EXPERIMENT/ros.log &
