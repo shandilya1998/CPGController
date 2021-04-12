@@ -1275,4 +1275,39 @@ You can start planning now!
 [0m[ INFO] [1618210898.356653470, 0.021000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618210898.363750397, 0.021000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618210898.363781755, 0.021000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
-[0m[ INFO] [1618210898.390463236, 0.021000000]: GazeboRo
+[0m[ INFO] [1618210898.390463236, 0.021000000]: GazeboRoException ignored in: <gdb._GdbOutputFile object at 0x7fe08a614460>
+Traceback (most recent call last):
+  File "/usr/share/gdb/python/gdb/__init__.py", line 43, in flush
+    def flush(self):
+KeyboardInterrupt: 
+[31m================================================================================REQUIRED process [master] has died!
+process has died [pid 15733, exit code -15, cmd rosmaster --core -p 11317 -w 3 __log:=/home/ubuntu/.ros/log/e3b294fe-9b5c-11eb-8570-b7cf1ba45e7e/master.log].
+log file: /home/ubuntu/.ros/log/e3b294fe-9b5c-11eb-8570-b7cf1ba45e7e/master*.log
+Initiating shutdown!
+================================================================================[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [15733][0m
+[1mROS_MASTER_URI=http://localhost:11317[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11317
+[1msetting /run_id to e3b294fe-9b5c-11eb-8570-b7cf1ba45e7e[0m
+[1mprocess[rosout-1]: started with pid [15748][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [15755][0m
+[1mprocess[urdf_spawner-3]: started with pid [15756][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [15758][0m
+[1mprocess[joint_state_publisher-5]: started with pid [15761][0m
+[1mprocess[robot_state_publisher-6]: started with pid [15762][0m
+[1mprocess[move_group-7]: started with pid [15764][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/e3b294fe-9b5c-11eb-8570-b7cf1ba45e7e/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

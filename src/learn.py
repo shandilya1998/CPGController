@@ -175,6 +175,7 @@ class Learner():
         np.seterr(all='raise')
         print('[Actor] GPU>>>>>>>>>>>>')
         print('[Actor] {lst}'.format(lst = physical_devices))
+        self.p1 = 1.0
 
     def set_desired_motion(self, motion):
         self.desired_motion = motion
@@ -676,8 +677,8 @@ class Learner():
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
 
-    def learn(self, model_dir, experiment, start_epoch = 0, rb = 'normal'):
-        if rb == 'per':
+    def learn(self, model_dir, experiment, start_epoch = 0, per = False):
+        if per:
             self.replay_buffer = PER(self.params)
         ep = 0
         self.epsilon = 1
@@ -690,7 +691,6 @@ class Learner():
 
         motion_state, robot_state, osc_state = \
             self.env.quadruped.get_state_tensor()
-
 
         print('[DDPG] Training Start')
         critic_loss = []
@@ -1000,21 +1000,33 @@ class Learner():
             ac = [out, osc]
             inputs = next_states + ac + [m, mn]
             target_q_values = self.critic.target_model(inputs)
-            y = [tf.repeat(reward, self.params['action_dim'])\
-                for reward in rewards]
+            y = rewards
+            if not per:
+                y = [tf.repeat(reward, self.params['units_q'])\
+                    for reward in rewards]
             y = [
-                y[k] + self.params['GAMMA'] * target_q_values[k] \
+                tf.expand_dims(y[k], 0) + \
+                    self.params['GAMMA'] * target_q_values[k] \
                     if step_types[k] != \
                     tfa.trajectories.time_step.StepType.LAST \
-                else y[k] for k in range(len(y))
+                else tf.expand_dims(y[k], 0) for k in range(len(y))
             ]
             y = tf.concat([
                 tf.expand_dims(_y, 0) for _y in y
             ], 0)
-            loss = self.critic.train(states, actions, params[0], \
-                params[1], y)
-            critic_loss.append(loss.numpy())
-            tot_loss += loss.numpy()
+            if not per:
+                loss = self.critic.train(states, actions, params[0], \
+                    params[1], y)
+                critic_loss.append(loss.numpy())
+                tot_loss += loss.numpy()
+            else:
+                W = self.replay_buffer.getISW()
+                loss, delta = self.critic.train(states, actions, params[0], \
+                    params[1], y, per, W)
+                critic_loss.append(loss.numpy())
+                tot_loss += loss.numpy()
+                self.replay_buffer.update(delta)
+
             a_for_grad,[omega_,mu_,mean_, state_] = self.actor.model(states)
             q_grads = self.critic.q_grads(states, a_for_grad, \
                 mu_, mean_)
@@ -1233,10 +1245,11 @@ class Learner():
         ax12.set_xlabel('steps')
         fig12.savefig(os.path.join(
             model_dir,
-            'd1_ep{ep}.png'.format(
-                ep = ep,
+                'd1_ep{ep}.png'.format(
+                    ep = ep
+                )
             )
-        ))
+        )
 
         pkl = open(os.path.join(
             model_dir,
@@ -1325,5 +1338,10 @@ if __name__ == '__main__':
     if not os.path.exists(critic_path):
         os.mkdir(critic_path)
 
-    learner.learn(path, experiment = args.experiment, start_epoch = args.start)
+    learner.learn(
+        path,
+        experiment = args.experiment,
+        start_epoch = args.start,
+        per = True
+    )
     #"""

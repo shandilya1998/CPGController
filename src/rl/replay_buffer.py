@@ -4,6 +4,7 @@ import numpy as np
 import random
 import tf_agents as tfa
 from rl.sum_tree import SumTree
+import math
 
 class OU(object):
     def function(self, x, mu, theta, sigma):
@@ -96,13 +97,17 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
 class PER(ReplayBuffer):
     def __init__(self, params):
         super(PER, self).__init__(params)
+        self.epsilon  = params['epsilon']
         self.alpha = params['alpha']
         self.betaInit = params['beta_init']
         self.betaFinal = params['beta_final']
         self.betaFinalAt = params['beta_final_at']
         self.priorityTree = SumTree(self.alpha, self.capacity)
         self.curStep = 0.0
-        self.beta = 0.0
+        self.beta = 0.4
+        self.beta_increment_per_sample = 1.0 / (
+            self.params['max_steps'] * self.params['train_episode_count']
+        )
         self.impSamplingWeights = []
         self.sampledMemIndexes = []
 
@@ -110,33 +115,22 @@ class PER(ReplayBuffer):
         ReplayBuffer.add_batch(self, experience)
         self.priorityTree.addNew(self.priorityTree.getMaxPriority())
 
-    def betaAnneal(self, sess):
-        pass
-        ff = max(
-            0, 
-            (
-                self.betaFinal - self.betaInit
-            ) * (
-                self.betaFinalAt - self.curStep
-            ) / self.betaFinalAt
-        )
-        bt = self.betaFinal - ff
-        self.beta = bt
-
     def getISW(self):
         return self.impSamplingWeights
 
     def update(self,deltas):
         for i,memIdx in enumerate(self.sampledMemIndexes):
-            new_priority  = math.fabs(deltas[i]) + self.epsilon
+            new_priority  = math.fabs(deltas[i][0].numpy()) + self.epsilon
             self.priorityTree.updateTree(memIdx, new_priority)
 
     def get_next(self, batch_size):
+        if self.num_experiences < batch_size:
+            batch_size = self.num_experiences
         pTotal = self.priorityTree.getSigmaPriority()
         pTot_by_k = int(pTotal // batch_size)
         self.sampledMemIndexes = []
         self.impSamplingWeights = []
-
+        self.beta = min(1.0, self.beta + self.beta_increment_per_sample)
         for j in range(batch_size):
             lower_bound = j * (pTot_by_k)
             upper_bound =  (j+1) * (pTot_by_k)

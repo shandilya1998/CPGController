@@ -159,6 +159,6 @@ def get_critic(params):
         units_history = params['units_history'],
         units_osc = params['units_osc'],
         units_lstm = params['action_dim'],
-        units_out = params['action_dim'],
+        units_out = params['units_q'],
     )
     return critic
