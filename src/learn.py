@@ -679,6 +679,7 @@ class Learner():
 
     def learn(self, model_dir, experiment, start_epoch = 0, per = False):
         if per:
+            print('[DDPG] Initializing PER')
             self.replay_buffer = PER(self.params)
         ep = 0
         self.epsilon = 1
@@ -759,6 +760,14 @@ class Learner():
 
         ep = start_epoch
         if ep != 0:
+            data_path = os.path.join(
+                model_dir,
+                'data.pickle'
+            )
+            pkl = open(data_path, 'rb')
+            buff = pickle.load(pkl)
+            pkl.close()
+            self.replay_buffer.set_buffer(buff)
             self.actor.model.load_weights(
                 os.path.join(
                     model_dir,
@@ -1001,9 +1010,6 @@ class Learner():
             inputs = next_states + ac + [m, mn]
             target_q_values = self.critic.target_model(inputs)
             y = rewards
-            if not per:
-                y = [tf.repeat(reward, self.params['units_q'])\
-                    for reward in rewards]
             y = [
                 tf.expand_dims(y[k], 0) + \
                     self.params['GAMMA'] * target_q_values[k] \
@@ -1053,7 +1059,17 @@ class Learner():
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
             critic_loss, COT, motion, stability, d1, d2, d3):
-        print('\n[DDPG] Saving Model')
+        print('[DDPG] Saving Data')
+        data_path = os.path.join(
+            model_dir,
+            'data.pickle'
+        )
+        if os.path.exists(data_path):
+            os.remove(data_path)
+        pkl = open(data_path, 'wb')
+        pickle.dump(self.replay_buffer.buffer, pkl)
+        pkl.close()
+        print('[DDPG] Saving Model')
         self.actor.model.save_weights(
             os.path.join(
                 model_dir,
@@ -1291,6 +1307,16 @@ class Learner():
 
         plt.close('all')
 
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -1309,6 +1335,16 @@ if __name__ == '__main__':
         help = 'start epoch',
         default = 0
     )
+
+    parser.add_argument(
+        "--per",
+        type = str2bool,
+        nargs = '?',
+        const = True,
+        default = False,
+        help = "Toggle PER"
+    )
+
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
     #learner.pretrain_actor(
@@ -1333,15 +1369,19 @@ if __name__ == '__main__':
     actor_path = os.path.join(path, 'actor')
     if not os.path.exists(actor_path):
         os.mkdir(actor_path)
+        os.mkdir(os.path.join(actor_path, 'model'))
+        os.mkdir(os.path.join(actor_path, 'target'))
 
     critic_path = os.path.join(path, 'critic')
     if not os.path.exists(critic_path):
         os.mkdir(critic_path)
+        os.mkdir(os.path.join(critic_path, 'model'))
+        os.mkdir(os.path.join(critic_path, 'target'))
 
     learner.learn(
         path,
         experiment = args.experiment,
         start_epoch = args.start,
-        per = True
+        per = args.per
     )
     #"""

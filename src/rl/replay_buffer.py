@@ -92,7 +92,10 @@ class ReplayBuffer(tfa.replay_buffers.replay_buffer.ReplayBuffer):
                 self.data_spec, 
                 sample_batch_size
             )
-        ) 
+        )
+
+    def set_buffer(self, _buffer):
+        self.buffer = _buffer
 
 class PER(ReplayBuffer):
     def __init__(self, params):
