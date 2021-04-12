@@ -16,6 +16,7 @@ params = {
     'units_mean'                  : [45, 60, 30, 20],
     'units_omega'                 : [45, 60, 30, 10],
     'units_robot_state_critic'    : 152,
+    'units_q'                     : 1,
     'units_motion_state_critic'   : 30,
     'units_history'               : 24,
     'BATCH_SIZE'                  : 200,

@@ -104,11 +104,14 @@ class CriticNetwork(object):
             q_values = self.model(inputs)
         return tape.gradient(q_values, watch)
 
-    def train(self, states, actions, mu, mean, y):
+    def train(self, states, actions, mu, mean, y, per = False, W = None):
         with tf.GradientTape() as tape:
             inputs = states + actions + [mu, mean]
             y_pred = self.model(inputs)
-            loss = self.loss(y, y_pred)
+            loss = 0.0
+            loss = self.loss(y, y_pred, sample_weight = W)
+            if per:
+                deltas = y_pred - y
         critic_grads = tape.gradient(
             loss,
             self.model.trainable_variables
@@ -117,7 +120,10 @@ class CriticNetwork(object):
             critic_grads,
             self.model.trainable_variables
         ))
-        return loss
+        if per:
+            return loss, deltas
+        else:
+            return loss
 
     def target_train(self):
         critic_weights = self.model.get_weights()
@@ -127,8 +133,8 @@ class CriticNetwork(object):
                 (1 - self.TAU) * critic_target_weights[i]
         self.target_model.set_weights(critic_target_weights)
 
-    def loss(self, y_true, y_pred):
-        return self.mse(y_true, y_pred)
+    def loss(self, y_true, y_pred, sample_weight):
+        return self.mse(y_true, y_pred, sample_weight)
 
     def create_critic_network(self, params):
         print('[DDPG] Building the critic model')
