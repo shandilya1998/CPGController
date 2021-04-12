@@ -414,4 +414,35 @@ Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
 [92m
 You can start planning now!
 
-[0m
+[0mException ignored in: <gdb._GdbOutputFile object at 0x7fee8c81d460>
+Traceback (most recent call last):
+  File "/usr/share/gdb/python/gdb/__init__.py", line 43, in flush
+    def flush(self):
+KeyboardInterrupt: 
+[31m[gazebo-2] process has died [pid 23973, exit code -15, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/478d9ec8-9b81-11eb-a632-f95a3a6820b8/gazebo-2.log].
+log file: /home/ubuntu/.ros/log/478d9ec8-9b81-11eb-a632-f95a3a6820b8/gazebo-2*.log[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [23944][0m
+[1mROS_MASTER_URI=http://localhost:11323[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11323
+[1msetting /run_id to 478d9ec8-9b81-11eb-a632-f95a3a6820b8[0m
+[1mprocess[rosout-1]: started with pid [23966][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [23973][0m
+[1mprocess[urdf_spawner-3]: started with pid [23975][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [23978][0m
+[1mprocess[joint_state_publisher-5]: started with pid [23980][0m
+[1mprocess[robot_state_publisher-6]: started with pid [23982][0m
+[1mprocess[move_group-7]: started with pid [23984][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/478d9ec8-9b81-11eb-a632-f95a3a6820b8/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
