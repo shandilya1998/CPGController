@@ -1,5 +1,6 @@
 import tensorflow as tf
 import tf_agents as tfa
+import numpy as np
 from rl.constants import params
 from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
 from tf_agents.trajectories.time_step import TimeStep, time_step_spec
@@ -132,14 +133,14 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
     def reward_func(self, goal):
         reward = self.quadruped.reward
         reward += self.quadruped.compute_reward.motion_reward(
-            self.pos,
-            self.last_pos,
+            self.quadruped.pos,
+            self.quadruped.last_pos,
             goal
         )
         reward += self.COT
         reward += self.quadruped.get_stability_reward(goal[3:])
-        return reward, tf.convert_to_tensor(
-            np.expand_dims(goal, 0)
+        return np.float32(reward), tf.convert_to_tensor(
+            np.expand_dims(goal, 0).astype('float32')
         )
 
     def _current_time_step(self):

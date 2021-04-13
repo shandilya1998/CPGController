@@ -716,6 +716,8 @@ class Learner():
         if per:
             print('[DDPG] Initializing PER')
             self.replay_buffer = PER(self.params)
+        if her:
+            print('[DDPG] Initializing HER')
         ep = 0
         self.epsilon = 1
         self._noise_init = [
@@ -793,8 +795,17 @@ class Learner():
             ))
             step += 1
 
+        enc_goals = []
         ep = start_epoch
         if ep != 0:
+            if her:
+                path = os.path.join(
+                    model_dir,
+                    'enc_goals.pickle'
+                )
+                pkl = open(path, 'rb')
+                enc_goals = pickle.load(pkl)
+                pkl.close()
             if per:
                 path = os.path.join(
                     model_dir,
@@ -933,7 +944,6 @@ class Learner():
             d3 = pickle.load(pkl)
             pkl.close()
 
-        enc_goals = []
         while ep < self.params['train_episode_count']:
             goal_id = np.random.randint(0, len(self.desired_motion))
             desired_motion = self.desired_motion[goal_id]
@@ -1000,7 +1010,7 @@ class Learner():
                 self.replay_buffer.add_batch(experience)
                 self._state = self.current_time_step.observation
                 if her:
-                    k = self.params['future_s']
+                    k = self.params['future_steps']
                     if k > len(enc_goals):
                         k = len(enc_goals)
                     for future in np.random.randint(0, len(enc_goals), k):
@@ -1113,14 +1123,18 @@ class Learner():
                 time = time.perf_counter() - start
             ))
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
-                if not per:
+                if per:
                     self.save(model_dir, ep, rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
-                        stability, d1, d2, d3)
+                        stability, d1, d2, d3, tree = self.replay_buffer.priorityTree)
+                elif her:
+                    self.save(model_dir, ep, rewards, total_reward, \
+                        total_critic_loss, critic_loss, COT, motion, \
+                        stability, d1, d2, d3, enc_goals = enc_goals)
                 else:
                     self.save(model_dir, ep, rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
-                        stability, d1, d2, d3, self.replay_buffer.priorityTree)
+                        stability, d1, d2, d3)
 
             _steps_.append(step + 1)
             total_reward.append(self.total_reward)
@@ -1128,7 +1142,7 @@ class Learner():
             ep += 1
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
-            critic_loss, COT, motion, stability, d1, d2, d3, tree = None):
+            critic_loss, COT, motion, stability, d1, d2, d3, tree = None, enc_goals = None):
         print('[DDPG] Saving Data')
         data_path = os.path.join(
             model_dir,
@@ -1149,6 +1163,15 @@ class Learner():
                 os.remove(path)
             pkl = open(path, 'wb')
             pickle.dump(tree, pkl)
+            pkl.close()
+        if enc_goals is not None:
+            print('[DDPG] Saving HER goals')
+            path = os.path.join(
+                model_dir,
+                'enc_goals.pickle'
+            )
+            pkl = open(path, 'wb')
+            pickle.dump(enc_goals, pkl)
             pkl.close()
         print('[DDPG] Saving Model')
         self.actor.model.save_weights(
