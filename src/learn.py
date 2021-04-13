@@ -922,6 +922,7 @@ class Learner():
                 if math.isnan(np.sum(self._action[0].numpy())):
                     print('[DDPG] Action value NaN. Ending Episode')
                     break_loop = True
+                    continue
                 steps = self._action[0].shape[1]
                 action = self._action[0] * tf.repeat(
                     tf.expand_dims(self._params[0], 1),
