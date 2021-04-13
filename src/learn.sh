@@ -16,4 +16,5 @@ nohup python3 -u learn.py \
     --out_path $OUT_PATH \
     --start $START \
     --per $PER \
+    --her $HER \
     >> $OUT_PATH/exp$EXPERIMENT/learn.log &
