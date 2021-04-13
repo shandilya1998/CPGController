@@ -170,7 +170,7 @@ class Learner():
             count += 1
         count = 0
         for i, (x, y) in enumerate(self.pretrain_dataset):
-            x_ = np.zeros(x[0][0].shape, dtype = x[0][0].dtype)
+            x_ = np.zeros(x[0][0].shape, dtype = np.float32)
             x_[0] = -1 / np.sqrt(2, dtype = np.float32)
             x_[1] = -1 / np.sqrt(2, dtype = np.float32)
             x_[3] = x[0][0][4] / np.sqrt(2, dtype = np.float32)
@@ -185,7 +185,7 @@ class Learner():
             count += 1
         count = 0
         for i, (x, y) in enumerate(self.pretrain_dataset):
-            x_ = np.zeros(x[0][0].shape, dtype = x[0][0].dtype)
+            x_ = np.zeros(x[0][0].shape, dtype = np.float32)
             x_[0] = 1 / np.sqrt(2, dtype = np.float32)
             x_[1] = -1 / np.sqrt(2, dtype = np.float32)
             x_[3] = -x[0][0][4] / np.sqrt(2, dtype = np.float32)
