@@ -83,17 +83,21 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
         self.quadruped.set_last_pos()
+        self.COT = 0.0
+        self.r_motion = 0.0
+        self.stability = 0.0
         for i in range(self.params['rnn_steps']):
             _action = [action[0][i], action[1][i]]
             observation =  self.quadruped.step(
                 _action,
                 desired_motion
             )
-            reward +=  0.002 * self.quadruped.get_COT()
-            reward += self.quadruped.get_motion_reward()
+            self.COT +=  0.002 * self.quadruped.get_COT()
+            self.r_motion += self.quadruped.get_motion_reward()
         self.quadruped.set_support_lines()
-        reward += 0.002 * self.quadruped.get_stability_reward()
+        self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
+        reward += self.COT + self.r_motion + self.stability
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
         observation = [
@@ -124,6 +128,19 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         )
 
         return self.current_time_step
+
+    def reward_func(self, goal):
+        reward = self.quadruped.reward
+        reward += self.quadruped.compute_reward.motion_reward(
+            self.pos,
+            self.last_pos,
+            goal
+        )
+        reward += self.COT
+        reward += self.quadruped.get_stability_reward(goal[3:])
+        return reward, tf.convert_to_tensor(
+            np.expand_dims(goal, 0)
+        )
 
     def _current_time_step(self):
         return self.current_time_step

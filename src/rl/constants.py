@@ -51,6 +51,7 @@ params = {
     'm1'                          : 0.010059,
     'm2'                          : 0.026074,
     'm3'                          : 0.007661,
+    'future_steps'                : 4,
 }
 
 observation_spec = [
