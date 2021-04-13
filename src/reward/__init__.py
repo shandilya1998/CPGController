@@ -78,9 +78,6 @@ class FitnessFunction:
         COT = p_e * dt
         return -1 * COT
 
-    def motion_reward(self, history_pos, history_vel, history_desired_motion,\
-            pos, last_pos, desired_motion):
-        sum_1 = 0.0
-        sum_2 = 0.0
+    def motion_reward(self, pos, last_pos, desired_motion):
         motion = np.dot(pos - last_pos, desired_motion[:3])
         return motion

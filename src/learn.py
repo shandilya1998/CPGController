@@ -157,13 +157,47 @@ class Learner():
             learning_rate = lr_schedule
         )
         self.pretrain_dataset = self.load_dataset()
-        i, (x, y) = next(enumerate(self.pretrain_dataset))
-        self.osc = x[-1][0]
-        self.desired_motion = np.repeat(
-            np.expand_dims(x[0][0], 0),
-            self.params['max_steps'] + 1,
-            0
-        )
+        self.desired_motion = []
+        count = 0
+        for i, (x, y) in enumerate(self.pretrain_dataset):
+            self.desired_motion.append(np.repeat(
+                np.expand_dims(x[0][0], 0),
+                self.params['max_steps'] + 1,
+                0
+            ))
+            if count > 10:
+                break
+            count += 1
+        count = 0
+        for i, (x, y) in enumerate(self.pretrain_dataset):
+            x_ = np.zeros(x[0][0].shape, dtype = x[0][0].dtype)
+            x_[0] = -1 / np.sqrt(2, dtype = np.float32)
+            x_[1] = -1 / np.sqrt(2, dtype = np.float32)
+            x_[3] = x[0][0][4] / np.sqrt(2, dtype = np.float32)
+            x_[4] = x[0][0][4] / np.sqrt(2, dtype = np.float32)
+            self.desired_motion.append(np.repeat(
+                np.expand_dims(x_, 0),
+                self.params['max_steps'] + 1,
+                0
+            ))
+            if count > 10:
+                break
+            count += 1
+        count = 0
+        for i, (x, y) in enumerate(self.pretrain_dataset):
+            x_ = np.zeros(x[0][0].shape, dtype = x[0][0].dtype)
+            x_[0] = 1 / np.sqrt(2, dtype = np.float32)
+            x_[1] = -1 / np.sqrt(2, dtype = np.float32)
+            x_[3] = -x[0][0][4] / np.sqrt(2, dtype = np.float32)
+            x_[4] = x[0][0][4] / np.sqrt(2, dtype = np.float32)
+            self.desired_motion.append(np.repeat(
+                np.expand_dims(x_, 0),
+                self.params['max_steps'] + 1,
+                0
+            ))
+            if count > 10:
+                break
+            count += 1
         self._state = [
             self.env.quadruped.motion_state,
             self.env.quadruped.robot_state,
@@ -677,18 +711,19 @@ class Learner():
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
 
-    def learn(self, model_dir, experiment, start_epoch = 0, per = False):
+    def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
+            her = False):
         if per:
             print('[DDPG] Initializing PER')
             self.replay_buffer = PER(self.params)
         ep = 0
         self.epsilon = 1
         self._noise_init = [
-                    tf.expand_dims(tf.zeros(
-                        spec.shape,
-                        spec.dtype
-                    ), 0) for spec in self.env.action_spec()
-                ]
+            tf.expand_dims(tf.zeros(
+                spec.shape,
+                    spec.dtype
+                ), 0) for spec in self.env.action_spec()
+            ]
 
         motion_state, robot_state, osc_state = \
             self.env.quadruped.get_state_tensor()
@@ -710,7 +745,7 @@ class Learner():
 
         self._action = self.env._action_init
         self._noise = self._noise_init
-        self.env.set_motion_state(self.desired_motion[0])
+        self.env.set_motion_state(self.desired_motion[0][0])
         self.current_time_step = self.env.reset()
         self._state = self.current_time_step.observation
         print('[DDPG] Starting Pretraining Test')
@@ -744,7 +779,7 @@ class Learner():
             try:
                 self.current_time_step = self.env.step(
                     [action, self._action[1]],
-                    self.desired_motion[step + 1]
+                    self.desired_motion[0][step + 1]
                 )
             except FloatingPointError:
                 print('[DDPG] Floating Point Error in reward computation')
@@ -898,10 +933,14 @@ class Learner():
             d3 = pickle.load(pkl)
             pkl.close()
 
+        enc_goals = []
         while ep < self.params['train_episode_count']:
+            goal_id = np.random.randint(0, len(self.desired_motion))
+            desired_motion = self.desired_motion[goal_id]
+            enc_goals.append(desired_motion[0])
             self._action = self.env._action_init
             self._noise = self._noise_init
-            self.env.set_motion_state(self.desired_motion[0])
+            self.env.set_motion_state(desired_motion[0])
             self.current_time_step = self.env.reset()
             self._state = self.current_time_step.observation
             print('[DDPG] Starting Episode {i}'.format(i = ep))
@@ -936,7 +975,7 @@ class Learner():
                 try:
                     self.current_time_step = self.env.step(
                         [action, self._action[1]],
-                        self.desired_motion[step + 1]
+                        desired_motion[step + 1]
                     )
                 except FloatingPointError:
                     print('[DDPG] Floating Point Error in reward computation')
@@ -960,6 +999,22 @@ class Learner():
                 self.total_reward += self.current_time_step.reward.numpy()
                 self.replay_buffer.add_batch(experience)
                 self._state = self.current_time_step.observation
+                if her:
+                    k = self.params['future_s']
+                    if k > len(enc_goals):
+                        k = len(enc_goals)
+                    for future in np.random.randint(0, len(enc_goals), k):
+                        goal = enc_goals[future]
+                        reward, goal = self.env.reward_func(goal)
+                        experience = [
+                            [goal, self._state[1], self._state[2]],
+                            self._action,
+                            self._params,
+                            reward,
+                            self.current_time_step.observation,
+                            self.current_time_step.step_type
+                        ]
+                        self.replay_buffer.add_batch(experience)
                 print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                     ep = ep,
                     step = step,
@@ -1371,6 +1426,15 @@ if __name__ == '__main__':
         help = "Toggle PER"
     )
 
+    parser.add_argument(
+        "--her",
+        type = str2bool,
+        nargs = '?',
+        const = True,
+        default = False,
+        help = "Toggle HER"
+    )
+
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
     #learner.pretrain_actor(
@@ -1408,6 +1472,7 @@ if __name__ == '__main__':
         path,
         experiment = args.experiment,
         start_epoch = args.start,
-        per = args.per
+        per = args.per,
+        her = args.her
     )
     #"""

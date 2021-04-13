@@ -1101,16 +1101,13 @@ class Quadruped:
 
     def get_motion_reward(self):
         self.r_motion = self.compute_reward.motion_reward(
-            self.history_pos,
-            self.history_vel,
-            self.history_desired_motion,
             self.pos,
             self.last_pos,
             self.motion_state
         )
         return self.r_motion
 
-    def get_stability_reward(self):
+    def get_stability_reward(self, v_exp = None):
         reward = 0.0
         if self.upright:
             t_1 = max(self.A_time[0], self.B_time[0])
@@ -1119,11 +1116,16 @@ class Quadruped:
             self.t = max(self.A_time[1], self.B_time[1])
             eta = self.A[1]['eta']
             v_real = self.A[1]['v_real']
-            v_exp = self.A[1]['v_exp']
+            given = False
+            if v_exp is None:
+                v_exp = self.A[1]['v_exp']
+            else:
+                given = True
             if self.A_time[1] < self.B_time[1]:
                 eta = self.B[1]['eta']
-                v_real = self.A[1]['v_real']
-                v_exp = self.A[1]['v_exp']
+                v_real = self.B[1]['v_real']
+                if not given:
+                    v_exp = self.B[1]['v_exp']
             if self.Tb == 0:
                 reward += -5.0
                 return
