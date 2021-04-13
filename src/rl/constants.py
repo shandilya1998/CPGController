@@ -234,10 +234,10 @@ params.update({
 
 params_ars = {
     'nb_steps'                    : 1000,
-    'episode_length'              : 20,
+    'episode_length'              : 300,
     'learning_rate'               : 0.001,
     'nb_directions'               : 12,
-    'rnn_steps'                   : 100,
+    'rnn_steps'                   : 1,
     'nb_best_directions'          : 7,
     'noise'                       : 0.0003,
     'seed'                        : 1,

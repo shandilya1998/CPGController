@@ -507,8 +507,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     learner = Learner(params, params_ars, args.experiment)
 
-    learner.policy.load_weights('rl/out_dir/models/ars/exp5/policy/policy_ep50.ckpt')
-
     if not os.path.exists(args.out_path):
         os.mkdir(args.out_path)
 
