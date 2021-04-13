@@ -1064,7 +1064,7 @@ class Learner():
                 else:
                     self.save(model_dir, ep, rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
-                        stability, d1, d2, d3, tree)
+                        stability, d1, d2, d3, self.replay_buffer.priorityTree)
 
             _steps_.append(step + 1)
             total_reward.append(self.total_reward)
@@ -1084,6 +1084,7 @@ class Learner():
         pickle.dump(self.replay_buffer.buffer, pkl)
         pkl.close()
         if tree is not None:
+            print('[DDPG] Saving PER priorities')
             path = os.path.join(
                 model_dir,
                 'per_tree.pickle'
