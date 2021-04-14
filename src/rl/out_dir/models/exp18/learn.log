@@ -13848,3 +13848,35 @@ Check clock synchronization if your are running ROS across multiple machines![0
 [DDPG] Resetting Environment
 [DDPG] Starting Episode 1592
 [DDPG] Action value NaN. Ending Episode
+[DDPG] Critic Loss nan
+[DDPG] Total Reward 0.00000 Avg Critic Loss nan Time 12.85677
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1593
+[DDPG] Action value NaN. Ending Episode
+[DDPG] Critic Loss nan
+[DDPG] Total Reward 0.00000 Avg Critic Loss nan Time 12.31749
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1594
+[DDPG] Action value NaN. Ending Episode
+[DDPG] Critic Loss nan
+[DDPG] Total Reward 0.00000 Avg Critic Loss nan Time 13.66132
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 1595
+[DDPG] Action value NaN. Ending Episode
+[DDPG] Critic Loss nan
+[DDPG] Total Reward 0.00000 Avg Critic Loss nan Time 10.70636
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "learn.py", line 1494, in <module>
+    learner.learn(
+  File "learn.py", line 954, in learn
+    self.current_time_step = self.env.reset()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 56, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 817, in reset
+    rospy.sleep(1.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request

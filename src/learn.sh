@@ -4,7 +4,7 @@ export ROS_MASTER_URI=http://localhost:11344
 export GAZEBO_MASTER_URI=http://localhost:11345
 
 OUT_PATH="rl/out_dir/models"
-EXPERIMENT=20
+EXPERIMENT=21
 START=0
 PER="false"
 HER="true"

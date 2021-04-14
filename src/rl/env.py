@@ -131,14 +131,14 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         return self.current_time_step
 
     def reward_func(self, goal):
-        reward = self.quadruped.reward
-        reward += self.quadruped.compute_reward.motion_reward(
+        reward = self.quadruped.compute_reward.motion_reward(
             self.quadruped.pos,
             self.quadruped.last_pos,
             goal
         )
         reward += self.COT
         reward += self.quadruped.get_stability_reward(goal[3:])
+        #reward += self.quadruped.reward
         return np.float32(reward), tf.convert_to_tensor(
             np.expand_dims(goal, 0).astype('float32')
         )
