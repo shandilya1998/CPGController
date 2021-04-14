@@ -1004,7 +1004,7 @@ class Quadruped:
         else:
             #raise NotImplementedError
             self.upright = False
-            self.reward += -10.0
+            self.reward += -1.0
 
     def set_last_pos(self):
         self.last_pos = self.pos
@@ -1127,7 +1127,7 @@ class Quadruped:
                 if not given:
                     v_exp = self.B[1]['v_exp']
             if self.Tb == 0:
-                reward += -5.0
+                reward += -1.0
                 return
             self.compute_reward.build(
                 self.t,
@@ -1152,11 +1152,11 @@ class Quadruped:
             )
             reward += np.nan_to_num(self.stability)
             if self.compute_reward.zmp.support_plane.flag:
-                reward += -5.0
+                reward += -1.0
             if math.isnan(reward):
-                reward += -5.0
+                reward += -1.0
         else:
-            reward += -5.0
+            reward += -1.0
         return reward
 
     def step(self, action, desired_motion):
@@ -1171,7 +1171,7 @@ class Quadruped:
         self.torque = self.get_moment()
         vd = np.linalg.norm(self.v_exp)
         if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
-            self.reward += -5.0
+            self.reward += -1.0
         if vd == 0:
             vd = 1e-8
         self.eta = (self.params['L'] + self.params['W'])/(2*vd)

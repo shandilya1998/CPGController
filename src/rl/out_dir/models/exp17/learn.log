@@ -33361,3 +33361,97 @@ Check clock synchronization if your are running ROS across multiple machines![0
 [DDPG] Quadruped Not Upright
 [DDPG] Episode 4137 Step 0 Reward -15.69047 Time 1.74683
 [DDPG] Starting Next Episode
+[DDPG] Critic Loss 124.71428680419922
+[DDPG] Total Reward -15.69047 Avg Critic Loss 124.71429 Time 31.17175
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4138
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4138 Step 0 Reward -15.94961 Time 1.83367
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 164.3572998046875
+[DDPG] Total Reward -15.94961 Avg Critic Loss 164.35730 Time 28.37790
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4139
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4139 Step 0 Reward -16.11586 Time 2.08188
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 124.37176513671875
+[DDPG] Total Reward -16.11586 Avg Critic Loss 124.37177 Time 28.00663
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4140
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4140 Step 0 Reward -16.03364 Time 1.73418
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 166.7494354248047
+[DDPG] Total Reward -16.03364 Avg Critic Loss 166.74944 Time 26.46829
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4141
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4141 Step 0 Reward -15.85696 Time 1.48929
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 167.00619506835938
+[DDPG] Total Reward -15.85696 Avg Critic Loss 167.00620 Time 29.49996
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4142
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4142 Step 0 Reward -15.89744 Time 1.32990
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 165.91925048828125
+[DDPG] Total Reward -15.89744 Avg Critic Loss 165.91925 Time 29.09135
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4143
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4143 Step 0 Reward -15.89860 Time 1.40840
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 126.72314453125
+[DDPG] Total Reward -15.89860 Avg Critic Loss 126.72314 Time 25.51595
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4144
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4144 Step 0 Reward -15.91693 Time 1.57151
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 168.3125762939453
+[DDPG] Total Reward -15.91693 Avg Critic Loss 168.31258 Time 28.41728
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4145
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4145 Step 0 Reward -15.93286 Time 1.98012
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 166.37730407714844
+[DDPG] Total Reward -15.93286 Avg Critic Loss 166.37730 Time 26.81600
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4146
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4146 Step 0 Reward -15.95614 Time 1.80823
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 164.90786743164062
+[DDPG] Total Reward -15.95614 Avg Critic Loss 164.90787 Time 30.86894
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4147
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4147 Step 0 Reward -16.02609 Time 1.73524
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 164.6953887939453
+[DDPG] Total Reward -16.02609 Avg Critic Loss 164.69539 Time 27.46563
+[DDPG] Resetting Environment
+[DDPG] Starting Episode 4148
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 4148 Step 0 Reward -15.91389 Time 1.22749
+[DDPG] Starting Next Episode
+[DDPG] Critic Loss 167.7411346435547
+[DDPG] Total Reward -15.91389 Avg Critic Loss 167.74113 Time 26.86702
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "learn.py", line 1406, in <module>
+    model_dir,
+  File "learn.py", line 905, in learn
+    pkl.close()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 55, in _reset
+    self._episode_ended = True
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 918, in reset
+    rospy.sleep(2.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
