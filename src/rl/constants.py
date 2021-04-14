@@ -9,6 +9,7 @@ params = {
     'dt'                          : 0.001,
     'units_output_mlp'            : [30, 45, 24, action_dim],
     'units_osc'                   : units_osc,
+    'units_combine_rddpg'         : [150, 60, units_osc],
     'units_combine'               : [60, 40, units_osc],
     'units_robot_state'           : [80, 120, 60, units_osc],
     'units_motion_state'          : [30, 60, 30],
