@@ -5143,4 +5143,63 @@ You can start planning now!
 [0m[ INFO] [1618323959.645496469, 0.189000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618323959.646943650, 0.189000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618323959.647001986, 0.189000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
-[0m[ INFO] [1618323959.665482907, 0.189000000]: GazeboRo
+[0m[ INFO] [1618323959.665482907, 0.189000000]: GazeboRo[New Thread 0x7fffcd02a700 (LWP 736566)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe260, rem=0x7fffffffe270)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 337870] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1618400785.299643, 13022.783000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1618323945.748721, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1618323959.659646, 0.189000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1618323959.674159, 0.191000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1618323959.705107, 0.202000]: Loading controller: front_right_leg_controller
+[INFO] [1618323959.980639, 0.255000]: Loading controller: front_left_leg_controller
+[INFO] [1618323960.186027, 0.302000]: Loading controller: back_right_leg_controller
+[INFO] [1618323960.368263, 0.352000]: Loading controller: back_left_leg_controller
+[INFO] [1618323960.552626, 0.389000]: Loading controller: joint_state_controller
+[INFO] [1618323960.586046, 0.395000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618323960.623327, 0.402000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618400770.187407, 13022.734000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618400770.189229, 13022.734000]: Stopping all controllers...
+[INFO] [1618400770.224062, 13022.742000]: Unloading all loaded controllers...
+[INFO] [1618400770.226905, 13022.743000]: Trying to unload joint_state_controller
+[INFO] [1618400770.262535, 13022.757000]: Succeeded in unloading joint_state_controller
+[INFO] [1618400770.263842, 13022.757000]: Trying to unload back_left_leg_controller
+[INFO] [1618400770.318844, 13022.777000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618400770.320148, 13022.777000]: Trying to unload back_right_leg_controller
+[31m[quadruped/controller_spawner-4] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [337808][0m
+[1mROS_MASTER_URI=http://localhost:11340[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11340
+[1msetting /run_id to 142d64d0-9c64-11eb-b496-59b95093d4bb[0m
+[1mprocess[rosout-1]: started with pid [337834][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [337843][0m
+[1mprocess[urdf_spawner-3]: started with pid [337845][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [337852][0m
+[1mprocess[joint_state_publisher-5]: started with pid [337856][0m
+[1mprocess[robot_state_publisher-6]: started with pid [337859][0m
+[1mprocess[move_group-7]: started with pid [337861][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/142d64d0-9c64-11eb-b496-59b95093d4bb/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
