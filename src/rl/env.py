@@ -138,7 +138,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         )
         reward += self.COT
         reward += self.quadruped.get_stability_reward(goal[3:])
-        #reward += self.quadruped.reward
+        reward += self.quadruped.reward
         return np.float32(reward), tf.convert_to_tensor(
             np.expand_dims(goal, 0).astype('float32')
         )
