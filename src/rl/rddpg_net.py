@@ -1,6 +1,90 @@
 import tensorflow as tf
 from layers import actor, critic
 
+def swap_batch_timestep(input_t):
+    # Swap the batch and timestep dim for the incoming tensor.
+    axes = list(range(len(input_t.shape)))
+    axes[0], axes[1] = 1, 0
+    return tf.transpose(input_t, axes)
+
+class TimeDistributed(tf.keras.Model):
+    def __init__(self, params, rnn_cell, name, state_sizes, trainable = True):
+        super(TimeDistributed, self).__init__(
+            name = name,
+            trainable = trainable
+        )
+        self.params = params
+        self.rnn_cell = rnn_cell
+        self.num_outputs = len(self.rnn_cell.outputs)
+        self.state_sizes = state_sizes
+        self.num_states = len(self.state_sizes)
+        self.steps = self.params['max_steps']
+
+    def call(self, inputs):
+        states = inputs[-1 * self.num_states:]
+        inputs = inputs[:-1 * self.num_states]
+        arrays = [
+            tf.TensorArray(
+                dtype = tf.dtypes.float32,
+                size = 0,
+                dynamic_size = True
+            ) for i in range(len(inputs))
+        ]
+
+        inputs = [swap_batch_timestep(inp) for inp in inputs]
+        steps = [inp.shape[0] for inp in inputs]
+        batch_size = [inp.shape[1] for inp in inputs]
+        batch_size = list(set(batch_size))
+        steps = list(set(steps))
+        if len(steps) > 1:
+            raise ValueError('All input Tensors must be of the same length')
+        if len(batch_size) > 1:
+            raise ValueError('All input Tensors must be of the same length')
+        steps = steps[0]
+        batch_size = batch_size[1]
+        if steps > self.params['max_steps']:
+            raise ValueError(
+                'Input length must be less than {i1}, got {i2}'.format(
+                    i1 = self.params['max_steps'], 
+                    i2 = steps
+                )
+            )
+        if steps != self.steps:
+            self.steps = steps
+        arrays = [
+            array.unstack(inp) for array, inp in zip(arrays, inputs)
+        ]
+        outputs = [
+            tf.TensorArray(
+                size = 0,
+                dtype = tf.dtypes.float32,
+                dynamic_size = True
+            ) for i in range(self.num_outputs)
+        ]
+        step = tf.constant(0, dtype = tf.dtypes.float32)
+        def cond(step, outputs, states):
+            return tf.math.less(step, self.steps)
+
+        def body(step, outputs, states):
+            rnn_inp = [inp.read(step) for inp in arrays] + states
+            rnn_out = self.rnn_cell(rnn_inp)
+            states = rnn_out[-1 * self.num_states:]
+            outputs = [
+                out.write(step,rnn_o) for out, rnn_o in zip(outputs,rnn_out)
+            ]
+            step = tf.math.add(step, tf.constant(1,dtype=tf.dtypes.float32))
+            return step, outputs, states
+
+        step, outputs, states = tf.while_loop(
+            cond, body, [step, outputs, states]
+        )
+
+        outputs = [
+            swap_batch_timestep(out.stack()) for out in outputs
+        ]
+
+        return outputs
+
 class ActorNetwork(object):
     def __init__(self, params, create_target = True):
         self.BATCH_SIZE = params['BATCH_SIZE']
@@ -66,7 +150,7 @@ class ActorNetwork(object):
             name = 'omega gru state'
         )
 
-        S.append(s1, s2)
+        #S.extend([s1, s2])
 
         inp_size = 0
         for spec in params['observation_spec'][:2]:
@@ -77,12 +161,12 @@ class ActorNetwork(object):
             dtype = tf.dtypes.float32
         )
 
-        gru_cell_out = tf.keras.layers.GRUCell(
+        combine_out, combine_state  = tf.keras.layers.GRUCell(
             units = params['units_combine_rddpg'][0],
             kernel_regularizer = tf.keras.regularizers.l2(1e-3),
             name = 'params_net_combine_gru'
         )(inp, s1)
-        combine_dense = tf.keras.Sequential('combine_dense')
+        combine_dense = tf.keras.Sequential(name = 'combine_dense')
         for i, units in enumerate(params['units_combine_rddpg'][1:]):
             combine_dense.add(
                 tf.keras.layers.Dense(
@@ -92,12 +176,20 @@ class ActorNetwork(object):
                     name = 'param_net_combine_dense_{i}'.format(i = i)
                 )
             )
-        out = combine_dense(gru_cell_out)
-        combine_model = tf.keras.Model(inputs = [inp, s1], outputs = [out])
+        out = combine_dense(combine_out)
+        combine_model = tf.keras.Model(
+            inputs = [inp, s1],
+            outputs = [out, combine_state]
+        )
 
         encoder = actor.get_state_encoder_v2(params,combine_model,trainable)
-        [state, omega, mu, mean, new_state, new_m_state] = encoder(S[:2])
-        model = tf.keras.Model(inputs=S, outputs=[state, omega, mu, mean, new_state, new_m_state])
+        [state, omega, mu, mean, new_state, new_m_state] = encoder(
+            S[:2] + [s1, s2]
+        )
+        model = tf.keras.Model(
+            inputs = S + [s1, s2],
+            outputs = [state, omega, mu, mean, new_state, new_m_state]
+        )
         return model
 
     def make_untrainable(self, model):
@@ -117,12 +209,47 @@ class ActorNetwork(object):
         [action, z_out] = actor.get_complex_mlp(params)(
             [encoder.inputs[2], state, omega]
         )
-        outputs = [[action, z_out], [omega, mu, mean, state, new_state, new_m_state]]
+        outputs = [
+            action, z_out, omega, mu, mean, state, new_state, new_m_state
+        ]
         model = tf.keras.Model(inputs = encoder.inputs, outputs = outputs)
         return model, model.trainable_weights, model.inputs
 
     def create_actor_network(self, params, encoder = None):
         actor_cell = self.create_actor_cell(params, encoder)
+        S = [
+            tf.keras.Input(
+                shape = (None, spec.shape[-1]),
+                dtype = spec.dtype,
+                name = spec.name
+            ) for spec in params['observation_spec']
+        ]
+
+        s1 = tf.keras.Input(
+            shape = (params['units_combine_rddpg'][0]),
+            dtype = tf.dtypes.float32,
+            name = 'combine gru state'
+        )
+
+        s2 = tf.keras.Input(
+            shape = (params['units_omega'][0]),
+            dtype = tf.dtypes.float32,
+            name = 'omega gru state'
+        )
+
+        S += [s1, s2]
+        outputs = TimeDistributed(
+            params,
+            actor_cell,
+            'TimeDistributedActor',
+            [
+                params['units_combine_rddpg'][0],
+                params['units_omega'][0]
+            ],
+            trainable = True
+        )
+        model = tf.keras.Model(inputs = S, outputs = outputs)
+        return model
 
 class CriticNetwork(object):
     def __init__(self, params):
