@@ -1,0 +1,40 @@
+2021-04-14 05:48:38.793447: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-14 05:48:38.793518: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-14 05:48:52.057837: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-14 05:48:52.058299: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-14 05:48:52.058354: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-14 05:48:52.058395: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+[DDPG] Building the actor model
+2021-04-14 05:48:52.109859: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-14 05:48:52.110257: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Building the actor model
+[DDPG] Building the critic model
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618359546.145457390, 1.133000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618359546.149040321, 1.134000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618359546.149544472, 1.134000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618359548.033893988, 1.342000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618359552.757184920, 1.960000000]: Ready to take commands for planning group front_left_leg.[0m
+Traceback (most recent call last):
+  File "learn.py", line 1462, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "learn.py", line 124, in __init__
+    self.env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 44, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 457, in __init__
+    self.kinematics = Kinematics(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 33, in __init__
+    self.back_right_leg = moveit_commander.MoveGroupCommander(
+  File "/opt/ros/noetic/lib/python3/dist-packages/moveit_commander/move_group.py", line 53, in __init__
+    self._g = _moveit_move_group_interface.MoveGroupInterface(name, robot_description, ns, wait_for_servers)
+RuntimeError: Unable to connect to move_group action server 'place' within allotted time (5s)
