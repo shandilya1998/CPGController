@@ -97,7 +97,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             self.r_motion += self.quadruped.get_motion_reward()
         self.quadruped.set_support_lines()
         self.stability += 0.002 * self.quadruped.get_stability_reward()
-        #reward += self.quadruped.reward
+        reward += self.quadruped.reward
         reward += self.COT + self.r_motion + self.stability
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
