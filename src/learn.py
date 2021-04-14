@@ -700,13 +700,13 @@ class Learner():
             action[0],
             0.0,
             0.15,
-            0.02
+            0.2
         )
         self._noise[1] = max(self.epsilon, 0) * self.OU.function(
             action[1],
             0.0,
             0.15,
-            0.02
+            0.2
         )
         self._action[0] = action[0] + self._noise[0]
         self._action[1] = action[1] + self._noise[1]
