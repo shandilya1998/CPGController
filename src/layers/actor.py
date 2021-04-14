@@ -104,26 +104,6 @@ class ParamNet(tf.keras.layers.Layer):
                 kernel_regularizer = tf.keras.regularizers.l2(1e-3)
             )
         )
-        """
-        self.A_layers = tf.keras.Sequential(name = 'mu_dense')
-        for i, units in enumerate(units_mu):
-            self.A_layers.add(
-                tf.keras.layers.Dense(
-                    units = units,
-                    activation = activation_mu,
-                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
-                    name = 'A_dense_{i}'.format(i = i)
-                )
-            )
-        self.A_layers.add(
-            tf.keras.layers.Dense(
-                units = units_osc,
-                activation = tf.keras.activations.linear,
-                name = 'A_dense_out',
-                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
-            )
-        )
-        """
 
         self.mean_layers = tf.keras.Sequential(name = 'mean_dense')
         for i, units in enumerate(units_mean):
@@ -171,9 +151,102 @@ class ParamNet(tf.keras.layers.Layer):
         omega = self.omega_layers(inputs[0])
         return [state, omega, mu, mean]
 
+
+class ParamNetV2(tf.keras.layers.Layer):
+    def __init__(
+            self,
+            units_osc,
+            action_dim,
+            combine_model,
+            units_mu,
+            units_omega,
+            units_mean,
+            activation_mu = 'elu',
+            activation_mean = 'elu',
+            activation_omega = 'elu',
+            name = 'param_net',
+            trainable = True
+        ):
+        super(ParamNetV2, self).__init__(trainable, name)
+
+        self.combine_rnn = combine_model
+
+        self.mu_layers = tf.keras.Sequential(name = 'mu_dense')
+        for i, units in enumerate(units_mu):
+            self.mu_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_mu,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'mu_dense_{i}'.format(i = i)
+                )
+            )
+        self.mu_layers.add(
+            tf.keras.layers.Dense(
+                units = action_dim,
+                activation = tf.keras.activations.linear,
+                name = 'mu_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
+        )
+
+        self.mean_layers = tf.keras.Sequential(name = 'mean_dense')
+        for i, units in enumerate(units_mean):
+            self.mean_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_mean,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'mean_dense_{i}'.format(i = i)
+                )
+            )
+
+        self.mean_layers.add(
+            tf.keras.layers.Dense(
+                units = action_dim,
+                activation = tf.keras.activations.linear,
+                name = 'mean_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
+        )
+
+        self.omega_gru = tf.keras.layers.GRUCell(
+            units = units_omega[0],
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+            name = 'omega_gru_{i}'.format(i = i)
+        )
+
+        self.omega_layers = tf.keras.Sequential(name = 'omega_dense')
+        for i, units in enumerate(units_omega[1:]):
+            self.omega_layers.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = activation_omega,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'omega_dense_{i}'.format(i = i)
+                )
+            )
+        self.omega_layers.add(
+            tf.keras.layers.Dense(
+                units = 1,
+                activation = tf.keras.activations.linear,
+                name = 'omega_dense_out',
+                kernel_regularizer = tf.keras.regularizers.l2(1e-3)
+            )
+        )
+
+    def call(self, inputs):
+        state = tf.concat(inputs[:-2], -1)
+        state, new_state = self.combine_rnn(state, inputs[-2])
+        mu = self.mu_layers(state)
+        mean = self.mean_layers(state)
+        m_state, new_m_state = self.omega_gru(inputs[0], inputs[-1])
+        omega = self.omega_layers(m_state)
+        return [state, omega, mu, mean, new_state, new_m_state]
+
 class Encoder(tf.keras.Model):
-    def __init__(self, 
-            params, 
+    def __init__(self,
+            params,
             name = 'state_encoder',
             trainable = True,
         ):
@@ -182,7 +255,7 @@ class Encoder(tf.keras.Model):
             trainable = trainable
         )
         self.motion_encoder, self.robot_encoder = get_encoders(
-            params, 
+            params,
             trainable
         )
         self.param_net = get_param_net(params, trainable)
@@ -198,8 +271,41 @@ class Encoder(tf.keras.Model):
     def call(self, inputs):
         motion_state = self.motion_encoder(inputs[0])
         robot_state = self.robot_encoder(inputs[1])
-        [state, omega, mu, mean] = self.param_net([motion_state, robot_state])
+        [state, omega, mu, mean]=self.param_net([motion_state, robot_state])
         return [state, omega, mu, mean]
+
+class EncoderV2(tf.keras.Model):
+    def __init__(self,
+            params,
+            combine_model,
+            name = 'state_encoder',
+            trainable = True,
+        ):
+        super(EncoderV2, self).__init__(
+            name = name,
+            trainable = trainable
+        )
+        self.motion_encoder, self.robot_encoder = get_encoders(
+            params,
+            trainable
+        )
+        self.param_net = get_param_net_v2(params, combine_model, trainable)
+
+    def build(self, input_shapes):
+        self.motion_state_shape = input_shapes[0]
+        self.robot_state_shape = input_shapes[1]
+        self.motion_encoder.build(self.motion_state_shape)
+        self.robot_encoder.build(self.robot_state_shape)
+        self.param_net.build(input_shapes)
+        self.build = True
+
+    def call(self, inputs):
+        motion_state = self.motion_encoder(inputs[0])
+        robot_state = self.robot_encoder(inputs[1])
+        inputs[0] = motion_state
+        inputs[1] = robot_state
+        [state, omega, mu, mean, new_state, new_m_state]=self.param_net(inputs)
+        return [state, omega, mu, mean, new_state, new_m_state]
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -377,11 +483,26 @@ def get_encoders(params, trainable = True):
 def get_state_encoder(params, trainable = True):
     return Encoder(params, trainable = trainable)
 
+def get_state_encoder_v2(params, combine_model, trainable = True):
+    return EncoderV2(params, combine_model, trainable = trainable)
+
 def get_param_net(params, trainable = True):
     param_net = ParamNet(
         units_osc = params['units_osc'],
         action_dim = params['action_dim'],
         units_combine = params['units_combine'],
+        units_mu = params['units_mu'],
+        units_omega = params['units_omega'],
+        units_mean = params['units_mean'],
+        trainable = trainable
+    )
+    return param_net
+
+def get_param_net_v2(params, combine_model, trainable = True):
+    param_net = ParamNetV2(
+        units_osc = params['units_osc'],
+        action_dim = params['action_dim'],
+        combine_model = combine_model,
         units_mu = params['units_mu'],
         units_omega = params['units_omega'],
         units_mean = params['units_mean'],
