@@ -44,7 +44,18 @@ def find_max_epoch(experiment, model):
             try:
                 numbers.append(int(f[:-7].split('_')[-1]))
             except ValueError:
+                print(f)
                 pass
+    if len(numbers) == 0:
+        for f in files:
+            if 'ckpt' in f or 'png' in f or 'checkpoint' in f:
+                continue
+            else:
+                try:
+                    numbers.append(int(f[:-7].split('_')[-1]))
+                except ValueError:
+                    print(f)
+                    pass
     return max(numbers)
 
 def get_filename(experiment, model, item, epoch):

@@ -1,9 +1,9 @@
 #!/bin/sh
 
-EXPERIMENT=30
+EXPERIMENT=23
 MODEL="enc"
-EPOCHS="99"
-ITEM=""
+EPOCHS="72"
+ITEM="action"
 
 OUT="exp$EXPERIMENT/"
 FILE="exp$EXPERIMENT/"
