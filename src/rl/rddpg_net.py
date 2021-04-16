@@ -41,7 +41,7 @@ class TimeDistributed(tf.keras.Model):
         if len(batch_size) > 1:
             raise ValueError('All input Tensors must be of the same length')
         steps = steps[0]
-        batch_size = batch_size[1]
+        batch_size = batch_size[0]
         if steps > self.params['max_steps']:
             raise ValueError(
                 'Input length must be less than {i1}, got {i2}'.format(
@@ -61,7 +61,7 @@ class TimeDistributed(tf.keras.Model):
                 dynamic_size = True
             ) for i in range(self.num_outputs)
         ]
-        step = tf.constant(0, dtype = tf.dtypes.float32)
+        step = tf.constant(0, dtype = tf.dtypes.int32)
         def cond(step, outputs, states):
             return tf.math.less(step, self.steps)
 
@@ -72,7 +72,7 @@ class TimeDistributed(tf.keras.Model):
             outputs = [
                 out.write(step,rnn_o) for out, rnn_o in zip(outputs,rnn_out)
             ]
-            step = tf.math.add(step, tf.constant(1,dtype=tf.dtypes.float32))
+            step = tf.math.add(step, tf.constant(1, dtype=tf.dtypes.int32))
             return step, outputs, states
 
         step, outputs, states = tf.while_loop(
@@ -82,7 +82,13 @@ class TimeDistributed(tf.keras.Model):
         outputs = [
             swap_batch_timestep(out.stack()) for out in outputs
         ]
-
+        for i, out in enumerate(outputs):
+            shape = outputs[i].shape.as_list()
+            if len(shape) > 2:
+                shape[1] = self.steps
+                outputs[i] = tf.ensure_shape(
+                    outputs[i], shape
+                )
         return outputs
 
 class ActorNetwork(object):
@@ -138,10 +144,19 @@ class ActorNetwork(object):
             ) for spec in params['observation_spec']
         ]
 
+        self.recurrent_state_init = []
+
         s1 = tf.keras.Input(
             shape = (params['units_combine_rddpg'][0]),
             dtype = tf.dtypes.float32,
             name = 'combine gru state'
+        )
+
+        self.recurrent_state_init.append(
+            tf.zeros(
+                shape = (1, params['units_combine_rddpg'][0]),
+                dtype = tf.dtypes.float32
+            )
         )
 
         s2 = tf.keras.Input(
@@ -150,11 +165,17 @@ class ActorNetwork(object):
             name = 'omega gru state'
         )
 
+        self.recurrent_state_init.append(
+            tf.zeros(
+                shape = (1, params['units_omega'][0]),
+                dtype = tf.dtypes.float32
+            )
+        )
+
         #S.extend([s1, s2])
 
-        inp_size = 0
-        for spec in params['observation_spec'][:2]:
-            inp_size += spec.shape[-1]
+        inp_size = params['units_robot_state'][-1] + \
+            params['units_motion_state'][-1]
 
         inp = tf.keras.Input(
             shape = (inp_size,),
@@ -201,7 +222,7 @@ class ActorNetwork(object):
         self.model = model
 
     def create_actor_cell(self, params, encoder = None):
-        print('[DDPG] Building the actor model')
+        print('[DDPG] Building the actor cell')
         if encoder is None:
             encoder = self.create_encoder(params)
         state, omega, mu, mean, new_state, new_m_state = encoder.outputs
@@ -216,10 +237,11 @@ class ActorNetwork(object):
         return model, model.trainable_weights, model.inputs
 
     def create_actor_network(self, params, encoder = None):
-        actor_cell = self.create_actor_cell(params, encoder)
+        actor_cell, _, _ = self.create_actor_cell(params, encoder)
+        print('[DDPG] Building the actor model')
         S = [
             tf.keras.Input(
-                shape = (None, spec.shape[-1]),
+                shape = (params['max_steps'], spec.shape[-1]),
                 dtype = spec.dtype,
                 name = spec.name
             ) for spec in params['observation_spec']
@@ -247,9 +269,9 @@ class ActorNetwork(object):
                 params['units_omega'][0]
             ],
             trainable = True
-        )
+        )(S)
         model = tf.keras.Model(inputs = S, outputs = outputs)
-        return model
+        return model, model.trainable_weights, S
 
 class CriticNetwork(object):
     def __init__(self, params):
@@ -268,19 +290,20 @@ class CriticNetwork(object):
         )
         self.mse =tf.keras.losses.MeanSquaredError()
 
-    def q_grads(self, states, actions, mu, mean):
+    def q_grads(self, states, actions, mu, mean, rc_state):
         with tf.GradientTape() as tape:
             watch = actions + [mu, mean]
             tape.watch(watch)
-            inputs = states + actions + [mu, mean]
+            inputs = states + actions + [mu, mean, rc_state]
             q_values = self.model(inputs)
         return tape.gradient(q_values, watch)
 
-    def train(self, states, actions, mu, mean, y, per = False, W = None):
+    def train(self, states, actions, mu, mean, rc_state, \
+            y, per = False, W = None):
         with tf.GradientTape() as tape:
-            inputs = states + actions + [mu, mean]
+            inputs = states + actions + [mu, mean, rc_state]
             y_pred = self.model(inputs)
-            loss = 0.0
+            deltas = None
             loss = self.loss(y, y_pred, sample_weight = W)
             if per:
                 deltas = y_pred - y
@@ -308,12 +331,12 @@ class CriticNetwork(object):
     def loss(self, y_true, y_pred, sample_weight):
         return self.mse(y_true, y_pred, sample_weight)
 
-    def create_critic_network(self, params):
-        print('[DDPG] Building the critic model')
+    def create_critic_cell(self, params):
+        print('[DDPG] Building the critic cell')
 
         S = [
             tf.keras.Input(
-                shape = spec.shape, 
+                shape = spec.shape,
                 dtype = spec.dtype
             ) for spec in params['observation_spec']
         ]
@@ -335,13 +358,77 @@ class CriticNetwork(object):
             dtype = params['action_spec'][0].dtype
         )
 
-        inputs = S + A + [mu, mean]
+        state = tf.keras.Input(
+            shape = (params['units_gru_rddpg'],),
+            dtype = tf.dtypes.float32
+        )
 
-        cr = critic.get_critic(params)
+        self.recurrent_state_init = [
+            tf.zeros(
+                shape = (1, params['units_gru_rddpg']),
+                dtype = tf.dtypes.float32
+            )
+        ]
+
+        inputs = S + A + [mu, mean, state]
+
+        cr = critic.get_critic_v2(params)
         out = cr(inputs)
         model = tf.keras.Model(
-            inputs = [S, A, mu, mean],
+            inputs = inputs,
             outputs = out
         )
 
+        return model, A, S
+
+    def create_critic_network(self, params):
+        critic_cell, _, _ = self.create_critic_cell(params)
+        print('[DDPG] Building the critic model')
+        S = [
+            tf.keras.Input(
+                shape = (params['max_steps'], spec.shape[-1]),
+                dtype = spec.dtype
+            ) for spec in params['observation_spec']
+        ]
+
+        A = [
+            tf.keras.Input(
+                shape = (
+                    params['max_steps'],
+                    spec.shape[-2],
+                    spec.shape[-1]),
+                dtype = spec.dtype
+            ) for spec in params['action_spec']
+        ]
+
+        mu = tf.keras.Input(
+            shape = (params['max_steps'], params['action_dim']),
+            dtype = params['action_spec'][0].dtype
+        )
+
+        mean = tf.keras.Input(
+            shape = (params['max_steps'], params['action_dim']),
+            dtype = params['action_spec'][0].dtype
+        )
+
+        state = tf.keras.Input(
+            shape = (params['units_gru_rddpg'],),
+            dtype = tf.dtypes.float32
+        )
+
+        inputs = S + A + [mu, mean, state]
+
+        outputs = TimeDistributed(
+            params,
+            critic_cell,
+            'TimeDistributedCritic',
+            [
+                params['units_gru_rddpg']
+            ],
+            trainable = True
+        )(inputs)
+        model = tf.keras.Model(
+            inputs = inputs,
+            outputs = outputs
+        )
         return model, A, S
