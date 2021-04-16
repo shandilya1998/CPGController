@@ -26,7 +26,7 @@ params = {
     'TEST_AFTER_N_EPISODES'       : 25,
     'TAU'                         : 0.005,
     'decay_steps'                 : int(20),
-    'LRA'                         : 1e-3,
+    'LRA'                         : 1e-4,
     'LRC'                         : 1e-3,
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,

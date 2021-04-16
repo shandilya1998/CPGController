@@ -416,4 +416,70 @@ You can start planning now!
 [0m[ INFO] [1618508893.942037418, 0.195000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618508893.942077859, 0.195000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618508893.961525957, 0.195000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
-[0m[ INFO] [
+[0m[ INFO] [[New Thread 0x7fffcd02a700 (LWP 1513526)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe260, rem=0x7fffffffe270)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 1301221] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1618549763.901588, 12049.620000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1618508886.379855, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1618508893.947674, 0.195000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1618508893.973091, 0.200000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1618508893.984612, 0.211000]: Loading controller: front_right_leg_controller
+[INFO] [1618508894.154253, 0.306000]: Loading controller: front_left_leg_controller
+[INFO] [1618508894.253475, 0.343000]: Loading controller: back_right_leg_controller
+[INFO] [1618508894.356627, 0.387000]: Loading controller: back_left_leg_controller
+[INFO] [1618508894.460456, 0.424000]: Loading controller: joint_state_controller
+[INFO] [1618508894.475423, 0.427000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618508894.492867, 0.433000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618549748.824845, 12049.569000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618549748.826579, 12049.570000]: Stopping all controllers...
+[INFO] [1618549748.841005, 12049.579000]: Unloading all loaded controllers...
+[INFO] [1618549748.842268, 12049.579000]: Trying to unload joint_state_controller
+[INFO] [1618549748.869402, 12049.590000]: Succeeded in unloading joint_state_controller
+[INFO] [1618549748.870648, 12049.590000]: Trying to unload back_left_leg_controller
+[INFO] [1618549748.891849, 12049.599000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618549748.893454, 12049.600000]: Trying to unload back_right_leg_controller
+[INFO] [1618549748.914571, 12049.610000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1618549748.915904, 12049.610000]: Trying to unload front_left_leg_controller
+[INFO] [1618549748.943309, 12049.620000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1618549748.944892, 12049.620000]: Trying to unload front_right_leg_controller
+[31m[gazebo_gui-3] process has died [pid 1301195, exit code 134, cmd /opt/ros/noetic/lib/gazebo_ros/gzclient __name:=gazebo_gui __log:=/home/ubuntu/.ros/log/b4a7db48-9e12-11eb-b496-59b95093d4bb/gazebo_gui-3.log].
+log file: /home/ubuntu/.ros/log/b4a7db48-9e12-11eb-b496-59b95093d4bb/gazebo_gui-3*.log[0m
+[31m[quadruped/controller_spawner-5] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [1301170][0m
+[1mROS_MASTER_URI=http://localhost:11348[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11348
+[1msetting /run_id to b4a7db48-9e12-11eb-b496-59b95093d4bb[0m
+[1mprocess[rosout-1]: started with pid [1301185][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [1301194][0m
+[1mprocess[gazebo_gui-3]: started with pid [1301195][0m
+[1mprocess[urdf_spawner-4]: started with pid [1301197][0m
+[1mprocess[quadruped/controller_spawner-5]: started with pid [1301203][0m
+[1mprocess[joint_state_publisher-6]: started with pid [1301204][0m
+[1mprocess[robot_state_publisher-7]: started with pid [1301207][0m
+[1mprocess[move_group-8]: started with pid [1301208][0m
+[1m[urdf_spawner-4] process has finished cleanly
+log file: /home/ubuntu/.ros/log/b4a7db48-9e12-11eb-b496-59b95093d4bb/urdf_spawner-4*.log[0m
+[move_group-8] killing on exit
+[robot_state_publisher-7] killing on exit
+[joint_state_publisher-6] killing on exit
+[quadruped/controller_spawner-5] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
