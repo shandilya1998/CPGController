@@ -733,7 +733,7 @@ class Learner():
         print('[DDPG] Training Start')
         critic_loss = []
         total_critic_loss = []
-        rewards = []
+        hist_rewards = []
         total_reward = []
         _steps_ = []
         COT = []
@@ -1005,10 +1005,9 @@ class Learner():
                 d1.append(self.env.quadruped.d1)
                 d2.append(self.env.quadruped.d2)
                 d3.append(self.env.quadruped.d3)
-                rewards.append(self.current_time_step.reward.numpy())
+                hist_rewards.append(self.current_time_step.reward.numpy())
                 self.total_reward += self.current_time_step.reward.numpy()
                 self.replay_buffer.add_batch(experience)
-                self._state = self.current_time_step.observation
                 if her:
                     k = self.params['future_steps']
                     if k > len(enc_goals):
@@ -1031,6 +1030,7 @@ class Learner():
                     reward = self.current_time_step.reward.numpy(),
                     time = time.perf_counter() - start
                 ))
+                self._state = self.current_time_step.observation
                 start = None
                 step += 1
                 if self.current_time_step.step_type == \
@@ -1124,15 +1124,15 @@ class Learner():
             ))
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
                 if per:
-                    self.save(model_dir, ep, rewards, total_reward, \
+                    self.save(model_dir, ep, hist_rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
                         stability, d1, d2, d3, tree = self.replay_buffer.priorityTree)
                 elif her:
-                    self.save(model_dir, ep, rewards, total_reward, \
+                    self.save(model_dir, ep, hist_rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
                         stability, d1, d2, d3, enc_goals = enc_goals)
                 else:
-                    self.save(model_dir, ep, rewards, total_reward, \
+                    self.save(model_dir, ep, hist_rewards, total_reward, \
                         total_critic_loss, critic_loss, COT, motion, \
                         stability, d1, d2, d3)
 

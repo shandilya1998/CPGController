@@ -237,7 +237,7 @@ class ParamNetV2(tf.keras.layers.Layer):
 
     def call(self, inputs):
         state = tf.concat(inputs[:-2], -1)
-        state, new_state = self.combine_rnn(state, inputs[-2])
+        state, new_state = self.combine_rnn([state, inputs[-2]])
         mu = self.mu_layers(state)
         mean = self.mean_layers(state)
         m_state, new_m_state = self.omega_gru(inputs[0], inputs[-1])
