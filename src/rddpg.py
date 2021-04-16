@@ -4,9 +4,14 @@ import os
 import pickle
 import time
 import math
-from rl.net import ActorNetwork, CriticNetwork
+from rl.rddpg_net import ActorNetwork, CriticNetwork
 from rl.env import Env
 from rl.constants import params
+from rl.replay_buffer import ReplayBuffer, OU
+import argparse
+import tf_agents as tfa
+import matplotlib.pyplot as plt
+import matplotlib
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
@@ -26,7 +31,8 @@ class Learner:
         self.env = Env(
             self.time_step_spec,
             self.params,
-            experiment
+            experiment,
+            rddpg = True
         )
         self.current_time_step = None
         self._action = self.env._action_init
@@ -39,6 +45,7 @@ class Learner:
         self._noise = self._noise_init
         self.OU = OU()
         self.dt = self.params['dt']
+        self.pretrain_dataset = self.load_dataset()
         self.desired_motion = []
         count = 0
         for i, (x, y) in enumerate(self.pretrain_dataset):
@@ -92,6 +99,46 @@ class Learner:
         print('[Actor] {lst}'.format(lst = physical_devices))
         self.p1 = 1.0
         self.epsilon = 1
+
+    def load_dataset(self):
+        Y = np.load(
+            'data/pretrain/Y.npy',
+            allow_pickle = True,
+            fix_imports=True
+        )[:, :self.params['rnn_steps'], :]
+        time.sleep(3)
+        num_data = Y.shape[0]
+        Y = tf.convert_to_tensor(Y)
+        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True))
+        time.sleep(3)
+        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
+        MEAN = tf.convert_to_tensor(np.load('data/pretrain/MEAN.npy', allow_pickle = True, fix_imports=True))
+        X = []
+        for j in range(len(self.params['observation_spec'])):
+            X.append(
+                tf.data.Dataset.from_tensor_slices(
+                    tf.convert_to_tensor(
+                        np.load('data/pretrain/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True)
+                    )
+                )
+            )
+        if num_data == self.params['num_data']:
+            self.num_data = self.params['num_data']
+        else:
+            self.num_data = num_data
+        self.num_batches = num_data//self.params['pretrain_bs']
+        Y = tf.data.Dataset.from_tensor_slices(Y)
+        F = tf.data.Dataset.from_tensor_slices(F)
+        MU = tf.data.Dataset.from_tensor_slices(MU)
+        MEAN = tf.data.Dataset.from_tensor_slices(MEAN)
+        Y = tf.data.Dataset.zip((Y, F, MU, MEAN))
+        X = tf.data.Dataset.zip(tuple(X))
+        dataset = tf.data.Dataset.zip((X, Y))
+        dataset = dataset.shuffle(self.num_data).batch(
+            self.params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        return dataset
 
     def load_actor(self, path, path_target):
         print('[DDPG] Loading Actor Weights')
@@ -155,6 +202,11 @@ class Learner:
                 self.params['observation_spec']
             )
         )]
+        next_actor_recurrent_states = [
+            [] for i in range(len(
+                self._actor_recurrent_state
+            ))
+        ]
         rewards = []
         step_types = []
         for b in batch:
@@ -165,28 +217,34 @@ class Learner:
             next_state = [[] for i in range(len(next_states))]
             step_type = []
             for i, item in enumerate(b):
-                for j, s in enumerate(item[0]):
-                    state[j].append(s)
-                for j, r in enumerate(item[1]):
-                    if i == 0:
-                        actor_recurrent_states[j].append(r)
-                for j, a in enumerate(item[2]):
-                    action[j].append(a)
-                for j, p in enumerate(item[3]):
-                    param[j].append(p)
-                reward.append(tf.expand_dims(tf.expand_dims(
-                    item[4], 0
-                ), 0))
-                for j, s in enumerate(item[5]):
-                    next_state[j].append(s)
-                step_type.append(item[6])
+                for j, st in enumerate(item[0][:-1]):
+                    for k, s in enumerate(st):
+                        state[k].append(s)
+                        next_state[k].append(s)
+                for k, s in enumerate(item[0][-1]):
+                    next_state[k].append(s)
+                for j, r in enumerate(item[1][0]):
+                    actor_recurrent_states[j].append(r)
+                    next_actor_recurrent_states[j].append(r)
+                for j, ac in enumerate(item[2]):
+                    for k, a in enumerate(ac):
+                        action[k].append(a)
+                for j, prm in enumerate(item[3]):
+                    for k, p in enumerate(prm):
+                        param[k].append(p)
+                for j, rw in item[4]:
+                    reward.append(tf.expand_dims(tf.expand_dims(
+                        rw, 0
+                    ), 0))
+                for j, st_tp in enumerate(item[5]):
+                    step_type.append(item[7])
             state = [tf.concat(tf.expand_dims(s, 1), 1) for s in state]
             action = [tf.concat(tf.expand_dims(a, 1), 1) for a in action]
             param = [tf.concat(tf.expand_dims(p, 1), 1) for p in param]
             reward = tf.expand_dims(tf.concat(reward, 0), 0)
             next_state = [tf.concat(tf.expand_dims(s, 1), 1) \
                 for s in next_state]
-
+            step_types.append(step_type)
             states = [st.append(s) \
                 for s, st in zip(state, states)]
             actions = [ac.append(a) \
@@ -204,10 +262,13 @@ class Learner:
         params = [tf.concat(param, 0) for param in params]
         rewards = tf.concat(rewards, 0)
         next_states = [tf.concat(state, 0) for state in next_states]
-        return states, actor_recurrent_states, actions \
-            params, rewards, next_states, batch_size
+        next_actor_recurrent_states = [tf.concat(ars, 0) \
+            for ars in next_actor_recurrent_states]
+        return states, actor_recurrent_states, actions, \
+            params, rewards, next_states, \
+            next_actor_recurrent_states, step_types, batch_size
 
-    def learn(self, model_dir, experiment, start_epoch = 0, per = False \
+    def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
             her = False):
         if per:
             print('[DDPG] Initializing PER')
@@ -243,7 +304,7 @@ class Learner:
         while(step < 5 and not break_loop):
             start = time.perf_counter()
             out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                self.actor.moodel.layers[-1].rnn_cell(
+                self.actor.model.layers[-1].rnn_cell(
                     self._state + self._actor_recurrent_state
                 )
             self._params = [mu, mean]
@@ -273,7 +334,7 @@ class Learner:
                 continue
             self._state = self.current_time_step.observation
             self.actor_recurrent_state = [new_state, new_m_state]
-             print('[DDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
+            print('[DDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                 step = step,
                 reward = self.current_time_step.reward.numpy(),
                 time = time.perf_counter() - start
@@ -445,10 +506,16 @@ class Learner:
             break_loop = False
             self.epsilon -= 1/self.params['EXPLORE']
             start = None
-            experience = []
-            while(step < self.params['max_steps'] and not break_loop):
+            observations = []
+            observations.append(self._state)
+            actor_recurrent_states = []
+            actor_recurrent_states.append(self._actor_recurrent_state)
+            actions = []
+            rewards = []
+            params = []
+            while(step < self.params['max_steps'] + 1 and not break_loop):
                 start = time.perf_counter()
-                out, osc, omega, mu, mean, state, new_state, new_m_state = \ 
+                out, osc, omega, mu, mean, state, new_state, new_m_state = \
                     self.actor.moodel.layers[-1].rnn_cell(
                         self._state + self._actor_recurrent_state
                     )
@@ -480,23 +547,19 @@ class Learner:
                     continue
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
-                experience.append([
-                    self._state,
-                    self._actor_recurrent_state
-                    self._action,
-                    self._params,
-                    self.current_time_step.reward,
-                    self.current_time_step.observation,
-                    self.current_time_step.step_type
-                ])
+                rewards.append(self.current_time_step.reward)
+                actions.append(self._actions)
+                params.append(self._params)
+                self._actor_recurrent_state = [new_state, new_m_state]
+                actor_recurrent_states.append(self._actor_recurrent_state)
+                self._state = self.current_time_step.observation
+                observations.append(self._state)
                 stability.append(self.env.quadruped.stability)
-                d1.append(self.env.quadruped.d1):
+                d1.append(self.env.quadruped.d1)
                 d2.append(self.env.quadruped.d2)
                 d3.append(self.env.quadruped.d3)
                 hist_rewards.append(self.current_time_step.reward.numpy())
                 self.total_reward += self.current_time_step.reward.numpy()
-                self._actor_recurrent_state = [new_state, new_m_state]
-                self._state = self.current_time_step.observation
                 print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                     ep = ep,
                     step = step,
@@ -509,12 +572,21 @@ class Learner:
                     tfa.trajectories.time_step.StepType.LAST:
                     print('[DDPG] Starting Next Episode')
                     break_loop = True
+            experience = [
+                observations,
+                actor_recurrent_states,
+                actions,
+                params,
+                rewards
+            ]
             self.replay_buffer.add_batch(experience)
             start = time.perf_counter()
-            states, actor_recurrent_states, actions \
-                params, rewards, next_states, batch_size = self.get_batch()
+            states, actor_recurrent_states, actions, \
+                params, rewards, next_states, \
+                next_actor_recurrent_states, step_types, batch_size = \
+                self.get_batch()
             out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                self.actor.target_model(next_states + recurrent_states)
+                self.actor.target_model(next_states+next_actor_recurrent_states)
             ac = [out, osc]
             recurrent_state = tf.repeat(
                 self.recurrent_state_init,
@@ -523,16 +595,38 @@ class Learner:
             )
             inputs = next_states + ac + [mu, mean, recurrent_state]
             target_q_values = self.critic.target_model(inputs)
-            y = rewards + self.params['GAMMA'] * target_q_values
+            y = tf.concat([
+                rewards[:, :-1] + \
+                    self.params['GAMMA'] * target_q_values[:, 1:-1],
+                rewards[:, -1:]
+            ], 1)
             loss = self.critic.train(states, actions, params[0], \
                 params[1], recurrent_state,  y)
             critic_loss.append(loss.numpy())
             tot_loss += loss.numpy()
 
             out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                self.actor.model(states + recurrent_states)
+                self.actor.model(states + actor_recurrent_states)
             a_for_grad = [out, osc]
-
+            q_grad = self.critic.q_grads(states, a_for_grad, \
+                mu, mean, recurrent_state)
+            self.actor.train(states, actor_recurrent_states)
+            print('[DDPG] Critic Loss {loss}'.format(
+                loss = loss.numpy(),
+            ))
+            print('[DDPG] Total Reward {reward:.5f} Avg Critic Loss {loss:.5f} Time {time:.5f}'.format(
+                reward = self.total_reward,
+                loss = tot_loss,
+                time = time.perf_counter() - start
+            ))
+            if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
+                self.save(model_dir, ep, hist_rewards, total_reward, \
+                    total_critic_loss, critic_loss, COT, motion, \
+                    stability, d1, d2, d3)
+            _steps_.append(step + 1)
+            total_reward.append(self.total_reward)
+            total_critic_loss.append(tot_loss)
+            ep += 1
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
             critic_loss, COT, motion, stability, d1, d2, d3, tree = None, enc_goals = None):
@@ -803,3 +897,79 @@ class Learner:
         ))
 
         plt.close('all')
+
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--experiment',
+        type = int,
+        help = 'ID of experiment being performaed'
+    )
+    parser.add_argument(
+        '--out_path',
+        type = str,
+        help = 'Path to output directory'
+    )
+    parser.add_argument(
+        '--start',
+        type = int,
+        help = 'start epoch',
+        default = 0
+    )
+
+    parser.add_argument(
+        "--per",
+        type = str2bool,
+        nargs = '?',
+        const = True,
+        default = False,
+        help = "Toggle PER"
+    )
+
+    parser.add_argument(
+        "--her",
+        type = str2bool,
+        nargs = '?',
+        const = True,
+        default = False,
+        help = "Toggle HER"
+    )
+    args = parser.parse_args()
+    learner = Learner(params, args.experiment)
+
+    path = os.path.join(args.out_path, 'exp{exp}'.format(
+        exp=args.experiment
+    ))
+
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    actor_path = os.path.join(path, 'actor')
+    if not os.path.exists(actor_path):
+        os.mkdir(actor_path)
+        os.mkdir(os.path.join(actor_path, 'model'))
+        os.mkdir(os.path.join(actor_path, 'target'))
+
+    critic_path = os.path.join(path, 'critic')
+    if not os.path.exists(critic_path):
+        os.mkdir(critic_path)
+        os.mkdir(os.path.join(critic_path, 'model'))
+        os.mkdir(os.path.join(critic_path, 'target'))
+
+    learner.learn(
+        path,
+        experiment = args.experiment,
+        start_epoch = args.start,
+        per = args.per,
+        her = args.her
+    )
