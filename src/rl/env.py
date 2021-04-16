@@ -17,9 +17,11 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             params,
             experiment,
             initial_state = None,
-            GUI = False
+            GUI = False,
+            rddpg = False
         ):
         super(Env, self).__init__(time_step_spec, params['action_spec'], 1)
+        self.rddpg = rddpg
         if initial_state is None:
             initial_state = [
                 tf.expand_dims(tf.zeros(
@@ -115,7 +117,10 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             step_type = tfa.trajectories.time_step.StepType.LAST
         if not self.quadruped.upright:
             print('[DDPG] Quadruped Not Upright')
-            step_type = tfa.trajectories.time_step.StepType.LAST
+            if not rddpg:
+                step_type = tfa.trajectories.time_step.StepType.LAST
+            else:
+                pass
         step_type = tf.stack([step_type \
             for i in range(self.batch_size)])
 

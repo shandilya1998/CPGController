@@ -42,13 +42,6 @@ class TimeDistributed(tf.keras.Model):
             raise ValueError('All input Tensors must be of the same length')
         steps = steps[0]
         batch_size = batch_size[0]
-        if steps > self.params['max_steps']:
-            raise ValueError(
-                'Input length must be less than {i1}, got {i2}'.format(
-                    i1 = self.params['max_steps'], 
-                    i2 = steps
-                )
-            )
         if steps != self.steps:
             self.steps = steps
         arrays = [
@@ -107,11 +100,25 @@ class ActorNetwork(object):
             learning_rate = self.LEARNING_RATE
         )
         self.pretrain_loss = tf.keras.losses.MeanSquaredError()
+        self.recurrent_state_init = []
+        self.recurrent_state_init.append(
+            tf.zeros(
+                shape = (1, params['units_combine_rddpg'][0]),
+                dtype = tf.dtypes.float32
+            )
+        )
+        self.recurrent_state_init.append(
+            tf.zeros(
+                shape = (1, params['units_omega'][0]),
+                dtype = tf.dtypes.float32
+            )
+        )
 
-
-    def train(self, states, q_grads):
+    def train(self, states, rc_state, q_grads):
         with tf.GradientTape() as tape:
-            action, [omega, mu, mean, state] = self.model(states)
+            out, osc, omega, mu, mean, state, new_state, new_m_state = \
+                self.model(states + rc_state)
+            action = [out, osc]
         grads = tape.gradient(
             action + [mu, mean],
             self.model.trainable_variables,
