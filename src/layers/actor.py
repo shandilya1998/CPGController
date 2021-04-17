@@ -56,8 +56,7 @@ class RobotStateEncoder(tf.keras.layers.Layer):
     def call(self, robot_state):
         return self.robot_state_dense(robot_state)
 
-
-class ParamNet(tf.keras.layers.Layer):
+class ParamNet(tf.keras.Model):
     def __init__(
             self,
             units_osc,
@@ -73,7 +72,10 @@ class ParamNet(tf.keras.layers.Layer):
             name = 'param_net',
             trainable = True
         ):
-        super(ParamNet, self).__init__(trainable, name)
+        super(ParamNet, self).__init__(
+            trainable = trainable,
+            name = name
+        )
 
         self.combine_dense = tf.keras.Sequential(name = 'combine_dense')
         for i, units in enumerate(units_combine):
@@ -152,7 +154,7 @@ class ParamNet(tf.keras.layers.Layer):
         return [state, omega, mu, mean]
 
 
-class ParamNetV2(tf.keras.layers.Layer):
+class ParamNetV2(tf.keras.Model):
     def __init__(
             self,
             units_osc,
@@ -167,7 +169,10 @@ class ParamNetV2(tf.keras.layers.Layer):
             name = 'param_net',
             trainable = True
         ):
-        super(ParamNetV2, self).__init__(trainable, name)
+        super(ParamNetV2, self).__init__(
+            trainable = trainable,
+            name = name
+        )
 
         self.combine_rnn = combine_model
 
@@ -331,12 +336,24 @@ class ComplexRNN(tf.keras.Model):
         activation_mu = 'elu',
         activation_motion_state = 'elu',
         activation_omega = 'elu',
-        name = 'TimeDistributedActor'
+        name = 'ComplexRNN'
     ):
         super(ComplexRNN, self).__init__(name = name)
+        self.units_output_mlp = units_output_mlp
+        self.units_osc = units_osc
+        self.units_combine = units_combine
+        self.units_robot_state = units_robot_state
+        self.units_motion_state = units_motion_state
+        self.units_mu = units_mu
+        self.activation_output_mlp = activation_output_mlp
+        self.activation_combine = activation_combine
+        self.activation_robot_state = activation_robot_state
+        self.activation_mu = activation_mu
+        self.activation_motion_state = activation_motion_state
+        self.activation_omega = activation_omega
         self.steps = steps
-        self.out_dim = action_dim
-
+        self.action_dim = action_dim
+        self.dt = dt
         self.output_mlp = tf.keras.Sequential(name = 'output_mlp')
         if isinstance(units_output_mlp, list):
             for i, num in enumerate(units_output_mlp):
@@ -356,7 +373,6 @@ class ComplexRNN(tf.keras.Model):
                 )
             )
 
-        self.units_osc = units_osc
 
         self.A_layers = tf.keras.Sequential(name = 'mu_dense')
         for i, units in enumerate(units_mu):
@@ -438,7 +454,7 @@ class ComplexRNN(tf.keras.Model):
             step = tf.math.add(step, tf.constant(1))
             return out, Z, step, z
 
-        out, Z, step, _ = tf.while_loop(cond, body,[out,Z,step,z_out])
+        out, Z, step, z_out = tf.while_loop(cond, body,[out,Z,step,z_out])
 
         out = out.stack()
         Z = Z.stack()
@@ -447,7 +463,7 @@ class ComplexRNN(tf.keras.Model):
         out = tf.ensure_shape(
             out,
             tf.TensorShape(
-                (None, self.steps, 2 * self.out_dim)
+                (None, self.steps, 2 * self.action_dim)
             ),
             name='ensure_shape_critic_time_distributed_out'
         )
@@ -460,8 +476,36 @@ class ComplexRNN(tf.keras.Model):
             name='ensure_shape_critic_time_distributed_out'
         )
 
-        out = 2 * out[:, :, :self.out_dim]
-        return [out, Z]
+        out = 2 * out[:, :, :self.action_dim]
+        return [out, Z, z_out]
+
+    def get_config(self):
+        config = {
+            'name' : self.name,
+            'layers' : [
+                l.get_config() for l in self.layers
+            ]
+        }
+        config.update({
+            'units_output_mlp' : self.units_output_mlp,
+            'units_osc' : self.units_osc,
+            'units_combine' : self.units_combine,
+            'units_robot_state' : self.units_robot_state,
+            'units_motion_state' : self.units_motion_state,
+            'units_mu' : self.units_mu,
+            'activation_output_mlp' : self.activation_output_mlp,
+            'activation_combine' : self.activation_combine,
+            'activation_robot_state' : self.activation_robot_state,
+            'activation_mu' : self.activation_mu,
+            'activation_motion_state' : self.activation_motion_state,
+            'activation_omega' : self.activation_omega,
+            'steps' : self.steps,
+            'action_dim' : self.action_dim,
+            'dt' : self.dt,
+        })
+        return config
+
+
 
 def get_encoders(params, trainable = True):
     motion_encoder = MotionStateEncoder(

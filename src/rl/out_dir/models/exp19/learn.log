@@ -57600,3 +57600,58 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 [DDPG] Episode 1806 Step 165 Reward -4.99591 Time 1.80675
 [DDPG] Episode 1806 Step 166 Reward -5.01095 Time 1.57027
 [DDPG] Episode 1806 Step 167 Reward -4.89777 Time 2.02878
+[DDPG] Episode 1806 Step 168 Reward -5.01272 Time 1.72731
+[DDPG] Episode 1806 Step 169 Reward -5.01189 Time 1.82926
+[DDPG] Episode 1806 Step 170 Reward -5.01146 Time 1.91602
+[DDPG] Episode 1806 Step 171 Reward -5.01204 Time 1.93044
+[DDPG] Episode 1806 Step 172 Reward -5.01490 Time 2.03244
+[DDPG] Episode 1806 Step 173 Reward -5.00104 Time 1.46464
+[DDPG] Episode 1806 Step 174 Reward -5.00980 Time 1.59917
+[DDPG] Episode 1806 Step 175 Reward -5.00590 Time 1.46350
+[DDPG] Episode 1806 Step 176 Reward -5.01523 Time 1.70497
+[DDPG] Episode 1806 Step 177 Reward -5.01111 Time 1.55195
+[DDPG] Episode 1806 Step 178 Reward -5.01549 Time 1.88585
+[DDPG] Episode 1806 Step 179 Reward -5.01943 Time 1.92222
+[DDPG] Episode 1806 Step 180 Reward -5.01527 Time 2.13200
+[DDPG] Episode 1806 Step 181 Reward -5.01820 Time 1.94710
+[DDPG] Episode 1806 Step 182 Reward -5.01639 Time 1.70777
+[DDPG] Episode 1806 Step 183 Reward -5.01258 Time 2.02446
+[DDPG] Episode 1806 Step 184 Reward -5.00881 Time 2.09755
+[DDPG] Episode 1806 Step 185 Reward -5.01127 Time 1.81159
+[DDPG] Episode 1806 Step 186 Reward -5.01172 Time 2.05408
+[DDPG] Episode 1806 Step 187 Reward -5.01710 Time 1.90656
+[DDPG] Episode 1806 Step 188 Reward -5.00789 Time 2.07027
+[DDPG] Episode 1806 Step 189 Reward -5.01334 Time 1.77269
+[DDPG] Episode 1806 Step 190 Reward -5.00493 Time 1.75559
+[DDPG] Episode 1806 Step 191 Reward -5.01093 Time 1.82364
+[DDPG] Episode 1806 Step 192 Reward -5.01690 Time 2.19696
+[DDPG] Episode 1806 Step 193 Reward -5.01713 Time 1.86398
+[DDPG] Episode 1806 Step 194 Reward -5.01169 Time 1.92975
+[DDPG] Episode 1806 Step 195 Reward -5.01679 Time 1.97334
+[DDPG] Episode 1806 Step 196 Reward -5.01893 Time 1.95722
+[DDPG] Episode 1806 Step 197 Reward -5.02405 Time 2.15675
+[DDPG] Episode 1806 Step 198 Reward -4.97025 Time 1.86031
+[DDPG] Episode 1806 Step 199 Reward -5.00960 Time 1.84465
+[DDPG] Episode 1806 Step 200 Reward -5.01339 Time 2.01837
+[DDPG] Episode 1806 Step 201 Reward -5.01576 Time 1.62391
+[DDPG] Episode 1806 Step 202 Reward -5.01468 Time 1.95759
+[DDPG] Episode 1806 Step 203 Reward -5.00917 Time 1.78397
+[DDPG] Episode 1806 Step 204 Reward -5.01116 Time 1.85297
+[DDPG] Episode 1806 Step 205 Reward -5.01283 Time 1.89737
+[DDPG] Episode 1806 Step 206 Reward -5.01393 Time 1.84783
+Traceback (most recent call last):
+  File "learn.py", line 1494, in <module>
+    learner.learn(
+  File "learn.py", line 986, in learn
+    self.current_time_step = self.env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 73, in step
+    return self._step(action, desired_motion, last_step)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 92, in _step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1168, in step
+    self.set_observation(action, desired_motion)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1025, in set_observation
+    rospy.wait_for_service('/gazebo/get_model_state')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
