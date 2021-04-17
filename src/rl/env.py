@@ -117,7 +117,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             step_type = tfa.trajectories.time_step.StepType.LAST
         if not self.quadruped.upright:
             print('[DDPG] Quadruped Not Upright')
-            if not rddpg:
+            if not self.rddpg:
                 step_type = tfa.trajectories.time_step.StepType.LAST
             else:
                 pass
