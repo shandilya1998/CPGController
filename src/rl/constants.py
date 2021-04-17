@@ -36,7 +36,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 20,
+    'rnn_steps'                   : 5,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -62,21 +62,21 @@ observation_spec = [
             params['motion_state_size'],
         ),
         dtype = tf.dtypes.float32,
-        name = 'motion state'
+        name = 'motion_state_inp'
     ),
     tf.TensorSpec(
         shape = (
             params['robot_state_size'],
         ),
         dtype = tf.dtypes.float32,
-        name = 'robot state'
+        name = 'robot_state_inp'
     ),
     tf.TensorSpec(
         shape = (
             params['units_osc'] * 2,
         ),
         dtype = tf.dtypes.float32,
-        name = 'oscillator state'
+        name = 'oscillator_state_inp'
     ),
 ]
 

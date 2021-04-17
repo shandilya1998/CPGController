@@ -5,7 +5,7 @@ class HopfOscillator(tf.keras.layers.Layer):
     def __init__(
         self,
         units,
-        dt, 
+        dt,
         name = 'hopf_oscillator',
         dtype = 'complex64',
         **kwargs
@@ -20,7 +20,7 @@ class HopfOscillator(tf.keras.layers.Layer):
         )
  
         self.units = int(units) if not isinstance(units, int) else units
-        self.dt = tf.constant(float(dt) if not isinstance(dt, float) else dt)*tf.ones((self.units,), dtype = tf.dtypes.float32)
+        self.dt = dt
         self.range = tf.range(start = 1, limit = self.units+1, delta = 1, dtype = 'float32')
 
     def build(self, input_shape):
@@ -79,11 +79,20 @@ class HopfOscillator(tf.keras.layers.Layer):
             tf.math.square(real_state),
             tf.math.square(imag_state)
         ))
-        phi = tf.math.atan2(imag_state, real_state) + inputs[1] * self.dt
+        delta_phi = inputs[1] * self.range * self.dt
+        phi = tf.math.atan2(imag_state, real_state) + delta_phi
         r = r + (inputs[2] - tf.math.square(r)) * r * self.dt
         #r = inputs[2]
         real_state = r * tf.math.cos(phi)
         imag_state = r * tf.math.sin(phi)
         Z = tf.concat([real_state, imag_state], -1)
-
         return Z
+
+    def get_config(self):
+        config = super(HopfOscillator, self).get_config()
+        config.update({
+            'units' : self.units,
+            'dt' : self.dt,
+            'range' : self.range.numpy()
+        })
+        return config

@@ -1004,7 +1004,7 @@ class Quadruped:
         else:
             #raise NotImplementedError
             self.upright = False
-            self.reward += -1.0
+            self.reward += -5.0
 
     def set_last_pos(self):
         self.last_pos = self.pos

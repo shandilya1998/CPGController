@@ -182,7 +182,7 @@ class Learner:
         batch = self.replay_buffer.get_next(
             self.params['BATCH_SIZE']
         )
-        batch_size = len(batch_size)
+        batch_size = len(batch)
         states = [[] for i in range(
             len(
                 self.params['observation_spec']
@@ -195,7 +195,7 @@ class Learner:
         )]
         actor_recurrent_states = [[] for i in range(len(
             self._actor_recurrent_state
-        ))]
+        )+ 1)]
         params = [[] for i in range(len(self._params))]
         next_states = [[] for i in range(
             len(
@@ -205,54 +205,60 @@ class Learner:
         next_actor_recurrent_states = [
             [] for i in range(len(
                 self._actor_recurrent_state
-            ))
+            ) + 1)
         ]
         rewards = []
         step_types = []
-        for b in batch:
+        def print_shape(item, level):
+            if not isinstance(item, list):
+                print(item.shape)
+                print(level)
+            else:
+                for l in item:
+                    print_shape(l, level + 1)
+        for item in batch:
             state = [[] for i in range(len(states))]
             action = [[] for i in range(len(actions))]
             reward = []
             param = [[] for i in range(len(params))]
             next_state = [[] for i in range(len(next_states))]
             step_type = []
-            for i, item in enumerate(b):
-                for j, st in enumerate(item[0][:-1]):
-                    for k, s in enumerate(st):
-                        state[k].append(s)
-                        next_state[k].append(s)
-                for k, s in enumerate(item[0][-1]):
+            for j, st in enumerate(item[0][:-1]):
+                for k, s in enumerate(st):
+                    state[k].append(s)
                     next_state[k].append(s)
-                for j, r in enumerate(item[1][0]):
-                    actor_recurrent_states[j].append(r)
-                    next_actor_recurrent_states[j].append(r)
-                for j, ac in enumerate(item[2]):
-                    for k, a in enumerate(ac):
-                        action[k].append(a)
-                for j, prm in enumerate(item[3]):
-                    for k, p in enumerate(prm):
-                        param[k].append(p)
-                for j, rw in item[4]:
-                    reward.append(tf.expand_dims(tf.expand_dims(
-                        rw, 0
-                    ), 0))
-                for j, st_tp in enumerate(item[5]):
-                    step_type.append(item[7])
-            state = [tf.concat(tf.expand_dims(s, 1), 1) for s in state]
-            action = [tf.concat(tf.expand_dims(a, 1), 1) for a in action]
-            param = [tf.concat(tf.expand_dims(p, 1), 1) for p in param]
+                    if j == 0 and k == len(states) - 1:
+                        actor_recurrent_states[0].append(s)
+                        next_actor_recurrent_states[0].append(s)
+            for k, s in enumerate(item[0][-1]):
+                next_state[k].append(s)
+            for j, r in enumerate(item[1][0]):
+                actor_recurrent_states[j + 1].append(r)
+                next_actor_recurrent_states[j + 1].append(r)
+            for j, ac in enumerate(item[2]):
+                for k, a in enumerate(ac):
+                    action[k].append(a)
+            for j, prm in enumerate(item[3]):
+                for k, p in enumerate(prm):
+                    param[k].append(p)
+            for j, rw in enumerate(item[4]):
+                reward.append(tf.expand_dims(tf.expand_dims(
+                    rw, 0
+                ), 0))
+            state = [tf.expand_dims(tf.concat(s, 0), 0) for s in state]
+            action = [tf.expand_dims(tf.concat(a, 0), 0) for a in action]
+            param = [tf.expand_dims(tf.concat(p, 0), 0) for p in param]
             reward = tf.expand_dims(tf.concat(reward, 0), 0)
-            next_state = [tf.concat(tf.expand_dims(s, 1), 1) \
+            next_state = [tf.expand_dims(tf.concat(s, 0), 0) \
                 for s in next_state]
-            step_types.append(step_type)
-            states = [st.append(s) \
-                for s, st in zip(state, states)]
-            actions = [ac.append(a) \
-                for a, ac in zip(action, actions)]
-            params = [pm.append(p) \
-                for p, pm in zip(param, params)]
-            next_states = [nst.append(ns) \
-                for ns, nst in zip(next_state, next_states)]
+            for i in range(len(states)):
+                states[i].append(state[i])
+            for i in range(len(actions)):
+                actions[i].append(action[i])
+            for i in range(len(params)):
+                params[i].append(param[i])
+            for i in range(len(next_states)):
+                next_states[i].append(next_state[i])
             rewards.append(reward)
 
         states = [tf.concat(state, 0) for state in states]
@@ -301,19 +307,19 @@ class Learner:
         self.epsilon -= 1/self.params['EXPLORE']
         start = None
         self._actor_recurrent_state = self.actor.recurrent_state_init
-        while(step < 5 and not break_loop):
+        while(step < 2 and not break_loop):
             start = time.perf_counter()
-            out, osc, omega, mu, mean, state, new_state, new_m_state = \
+            out, osc, omega, a, b, state, z_out, combine_state, omega_state = \
                 self.actor.model.layers[-1].rnn_cell(
                     self._state + self._actor_recurrent_state
                 )
-            self._params = [mu, mean]
+            self._params = [a, b]
             action_original = [out, osc]
             self._add_noise(action_original)
             if math.isnan(np.sum(self._action[0].numpy())):
                 print('[DDPG] Action value NaN. Ending Episode')
                 break_loop = True
-
+            steps = self._action[0].shape[1]
             action = self._action[0] * tf.repeat(
                 tf.expand_dims(self._params[0], 1),
                 steps,
@@ -333,7 +339,7 @@ class Learner:
                 break_loop = True
                 continue
             self._state = self.current_time_step.observation
-            self.actor_recurrent_state = [new_state, new_m_state]
+            self.actor_recurrent_state = [combine_state, omega_state]
             print('[DDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                 step = step,
                 reward = self.current_time_step.reward.numpy(),
@@ -513,19 +519,20 @@ class Learner:
             actions = []
             rewards = []
             params = []
-            while(step < self.params['max_steps'] + 1 and not break_loop):
+            while(step < self.params['max_steps'] and not break_loop):
+                penalty = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
                 start = time.perf_counter()
-                out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                    self.actor.moodel.layers[-1].rnn_cell(
+                out, osc, omega, a, b, state, z_out, combine_state, omega_state = \
+                    self.actor.model.layers[-1].rnn_cell(
                         self._state + self._actor_recurrent_state
                     )
-                self._params = [mu, mean]
+                self._params = [a, b]
                 action_original = [out, osc]
                 self._add_noise(action_original)
                 if math.isnan(np.sum(self._action[0].numpy())):
                     print('[DDPG] Action value NaN. Ending Episode')
-                    break_loop = True
-                    continue
+                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                    self._action[0] = tf.zeros_like(self._action[0])
                 steps = self._action[0].shape[1]
                 action = self._action[0] * tf.repeat(
                     tf.expand_dims(self._params[0], 1),
@@ -537,20 +544,30 @@ class Learner:
                     axis = 1
                 )
                 try:
+                    last_step = False
+                    first_step = False
+                    if step == 0:
+                        first_step = True
+                    if step < self.params['max_steps'] - 1:
+                        last_step = False
+                    else:
+                        last_step = True
                     self.current_time_step = self.env.step(
                         [action, self._action[1]],
-                        desired_motion[step + 1]
+                        desired_motion[step + 1],
+                        last_step = last_step,
+                        first_step = first_step
                     )
                 except FloatingPointError:
                     print('[DDPG] Floating Point Error in reward computation')
-                    break_loop = True
-                    continue
+                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                r = self.current_time_step.reward + penalty
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)
-                rewards.append(self.current_time_step.reward)
-                actions.append(self._actions)
+                rewards.append(r)
+                actions.append(self._action)
                 params.append(self._params)
-                self._actor_recurrent_state = [new_state, new_m_state]
+                self._actor_recurrent_state = [combine_state, omega_state]
                 actor_recurrent_states.append(self._actor_recurrent_state)
                 self._state = self.current_time_step.observation
                 observations.append(self._state)
@@ -558,19 +575,17 @@ class Learner:
                 d1.append(self.env.quadruped.d1)
                 d2.append(self.env.quadruped.d2)
                 d3.append(self.env.quadruped.d3)
-                hist_rewards.append(self.current_time_step.reward.numpy())
-                self.total_reward += self.current_time_step.reward.numpy()
+                hist_rewards.append(r.numpy())
+                self.total_reward += r.numpy()
                 print('[DDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                     ep = ep,
                     step = step,
-                    reward = self.current_time_step.reward.numpy(),
+                    reward = r.numpy(),
                     time = time.perf_counter() - start
                 ))
-                start = None
                 step += 1
                 if self.current_time_step.step_type == \
                     tfa.trajectories.time_step.StepType.LAST:
-                    print('[DDPG] Starting Next Episode')
                     break_loop = True
             experience = [
                 observations,
@@ -585,16 +600,18 @@ class Learner:
                 params, rewards, next_states, \
                 next_actor_recurrent_states, step_types, batch_size = \
                 self.get_batch()
-            out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                self.actor.target_model(next_states+next_actor_recurrent_states)
+            out, osc, omega, a, b, state, z_out, combine_state, omega_state = \
+                self.actor.target_model(
+                    next_states[:-1] + next_actor_recurrent_states
+                )
             ac = [out, osc]
-            recurrent_state = tf.repeat(
-                self.recurrent_state_init,
+            recurrent_state = [tf.repeat(
+                rci,
                 batch_size,
                 0
-            )
-            inputs = next_states + ac + [mu, mean, recurrent_state]
-            target_q_values = self.critic.target_model(inputs)
+            ) for rci in self.critic.recurrent_state_init]
+            inputs = next_states + ac + [a, b] + recurrent_state
+            target_q_values, _ = self.critic.target_model(inputs)
             y = tf.concat([
                 rewards[:, :-1] + \
                     self.params['GAMMA'] * target_q_values[:, 1:-1],
@@ -605,12 +622,12 @@ class Learner:
             critic_loss.append(loss.numpy())
             tot_loss += loss.numpy()
 
-            out, osc, omega, mu, mean, state, new_state, new_m_state = \
-                self.actor.model(states + actor_recurrent_states)
+            out, osc, omega, a, b, state, z_out, combine_state, omega_state = \
+                    self.actor.model(states[:-1] + actor_recurrent_states)
             a_for_grad = [out, osc]
             q_grad = self.critic.q_grads(states, a_for_grad, \
-                mu, mean, recurrent_state)
-            self.actor.train(states, actor_recurrent_states)
+                a, b, recurrent_state)
+            self.actor.train(states, actor_recurrent_states, q_grad)
             print('[DDPG] Critic Loss {loss}'.format(
                 loss = loss.numpy(),
             ))
@@ -627,6 +644,7 @@ class Learner:
             total_reward.append(self.total_reward)
             total_critic_loss.append(tot_loss)
             ep += 1
+            print('[DDPG] Starting Next Episode')
 
     def save(self, model_dir, ep, rewards, total_reward, total_critic_loss, \
             critic_loss, COT, motion, stability, d1, d2, d3, tree = None, enc_goals = None):
