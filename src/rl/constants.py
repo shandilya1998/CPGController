@@ -36,7 +36,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 250,
+    'rnn_steps'                   : 25,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -228,7 +228,7 @@ pretraining = {
 
 num_data = len(pretraining['Tst'])
 params.update(pretraining)
-bs = 225
+bs = 15
 params.update({
     'num_data' : 135 * params['rnn_steps'] / bs,
     'pretrain_bs': bs
