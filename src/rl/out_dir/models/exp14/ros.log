@@ -4509,3 +4509,61 @@ You can start planning now!
 [0m[ INFO] [1618310845.643888436, 0.168000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618310845.643917405, 0.168000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618310845.670890521, 0.168000000]: GazeboRo
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe260, rem=0x7fffffffe270)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 272661] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1618692273.304652, 92282.221000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1618310833.540037, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1618310845.635926, 0.168000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1618310845.655182, 0.168000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1618310845.670200, 0.168000]: Loading controller: front_right_leg_controller
+[INFO] [1618310845.849061, 0.265000]: Loading controller: front_left_leg_controller
+[INFO] [1618310845.942674, 0.316000]: Loading controller: back_right_leg_controller
+[INFO] [1618310846.071886, 0.374000]: Loading controller: back_left_leg_controller
+[INFO] [1618310846.182092, 0.408000]: Loading controller: joint_state_controller
+[INFO] [1618310846.204939, 0.417000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618310846.221935, 0.425000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618692258.242216, 92282.195000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618692258.245126, 92282.195000]: Stopping all controllers...
+[INFO] [1618692258.275953, 92282.203000]: Unloading all loaded controllers...
+[INFO] [1618692258.277295, 92282.203000]: Trying to unload joint_state_controller
+[INFO] [1618692258.308285, 92282.210000]: Succeeded in unloading joint_state_controller
+[INFO] [1618692258.309602, 92282.210000]: Trying to unload back_left_leg_controller
+[INFO] [1618692258.339345, 92282.217000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1618692258.340637, 92282.217000]: Trying to unload back_right_leg_controller
+[31m[quadruped/controller_spawner-4] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [272617][0m
+[1mROS_MASTER_URI=http://localhost:11338[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11338
+[1msetting /run_id to 91193b6e-9c45-11eb-b496-59b95093d4bb[0m
+[1mprocess[rosout-1]: started with pid [272635][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [272642][0m
+[1mprocess[urdf_spawner-3]: started with pid [272643][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [272645][0m
+[1mprocess[joint_state_publisher-5]: started with pid [272648][0m
+[1mprocess[robot_state_publisher-6]: started with pid [272650][0m
+[1mprocess[move_group-7]: started with pid [272651][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/91193b6e-9c45-11eb-b496-59b95093d4bb/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

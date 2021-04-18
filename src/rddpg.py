@@ -640,6 +640,7 @@ class Learner:
             pkl.close()
         goal_id = np.random.randint(0, len(self.desired_motion))
         desired_motion = self.desired_motion[goal_id]
+        print(desired_motion)
         while ep < self.params['train_episode_count']:
             enc_goals.append(desired_motion[0])
             self._action = self.env._action_init
