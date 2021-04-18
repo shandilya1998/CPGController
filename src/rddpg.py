@@ -47,7 +47,7 @@ class Learner:
         self._noise = self._noise_init
         self.OU = OU()
         self.dt = self.params['dt']
-        self.pretrain_dataset = self.load_dataset()
+        self.pretrain_dataset = self.load_ddpg_dataset()
         self.desired_motion = []
         count = 0
         for i, (x, y) in enumerate(self.pretrain_dataset):
@@ -108,6 +108,14 @@ class Learner:
                 create_data
             )
             self.create_dataset()
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+            0.001,
+            decay_steps=60,
+            decay_rate=0.95
+        )
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
+            learning_rate = lr_schedule
+        )
 
     def create_dataset(self):
         self.env.quadruped.reset()
@@ -205,7 +213,7 @@ class Learner:
             np.save('data/pretrain_rddpg/X_{j}.npy'.format(j=j), X[j], \
                 allow_pickle = True, fix_imports=True)
 
-    def load_dataset(self):
+    def load_ddpg_dataset(self):
         Y = np.load(
             'data/pretrain/Y.npy',
             allow_pickle = True,
@@ -237,6 +245,46 @@ class Learner:
         MU = tf.data.Dataset.from_tensor_slices(MU)
         MEAN = tf.data.Dataset.from_tensor_slices(MEAN)
         Y = tf.data.Dataset.zip((Y, F, MU, MEAN))
+        X = tf.data.Dataset.zip(tuple(X))
+        dataset = tf.data.Dataset.zip((X, Y))
+        dataset = dataset.shuffle(self.num_data).batch(
+            self.params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        return dataset
+
+    def load_dataset(self):
+        Y = np.load(
+            'data/pretrain_rddpg/Y.npy',
+            allow_pickle = True,
+            fix_imports=True
+        )
+        time.sleep(3)
+        num_data = Y.shape[0]
+        Y = tf.convert_to_tensor(Y)
+        F = tf.convert_to_tensor(np.load('data/pretrain_rddpg/F.npy', allow_pickle = True, fix_imports=True))
+        time.sleep(3)
+        A = tf.convert_to_tensor(np.load('data/pretrain_rddpg/A.npy', allow_pickle = True, fix_imports=True))
+        B = tf.convert_to_tensor(np.load('data/pretrain_rddpg/B.npy', allow_pickle = True, fix_imports=True))
+        X = []
+        for j in range(len(self.params['observation_spec']) + 2):
+            X.append(
+                tf.data.Dataset.from_tensor_slices(
+                    tf.convert_to_tensor(
+                        np.load('data/pretrain_rddpg/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True)
+                    )
+                )
+            )
+        if num_data == self.params['num_data']:
+            self.num_data = self.params['num_data']
+        else:
+            self.num_data = num_data
+        self.num_batches = num_data//self.params['pretrain_bs']
+        Y = tf.data.Dataset.from_tensor_slices(Y)
+        F = tf.data.Dataset.from_tensor_slices(F)
+        A = tf.data.Dataset.from_tensor_slices(A)
+        B = tf.data.Dataset.from_tensor_slices(B)
+        Y = tf.data.Dataset.zip((Y, F, A, B))
         X = tf.data.Dataset.zip(tuple(X))
         dataset = tf.data.Dataset.zip((X, Y))
         dataset = dataset.shuffle(self.num_data).batch(
@@ -423,6 +471,267 @@ class Learner:
             drop_remainder=True
         ).prefetch(tf.data.AUTOTUNE)
         return dataset
+
+    def _pretrain_loop(
+        self,•
+        grad_update,•
+        experiment,•
+        checkpoint_dir,•
+        name,•
+        epochs = None,•
+        start = 0
+    ):
+        if epochs is None:
+            epochs = self.params['train_episode_count']
+        total_loss = 0.0
+        avg_loss = 0.0
+        prev_loss = 1e20
+        history_loss = []
+        history_loss_action = []
+        history_loss_a = []
+        history_loss_b = []
+        history_loss_omega = []
+        path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
+        if not os.path.exists(path):
+            os.mkdir(path)
+        path = os.path.join(path, name)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        if start != 0:
+            pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_action_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_action = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_a_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_a = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_b_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_b = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_omega = pickle.load(pkl)
+            pkl.close()
+        dataset = self.load_dataset()
+        print('[Actor] Dataset {ds}'.format(ds = dataset))
+        print('[Actor] Starting Actor Pretraining')
+        for episode in range(start, epochs):
+            print('[Actor] Starting Episode {ep}'.format(ep = episode))
+            total_loss = 0.0
+            total_loss_action = 0.0
+            total_loss_a = 0.0
+            total_loss_b = 0.0
+            total_loss_omega = 0.0
+            start = time.time()
+            num = 0
+            for step, (x, y) in enumerate(dataset):
+                loss, [loss_action, loss_omega, loss_a, loss_b] = \
+                    grad_update(x, y)
+                loss = loss.numpy()
+                loss_action = loss_action.numpy()
+                loss_omega = loss_omega.numpy()
+                loss_a = loss_a.numpy()
+                loss_b = loss_b.numpy()
+                print('[Actor] Episode {ep} Step {st} Loss: {loss}'.format(
+                    ep = episode,
+                    st = step,
+                    loss = loss
+                ))
+                total_loss += loss
+                total_loss_action += loss_action
+                total_loss_a += loss_a
+                total_loss_b += loss_b
+                total_loss_omega += loss_omega
+                num += 1
+                if step > 100:
+                    break
+            end = time.time()
+            avg_loss = total_loss / num
+            avg_loss_action = total_loss_action / num
+            avg_loss_a = total_loss_a / num
+            avg_loss_b = total_loss_b / num
+            avg_loss_omega = total_loss_omega / num
+            print('-------------------------------------------------')
+            print('[Actor] Episode {ep} Average Loss: {l}'.format(
+                ep = episode,
+                l = avg_loss
+            ))
+            print('[Actor] Learning Rate: {lr}'.format(
+                lr = self.pretrain_actor_optimizer.lr((episode + 1) * 5))
+            )
+            print('[Actor] Epoch Time: {time}s'.format(time = end - start))
+            print('-------------------------------------------------')
+            history_loss.append(avg_loss)
+            history_loss_action.append(avg_loss_action)
+            history_loss_a.append(avg_loss_a)
+            history_loss_b.append(avg_loss_b)
+            history_loss_omega.append(avg_loss_omega)
+            if episode % 3 == 0:
+                if math.isnan(avg_loss):
+                    break
+                pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss, pkl)
+                pkl.close()
+                fig1, ax1 = plt.subplots(1, 1, figsize = (5, 5))
+                ax1.plot(history_loss)
+                ax1.set_xlabel('loss')
+                ax1.set_ylabel('steps')
+                ax1.set_title('Total Loss')
+                fig1.savefig(
+                    open(
+                        os.path.join(
+                            path,
+                            'loss_{ex}_{name}_{ep}.png'.format(
+                                name = name,
+                                ex = experiment,
+                                ep = episode
+                            )
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'loss_action_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_action, pkl)
+                pkl.close()
+                fig2, ax2 = plt.subplots(1, 1, figsize = (5, 5))
+                ax2.plot(history_loss_action)
+                ax2.set_xlabel('loss')
+                ax2.set_ylabel('steps')
+                ax2.set_title('Total Action Loss')
+                fig2.savefig(
+                    open(
+                        os.path.join(
+                            path,
+                            'loss_action_{ex}_{name}_{ep}.png'.format(
+                                name = name,
+                                ex = experiment,
+                                ep = episode
+                            )
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'loss_a_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_a, pkl)
+                pkl.close()
+                fig3, ax3 = plt.subplots(1, 1, figsize = (5, 5))
+                ax3.plot(history_loss_a)
+                ax3.set_xlabel('loss')
+                ax3.set_ylabel('steps')
+                ax3.set_title('Total Amplitude Loss')
+                fig3.savefig(
+                    open(
+                        os.path.join(
+                            path,
+                            'loss_a_{ex}_{name}_{ep}.png'.format(
+                                name = name,
+                                ex = experiment,
+                                ep = episode
+                            )
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'loss_b_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_b, pkl)
+                pkl.close()
+                fig4, ax4 = plt.subplots(1, 1, figsize = (5, 5))
+                ax4.plot(history_loss_b)
+                ax4.set_xlabel('loss')
+                ax4.set_ylabel('steps')
+                ax4.set_title('Total Mean Loss')
+                fig4.savefig(
+                    open(
+                        os.path.join(
+                            path,
+                            'loss_b_{ex}_{name}_{ep}.png'.format(
+                                name = name,
+                                ex = experiment,
+                                ep = episode
+                            )
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_omega, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(history_loss_omega)
+                ax5.set_xlabel('loss')
+                ax5.set_ylabel('steps')
+                ax5.set_title('Total Mean Loss')
+                fig5.savefig(
+                    open(
+                        os.path.join(
+                            path,
+                            'loss_omega_{ex}_{name}_{ep}.png'.format(
+                                name = name,
+                                ex = experiment,
+                                ep = episode
+                            )
+                        )
+                    )
+                )
+                if prev_loss < avg_loss:
+                    break
+                else:
+                    self.actor.model.save_weights(
+                        os.path.join(
+                            path,
+                            'actor_pretrained_{name}_{ex}_{ep}.ckpt'.format(
+                                ep = episode,
+                                ex = experiment,
+                                name = name,
+                            )
+                        )
+                    )
+                prev_loss = avg_loss
 
     def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
             her = False):
