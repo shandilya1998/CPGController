@@ -860,3 +860,60 @@ You can start planning now!
 [0m[ INFO] [1618249527.334811479, 0.001000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1618249527.334944253, 0.001000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1618249527.370809540, 0.001000000]: GazeboRo[New Thread 0x7fffcd02a700 (LWP 2050052)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e93bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe250, rem=0x7fffffffe260)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 6889] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[WARN] [1618691806.851199, 107782.758000]: Controller Spawner error while taking down controllers: transport error completing service call: unable to receive data from sender, check sender's logs for details
+[INFO] [1618249518.161154, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1618249527.542686, 0.062000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1618249527.565042, 0.070000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1618249527.593095, 0.079000]: Loading controller: front_right_leg_controller
+[INFO] [1618249527.767282, 0.121000]: Loading controller: front_left_leg_controller
+[INFO] [1618249527.847486, 0.149000]: Loading controller: back_right_leg_controller
+[INFO] [1618249527.910739, 0.177000]: Loading controller: back_left_leg_controller
+[INFO] [1618249527.975494, 0.205000]: Loading controller: joint_state_controller
+[INFO] [1618249528.009847, 0.223000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618249528.028535, 0.235000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1618691791.769598, 107782.734000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1618691791.771564, 107782.735000]: Stopping all controllers...
+[INFO] [1618691791.794505, 107782.742000]: Unloading all loaded controllers...
+[INFO] [1618691791.796021, 107782.742000]: Trying to unload joint_state_controller
+[INFO] [1618691791.837662, 107782.748000]: Succeeded in unloading joint_state_controller
+[INFO] [1618691791.839482, 107782.748000]: Trying to unload back_left_leg_controller
+[31m[quadruped/controller_spawner-4] escalating to SIGTERM[0m
+[31m[gazebo-2] escalating to SIGTERM[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [6802][0m
+[1mROS_MASTER_URI=http://localhost:11320[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11320
+[1msetting /run_id to ce279e9a-9bb6-11eb-b496-59b95093d4bb[0m
+[1mprocess[rosout-1]: started with pid [6853][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [6864][0m
+[1mprocess[urdf_spawner-3]: started with pid [6866][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [6867][0m
+[1mprocess[joint_state_publisher-5]: started with pid [6869][0m
+[1mprocess[robot_state_publisher-6]: started with pid [6874][0m
+[1mprocess[move_group-7]: started with pid [6875][0m
+[1m[urdf_spawner-3] process has finished cleanly
+log file: /home/ubuntu/.ros/log/ce279e9a-9bb6-11eb-b496-59b95093d4bb/urdf_spawner-3*.log[0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
