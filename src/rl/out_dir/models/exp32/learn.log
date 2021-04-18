@@ -3200,3 +3200,120 @@ coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidt
 [DDPG] Episode 35 Step 35 Reward -1.34080 Time 8.37770
 [DDPG] Episode 35 Step 36 Reward -0.57791 Time 8.19496
 [DDPG] Episode 35 Step 37 Reward 3.80756 Time 8.13289
+[DDPG] Episode 35 Step 38 Reward -0.37579 Time 7.99386
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 39 Reward -13.88999 Time 7.92024
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 40 Reward -7.33830 Time 8.02327
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 41 Reward -5.02086 Time 8.22280
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 42 Reward -4.59502 Time 7.92276
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 43 Reward -6.67585 Time 7.93068
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 44 Reward -5.66337 Time 7.92560
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 45 Reward -5.84560 Time 7.92789
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 46 Reward -6.71442 Time 7.91366
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 47 Reward -6.65732 Time 7.97113
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 48 Reward -6.00294 Time 7.87945
+[DDPG] Last Step of episode
+[DDPG] Quadruped Not Upright
+[DDPG] Episode 35 Step 49 Reward -6.05282 Time 7.91440
+[DDPG] Critic Loss 86.9093246459961
+[DDPG] Total Reward -101.85903 Avg Critic Loss 86.90932 Time 288.92249
+[DDPG] Starting Next Episode
+[DDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg.py", line 987, in <module>
+    os.mkdir(os.path.join(critic_path, 'model'))
+  File "rddpg.py", line 504, in learn
+    self._action = self.env._action_init
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/tf_agents/environments/tf_environment.py", line 209, in reset
+    return self._reset()
+  File "/home/ubuntu/CPGController/src/rl/env.py", line 58, in _reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 815, in reset
+    self._reset()
+  File "/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 787, in _reset
+    rospy.wait_for_service('/gazebo/pause_physics')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-04-18 06:11:51.430097: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-18 06:11:54.084983: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-18 06:11:54.090579: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-18 06:11:54.180657: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.182799: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-18 06:11:54.182849: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-18 06:11:54.197234: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-18 06:11:54.197403: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-18 06:11:54.202761: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-18 06:11:54.204114: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-18 06:11:54.215740: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-18 06:11:54.218361: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-18 06:11:54.219472: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-18 06:11:54.219691: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.221497: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.224087: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-18 06:11:54.292662: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-18 06:11:54.293160: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-18 06:11:54.294494: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.296150: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:00:1e.0 name: Tesla T4 computeCapability: 7.5
+coreClock: 1.59GHz coreCount: 40 deviceMemorySize: 14.75GiB deviceMemoryBandwidth: 298.08GiB/s
+2021-04-18 06:11:54.296210: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-18 06:11:54.297282: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-18 06:11:54.298139: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-18 06:11:54.298342: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-18 06:11:54.299173: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-18 06:11:54.299323: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusolver.so.10
+2021-04-18 06:11:54.299552: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-18 06:11:54.299644: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-18 06:11:54.299893: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.302603: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:54.305330: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-04-18 06:11:54.305395: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-18 06:11:55.313049: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-18 06:11:55.313078: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-04-18 06:11:55.313085: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-04-18 06:11:55.313434: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:55.314501: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:55.315337: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-18 06:11:55.316091: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13963 MB memory) -> physical GPU (device: 0, name: Tesla T4, pci bus id: 0000:00:1e.0, compute capability: 7.5)
+[DDPG] Building the actor model
+[DDPG] Building the actor model
+[DDPG] Building the critic cell
+[DDPG] Building the critic model
+[DDPG] Building the critic cell
+[DDPG] Building the critic model
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618726321.260737246, 1.618000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618726321.262162211, 1.619000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618726321.262369139, 1.620000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618726322.630405584, 2.953000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618726323.296479322, 3.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618726324.113693057, 4.401000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618726325.149455271, 5.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
+[DDPG] Training Start
+[DDPG] Resetting Environment
+[DDPG] Starting Pretraining Test
+2021-04-18 06:12:33.540706: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-18 06:12:34.282358: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+[DDPG] Step 0 Reward 33.64094 Time 5.07219
