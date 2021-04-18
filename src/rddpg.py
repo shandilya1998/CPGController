@@ -109,8 +109,8 @@ class Learner:
             )
             self.create_dataset()
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.001,
-            decay_steps=60,
+            0.01,
+            decay_steps=20,
             decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
@@ -499,6 +499,66 @@ class Learner:
         )
         return loss, [loss_action, loss_omega, loss_a, loss_b]
 
+    def test_actor(self, path):
+        print('[Actor] Starting Actor Test')
+        step, (x, y) = next(enumerate(self.load_dataset()))
+        y_pred = self.actor.model(x)
+        bs = y_pred[0].shape[0]
+        action_dim = y_pred[0].shape[-1]
+        steps = y_pred[0].shape[2]
+        max_steps = y_pred[0].shape[1]
+        shape = (bs, steps * max_steps, action_dim)
+        y_pred = y_pred[0] * tf.repeat(
+            tf.expand_dims(
+                y_pred[3], 2),
+                steps,
+                2
+        ) + tf.repeat(
+            tf.expand_dims(
+                y_pred[4],
+                2
+            ),
+            steps,
+            2
+        )
+        y_pred = tf.reshape(y_pred, shape)
+        bs = y[0].shape[0]
+        action_dim = y[0].shape[-1]
+        steps = y[0].shape[2]
+        max_steps = y[0].shape[1]
+        shape = (bs, steps * max_steps, action_dim)
+        y = y[0] * tf.repeat(
+            tf.expand_dims(
+                y[2],
+                2
+            ),
+            steps,
+            2
+        ) + tf.repeat(
+            tf.expand_dims(
+                y[3],
+                2
+            ),
+            steps,
+            2
+        )
+        y = tf.reshape(y, shape)
+        fig, ax = plt.subplots(4,1, figsize = (5,20))
+        for i in range(4):
+            ax[i].plot(y_pred[0][:,3*i], 'b', label = 'ankle')
+            ax[i].plot(y_pred[0][:,3*i + 1], 'g', label = 'knee')
+            ax[i].plot(y_pred[0][:,3*i + 2], 'r', label = 'hip')
+            ax[i].legend()
+        fig.savefig(os.path.join(path,'y_pred.png'))
+        fig, ax = plt.subplots(4,1, figsize = (5,20))
+        for i in range(4):
+            ax[i].plot(y[0][:,3*i], 'b', label = 'ankle real')
+            ax[i].plot(y[0][:,3*i + 1], 'g', label = 'knee real')
+            ax[i].plot(y[0][:,3*i + 2], 'r', label = 'hip real')
+            ax[i].legend()
+        fig.savefig(os.path.join(path, 'y.png'))
+        print('[Actor] Finishing Actor Test')
+
     def _pretrain_loop(
         self,
         grad_update,
@@ -506,8 +566,14 @@ class Learner:
         checkpoint_dir,
         name,
         epochs = None,
-        start = 0
+        start = 0,
+        W = [1.0, 1.0, 1.0, 1.0]
     ):
+        self.test_actor(os.path.join(
+            checkpoint_dir,
+            'exp{exp}'.format(exp = experiment),
+            name
+        ))
         if epochs is None:
             epochs = self.params['train_episode_count']
         total_loss = 0.0
@@ -578,7 +644,7 @@ class Learner:
             num = 0
             for step, (x, y) in enumerate(dataset):
                 loss, [loss_action, loss_omega, loss_a, loss_b] = \
-                    grad_update(x, y)
+                    grad_update(x, y, W)
                 loss = loss.numpy()
                 loss_action = loss_action.numpy()
                 loss_omega = loss_omega.numpy()
@@ -750,6 +816,11 @@ class Learner:
                         )
                     )
                 prev_loss = avg_loss
+        self.test_actor(os.path.join(
+            checkpoint_dir,
+            'exp{exp}'.format(exp = experiment),
+            name
+        ))
 
     def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
         path = os.path.join(checkpoint_dir, 'exp{exp}'.format(exp = experiment))
@@ -759,7 +830,8 @@ class Learner:
                 path, 'pretrain_actor'
             ))
         self._pretrain_loop(
-            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_actor'
+            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_actor',
+            W = [1.0, 1.0, 1.0, 0.01]
         )
 
     def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
