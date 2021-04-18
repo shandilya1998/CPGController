@@ -630,7 +630,7 @@ class Quadruped:
         mod = (mu - np.square(np.abs(z)))
         r = np.abs(z)
         phi = np.angle(z)
-        r = r + (mu-r**2)*r*self.dt
+        r = r + (mu-np.square(r))*r*self.dt
         phi = phi + rng*self.dt
         z = r*np.exp(1j*phi) + b
         x = np.real(z)

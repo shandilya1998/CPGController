@@ -13,6 +13,7 @@ import tf_agents as tfa
 import matplotlib.pyplot as plt
 import matplotlib
 from learn import SignalDataGen
+from tqdm import tqdm
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
@@ -103,23 +104,23 @@ class Learner:
         if create_data:
             self.signal_gen = SignalDataGen(params)
             self.signal_gen.set_N(
-                3 * self.params['rnn_steps'] * self.params['max_steps'], 
+                self.params['rnn_steps'] * (self.params['max_steps'] + 2),
                 create_data
             )
             self.create_dataset()
 
     def create_dataset(self):
         self.env.quadruped.reset()
-        _state = self.env.quadruped.get_state_tensor()
         F = []
         A = []
         B = []
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']) + 2)]
         for y, x, f_ in tqdm(self.signal_gen.generator()):
-            f = f * 2 * np.pi
+            f_ = f_ * 2 * np.pi
             y = y * np.pi / 180.0
-            ac = y[0]
+            self.env.quadruped.set_motion_state(x)
+            _state = self.env.quadruped.get_state_tensor()
             x = [[] for j in range(len(self.params['observation_spec']) - 1)]
             f = []
             a = []
@@ -128,37 +129,39 @@ class Learner:
             x.append(self.actor.recurrent_state_init[0])
             x.append(self.actor.recurrent_state_init[1])
             actions = []
+            count = 0
             for i in range(self.params['max_steps']):
                 y_, b_, a_ = self.signal_gen.preprocess(
                     y[i*self.params['rnn_steps']:(i+1)*self.params['rnn_steps']]
                 )
-                a = a / (np.pi / 3)
+                a_ = a_ / (np.pi / 3)
                 for k, s in enumerate(_state[:-1]):
                     x[k].append(s)
                 actions.append(np.expand_dims(y_, 0))
                 b.append(np.expand_dims(b_, 0))
                 a.append(np.expand_dims(a_, 0))
-                f.append(np.array([[f_]]), dtype = np.float32)
+                f.append(np.array([[f_]], dtype = np.float32))
                 for j in range(self.params['rnn_steps']):
-                    ac = y_[j]
+                    ac = y[count]
+                    count += 1
                     if np.isinf(ac).any():
                         print('Inf in unprocessed')
                         continue
                     self.env.quadruped.all_legs.move(ac)
                     self.env.quadruped._hopf_oscillator(
-                        f,
+                        f_,
                         np.ones((self.params['units_osc'],)),
                         np.zeros((self.params['units_osc'],)),
                     )
                 _state = self.env.quadruped.get_state_tensor()
             for j in range(len(self.params['observation_spec']) - 1):
                 x[j] = np.expand_dims(
-                    np.concatenate(x[j], axis = 0)
+                    np.concatenate(x[j], axis = 0), 0
                 )
-            b = np.expand_dims(np.concatenate(b, axis = 0))
-            a = np.expand_dims(np.concatenate(a, axis = 0))
-            f = np.expand_dims(np.concatenate(f, axis = 0))
-            actions = np.expand_dims(np.concatenate(actions, axis = 0))
+            b = np.expand_dims(np.concatenate(b, axis = 0), 0)
+            a = np.expand_dims(np.concatenate(a, axis = 0), 0)
+            f = np.expand_dims(np.concatenate(f, axis = 0), 0)
+            actions = np.expand_dims(np.concatenate(actions, axis = 0), 0)
             for j in range(len(X)):
                 X[j].append(x[j])
             B.append(b)
@@ -167,6 +170,7 @@ class Learner:
             Y.append(actions)
             self.env.quadruped.reset()
             _state = self.env.quadruped.get_state_tensor()
+            count += 1
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
@@ -176,26 +180,30 @@ class Learner:
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
         print('[Actor] X Shapes:')
         for i in range(len(X)):
-            print('[Actor] {sh}'.format(X[i].shape))
+            print('[Actor] {sh}'.format(sh = X[i].shape))
         print('[Actor] A Shape : {sh}'.format(sh=A.shape))
         print('[Actor] B Shape : {sh}'.format(sh=B.shape))
         print('[Actor] F Shape : {sh}'.format(sh=F.shape))
-        np.save('data/pretrain/Y.npy', Y, allow_pickle = True, fix_imports=True)
+        np.save('data/pretrain_rddpg/Y.npy', Y, \
+            allow_pickle = True, fix_imports=True)
         time.sleep(3)
-        np.save('data/pretrain/F.npy', F, allow_pickle = True, fix_imports=True)
+        np.save('data/pretrain_rddpg/F.npy', F, \
+            allow_pickle = True, fix_imports=True)
         time.sleep(3)
-        np.save('data/pretrain/MU.npy', MU,allow_pickle = True,fix_imports=True)
+        np.save('data/pretrain_rddpg/A.npy', A, \
+            allow_pickle = True, fix_imports=True)
         time.sleep(3)
         np.save(
-            'data/pretrain/MEAN.npy',
-            MEAN,
+            'data/pretrain_rddpg/B.npy',
+            B,
             allow_pickle = True,
             fix_imports=True
         )
         time.sleep(3)
         for j in range(len(X)):
             time.sleep(3)
-            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True, fix_imports=True)
+            np.save('data/pretrain_rddpg/X_{j}.npy'.format(j=j), X[j], \
+                allow_pickle = True, fix_imports=True)
 
     def load_dataset(self):
         Y = np.load(
@@ -370,8 +378,6 @@ class Learner:
         return states, actor_recurrent_states, actions, \
             params, rewards, next_states, \
             next_actor_recurrent_states, step_types, batch_size
-
-    def create_dataset(self):
 
     def load_pretrain_dataset(self):
         Y = np.load(
@@ -1108,8 +1114,9 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment)
+    learner = Learner(params, args.experiment, True)
 
+    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -1136,3 +1143,4 @@ if __name__ == '__main__':
         per = args.per,
         her = args.her
     )
+    """

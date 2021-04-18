@@ -60,7 +60,6 @@ class Signal:
             self.theta2 = 0
             self.theta3 = 0
 
-
     def _get_base(self):
         self.base_signal = np.zeros((self.N + 2*self.T, 3))
         for i in range(self.N + 2 * self.T):

@@ -76,13 +76,13 @@ class SignalDataGen:
         """
             Data for straight ahead
         """
-        for d in tqdm(delta):
-            for tst, tsw, theta_h, theta_k in zip(
+        for d in delta:
+            for tst, tsw, theta_h, theta_k in tqdm(zip(
                 self.Tst,
                 self.Tsw,
                 self.theta_h,
                 self.theta_k
-            ):
+            )):
                 tsw = tsw + d[0]
                 tst = tst + d[1]
                 self.signal_gen.build(tsw, tst, theta_h, theta_k)
@@ -102,7 +102,12 @@ class SignalDataGen:
     def preprocess(self, signal):
         mean = np.mean(signal, axis = 0)
         mu = np.abs(signal).max(axis = 0)
-        signal = (signal - mean) / mu
+        signal = np.divide(
+            (signal - mean),
+            mu,
+            out = np.zeros_like(signal),
+            where = mu != 0
+        )
         return signal, mean, mu
 
     def generator(self):

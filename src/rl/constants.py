@@ -6,7 +6,7 @@ units_osc = 30
 params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 4*action_dim + 4 + 8*3,
-    'dt'                          : 0.01,
+    'dt'                          : 0.001,
     'units_output_mlp'            : [30, 45, 24, action_dim],
     'units_osc'                   : units_osc,
     'units_combine_rddpg'         : [150, 60, units_osc],
@@ -32,11 +32,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 100,
+    'max_steps'                   : 10,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 10,
+    'rnn_steps'                   : 250,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
