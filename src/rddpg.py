@@ -12,13 +12,14 @@ import argparse
 import tf_agents as tfa
 import matplotlib.pyplot as plt
 import matplotlib
+from learn import SignalDataGen
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
 class Learner:
-    def __init__(self, params, experiment):
+    def __init__(self, params, experiment, create_data = False):
         self.params = params
         self.experiment = experiment
         self.actor = ActorNetwork(self.params)
@@ -99,6 +100,102 @@ class Learner:
         print('[Actor] {lst}'.format(lst = physical_devices))
         self.p1 = 1.0
         self.epsilon = 1
+        if create_data:
+            self.signal_gen = SignalDataGen(params)
+            self.signal_gen.set_N(
+                3 * self.params['rnn_steps'] * self.params['max_steps'], 
+                create_data
+            )
+            self.create_dataset()
+
+    def create_dataset(self):
+        self.env.quadruped.reset()
+        _state = self.env.quadruped.get_state_tensor()
+        F = []
+        A = []
+        B = []
+        Y = []
+        X = [[] for j in range(len(self.params['observation_spec']) + 2)]
+        for y, x, f_ in tqdm(self.signal_gen.generator()):
+            f = f * 2 * np.pi
+            y = y * np.pi / 180.0
+            ac = y[0]
+            x = [[] for j in range(len(self.params['observation_spec']) - 1)]
+            f = []
+            a = []
+            b = []
+            x.append(_state[-1])
+            x.append(self.actor.recurrent_state_init[0])
+            x.append(self.actor.recurrent_state_init[1])
+            actions = []
+            for i in range(self.params['max_steps']):
+                y_, b_, a_ = self.signal_gen.preprocess(
+                    y[i*self.params['rnn_steps']:(i+1)*self.params['rnn_steps']]
+                )
+                a = a / (np.pi / 3)
+                for k, s in enumerate(_state[:-1]):
+                    x[k].append(s)
+                actions.append(np.expand_dims(y_, 0))
+                b.append(np.expand_dims(b_, 0))
+                a.append(np.expand_dims(a_, 0))
+                f.append(np.array([[f_]]), dtype = np.float32)
+                for j in range(self.params['rnn_steps']):
+                    ac = y_[j]
+                    if np.isinf(ac).any():
+                        print('Inf in unprocessed')
+                        continue
+                    self.env.quadruped.all_legs.move(ac)
+                    self.env.quadruped._hopf_oscillator(
+                        f,
+                        np.ones((self.params['units_osc'],)),
+                        np.zeros((self.params['units_osc'],)),
+                    )
+                _state = self.env.quadruped.get_state_tensor()
+            for j in range(len(self.params['observation_spec']) - 1):
+                x[j] = np.expand_dims(
+                    np.concatenate(x[j], axis = 0)
+                )
+            b = np.expand_dims(np.concatenate(b, axis = 0))
+            a = np.expand_dims(np.concatenate(a, axis = 0))
+            f = np.expand_dims(np.concatenate(f, axis = 0))
+            actions = np.expand_dims(np.concatenate(actions, axis = 0))
+            for j in range(len(X)):
+                X[j].append(x[j])
+            B.append(b)
+            A.append(a)
+            F.append(f)
+            Y.append(actions)
+            self.env.quadruped.reset()
+            _state = self.env.quadruped.get_state_tensor()
+        for j in range(len(X)):
+            X[j] = np.concatenate(X[j], axis = 0)
+        Y = np.concatenate(Y, axis = 0)
+        F = np.concatenate(F, axis = 0)
+        A = np.concatenate(A, axis = 0)
+        B = np.concatenate(B, axis = 0)
+        print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
+        print('[Actor] X Shapes:')
+        for i in range(len(X)):
+            print('[Actor] {sh}'.format(X[i].shape))
+        print('[Actor] A Shape : {sh}'.format(sh=A.shape))
+        print('[Actor] B Shape : {sh}'.format(sh=B.shape))
+        print('[Actor] F Shape : {sh}'.format(sh=F.shape))
+        np.save('data/pretrain/Y.npy', Y, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save('data/pretrain/F.npy', F, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save('data/pretrain/MU.npy', MU,allow_pickle = True,fix_imports=True)
+        time.sleep(3)
+        np.save(
+            'data/pretrain/MEAN.npy',
+            MEAN,
+            allow_pickle = True,
+            fix_imports=True
+        )
+        time.sleep(3)
+        for j in range(len(X)):
+            time.sleep(3)
+            np.save('data/pretrain/X_{j}.npy'.format(j=j), X[j], allow_pickle = True, fix_imports=True)
 
     def load_dataset(self):
         Y = np.load(
@@ -273,6 +370,53 @@ class Learner:
         return states, actor_recurrent_states, actions, \
             params, rewards, next_states, \
             next_actor_recurrent_states, step_types, batch_size
+
+    def create_dataset(self):
+
+    def load_pretrain_dataset(self):
+        Y = np.load(
+            'data/pretrain/Y.npy',
+            allow_pickle = True,
+            fix_imports=True
+        )
+        num_steps = Y.shape[1] // self.params['rnn_steps']
+        Y = Y[:, num_steps * self.params['rnn_steps'], :]
+        Y = np.reshape(Y, (
+            Y.shape[0], num_steps, self.params['rnn_steps'], Y.shape[-1]
+        ))
+        time.sleep(3)
+        num_data = Y.shape[0]
+        Y = tf.convert_to_tensor(Y)
+        F = tf.convert_to_tensor(np.load('data/pretrain/F.npy', allow_pickle = True, fix_imports=True))
+        time.sleep(3)
+        MU = tf.convert_to_tensor(np.load('data/pretrain/MU.npy', allow_pickle = True, fix_imports=True))
+        MEAN = tf.convert_to_tensor(np.load('data/pretrain/MEAN.npy', allow_pickle = True, fix_imports=True))
+        X = []
+        for j in range(len(self.params['observation_spec'])):
+            X.append(
+                tf.data.Dataset.from_tensor_slices(
+                    tf.convert_to_tensor(
+                        np.load('data/pretrain/X_{j}.npy'.format(j=j), allow_pickle = True, fix_imports=True)
+                    )
+                )
+            )
+        if num_data == self.params['num_data']:
+            self.num_data = self.params['num_data']
+        else:
+            self.num_data = num_data
+        self.num_batches = num_data//self.params['pretrain_bs']
+        Y = tf.data.Dataset.from_tensor_slices(Y)
+        F = tf.data.Dataset.from_tensor_slices(F)
+        MU = tf.data.Dataset.from_tensor_slices(MU)
+        MEAN = tf.data.Dataset.from_tensor_slices(MEAN)
+        Y = tf.data.Dataset.zip((Y, F, MU, MEAN))
+        X = tf.data.Dataset.zip(tuple(X))
+        dataset = tf.data.Dataset.zip((X, Y))
+        dataset = dataset.shuffle(self.num_data).batch(
+            self.params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        return dataset
 
     def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
             her = False):
@@ -494,9 +638,9 @@ class Learner:
             ), 'rb')
             d3 = pickle.load(pkl)
             pkl.close()
+        goal_id = np.random.randint(0, len(self.desired_motion))
+        desired_motion = self.desired_motion[goal_id]
         while ep < self.params['train_episode_count']:
-            goal_id = np.random.randint(0, len(self.desired_motion))
-            desired_motion = self.desired_motion[goal_id]
             enc_goals.append(desired_motion[0])
             self._action = self.env._action_init
             self._noise = self._noise_init
