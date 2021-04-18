@@ -116,6 +116,10 @@ class Learner:
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
         )
+        self.action_mse = tf.keras.losses.MeanSquaredError()
+        self.omega_mse = tf.keras.losses.MeanSquaredError()
+        self.a_mse = tf.keras.losses.MeanSquaredError()
+        self.b_mse = tf.keras.losses.MeanSquaredError()
 
     def create_dataset(self):
         self.env.quadruped.reset()
@@ -258,7 +262,7 @@ class Learner:
             'data/pretrain_rddpg/Y.npy',
             allow_pickle = True,
             fix_imports=True
-        )
+            )[:, :, :self.params['rnn_steps'], :]
         time.sleep(3)
         num_data = Y.shape[0]
         Y = tf.convert_to_tensor(Y)
@@ -472,13 +476,36 @@ class Learner:
         ).prefetch(tf.data.AUTOTUNE)
         return dataset
 
+    def _pretrain_actor(self, x, y, W = [1,1,1,1]):
+        with tf.GradientTape(persistent=False) as tape:
+            out, osc, omega, a, b, state, z_out, combine_state, \
+                omega_state = self.actor.model(x)
+            loss_action = self.action_mse(y[0], out)
+            loss_omega = self.omega_mse(y[1], omega)
+            loss_a = self.a_mse(y[2], a)
+            loss_b = self.b_mse(y[3], b)
+            loss = W[0] * loss_action + W[1] * loss_a + \
+                W[2] * loss_b + W[3] * loss_omega
+
+        grads = tape.gradient(
+            loss,
+            self.actor.model.trainable_variables
+        )
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                self.actor.model.trainable_variables
+            )
+        )
+        return loss, [loss_action, loss_omega, loss_a, loss_b]
+
     def _pretrain_loop(
-        self,•
-        grad_update,•
-        experiment,•
-        checkpoint_dir,•
-        name,•
-        epochs = None,•
+        self,
+        grad_update,
+        experiment,
+        checkpoint_dir,
+        name,
+        epochs = None,
         start = 0
     ):
         if epochs is None:
@@ -607,14 +634,12 @@ class Learner:
                 ax1.set_ylabel('steps')
                 ax1.set_title('Total Loss')
                 fig1.savefig(
-                    open(
-                        os.path.join(
-                            path,
-                            'loss_{ex}_{name}_{ep}.png'.format(
-                                name = name,
-                                ex = experiment,
-                                ep = episode
-                            )
+                    os.path.join(
+                        path,
+                        'loss_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
                         )
                     )
                 )
@@ -632,14 +657,12 @@ class Learner:
                 ax2.set_ylabel('steps')
                 ax2.set_title('Total Action Loss')
                 fig2.savefig(
-                    open(
-                        os.path.join(
-                            path,
-                            'loss_action_{ex}_{name}_{ep}.png'.format(
-                                name = name,
-                                ex = experiment,
-                                ep = episode
-                            )
+                    os.path.join(
+                        path,
+                        'loss_action_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
                         )
                     )
                 )
@@ -657,14 +680,12 @@ class Learner:
                 ax3.set_ylabel('steps')
                 ax3.set_title('Total Amplitude Loss')
                 fig3.savefig(
-                    open(
-                        os.path.join(
-                            path,
-                            'loss_a_{ex}_{name}_{ep}.png'.format(
-                                name = name,
-                                ex = experiment,
-                                ep = episode
-                            )
+                    os.path.join(
+                        path,
+                        'loss_a_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
                         )
                     )
                 )
@@ -682,14 +703,12 @@ class Learner:
                 ax4.set_ylabel('steps')
                 ax4.set_title('Total Mean Loss')
                 fig4.savefig(
-                    open(
-                        os.path.join(
-                            path,
-                            'loss_b_{ex}_{name}_{ep}.png'.format(
-                                name = name,
-                                ex = experiment,
-                                ep = episode
-                            )
+                    os.path.join(
+                        path,
+                        'loss_b_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
                         )
                     )
                 )
@@ -707,17 +726,16 @@ class Learner:
                 ax5.set_ylabel('steps')
                 ax5.set_title('Total Mean Loss')
                 fig5.savefig(
-                    open(
-                        os.path.join(
-                            path,
-                            'loss_omega_{ex}_{name}_{ep}.png'.format(
-                                name = name,
-                                ex = experiment,
-                                ep = episode
-                            )
+                    os.path.join(
+                        path,
+                        'loss_omega_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
                         )
                     )
                 )
+
                 if prev_loss < avg_loss:
                     break
                 else:
@@ -732,6 +750,17 @@ class Learner:
                         )
                     )
                 prev_loss = avg_loss
+
+    def pretrain_actor(self, experiment, checkpoint_dir = 'weights/actor_pretrain'):
+        path = os.path.join(checkpoint_dir, 'exp{exp}'.format(exp = experiment))
+        if not os.path.exists(path):
+            os.mkdir(path)
+            os.mkdir(os.path.join(
+                path, 'pretrain_actor'
+            ))
+        self._pretrain_loop(
+            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_actor'
+        )
 
     def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
             her = False):
@@ -1423,7 +1452,8 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, True)
+    learner = Learner(params, args.experiment, False)
+    learner.pretrain_actor(args.experiment, args.out_path)
 
     """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
