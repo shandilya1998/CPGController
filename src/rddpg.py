@@ -1525,9 +1525,8 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
-    learner.pretrain_actor(args.experiment, args.out_path)
+    #learner.pretrain_actor(args.experiment, args.out_path)
 
-    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -1554,4 +1553,3 @@ if __name__ == '__main__':
         per = args.per,
         her = args.her
     )
-    """
