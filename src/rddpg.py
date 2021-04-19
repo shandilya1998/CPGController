@@ -196,17 +196,17 @@ class Learner:
         print('[Actor] A Shape : {sh}'.format(sh=A.shape))
         print('[Actor] B Shape : {sh}'.format(sh=B.shape))
         print('[Actor] F Shape : {sh}'.format(sh=F.shape))
-        np.save('data/pretrain_rddpg/Y.npy', Y, \
+        np.save('data/pretrain_rddpg_2/Y.npy', Y, \
             allow_pickle = True, fix_imports=True)
         time.sleep(3)
-        np.save('data/pretrain_rddpg/F.npy', F, \
+        np.save('data/pretrain_rddpg_2/F.npy', F, \
             allow_pickle = True, fix_imports=True)
         time.sleep(3)
-        np.save('data/pretrain_rddpg/A.npy', A, \
+        np.save('data/pretrain_rddpg_2/A.npy', A, \
             allow_pickle = True, fix_imports=True)
         time.sleep(3)
         np.save(
-            'data/pretrain_rddpg/B.npy',
+            'data/pretrain_rddpg_2/B.npy',
             B,
             allow_pickle = True,
             fix_imports=True
@@ -214,7 +214,7 @@ class Learner:
         time.sleep(3)
         for j in range(len(X)):
             time.sleep(3)
-            np.save('data/pretrain_rddpg/X_{j}.npy'.format(j=j), X[j], \
+            np.save('data/pretrain_rddpg_2/X_{j}.npy'.format(j=j), X[j], \
                 allow_pickle = True, fix_imports=True)
 
     def load_ddpg_dataset(self):
@@ -1524,9 +1524,9 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, False)
+    learner = Learner(params, args.experiment, True)
     #learner.pretrain_actor(args.experiment, args.out_path)
-
+    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
@@ -1553,3 +1553,4 @@ if __name__ == '__main__':
         per = args.per,
         her = args.her
     )
+    """
