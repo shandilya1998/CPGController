@@ -321,6 +321,8 @@ class ActorNetwork(object):
             name = 'get_real_rhythms_rhythm_generator'
         )
 
+        action_real = 2 * action_real
+
         model = tf.keras.Model(
             inputs = [mod_state, Z, omega, mu],
             outputs = [action_real, z, omega, mu],
@@ -494,6 +496,7 @@ class ActorNetwork(object):
             steps,
             2
         )
+        Y = Y / (np.pi / 3)
         desired_motion = np.load(
             os.path.join(data_dir, 'X_0.npy'),
             allow_pickle = True,

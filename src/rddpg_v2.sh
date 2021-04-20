@@ -4,7 +4,7 @@ export ROS_MASTER_URI=http://localhost:11319
 export GAZEBO_MASTER_URI=http://localhost:11320
 
 OUT_PATH="weights/actor_pretrain"
-EXPERIMENT=33
+EXPERIMENT=34
 START=0
 PER="false"
 HER="false"
