@@ -24,6 +24,26 @@ class Learner:
         self.params = params
         self.experiment = experiment
         self.actor = ActorNetwork(self.params)
+        self.time_step_spec = tfa.trajectories.time_step.time_step_spec(
+            observation_spec = self.params['observation_spec'],
+            reward_spec = self.params['reward_spec']
+        )
+        self.env = Env(
+            self.time_step_spec,
+            self.params,
+            experiment,
+            rddpg = True
+        )
+        self.current_time_step = None
+        self._action = self.env._action_init
+        self._noise_init = [
+            tf.expand_dims(tf.zeros(
+                spec.shape,
+                spec.dtype
+            ), 0) for spec in self.env.action_spec()
+        ]
+        self._noise = self._noise_init
+        self.OU = OU()
         self.dt = self.params['dt']
         matplotlib.use('Agg')
         physical_devices = tf.config.list_physical_devices('GPU')
@@ -38,7 +58,7 @@ class Learner:
                 self.params['rnn_steps'] * (self.params['max_steps'] + 2),
                 create_data
             )
-            self.create_dataset()
+            self.create_dataset('data/pretrain_rddpg_3', self.signal_gen.generator)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
             decay_steps=20,
@@ -49,6 +69,9 @@ class Learner:
         )
         self.action_mse = tf.keras.losses.MeanSquaredError()
         self.omega_mse = tf.keras.losses.MeanSquaredError()
+
+    def create_dataset(self, path, generator):
+        self.actor.create_data(path, generator, self.env)
 
     def load_actor(self, path, path_target):
         print('[DDPG] Loading Actor Weights')
@@ -419,7 +442,7 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, False)
+    learner = Learner(params, args.experiment, True)
     learner.pretrain_actor(
         args.experiment,
         args.out_path,

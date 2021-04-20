@@ -127,7 +127,7 @@ class Learner:
         A = []
         B = []
         Y = []
-        X = [[] for j in range(len(self.params['observation_spec']) + 2)]
+        X = [[] for j in range(len(self.params['observation_spec']))]
         for y, x, f_ in tqdm(self.signal_gen.generator()):
             f_ = f_ * 2 * np.pi
             y = y * np.pi / 180.0
@@ -142,27 +142,24 @@ class Learner:
             x.append(self.actor.recurrent_state_init[1])
             actions = []
             count = 0
-            for i in range(2 * self.params['max_steps']):
-                y_, b_, a_ = self.signal_gen.preprocess(
-                    y[i*self.params['rnn_steps']:(i+1)*self.params['rnn_steps']]
-                )
-                a_ = a_ / (np.pi / 3)
-                for k, s in enumerate(_state[:-1]):
-                    x[k].append(s)
-                actions.append(np.expand_dims(y_, 0))
-                b.append(np.expand_dims(b_, 0))
-                a.append(np.expand_dims(a_, 0))
-                f.append(np.array([[f_]], dtype = np.float32))
+            for i in range(self.params['max_steps']):
                 for j in range(self.params['rnn_steps']):
                     y_, b_, a_ = self.signal_gen.preprocess(
-                        y[i*self.params['rnn_steps']+j:(i+1)*self.params['rnn_steps']+j]
+                        y[
+                            i * self.params[
+                                'rnn_steps'
+                            ] + j: (i + 1) * self.params[
+                            'rnn_steps'
+                            ] + j
+                        ]
                     )
                     a_ = a_ / (np.pi / 3)
-                    actions.append(np.expand_dims(y_, 0))
-                    b.append(np.expand_dims(b_, 0))
-                    a.append(np.expand_dims(a_, 0))
                     for k, s in enumerate(_state):
-                        x[k].append(s)
+                        X[k].append(s)
+                    Y.append(np.expand_dims(y_, 0))
+                    B.append(np.expand_dims(b_, 0))
+                    A.append(np.expand_dims(a_, 0))
+                    F.append(np.array([[f_]], dtype = np.float32))
                     ac = y[count]
                     count += 1
                     if np.isinf(ac).any():
@@ -175,11 +172,7 @@ class Learner:
                         np.zeros((self.params['units_osc'],)),
                     )
                     _state = self.env.quadruped.get_state_tensor()
-            for j in range(self.params['rnn_steps']):
-                for k in range(len(self.params['observation_spec']) - 1):
-                    x[k] = np.expand_dims(
-                        np.concatenate(x[k][j:], axis = 0), 0
-                    )
+            self.env.quadruped.reset()
 
 
     def create_dataset(self):
