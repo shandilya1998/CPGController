@@ -58,7 +58,7 @@ class Learner:
                 self.params['rnn_steps'] * (self.params['max_steps'] + 2),
                 create_data
             )
-            self.create_dataset('data/pretrain_rddpg_3', self.signal_gen.generator)
+            self.create_dataset('data/pretrain_rddpg_3', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
             decay_steps=20,
@@ -70,8 +70,8 @@ class Learner:
         self.action_mse = tf.keras.losses.MeanSquaredError()
         self.omega_mse = tf.keras.losses.MeanSquaredError()
 
-    def create_dataset(self, path, generator):
-        self.actor.create_data(path, generator, self.env)
+    def create_dataset(self, path, signal_gen):
+        self.actor.create_data(path, signal_gen, self.env)
 
     def load_actor(self, path, path_target):
         print('[DDPG] Loading Actor Weights')
