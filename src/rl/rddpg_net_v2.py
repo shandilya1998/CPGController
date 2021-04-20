@@ -3,6 +3,8 @@ from layers import actor, critic, oscillator, complex
 import copy
 import os
 import numpy as np
+from tqdm import tqdm
+import time
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -417,7 +419,7 @@ class ActorNetwork(object):
         )
         return model
 
-    def create_data(self, path, generator, env):
+    def create_data(self, path, signal_gen, env):
         env.quadruped.reset()
         F = []
         A = []
@@ -425,14 +427,18 @@ class ActorNetwork(object):
         Y = []
         X = [[] for j in range(len(self.params['observation_spec']))]
         count = 0
-        for y, x, f_ in tqdm(generator()):
+        for y, x, f_ in tqdm(signal_gen.generator()):
+            if count == 2:
+                        break
             f_ = f_ * 2 * np.pi
             y = y * np.pi / 180.0
             env.quadruped.set_motion_state(x)
             _state = env.quadruped.get_state_tensor()
             for i in range(self.params['max_steps']):
                 for j in range(self.params['rnn_steps']):
-                    y_, b_, a_ = self.signal_gen.preprocess(
+                    if count == 5:
+                        break
+                    y_, b_, a_ = signal_gen.preprocess(
                         y[
                             i * self.params[
                                 'rnn_steps'
@@ -449,9 +455,8 @@ class ActorNetwork(object):
                     A.append(np.expand_dims(a_, 0))
                     F.append(np.array([[f_]], dtype = np.float32))
                     ac = y[
-                        i * self.params['rnn_cells'] + j
+                        i * self.params['rnn_steps'] + j
                     ]
-                    count += 1
                     if np.isinf(ac).any():
                         print('Inf in unprocessed')
                         continue
@@ -462,9 +467,7 @@ class ActorNetwork(object):
                         np.zeros((self.params['units_osc'],)),
                     )
                     _state = env.quadruped.get_state_tensor()
-                    count += 1
-                    if count == 5:
-                        break
+            count += 1
             env.quadruped.reset()
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
