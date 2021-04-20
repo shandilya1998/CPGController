@@ -349,6 +349,14 @@ class Learner:
             os.mkdir(path)
         if not os.path.exists(
             os.path.join(
+                path, 'pretrain_enc'
+            )
+        ):
+            os.mkdir(os.path.join(
+                path, 'pretrain_enc'
+            ))
+        if not os.path.exists(
+            os.path.join(
                 path, name
             )
         ):
@@ -356,8 +364,12 @@ class Learner:
                 path, name
             ))
         self._pretrain_loop(
+            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
+            W = [0.001, 1.0]
+        )
+        self._pretrain_loop(
             self._pretrain_actor, experiment, checkpoint_dir, name,
-            W = [1.0, 0.0]
+            W = [1.0, 0.001]
         )
 
 def str2bool(v):
