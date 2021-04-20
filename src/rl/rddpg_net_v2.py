@@ -165,16 +165,6 @@ class ActorNetwork(object):
             dtype = params['observation_spec'][0].dtype,
             name = params['observation_spec'][0].name + '_omega_net'
         )
-        s_omega = tf.keras.Input(
-            shape = (params['units_omega'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'omega_gru_state_omega_net'
-        )
-        s_mu = tf.keras.Input(
-            shape = (params['units_mu'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'mu_gru_state_omega_net'
-        )
 
         motion_encoder = tf.keras.Sequential(name = 'motion_encoder_omega_net')
         for i, units in enumerate(params['units_motion_state']):
@@ -187,14 +177,8 @@ class ActorNetwork(object):
                     trainable = trainable
                 )
             )
-        omega_gru = tf.keras.layers.GRUCell(
-            units = params['units_omega'][0],
-            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
-            name = 'omega_gru_omega_net',
-            trainable = trainable
-        )
         omega_dense = tf.keras.Sequential(name = 'omega_dense_omega_net')
-        for i, units in enumerate(params['units_omega'][1:]):
+        for i, units in enumerate(params['units_omega']):
             omega_dense.add(
                 tf.keras.layers.Dense(
                     units = units,
@@ -214,14 +198,8 @@ class ActorNetwork(object):
             )
         )
 
-        mu_gru = tf.keras.layers.GRUCell(
-            units = params['units_mu'][0],
-            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
-            name = 'mu_gru_omega_net',
-            trainable = trainable
-        )
         mu_dense = tf.keras.Sequential(name = 'mu_dense_omega_net')
-        for i, units in enumerate(params['units_mu'][1:]):
+        for i, units in enumerate(params['units_mu']):
             mu_dense.add(
                 tf.keras.layers.Dense(
                     units = units,
@@ -242,13 +220,11 @@ class ActorNetwork(object):
         )
 
         x = motion_encoder(desired_motion)
-        x1, omega_state = omega_gru(x, s_omega)
-        omega = omega_dense(x1)
-        x2, mu_state = mu_gru(x, s_mu)
-        mu = mu_dense(x2)
+        omega = omega_dense(x)
+        mu = mu_dense(x)
         model = tf.keras.Model(
-            inputs = [desired_motion, s_omega, s_mu],
-            outputs = [omega, mu, omega_state, mu_state],
+            inputs = [desired_motion],
+            outputs = [omega, mu],
             name = 'param_net'
         )
         return model
@@ -346,16 +322,6 @@ class ActorNetwork(object):
             dtype = tf.dtypes.float32,
             name = 'mod_state' + '_cell'
         )
-        s_omega = tf.keras.Input(
-            shape = (params['units_omega'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'omega_gru_state' + '_cell'
-        )
-        s_mu = tf.keras.Input(
-            shape = (params['units_mu'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'mu_gru_state' + '_cell'
-        )
         z = tf.keras.Input(
             shape = (2 * params['units_osc'],),
             dtype = tf.dtypes.float32,
@@ -378,25 +344,22 @@ class ActorNetwork(object):
             'TimeDistributedRhythmGenerator',
             [
                 2 * params['units_osc'],
-                params['units_omega'][0],
-                params['units_mu'][0]
+                1,
+                params['units_osc']
             ],
             steps = params['rnn_steps'],
             return_state = True,
             trainable = trainable
         )
 
-        omega, mu, omega_state, mu_state = param_net([
-            desired_motion, s_omega, s_mu
-        ])
+        omega, mu = param_net(desired_motion)
         [actions, osc, _, _], [Z, _, _] = td_rhythm_gen([
             mod_state, z, omega, mu
         ])
 
         model = tf.keras.Model(
-            inputs = [desired_motion, mod_state, \
-                s_omega, s_mu, z],
-            outputs = [actions, osc, omega, omega_state, mu_state, Z],
+            inputs = [desired_motion, mod_state, z],
+            outputs = [actions, osc, omega, Z],
             name = 'pretrain_actor_cell'
         )
         return model
@@ -419,16 +382,6 @@ class ActorNetwork(object):
             dtype = tf.dtypes.float32,
             name = 'mod_state'
         )
-        s_omega = tf.keras.Input(
-            shape = (params['units_omega'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'omega_gru_state' + '_cell'
-        )
-        s_mu = tf.keras.Input(
-            shape = (params['units_mu'][0],),
-            dtype = tf.dtypes.float32,
-            name = 'mu_gru_state' + '_cell'
-        )
         z = tf.keras.Input(
             shape = (2 * params['units_osc'],),
             dtype = tf.dtypes.float32,
@@ -446,26 +399,21 @@ class ActorNetwork(object):
             'TimeDistributedActor',
             [
                 2 * params['units_osc'],
-                params['units_omega'][0],
-                params['units_mu'][0]
             ],
             steps = params['max_steps'],
             return_state = False,
             trainable = trainable
         )
 
-        actions, _, omega, _, _, _ = actor([
+        actions, _, omega, Z = actor([
             desired_motion,
             mod_state,
-            s_omega,
-            s_mu,
             z
         ])
 
         model = tf.keras.Model(
-            inputs = [desired_motion, mod_state, \
-                s_omega, s_mu, z],
-            outputs = [actions, omega]
+            inputs = [desired_motion, mod_state, z],
+            outputs = [actions, omega, Z]
         )
         return model
 

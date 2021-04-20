@@ -2475,3 +2475,41 @@ Aborted (core dumped)
 You can start planning now!
 
 [0m
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e83bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe240, rem=0x7fffffffe250)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3316163] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[31m[urdf_spawner-3] process has died [pid 3316141, exit code 1, cmd /opt/ros/noetic/lib/gazebo_ros/spawn_model -param robot_description -urdf -model quadruped __name:=urdf_spawner __log:=/home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/urdf_spawner-3.log].
+log file: /home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/urdf_spawner-3*.log[0m
+[31m[gazebo-1] process has died [pid 3316138, exit code 255, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/gazebo-1.log].
+log file: /home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/gazebo-1*.log[0m
+[31m[gazebo_gui-2] process has died [pid 3316140, exit code 134, cmd /opt/ros/noetic/lib/gazebo_ros/gzclient __name:=gazebo_gui __log:=/home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/gazebo_gui-2.log].
+log file: /home/ubuntu/.ros/log/1e461ef4-a18b-11eb-b496-59b95093d4bb/gazebo_gui-2*.log[0m
+[31m[quadruped/controller_spawner-4] escalating to SIGTERM[0m
+[31m[quadruped/controller_spawner-4] escalating to SIGKILL[0m
+[31mShutdown errors:
+ * process[quadruped/controller_spawner-4, pid 3316148]: required SIGKILL. May still be running.[0m
+
+[1mROS_MASTER_URI=http://localhost:11319[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11319
+[1mprocess[gazebo-1]: started with pid [3316138][0m
+[1mprocess[gazebo_gui-2]: started with pid [3316140][0m
+[1mprocess[urdf_spawner-3]: started with pid [3316141][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [3316148][0m
+[1mprocess[joint_state_publisher-5]: started with pid [3316150][0m
+[1mprocess[robot_state_publisher-6]: started with pid [3316151][0m
+[1mprocess[move_group-7]: started with pid [3316152][0m
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[joint_state_publisher-5] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
