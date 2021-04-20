@@ -417,6 +417,89 @@ class ActorNetwork(object):
         )
         return model
 
+    def create_data(self, path, generator, env):
+        env.quadruped.reset()
+        F = []
+        A = []
+        B = []
+        Y = []
+        X = [[] for j in range(len(self.params['observation_spec']))]
+        count = 0
+        for y, x, f_ in tqdm(generator()):
+            f_ = f_ * 2 * np.pi
+            y = y * np.pi / 180.0
+            env.quadruped.set_motion_state(x)
+            _state = env.quadruped.get_state_tensor()
+            for i in range(self.params['max_steps']):
+                for j in range(self.params['rnn_steps']):
+                    y_, b_, a_ = self.signal_gen.preprocess(
+                        y[
+                            i * self.params[
+                                'rnn_steps'
+                            ] + j: (i + 1) * self.params[
+                            'rnn_steps'
+                            ] + j
+                        ]
+                    )
+                    a_ = a_ / (np.pi / 3)
+                    for k, s in enumerate(_state):
+                        X[k].append(s)
+                    Y.append(np.expand_dims(y_, 0))
+                    B.append(np.expand_dims(b_, 0))
+                    A.append(np.expand_dims(a_, 0))
+                    F.append(np.array([[f_]], dtype = np.float32))
+                    ac = y[
+                        i * self.params['rnn_cells'] + j
+                    ]
+                    count += 1
+                    if np.isinf(ac).any():
+                        print('Inf in unprocessed')
+                        continue
+                    env.quadruped.all_legs.move(ac)
+                    env.quadruped._hopf_oscillator(
+                        f_,
+                        np.ones((self.params['units_osc'],)),
+                        np.zeros((self.params['units_osc'],)),
+                    )
+                    _state = env.quadruped.get_state_tensor()
+                    count += 1
+                    if count == 5:
+                        break
+            env.quadruped.reset()
+        for j in range(len(X)):
+            X[j] = np.concatenate(X[j], axis = 0)
+        Y = np.concatenate(Y, axis = 0)
+        F = np.concatenate(F, axis = 0)
+        A = np.concatenate(A, axis = 0)
+        B = np.concatenate(B, axis = 0)
+        print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
+        print('[Actor] X Shapes:')
+        for i in range(len(X)):
+            print('[Actor] {sh}'.format(sh = X[i].shape))
+        print('[Actor] A Shape : {sh}'.format(sh=A.shape))
+        print('[Actor] B Shape : {sh}'.format(sh=B.shape))
+        print('[Actor] F Shape : {sh}'.format(sh=F.shape))
+        np.save(os.path.join(path, 'Y.npy'), \
+            Y, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save(os.path.join(path, 'F.npy'), \
+            F, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save(os.path.join(path, 'A.npy'), \
+            A, allow_pickle = True,fix_imports=True)
+        time.sleep(3)
+        np.save(
+            os.path.join(path, 'B.npy'),
+            B,
+            allow_pickle = True,
+            fix_imports=True
+        )
+        time.sleep(3)
+        for j in range(len(X)):
+            time.sleep(3)
+            np.save(os.path.join(path, 'X_{j}.npy'.format(j=j)), \
+                X[j], allow_pickle = True, fix_imports=True)
+
     def create_pretrain_dataset(self, data_dir, params):
         Y = np.load(
             os.path.join(data_dir, 'Y.npy'),
@@ -434,15 +517,15 @@ class ActorNetwork(object):
             fix_imports=True
         )
         num_data = Y.shape[0]
-        steps = Y.shape[2]
+        steps = Y.shape[1]
         Y = Y * tf.repeat(
-            tf.expand_dims(A, 2),
+            tf.expand_dims(A, 1),
             steps,
-            2
+            1
         ) + tf.repeat(
-            tf.expand_dims(B, 2),
+            tf.expand_dims(B, 1),
             steps,
-            2
+            1
         )
         #Y = Y * (np.pi / 3)
         desired_motion = np.load(
@@ -453,7 +536,6 @@ class ActorNetwork(object):
         mod_state = np.zeros(
             shape = (
                 num_data,
-                params['max_steps'],
                 params['rnn_steps'],
                 2 * params['units_osc']
             )
