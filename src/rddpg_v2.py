@@ -74,7 +74,7 @@ class Learner:
 
     def _pretrain_actor(self, x, y, W = [1,1]):
         with tf.GradientTape(persistent=False) as tape:
-            out, omega = self.actor.model(x)
+            out, omega, _ = self.actor.model(x)
             loss_action = self.action_mse(y[0], out)
             loss_omega = self.omega_mse(y[1], omega)
             loss = W[0] * loss_action + W[1] * loss_omega
@@ -99,7 +99,7 @@ class Learner:
                 self.params
             )
         ))
-        actions, omega = self.actor.model(x)
+        actions, omega, _ = self.actor.model(x)
         bs = actions.shape[0]
         action_dim = actions.shape[-1]
         steps = actions.shape[2]

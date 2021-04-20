@@ -458,20 +458,6 @@ class ActorNetwork(object):
                 2 * params['units_osc']
             )
         )
-        s_omega = np.zeros(
-            shape = (
-                num_data,
-                params['units_omega'][0]
-            ),
-            dtype = np.float32
-        )
-        s_mu = np.zeros(
-            shape = (
-                num_data,
-                params['units_omega'][0]
-            ),
-            dtype = np.float32
-        )
         z =  np.load(
             os.path.join(data_dir, 'X_2.npy'),
             allow_pickle = True,
@@ -494,20 +480,12 @@ class ActorNetwork(object):
         mod_state = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(mod_state)
         )
-        s_omega = tf.data.Dataset.from_tensor_slices(
-            tf.convert_to_tensor(s_omega)
-        )
-        s_mu = tf.data.Dataset.from_tensor_slices(
-            tf.convert_to_tensor(s_mu)
-        )
         z = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(z)
         )
         X = tf.data.Dataset.zip((
             desired_motion,
             mod_state,
-            s_omega,
-            s_mu,
             z
         ))
         Y = tf.data.Dataset.zip((
