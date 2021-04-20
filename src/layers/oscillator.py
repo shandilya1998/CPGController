@@ -7,7 +7,7 @@ class HopfOscillator(tf.keras.layers.Layer):
         units,
         dt,
         name = 'hopf_oscillator',
-        dtype = 'complex64',
+        dtype = 'float32',
         **kwargs
     ):
         super(
@@ -71,18 +71,18 @@ class HopfOscillator(tf.keras.layers.Layer):
                 b : (None, units)
             ]
         """
-        input_dim = inputs[0].shape[-1] // 2
-        real_state = inputs[0][:, :input_dim]
-        imag_state = inputs[0][:, input_dim:]
+        Z, omega, mu = inputs
+        input_dim = Z.shape[-1] // 2
+        real_state = Z[:, :input_dim]
+        imag_state = Z[:, input_dim:]
 
         r = tf.math.sqrt(tf.math.add(
             tf.math.square(real_state),
             tf.math.square(imag_state)
         ))
-        delta_phi = inputs[1] * self.range * self.dt
+        delta_phi = omega * self.range * self.dt
         phi = tf.math.atan2(imag_state, real_state) + delta_phi
-        r = r + (inputs[2] - tf.math.square(r)) * r * self.dt
-        #r = inputs[2]
+        r = r + (mu - tf.math.square(r)) * r * self.dt
         real_state = r * tf.math.cos(phi)
         imag_state = r * tf.math.sin(phi)
         Z = tf.concat([real_state, imag_state], -1)
