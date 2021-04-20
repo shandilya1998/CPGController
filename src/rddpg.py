@@ -121,6 +121,67 @@ class Learner:
         self.a_mse = tf.keras.losses.MeanSquaredError()
         self.b_mse = tf.keras.losses.MeanSquaredError()
 
+    def create_dataset_v2(self):
+        self.env.quadruped.reset()
+        F = []
+        A = []
+        B = []
+        Y = []
+        X = [[] for j in range(len(self.params['observation_spec']) + 2)]
+        for y, x, f_ in tqdm(self.signal_gen.generator()):
+            f_ = f_ * 2 * np.pi
+            y = y * np.pi / 180.0
+            self.env.quadruped.set_motion_state(x)
+            _state = self.env.quadruped.get_state_tensor()
+            x = [[] for j in range(len(self.params['observation_spec']))]
+            f = []
+            a = []
+            b = []
+            x.append(_state[-1])
+            x.append(self.actor.recurrent_state_init[0])
+            x.append(self.actor.recurrent_state_init[1])
+            actions = []
+            count = 0
+            for i in range(2 * self.params['max_steps']):
+                y_, b_, a_ = self.signal_gen.preprocess(
+                    y[i*self.params['rnn_steps']:(i+1)*self.params['rnn_steps']]
+                )
+                a_ = a_ / (np.pi / 3)
+                for k, s in enumerate(_state[:-1]):
+                    x[k].append(s)
+                actions.append(np.expand_dims(y_, 0))
+                b.append(np.expand_dims(b_, 0))
+                a.append(np.expand_dims(a_, 0))
+                f.append(np.array([[f_]], dtype = np.float32))
+                for j in range(self.params['rnn_steps']):
+                    y_, b_, a_ = self.signal_gen.preprocess(
+                        y[i*self.params['rnn_steps']+j:(i+1)*self.params['rnn_steps']+j]
+                    )
+                    a_ = a_ / (np.pi / 3)
+                    actions.append(np.expand_dims(y_, 0))
+                    b.append(np.expand_dims(b_, 0))
+                    a.append(np.expand_dims(a_, 0))
+                    for k, s in enumerate(_state):
+                        x[k].append(s)
+                    ac = y[count]
+                    count += 1
+                    if np.isinf(ac).any():
+                        print('Inf in unprocessed')
+                        continue
+                    self.env.quadruped.all_legs.move(ac)
+                    self.env.quadruped._hopf_oscillator(
+                        f_,
+                        np.ones((self.params['units_osc'],)),
+                        np.zeros((self.params['units_osc'],)),
+                    )
+                    _state = self.env.quadruped.get_state_tensor()
+            for j in range(self.params['rnn_steps']):
+                for k in range(len(self.params['observation_spec']) - 1):
+                    x[k] = np.expand_dims(
+                        np.concatenate(x[k][j:], axis = 0), 0
+                    )
+
+
     def create_dataset(self):
         self.env.quadruped.reset()
         F = []
