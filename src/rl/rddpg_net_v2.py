@@ -444,7 +444,7 @@ class ActorNetwork(object):
             steps,
             2
         )
-        Y = Y / (np.pi / 3)
+        #Y = Y * (np.pi / 3)
         desired_motion = np.load(
             os.path.join(data_dir, 'X_0.npy'),
             allow_pickle = True,
