@@ -357,7 +357,7 @@ class Learner:
             ))
         self._pretrain_loop(
             self._pretrain_actor, experiment, checkpoint_dir, name,
-            W = [1.0, 1.0]
+            W = [1.0, 0.0]
         )
 
 def str2bool(v):
