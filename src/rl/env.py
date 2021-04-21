@@ -98,7 +98,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             self.COT +=  0.002 * self.quadruped.get_COT()
             self.r_motion += self.quadruped.get_motion_reward()
         self.quadruped.set_support_lines()
-        #self.stability += 0.002 * self.quadruped.get_stability_reward()
+        self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
         reward += self.COT + self.r_motion + self.stability
         action[0] = swap_batch_timestep(action[0])
@@ -144,7 +144,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             goal
         )
         reward += self.COT
-        #reward += self.quadruped.get_stability_reward(goal[3:])
+        reward += self.quadruped.get_stability_reward(goal[3:])
         reward += self.quadruped.reward
         return np.float32(reward), tf.convert_to_tensor(
             np.expand_dims(goal, 0).astype('float32')

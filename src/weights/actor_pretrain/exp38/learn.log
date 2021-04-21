@@ -784,3 +784,1142 @@ Traceback (most recent call last):
   File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
     raise ValueError('Input ' + str(input_index) +
 ValueError: Input 1 is incompatible with layer model: expected shape=(None, 50, 50, 40), found shape=(15, 50, 40)
+2021-04-20 23:07:02.686187: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:07:02.686234: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-20 23:07:06.131981: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-20 23:07:06.132294: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:07:06.132318: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-20 23:07:06.132345: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-20 23:07:06.137465: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-20 23:07:06.137714: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618940229.478584283, 1.317000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618940229.481311759, 1.317000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618940229.481434534, 1.317000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618940230.983519405, 2.403000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618940231.510745598, 2.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618940232.063265807, 3.200000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618940233.175339782, 4.002000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  8.83it/s]2it [00:00,  5.42it/s]3it [00:00,  4.42it/s]4it [00:00,  4.73it/s]5it [00:01,  4.03it/s]6it [00:01,  3.76it/s]7it [00:01,  3.52it/s]8it [00:02,  3.48it/s]9it [00:02,  4.14it/s]10it [00:02,  4.23it/s]11it [00:02,  4.73it/s]12it [00:02,  5.37it/s]13it [00:02,  4.63it/s]14it [00:03,  4.88it/s]15it [00:03,  5.19it/s]16it [00:03,  4.76it/s]17it [00:03,  4.46it/s]18it [00:04,  3.91it/s]19it [00:04,  4.57it/s]20it [00:04,  4.03it/s]21it [00:04,  3.74it/s]22it [00:05,  3.63it/s]23it [00:05,  3.98it/s]24it [00:05,  4.25it/s]25it [00:05,  4.39it/s]26it [00:06,  4.25it/s]27it [00:06,  3.65it/s]28it [00:06,  3.29it/s]29it [00:07,  3.46it/s]30it [00:07,  3.15it/s]31it [00:07,  2.96it/s]32it [00:08,  3.05it/s]33it [00:08,  3.73it/s]34it [00:08,  3.79it/s]35it [00:08,  4.58it/s]36it [00:08,  4.37it/s]37it [00:09,  3.66it/s]38it [00:09,  3.16it/s]39it [00:09,  3.61it/s]40it [00:10,  3.59it/s]41it [00:10,  3.84it/s]42it [00:10,  4.12it/s]43it [00:10,  4.22it/s]44it [00:11,  4.30it/s]45it [00:11,  4.39it/s]46it [00:11,  3.73it/s]47it [00:11,  3.91it/s]48it [00:12,  3.75it/s]49it [00:12,  3.72it/s]50it [00:12,  3.59it/s]51it [00:12,  4.06it/s]52it [00:13,  4.54it/s]53it [00:13,  3.90it/s]54it [00:13,  4.26it/s]55it [00:13,  4.80it/s]56it [00:13,  4.53it/s]57it [00:14,  4.83it/s]58it [00:14,  5.56it/s]59it [00:14,  4.92it/s]60it [00:14,  4.27it/s]61it [00:14,  4.65it/s]62it [00:15,  5.13it/s]63it [00:15,  5.03it/s]64it [00:15,  5.65it/s]65it [00:15,  5.41it/s]66it [00:15,  4.75it/s]67it [00:16,  4.14it/s]68it [00:16,  4.15it/s]69it [00:16,  4.33it/s]70it [00:16,  4.59it/s]71it [00:17,  4.29it/s]72it [00:17,  4.48it/s]73it [00:17,  4.08it/s]74it [00:17,  3.83it/s]75it [00:18,  3.86it/s]76it [00:18,  3.90it/s]77it [00:18,  4.17it/s]78it [00:18,  3.93it/s]79it [00:19,  3.49it/s]80it [00:19,  3.28it/s]81it [00:19,  3.91it/s]82it [00:20,  3.60it/s]83it [00:20,  3.17it/s]84it [00:20,  3.15it/s]85it [00:21,  3.22it/s]86it [00:21,  3.70it/s]87it [00:21,  3.82it/s]88it [00:21,  3.77it/s]89it [00:22,  3.56it/s]90it [00:22,  3.54it/s]91it [00:22,  3.43it/s]92it [00:23,  3.19it/s]93it [00:23,  3.61it/s]94it [00:23,  3.90it/s]95it [00:23,  4.44it/s]96it [00:24,  3.78it/s]97it [00:24,  4.37it/s]98it [00:24,  4.90it/s]99it [00:24,  4.31it/s]100it [00:24,  4.36it/s]101it [00:25,  3.89it/s]102it [00:25,  4.29it/s]103it [00:25,  4.91it/s]104it [00:25,  4.40it/s]105it [00:25,  4.45it/s]106it [00:26,  3.62it/s]107it [00:26,  3.80it/s]108it [00:26,  4.12it/s]109it [00:27,  3.94it/s]110it [00:27,  4.70it/s]111it [00:27,  5.21it/s]112it [00:27,  4.47it/s]113it [00:27,  4.34it/s]114it [00:28,  4.03it/s]115it [00:28,  3.69it/s]116it [00:28,  4.05it/s]117it [00:28,  3.72it/s]118it [00:29,  3.72it/s]119it [00:29,  3.24it/s]120it [00:29,  3.41it/s]121it [00:30,  4.13it/s]122it [00:30,  3.82it/s]123it [00:30,  3.63it/s]124it [00:31,  3.34it/s]125it [00:31,  3.11it/s]126it [00:31,  3.58it/s]127it [00:31,  3.71it/s]128it [00:31,  4.26it/s]129it [00:32,  3.72it/s]130it [00:32,  3.68it/s]131it [00:32,  3.99it/s]132it [00:32,  4.20it/s]133it [00:33,  3.74it/s]134it [00:33,  4.24it/s]135it [00:33,  4.30it/s]135it [00:33,  4.00it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [01:32, 92.05s/it]2it [03:04, 92.04s/it]2it [03:04, 92.04s/it]
+[Actor] Y Shape : (5000, 50, 12)
+[Actor] X Shapes:
+[Actor] (5000, 6)
+[Actor] (5000, 76)
+[Actor] (5000, 40)
+[Actor] A Shape : (5000, 12)
+[Actor] B Shape : (5000, 12)
+[Actor] F Shape : (5000, 1)
+[Actor] Starting Actor Test
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer.py", line 998, in __call__
+    input_spec.assert_input_compatibility(self.input_spec, inputs, self.name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
+    raise ValueError('Input ' + str(input_index) +
+ValueError: Input 1 is incompatible with layer model: expected shape=(None, 50, 50, 40), found shape=(15, 50, 40)
+2021-04-20 23:12:13.757178: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:12:13.757214: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-20 23:12:17.076492: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-20 23:12:17.077030: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:12:17.077213: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-20 23:12:17.077382: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-20 23:12:17.082564: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-20 23:12:17.082995: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618940540.499368957, 1.164000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618940540.501861485, 1.165000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618940540.502102384, 1.165000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618940542.103322026, 2.311000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618940543.024682801, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618940544.089722736, 3.802000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618940545.182470599, 4.603000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  5.34it/s]3it [00:00,  6.74it/s]4it [00:00,  7.46it/s]5it [00:00,  6.76it/s]6it [00:00,  5.71it/s]7it [00:01,  5.21it/s]9it [00:01,  6.25it/s]10it [00:01,  6.43it/s]11it [00:01,  6.24it/s]12it [00:02,  5.50it/s]13it [00:02,  6.15it/s]14it [00:02,  5.39it/s]15it [00:02,  5.65it/s]16it [00:02,  4.99it/s]17it [00:02,  5.39it/s]18it [00:03,  5.86it/s]19it [00:03,  6.23it/s]20it [00:03,  6.29it/s]22it [00:03,  8.14it/s]23it [00:03,  7.30it/s]24it [00:03,  7.55it/s]25it [00:03,  6.94it/s]26it [00:04,  6.96it/s]27it [00:04,  5.59it/s]28it [00:04,  5.54it/s]29it [00:04,  5.32it/s]30it [00:05,  4.90it/s]31it [00:05,  5.09it/s]32it [00:05,  5.87it/s]33it [00:05,  5.80it/s]34it [00:05,  6.28it/s]35it [00:05,  6.67it/s]36it [00:05,  7.22it/s]37it [00:06,  6.89it/s]38it [00:06,  6.07it/s]39it [00:06,  6.01it/s]40it [00:06,  5.09it/s]41it [00:06,  5.78it/s]42it [00:06,  5.58it/s]43it [00:07,  5.64it/s]45it [00:07,  6.88it/s]47it [00:07,  8.57it/s]48it [00:07,  7.84it/s]49it [00:07,  8.03it/s]50it [00:08,  6.35it/s]51it [00:08,  6.39it/s]53it [00:08,  8.50it/s]54it [00:08,  8.17it/s]55it [00:08,  7.44it/s]56it [00:08,  6.84it/s]57it [00:09,  6.41it/s]58it [00:09,  5.71it/s]60it [00:09,  5.96it/s]61it [00:09,  6.03it/s]62it [00:09,  5.74it/s]63it [00:10,  6.07it/s]65it [00:10,  6.31it/s]66it [00:10,  6.53it/s]67it [00:10,  7.01it/s]68it [00:10,  6.30it/s]69it [00:11,  5.38it/s]71it [00:11,  6.87it/s]73it [00:11,  7.00it/s]74it [00:11,  5.83it/s]75it [00:12,  5.00it/s]76it [00:12,  5.10it/s]77it [00:12,  5.18it/s]78it [00:12,  5.32it/s]79it [00:12,  5.43it/s]80it [00:12,  5.48it/s]81it [00:13,  4.75it/s]82it [00:13,  5.25it/s]83it [00:13,  4.93it/s]84it [00:13,  5.13it/s]85it [00:14,  5.17it/s]86it [00:14,  5.53it/s]87it [00:14,  4.62it/s]88it [00:14,  4.91it/s]90it [00:14,  5.37it/s]91it [00:15,  5.66it/s]92it [00:15,  6.32it/s]93it [00:15,  6.98it/s]94it [00:15,  7.42it/s]95it [00:15,  5.86it/s]96it [00:15,  5.54it/s]97it [00:16,  5.89it/s]98it [00:16,  5.28it/s]100it [00:16,  6.80it/s]101it [00:16,  6.26it/s]102it [00:16,  6.49it/s]103it [00:16,  6.67it/s]104it [00:17,  6.62it/s]105it [00:17,  5.94it/s]106it [00:17,  6.70it/s]107it [00:17,  6.77it/s]108it [00:17,  5.21it/s]109it [00:18,  5.14it/s]110it [00:18,  5.76it/s]111it [00:18,  5.50it/s]112it [00:18,  4.56it/s]113it [00:18,  4.46it/s]114it [00:19,  4.72it/s]115it [00:19,  4.56it/s]116it [00:19,  4.47it/s]117it [00:19,  5.17it/s]118it [00:19,  5.50it/s]119it [00:19,  5.95it/s]121it [00:20,  6.73it/s]122it [00:20,  6.13it/s]123it [00:20,  5.36it/s]124it [00:20,  5.61it/s]125it [00:21,  5.49it/s]126it [00:21,  5.47it/s]127it [00:21,  5.15it/s]128it [00:21,  5.25it/s]129it [00:21,  5.11it/s]130it [00:22,  4.30it/s]131it [00:22,  4.28it/s]132it [00:22,  4.48it/s]133it [00:22,  4.24it/s]134it [00:23,  4.04it/s]135it [00:23,  4.63it/s]135it [00:23,  5.80it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:29, 29.86s/it]2it [01:00, 30.31s/it]2it [01:00, 30.25s/it]
+[Actor] Y Shape : (1600, 40, 12)
+[Actor] X Shapes:
+[Actor] (1600, 6)
+[Actor] (1600, 76)
+[Actor] (1600, 40)
+[Actor] A Shape : (1600, 12)
+[Actor] B Shape : (1600, 12)
+[Actor] F Shape : (1600, 1)
+[Actor] Starting Actor Test
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer.py", line 998, in __call__
+    input_spec.assert_input_compatibility(self.input_spec, inputs, self.name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
+    raise ValueError('Input ' + str(input_index) +
+ValueError: Input 0 is incompatible with layer model: expected shape=(None, 20, 6), found shape=(15, 50, 6)
+2021-04-20 23:15:51.843359: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:15:51.843398: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-20 23:15:55.186420: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-20 23:15:55.186753: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:15:55.186776: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-20 23:15:55.186803: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-20 23:15:55.192005: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-20 23:15:55.192266: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618940758.020398728, 1.195000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618940758.022446516, 1.196000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618940758.022597755, 1.196000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618940759.563531861, 2.348000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618940760.407496843, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618940761.475869645, 3.800000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618940762.562322881, 4.602000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  3.90it/s]2it [00:00,  5.87it/s]3it [00:00,  5.97it/s]4it [00:00,  5.13it/s]5it [00:00,  5.57it/s]7it [00:01,  6.64it/s]8it [00:01,  6.58it/s]9it [00:01,  6.25it/s]10it [00:01,  5.84it/s]12it [00:01,  6.51it/s]13it [00:02,  6.67it/s]14it [00:02,  5.32it/s]16it [00:02,  5.96it/s]17it [00:02,  6.23it/s]18it [00:03,  5.72it/s]19it [00:03,  5.77it/s]21it [00:03,  5.66it/s]22it [00:03,  5.83it/s]23it [00:03,  6.03it/s]25it [00:04,  7.06it/s]26it [00:04,  6.97it/s]27it [00:04,  7.21it/s]28it [00:04,  5.60it/s]29it [00:04,  5.24it/s]31it [00:05,  6.01it/s]33it [00:05,  6.14it/s]34it [00:05,  5.49it/s]35it [00:05,  5.18it/s]36it [00:06,  5.75it/s]38it [00:06,  7.24it/s]39it [00:06,  6.57it/s]40it [00:06,  5.98it/s]41it [00:06,  5.86it/s]42it [00:06,  6.01it/s]43it [00:07,  5.59it/s]44it [00:07,  6.23it/s]45it [00:07,  5.39it/s]46it [00:07,  5.88it/s]47it [00:07,  6.46it/s]48it [00:08,  5.73it/s]49it [00:08,  6.25it/s]50it [00:08,  5.67it/s]52it [00:08,  6.83it/s]53it [00:08,  6.29it/s]54it [00:08,  6.30it/s]55it [00:09,  6.94it/s]56it [00:09,  6.14it/s]57it [00:09,  5.77it/s]58it [00:09,  6.18it/s]60it [00:09,  8.39it/s]61it [00:09,  8.61it/s]62it [00:10,  7.48it/s]63it [00:10,  5.69it/s]64it [00:10,  5.27it/s]65it [00:10,  4.89it/s]66it [00:10,  5.66it/s]67it [00:11,  5.94it/s]68it [00:11,  6.59it/s]69it [00:11,  6.67it/s]70it [00:11,  6.55it/s]71it [00:11,  6.21it/s]72it [00:11,  4.99it/s]73it [00:12,  4.41it/s]74it [00:12,  4.27it/s]75it [00:12,  4.83it/s]76it [00:12,  4.23it/s]77it [00:13,  4.52it/s]78it [00:13,  4.66it/s]79it [00:13,  5.07it/s]80it [00:13,  4.56it/s]81it [00:13,  4.34it/s]82it [00:14,  4.78it/s]83it [00:14,  5.56it/s]84it [00:14,  3.65it/s]86it [00:14,  5.43it/s]87it [00:15,  4.86it/s]88it [00:15,  4.48it/s]89it [00:15,  4.30it/s]90it [00:15,  4.63it/s]92it [00:16,  6.13it/s]93it [00:16,  5.67it/s]94it [00:16,  6.32it/s]95it [00:16,  6.40it/s]96it [00:16,  5.94it/s]97it [00:16,  6.60it/s]98it [00:17,  5.97it/s]99it [00:17,  6.51it/s]100it [00:17,  7.18it/s]101it [00:17,  5.88it/s]103it [00:17,  6.61it/s]104it [00:17,  6.51it/s]105it [00:18,  6.89it/s]107it [00:18,  8.33it/s]108it [00:18,  8.13it/s]109it [00:18,  6.93it/s]111it [00:18,  6.34it/s]112it [00:19,  6.64it/s]113it [00:19,  7.17it/s]114it [00:19,  7.24it/s]115it [00:19,  6.90it/s]116it [00:19,  5.79it/s]117it [00:19,  6.52it/s]119it [00:19,  8.06it/s]120it [00:20,  7.16it/s]121it [00:20,  5.78it/s]122it [00:20,  6.47it/s]123it [00:20,  6.04it/s]124it [00:21,  5.21it/s]125it [00:21,  5.63it/s]126it [00:21,  5.75it/s]127it [00:21,  4.65it/s]128it [00:21,  5.32it/s]129it [00:21,  5.65it/s]130it [00:22,  5.74it/s]131it [00:22,  5.97it/s]132it [00:22,  5.48it/s]133it [00:22,  5.79it/s]134it [00:22,  5.57it/s]135it [00:23,  4.73it/s]135it [00:23,  5.85it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 445, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('data/pretrain_rddpg_3', self.signal_gen)
+  File "rddpg_v2.py", line 74, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 436, in create_data
+    if count == 5:
+NameError: name 'count' is not defined
+2021-04-20 23:18:00.667582: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:18:00.667618: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-20 23:18:04.157724: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-20 23:18:04.158054: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-20 23:18:04.158084: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-20 23:18:04.158115: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-20 23:18:04.164736: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-20 23:18:04.164995: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618940887.179350573, 1.067000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618940887.182776360, 1.068000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618940887.182902117, 1.068000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618940888.586409772, 2.054000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618940889.589946478, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618940890.784434799, 3.600000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618940891.879932162, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  8.71it/s]2it [00:00,  6.63it/s]3it [00:00,  5.56it/s]4it [00:00,  5.42it/s]5it [00:00,  5.17it/s]6it [00:01,  6.14it/s]8it [00:01,  7.86it/s]9it [00:01,  6.79it/s]10it [00:01,  7.43it/s]11it [00:01,  6.26it/s]12it [00:01,  5.58it/s]14it [00:02,  6.48it/s]15it [00:02,  6.72it/s]16it [00:02,  6.23it/s]17it [00:02,  6.62it/s]18it [00:02,  6.98it/s]19it [00:02,  6.84it/s]20it [00:03,  6.97it/s]22it [00:03,  8.73it/s]23it [00:03,  8.97it/s]25it [00:03,  8.25it/s]26it [00:03,  6.47it/s]27it [00:04,  6.38it/s]28it [00:04,  6.00it/s]29it [00:04,  5.63it/s]30it [00:04,  5.70it/s]31it [00:04,  5.89it/s]32it [00:05,  5.08it/s]33it [00:05,  5.32it/s]34it [00:05,  5.12it/s]35it [00:05,  4.32it/s]36it [00:05,  4.93it/s]37it [00:05,  5.62it/s]38it [00:06,  5.82it/s]39it [00:06,  6.59it/s]40it [00:06,  7.30it/s]41it [00:06,  6.34it/s]42it [00:06,  5.95it/s]43it [00:07,  4.96it/s]44it [00:07,  4.18it/s]45it [00:07,  5.06it/s]47it [00:07,  6.18it/s]48it [00:07,  6.29it/s]50it [00:08,  6.60it/s]51it [00:08,  5.50it/s]52it [00:08,  4.72it/s]53it [00:08,  5.30it/s]55it [00:08,  6.85it/s]56it [00:09,  7.38it/s]57it [00:09,  6.13it/s]58it [00:09,  5.34it/s]59it [00:09,  5.50it/s]60it [00:09,  5.33it/s]61it [00:10,  5.55it/s]62it [00:10,  6.21it/s]63it [00:10,  5.98it/s]64it [00:10,  5.78it/s]65it [00:10,  5.72it/s]66it [00:11,  4.98it/s]67it [00:11,  4.50it/s]68it [00:11,  5.04it/s]69it [00:11,  4.57it/s]70it [00:11,  5.23it/s]71it [00:12,  5.21it/s]72it [00:12,  5.22it/s]73it [00:12,  4.31it/s]74it [00:12,  5.02it/s]75it [00:12,  5.71it/s]76it [00:12,  5.71it/s]77it [00:13,  4.91it/s]78it [00:13,  5.73it/s]79it [00:13,  5.34it/s]80it [00:13,  4.72it/s]81it [00:14,  5.11it/s]82it [00:14,  5.41it/s]83it [00:14,  5.29it/s]84it [00:14,  5.83it/s]85it [00:14,  5.31it/s]86it [00:14,  5.56it/s]87it [00:15,  4.81it/s]88it [00:15,  4.51it/s]89it [00:15,  5.22it/s]90it [00:15,  5.74it/s]92it [00:15,  6.61it/s]93it [00:16,  6.23it/s]94it [00:16,  6.65it/s]95it [00:16,  6.61it/s]96it [00:16,  6.30it/s]97it [00:16,  5.57it/s]99it [00:16,  7.70it/s]101it [00:17,  8.54it/s]103it [00:17,  9.25it/s]104it [00:17,  7.66it/s]105it [00:17,  6.96it/s]106it [00:17,  7.31it/s]107it [00:17,  7.74it/s]108it [00:18,  7.40it/s]109it [00:18,  6.33it/s]110it [00:18,  5.26it/s]112it [00:18,  5.83it/s]114it [00:18,  7.83it/s]115it [00:19,  7.43it/s]116it [00:19,  7.68it/s]117it [00:19,  6.34it/s]118it [00:19,  5.85it/s]119it [00:19,  5.72it/s]120it [00:20,  5.85it/s]121it [00:20,  4.91it/s]122it [00:20,  4.93it/s]123it [00:20,  5.28it/s]124it [00:21,  3.59it/s]125it [00:21,  4.23it/s]126it [00:21,  4.94it/s]127it [00:21,  5.04it/s]128it [00:21,  5.23it/s]129it [00:22,  5.06it/s]130it [00:22,  4.62it/s]131it [00:22,  4.63it/s]132it [00:22,  4.90it/s]133it [00:22,  5.39it/s]134it [00:23,  5.44it/s]135it [00:23,  4.89it/s]135it [00:23,  5.80it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:29, 29.26s/it]2it [00:59, 29.78s/it]3it [01:29, 29.83s/it]4it [01:58, 29.78s/it]5it [02:29, 29.99s/it]6it [02:59, 29.99s/it]7it [03:29, 30.02s/it]8it [03:57, 29.48s/it]9it [04:26, 29.22s/it]10it [04:56, 29.47s/it]11it [05:25, 29.37s/it]12it [05:54, 29.16s/it]13it [06:22, 29.00s/it]14it [06:52, 29.25s/it]15it [07:21, 29.20s/it]16it [07:50, 29.02s/it]17it [08:19, 29.12s/it]18it [08:49, 29.26s/it]19it [09:19, 29.43s/it]20it [09:48, 29.54s/it]21it [10:18, 29.44s/it]22it [10:49, 29.90s/it]23it [11:19, 29.91s/it]24it [11:49, 29.92s/it]25it [12:18, 29.88s/it]26it [12:48, 29.77s/it]27it [13:19, 30.06s/it]28it [13:49, 30.24s/it]29it [14:20, 30.35s/it]30it [14:50, 30.41s/it]31it [15:21, 30.55s/it]32it [15:52, 30.66s/it]33it [16:21, 30.21s/it]34it [16:52, 30.36s/it]35it [17:19, 29.47s/it]36it [17:51, 30.02s/it]37it [18:21, 29.98s/it]38it [18:51, 30.21s/it]39it [19:22, 30.29s/it]40it [19:52, 30.20s/it]41it [20:22, 30.32s/it]42it [20:53, 30.26s/it]43it [21:23, 30.42s/it]44it [21:54, 30.41s/it]45it [22:23, 30.15s/it]46it [22:53, 29.92s/it]47it [23:23, 29.95s/it]48it [23:54, 30.37s/it]49it [24:24, 30.10s/it]50it [24:54, 30.14s/it]51it [25:24, 30.06s/it]52it [25:54, 30.06s/it]53it [26:22, 29.52s/it]54it [26:52, 29.68s/it]55it [27:21, 29.38s/it]56it [27:50, 29.41s/it]57it [28:20, 29.64s/it]58it [28:50, 29.66s/it]59it [29:21, 29.99s/it]60it [29:51, 30.07s/it]61it [30:21, 30.12s/it]62it [30:52, 30.31s/it]63it [31:21, 29.92s/it]64it [31:51, 30.03s/it]65it [32:23, 30.40s/it]66it [32:53, 30.27s/it]67it [33:22, 30.08s/it]68it [33:52, 30.06s/it]69it [34:22, 29.93s/it]70it [34:51, 29.77s/it]71it [35:20, 29.46s/it]72it [35:50, 29.69s/it]73it [36:21, 29.93s/it]74it [36:50, 29.84s/it]75it [37:20, 29.76s/it]76it [37:48, 29.15s/it]77it [38:19, 29.70s/it]78it [38:49, 29.90s/it]79it [39:19, 29.87s/it]80it [39:49, 30.07s/it]81it [40:19, 30.10s/it]82it [40:48, 29.67s/it]83it [41:18, 29.74s/it]84it [41:50, 30.26s/it]85it [42:20, 30.26s/it]86it [42:49, 30.08s/it]87it [43:21, 30.51s/it]88it [43:51, 30.39s/it]89it [44:20, 29.99s/it]90it [44:51, 30.28s/it]91it [45:21, 30.24s/it]92it [45:51, 29.98s/it]93it [46:20, 29.91s/it]94it [46:51, 30.12s/it]95it [47:21, 30.13s/it]96it [47:51, 29.92s/it]97it [48:21, 30.05s/it]98it [48:49, 29.59s/it]99it [49:20, 29.84s/it]100it [49:50, 29.98s/it]101it [50:22, 30.63s/it]102it [50:52, 30.34s/it]103it [51:21, 30.07s/it]104it [51:51, 29.79s/it]105it [52:20, 29.81s/it]106it [52:51, 29.92s/it]107it [53:20, 29.91s/it]108it [53:50, 29.68s/it]109it [54:20, 29.83s/it]110it [54:50, 30.00s/it]111it [55:20, 29.98s/it]112it [55:49, 29.61s/it]113it [56:19, 29.87s/it]114it [56:50, 30.07s/it]115it [57:20, 30.00s/it]116it [57:50, 30.14s/it]117it [58:20, 29.92s/it]118it [58:50, 30.05s/it]119it [59:19, 29.86s/it]120it [59:50, 30.01s/it]121it [1:00:20, 29.94s/it]122it [1:00:49, 29.83s/it]123it [1:01:19, 29.83s/it]124it [1:01:49, 29.99s/it]125it [1:02:20, 30.19s/it]126it [1:02:50, 30.26s/it]127it [1:03:20, 30.07s/it]128it [1:03:50, 30.03s/it]129it [1:04:21, 30.22s/it]130it [1:04:50, 30.09s/it]131it [1:05:20, 30.06s/it]132it [1:05:52, 30.42s/it]133it [1:06:22, 30.29s/it]134it [1:06:53, 30.64s/it]135it [1:07:23, 30.54s/it]135it [1:07:23, 29.95s/it]
+[Actor] Y Shape : (108000, 40, 12)
+[Actor] X Shapes:
+[Actor] (108000, 6)
+[Actor] (108000, 76)
+[Actor] (108000, 40)
+[Actor] A Shape : (108000, 12)
+[Actor] B Shape : (108000, 12)
+[Actor] F Shape : (108000, 1)
+[Actor] Starting Actor Test
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer.py", line 998, in __call__
+    input_spec.assert_input_compatibility(self.input_spec, inputs, self.name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
+    raise ValueError('Input ' + str(input_index) +
+ValueError: Input 0 is incompatible with layer model: expected shape=(None, 20, 6), found shape=(15, 50, 6)
+2021-04-21 00:41:09.601895: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:41:09.601943: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:41:13.108071: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:41:13.108469: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:41:13.108505: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:41:13.108544: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:41:13.113253: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:41:13.113537: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618945876.598612868, 1.346000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618945876.601268420, 1.347000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618945876.601920785, 1.347000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618945878.124979505, 2.442000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618945879.142053064, 3.200000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618945880.227028718, 4.001000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618945881.312334986, 4.800000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]2it [00:00, 11.80it/s]4it [00:00,  9.45it/s]6it [00:00,  9.82it/s]7it [00:00,  9.71it/s]8it [00:00,  7.93it/s]9it [00:01,  7.00it/s]10it [00:01,  6.86it/s]11it [00:01,  6.84it/s]12it [00:01,  5.87it/s]13it [00:01,  5.58it/s]14it [00:02,  5.30it/s]15it [00:02,  5.11it/s]16it [00:02,  5.40it/s]18it [00:02,  6.21it/s]20it [00:02,  7.48it/s]21it [00:03,  6.38it/s]22it [00:03,  6.57it/s]23it [00:03,  6.97it/s]24it [00:03,  6.34it/s]25it [00:03,  6.91it/s]26it [00:03,  6.62it/s]27it [00:04,  5.80it/s]28it [00:04,  5.57it/s]29it [00:04,  6.06it/s]30it [00:04,  6.28it/s]31it [00:04,  5.77it/s]32it [00:04,  6.47it/s]33it [00:04,  6.39it/s]35it [00:05,  7.56it/s]36it [00:05,  7.06it/s]37it [00:05,  6.93it/s]38it [00:05,  5.90it/s]39it [00:06,  5.32it/s]40it [00:06,  4.53it/s]41it [00:06,  5.22it/s]42it [00:06,  5.19it/s]43it [00:06,  4.66it/s]45it [00:07,  5.48it/s]46it [00:07,  6.06it/s]47it [00:07,  6.67it/s]48it [00:07,  7.32it/s]49it [00:07,  5.49it/s]50it [00:08,  5.13it/s]51it [00:08,  5.57it/s]53it [00:08,  7.71it/s]54it [00:08,  7.10it/s]55it [00:08,  5.96it/s]56it [00:08,  5.64it/s]57it [00:09,  5.87it/s]58it [00:09,  5.17it/s]59it [00:09,  5.85it/s]61it [00:09,  7.45it/s]62it [00:09,  6.63it/s]63it [00:10,  5.62it/s]64it [00:10,  4.76it/s]65it [00:10,  5.02it/s]67it [00:10,  7.37it/s]68it [00:10,  5.69it/s]69it [00:11,  5.98it/s]70it [00:11,  6.34it/s]71it [00:11,  6.30it/s]72it [00:11,  5.45it/s]73it [00:11,  5.57it/s]75it [00:11,  7.20it/s]76it [00:12,  7.23it/s]77it [00:12,  6.99it/s]79it [00:12,  6.30it/s]80it [00:12,  5.81it/s]81it [00:13,  5.91it/s]82it [00:13,  5.13it/s]83it [00:13,  5.52it/s]84it [00:13,  5.78it/s]85it [00:13,  5.77it/s]86it [00:14,  4.97it/s]87it [00:14,  4.27it/s]88it [00:14,  4.61it/s]89it [00:14,  4.43it/s]90it [00:14,  5.28it/s]92it [00:15,  7.03it/s]94it [00:15,  7.73it/s]95it [00:15,  7.93it/s]96it [00:15,  4.88it/s]97it [00:16,  4.79it/s]98it [00:16,  5.00it/s]99it [00:16,  4.63it/s]101it [00:16,  6.04it/s]102it [00:16,  5.39it/s]103it [00:17,  5.50it/s]104it [00:17,  5.85it/s]105it [00:17,  5.91it/s]106it [00:17,  5.71it/s]108it [00:17,  7.40it/s]109it [00:18,  6.07it/s]110it [00:18,  5.48it/s]111it [00:18,  5.07it/s]112it [00:18,  5.34it/s]113it [00:18,  5.04it/s]114it [00:19,  4.75it/s]115it [00:19,  5.27it/s]116it [00:19,  5.85it/s]117it [00:19,  5.28it/s]118it [00:19,  5.57it/s]119it [00:20,  3.03it/s]125it [00:20,  9.35it/s]135it [00:20, 21.59it/s]135it [00:20,  6.52it/s]
+[Actor] Number of Data Points: 135
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 445, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('data/pretrain_rddpg_3', self.signal_gen)
+  File "rddpg_v2.py", line 74, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 423, in create_data
+    env.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 815, in reset
+    self._reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 787, in _reset
+    rospy.wait_for_service('/gazebo/pause_physics')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-04-21 00:42:25.697432: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:42:25.697481: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:42:29.152229: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:42:29.152643: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:42:29.152718: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:42:29.152767: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:42:29.158029: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:42:29.158353: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618945952.606731439, 1.148000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618945952.609343636, 1.150000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618945952.609612483, 1.150000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618945953.980100372, 2.111000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618945954.905800786, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618945955.992166894, 3.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618945957.107406517, 4.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer.py", line 998, in __call__
+    input_spec.assert_input_compatibility(self.input_spec, inputs, self.name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
+    raise ValueError('Input ' + str(input_index) +
+ValueError: Input 0 is incompatible with layer pretrain_actor_cell: expected shape=(None, 6), found shape=(15, 50, 6)
+2021-04-21 00:45:29.876538: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:45:29.876598: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:45:33.262662: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:45:33.263026: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:45:33.263059: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:45:33.263084: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:45:33.270610: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:45:33.270905: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946136.555152954, 1.314000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946136.556762373, 1.315000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946136.556889108, 1.315000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618946138.178783788, 2.429000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618946139.118506353, 3.129000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618946140.547920701, 4.125000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618946141.636278494, 4.925000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/base_layer.py", line 998, in __call__
+    input_spec.assert_input_compatibility(self.input_spec, inputs, self.name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/engine/input_spec.py", line 271, in assert_input_compatibility
+    raise ValueError('Input ' + str(input_index) +
+ValueError: Input 0 is incompatible with layer pretrain_actor_cell: expected shape=(None, 6), found shape=(15, 50, 6)
+2021-04-21 00:47:29.347831: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:47:29.347910: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:47:40.020246: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:47:40.021419: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:47:40.021717: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:47:40.021902: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:47:40.032900: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:47:40.033345: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946309.720614000, 100.809000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946309.721723572, 100.809000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946309.721797067, 100.809000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[31m[ERROR] [1618946309.839408991, 100.809000000]: [registerSubscriber] Failed to contact master at [localhost:11331].  Retrying...[0m
+2021-04-21 00:48:53.994254: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:48:53.994297: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[0m[ INFO] [1618946335.990759277, 100.809000000]: Connected to master at [localhost:11331][0m
+2021-04-21 00:48:57.611439: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:48:57.611811: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:48:57.611859: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:48:57.611910: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:48:57.617273: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:48:57.617556: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[0m[ INFO] [1618946339.572991546, 100.809000000]: Ready to take commands for planning group front_right_leg.[0m
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[0m[ INFO] [1618946340.806226687, 100.809000000]: Ready to take commands for planning group front_left_leg.[0m
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946340.912785508, 1.059000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946340.916106272, 1.060000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946340.916290167, 1.061000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618946342.002594089, 100.809000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618946342.524939367, 2.165000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618946343.149638159, 100.809000000]: Ready to take commands for planning group back_left_leg.[0m
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 445, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "rddpg_v2.py", line 31, in __init__
+    self.env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 46, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 544, in __init__
+    self.compute_reward = FitnessFunction(
+  File "/home/shandilya/Desktop/CNS/DDP/src/reward/__init__.py", line 7, in __init__
+    self.zmp = ZMP(params)
+  File "/home/shandilya/Desktop/CNS/DDP/src/reward/zmp.py", line 14, in __init__
+    g = self.get_physics_prop_proxy().gravity
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 524, in call
+    raise ServiceException("service [%s] returned no response"%self.resolved_name)
+rospy.service.ServiceException: service [/gazebo/get_physics_properties] returned no response
+[0m[ INFO] [1618946343.651750061, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+terminate called after throwing an instance of 'boost::wrapexcept<boost::lock_error>'
+  what():  boost: mutex lock failed in pthread_mutex_lock: Invalid argument
+[0m[ INFO] [1618946345.759064824, 3.600000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618946348.417596127, 4.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 00:50:03.297944: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 00:50:05.876197: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 125, in test_actor
+    actions, omega, _ = self.actor.model(x)
+ValueError: too many values to unpack (expected 3)
+2021-04-21 00:51:06.898018: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:06.898075: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:51:10.461318: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:51:10.461751: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:10.461790: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:51:10.461829: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:51:10.467197: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:51:10.467494: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+2021-04-21 00:51:11.030071: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:11.030128: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946474.393301356, 0.473000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946474.398312372, 0.473000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946474.398548850, 0.473000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618946476.130717156, 1.019000000]: Ready to take commands for planning group front_right_leg.[0m
+2021-04-21 00:51:20.791598: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:51:20.792243: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:20.792347: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:51:20.792532: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:51:20.800051: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:51:20.800602: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+shutdown request: [/joint_position_node_exp38] Reason: new node registered with same name
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 445, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "rddpg_v2.py", line 31, in __init__
+    self.env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 46, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 457, in __init__
+    self.kinematics = Kinematics(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 27, in __init__
+    self.front_left_leg = moveit_commander.MoveGroupCommander(
+  File "/opt/ros/noetic/lib/python3/dist-packages/moveit_commander/move_group.py", line 53, in __init__
+    self._g = _moveit_move_group_interface.MoveGroupInterface(name, robot_description, ns, wait_for_servers)
+RuntimeError: Unable to connect to move_group action server 'execute_trajectory' within allotted time (5s)
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946488.772546649, 4.228000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946488.773857981, 4.228000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946488.774087879, 4.228000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 445, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "rddpg_v2.py", line 31, in __init__
+    self.env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 46, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 457, in __init__
+    self.kinematics = Kinematics(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 21, in __init__
+    self.front_right_leg = moveit_commander.MoveGroupCommander(
+  File "/opt/ros/noetic/lib/python3/dist-packages/moveit_commander/move_group.py", line 53, in __init__
+    self._g = _moveit_move_group_interface.MoveGroupInterface(name, robot_description, ns, wait_for_servers)
+RuntimeError: Unable to connect to move_group action server 'move_group' within allotted time (5s)
+2021-04-21 00:51:47.699241: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:47.699289: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 00:51:51.147740: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 00:51:51.148095: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 00:51:51.148224: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 00:51:51.148316: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 00:51:51.153586: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 00:51:51.153981: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618946514.261302281, 1.085000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618946514.263642005, 1.087000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618946514.263834730, 1.087000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618946515.672114275, 2.062000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618946516.696406502, 2.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618946517.786141855, 3.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618946518.895698427, 4.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 00:52:49.346670: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 00:52:51.983553: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 131, in test_actor
+    actions = tf.reshape(actions, shape) * np.pi / 3
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/util/dispatch.py", line 201, in wrapper
+    return target(*args, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/array_ops.py", line 195, in reshape
+    result = gen_array_ops.reshape(tensor, shape, name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_array_ops.py", line 8372, in reshape
+    return reshape_eager_fallback(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_array_ops.py", line 8397, in reshape_eager_fallback
+    _result = _execute.execute(b"Reshape", 1, inputs=_inputs_flat, attrs=_attrs,
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Input to reshape is a tensor with 7200 values, but the requested shape has 86400 [Op:Reshape]
+2021-04-21 09:10:50.174623: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:10:50.326928: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 09:11:52.105422: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 09:11:52.128061: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:11:52.128123: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 09:11:52.128170: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 09:11:52.181033: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 09:11:52.181437: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618976514.424991987, 22.988000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618976514.427800782, 22.989000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618976514.427915500, 22.989000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618976516.023373156, 23.792000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618976517.605391818, 24.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618976519.176459169, 25.401000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618976520.705492448, 26.198000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 09:13:08.920794: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 09:13:12.772014: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 446, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 389, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 179, in _pretrain_loop
+    self.test_actor(os.path.join(
+  File "rddpg_v2.py", line 131, in test_actor
+    actions = tf.reshape(actions, shape) * np.pi / 3
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/util/dispatch.py", line 201, in wrapper
+    return target(*args, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/array_ops.py", line 195, in reshape
+    result = gen_array_ops.reshape(tensor, shape, name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_array_ops.py", line 8372, in reshape
+    return reshape_eager_fallback(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_array_ops.py", line 8397, in reshape_eager_fallback
+    _result = _execute.execute(b"Reshape", 1, inputs=_inputs_flat, attrs=_attrs,
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Input to reshape is a tensor with 7200 values, but the requested shape has 86400 [Op:Reshape]
+2021-04-21 09:16:30.185238: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:16:30.185281: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 09:16:34.360522: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 09:16:34.361013: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:16:34.361246: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 09:16:34.361441: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 09:16:34.366931: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 09:16:34.367388: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618976798.688083070, 1.124000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618976798.690811809, 1.124000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618976798.691528797, 1.125000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618976800.304196110, 2.005000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618976801.551435071, 2.675000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618976803.010355959, 3.476000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618976804.516278775, 4.275000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 09:17:47.344476: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 09:17:50.352916: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Finishing Actor Test
+2021-04-21 09:18:32.925013: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Dataset <PrefetchDataset shapes: (((15, 6), (15, 40, 40), (15, 40)), ((15, 40, 12), (15, 1))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-04-21 09:18:36.002802: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 436, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 379, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 226, in _pretrain_loop
+    loss, [loss_action, loss_omega] = grad_update(x, y, W)
+  File "rddpg_v2.py", line 102, in _pretrain_actor
+    loss_omega = self.omega_mse(y[1], omega)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 152, in __call__
+    losses = call_fn(y_true, y_pred)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 256, in call
+    return ag_fn(y_true, y_pred, **self._fn_kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/util/dispatch.py", line 201, in wrapper
+    return target(*args, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 1198, in mean_squared_error
+    return K.mean(math_ops.squared_difference(y_pred, y_true), axis=-1)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_math_ops.py", line 10233, in squared_difference
+    _ops.raise_from_not_ok_status(e, name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/framework/ops.py", line 6862, in raise_from_not_ok_status
+    six.raise_from(core._status_to_exception(e.code, message), None)
+  File "<string>", line 3, in raise_from
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Incompatible shapes: [15,40,40] vs. [15,1] [Op:SquaredDifference]
+2021-04-21 09:21:46.969144: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:21:46.969180: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 09:21:50.378545: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 09:21:50.379113: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:21:50.379311: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 09:21:50.379455: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 09:21:50.384905: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 09:21:50.385346: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618977113.221258515, 0.929000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618977113.223944395, 0.931000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618977113.224069741, 0.931000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618977114.756664289, 2.008000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618977115.938550604, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618977117.011448173, 3.602000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618977118.103076141, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 09:22:49.045336: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 09:22:51.712112: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Finishing Actor Test
+2021-04-21 09:23:34.864399: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Dataset <PrefetchDataset shapes: (((15, 6), (15, 40, 40), (15, 40)), ((15, 40, 12), (15, 1))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-04-21 09:23:37.628613: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Episode 0 Step 0 Loss: 134.81903076171875
+[Actor] Episode 0 Step 1 Loss: 132.64901733398438
+[Actor] Episode 0 Step 2 Loss: 125.05487823486328
+[Actor] Episode 0 Step 3 Loss: 89.70614624023438
+[Actor] Episode 0 Step 4 Loss: 134.6525421142578
+[Actor] Episode 0 Step 5 Loss: 110.5136489868164
+[Actor] Episode 0 Step 6 Loss: 88.80404663085938
+[Actor] Episode 0 Step 7 Loss: 104.22100067138672
+[Actor] Episode 0 Step 8 Loss: 132.0167236328125
+[Actor] Episode 0 Step 9 Loss: 147.627685546875
+[Actor] Episode 0 Step 10 Loss: 84.52677917480469
+[Actor] Episode 0 Step 11 Loss: 142.98651123046875
+[Actor] Episode 0 Step 12 Loss: 114.88961791992188
+[Actor] Episode 0 Step 13 Loss: 108.16287231445312
+[Actor] Episode 0 Step 14 Loss: 114.60087585449219
+[Actor] Episode 0 Step 15 Loss: 129.1308135986328
+[Actor] Episode 0 Step 16 Loss: 147.84048461914062
+[Actor] Episode 0 Step 17 Loss: 130.41261291503906
+[Actor] Episode 0 Step 18 Loss: 141.80421447753906
+[Actor] Episode 0 Step 19 Loss: 146.3760528564453
+[Actor] Episode 0 Step 20 Loss: 124.89942169189453
+[Actor] Episode 0 Step 21 Loss: 114.6683578491211
+[Actor] Episode 0 Step 22 Loss: 130.04605102539062
+[Actor] Episode 0 Step 23 Loss: 169.5666046142578
+2021-04-21 09:25:18.199540: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:25:18.199572: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-21 09:25:21.584471: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-21 09:25:21.584826: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-21 09:25:21.584858: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-21 09:25:21.584887: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-21 09:25:21.590770: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-21 09:25:21.591240: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1618977324.826306314, 1.347000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1618977324.830936390, 1.350000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1618977324.831371573, 1.350000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1618977326.369682904, 2.433000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1618977327.301909528, 3.126000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1618977328.781529587, 4.126000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1618977329.869612493, 4.928000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Starting Actor Test
+2021-04-21 09:26:20.309437: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+2021-04-21 09:26:23.171106: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Finishing Actor Test
+2021-04-21 09:27:05.189845: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Dataset <PrefetchDataset shapes: (((15, 6), (15, 40, 40), (15, 40)), ((15, 40, 12), (15, 1))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+2021-04-21 09:27:08.069312: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Episode 0 Step 0 Loss: 138.7145538330078
+[Actor] Episode 0 Step 1 Loss: 154.08851623535156
+[Actor] Episode 0 Step 2 Loss: 144.06353759765625
+[Actor] Episode 0 Step 3 Loss: 109.89009857177734
+[Actor] Episode 0 Step 4 Loss: 110.47773742675781
+[Actor] Episode 0 Step 5 Loss: 111.9343032836914
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 128.19479115804037
+[Actor] Learning Rate: 0.009872585535049438
+[Actor] Epoch Time: 154.78596234321594s
+-------------------------------------------------
+[Actor] Starting Actor Test
+2021-04-21 09:29:52.268084: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 1382400000 exceeds 10% of free system memory.
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 99.77207946777344
+[Actor] Episode 1 Step 1 Loss: 102.77484130859375
+[Actor] Episode 1 Step 2 Loss: 109.39862823486328
+[Actor] Episode 1 Step 3 Loss: 141.67210388183594
+[Actor] Episode 1 Step 4 Loss: 90.64550018310547
+[Actor] Episode 1 Step 5 Loss: 151.64833068847656
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 115.98524729410808
+[Actor] Learning Rate: 0.009746793657541275
+[Actor] Epoch Time: 86.01250958442688s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 2
+[Actor] Episode 2 Step 0 Loss: 90.95269012451172
+[Actor] Episode 2 Step 1 Loss: 142.63133239746094
+[Actor] Episode 2 Step 2 Loss: 151.14199829101562
+[Actor] Episode 2 Step 3 Loss: 146.83201599121094
+[Actor] Episode 2 Step 4 Loss: 165.73866271972656
+[Actor] Episode 2 Step 5 Loss: 87.12603759765625
+-------------------------------------------------
+[Actor] Episode 2 Average Loss: 130.73712285359701
+[Actor] Learning Rate: 0.0096226055175066
+[Actor] Epoch Time: 135.34925627708435s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 3
+[Actor] Episode 3 Step 0 Loss: 143.52676391601562
+[Actor] Episode 3 Step 1 Loss: 92.85006713867188
+[Actor] Episode 3 Step 2 Loss: 159.87867736816406
+[Actor] Episode 3 Step 3 Loss: 111.67427062988281
+[Actor] Episode 3 Step 4 Loss: 126.56685638427734
+[Actor] Episode 3 Step 5 Loss: 103.92768859863281
+-------------------------------------------------
+[Actor] Episode 3 Average Loss: 123.07072067260742
+[Actor] Learning Rate: 0.009499999694526196
+[Actor] Epoch Time: 175.7079131603241s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[33m[ WARN] [1618978262.987164715, 513.950000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg1 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617403525, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg2 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617521695, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg3 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617570149, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg1 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617596359, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg2 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617618949, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg3 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617641999, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg1 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617666719, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg2 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617694231, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg3 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617724162, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg1 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617752486, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg2 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978263.617814852, 514.394000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg3 at time 512.226000 according to authority unknown_publisher[0m
+[33m[ WARN] [1618978292.686097379, 534.423000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg1 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.775815952, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg2 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.775953175, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg3 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776025885, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg1 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776081750, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg2 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776156608, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg3 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776206637, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg1 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776259213, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg2 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776305012, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg3 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776357016, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg1 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776403724, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg2 at time 512.226000 according to authority /robot_state_publisher[0m
+[33m[ WARN] [1618978292.776456721, 534.485000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg3 at time 512.226000 according to authority /robot_state_publisher[0m
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 4
+2021-04-21 09:43:36.258167: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 5187 of 108000
+2021-04-21 09:43:46.202459: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 10200 of 108000
+2021-04-21 09:43:56.201073: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 15060 of 108000
+2021-04-21 09:44:06.174919: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 20218 of 108000
+2021-04-21 09:44:16.192832: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 24289 of 108000
+2021-04-21 09:44:26.185494: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 29183 of 108000
+2021-04-21 09:44:36.184426: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 36011 of 108000
+2021-04-21 09:44:46.185198: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 42991 of 108000
+2021-04-21 09:44:56.187196: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 49356 of 108000
+2021-04-21 09:45:06.188199: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 56204 of 108000
+2021-04-21 09:45:16.180550: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 62142 of 108000
+2021-04-21 09:45:26.174768: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 67773 of 108000
+2021-04-21 09:45:36.175052: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 72906 of 108000
+2021-04-21 09:45:46.176973: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 79049 of 108000
+2021-04-21 09:45:56.177357: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 84919 of 108000
+2021-04-21 09:46:06.181855: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 90400 of 108000
+2021-04-21 09:46:16.174836: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 95890 of 108000
+2021-04-21 09:46:26.194553: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 101436 of 108000
+2021-04-21 09:46:36.232597: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:177] Filling up shuffle buffer (this may take a while): 107174 of 108000
+2021-04-21 09:46:37.360056: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:230] Shuffle buffer filled.
+[Actor] Episode 4 Step 0 Loss: 125.24241638183594
+[Actor] Episode 4 Step 1 Loss: 154.18450927734375
+[Actor] Episode 4 Step 2 Loss: 102.37368774414062
+[Actor] Episode 4 Step 3 Loss: 85.8580551147461
+[Actor] Episode 4 Step 4 Loss: 128.08755493164062
+[Actor] Episode 4 Step 5 Loss: 142.7926025390625
+-------------------------------------------------
+[Actor] Episode 4 Average Loss: 123.0898043314616
+[Actor] Learning Rate: 0.009378955699503422
+[Actor] Epoch Time: 359.039439201355s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 5
+[Actor] Episode 5 Step 0 Loss: 100.48291778564453
+[Actor] Episode 5 Step 1 Loss: 100.28743743896484
+[Actor] Episode 5 Step 2 Loss: 99.98396301269531
+[Actor] Episode 5 Step 3 Loss: 105.91937255859375
+[Actor] Episode 5 Step 4 Loss: 146.48446655273438
+[Actor] Episode 5 Step 5 Loss: 155.45510864257812
+-------------------------------------------------
+[Actor] Episode 5 Average Loss: 118.10221099853516
+[Actor] Learning Rate: 0.009259453974664211
+[Actor] Epoch Time: 157.01427793502808s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 6
+[Actor] Episode 6 Step 0 Loss: 80.2179946899414
+[Actor] Episode 6 Step 1 Loss: 125.07696533203125
+[Actor] Episode 6 Step 2 Loss: 150.59164428710938
+[Actor] Episode 6 Step 3 Loss: 97.87579345703125
+[Actor] Episode 6 Step 4 Loss: 123.40406036376953
+[Actor] Episode 6 Step 5 Loss: 99.52972412109375
+-------------------------------------------------
+[Actor] Episode 6 Average Loss: 112.78269704182942
+[Actor] Learning Rate: 0.009141474962234497
+[Actor] Epoch Time: 142.05491542816162s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 7
+[Actor] Episode 7 Step 0 Loss: 166.47561645507812
+[Actor] Episode 7 Step 1 Loss: 120.74791717529297
+[Actor] Episode 7 Step 2 Loss: 146.0333251953125
+[Actor] Episode 7 Step 3 Loss: 129.4095001220703
+[Actor] Episode 7 Step 4 Loss: 145.1282196044922
+[Actor] Episode 7 Step 5 Loss: 124.76349639892578
+-------------------------------------------------
+[Actor] Episode 7 Average Loss: 138.75967915852866
+[Actor] Learning Rate: 0.009024999104440212
+[Actor] Epoch Time: 11.207308053970337s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 8
+[Actor] Episode 8 Step 0 Loss: 129.5358428955078
+[Actor] Episode 8 Step 1 Loss: 131.87791442871094
+[Actor] Episode 8 Step 2 Loss: 129.52236938476562
+[Actor] Episode 8 Step 3 Loss: 97.04885864257812
+[Actor] Episode 8 Step 4 Loss: 138.59010314941406
+[Actor] Episode 8 Step 5 Loss: 109.47331237792969
+-------------------------------------------------
+[Actor] Episode 8 Average Loss: 122.6747334798177
+[Actor] Learning Rate: 0.008910007774829865
+[Actor] Epoch Time: 6.6539082527160645s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 9
+[Actor] Episode 9 Step 0 Loss: 115.55296325683594
+[Actor] Episode 9 Step 1 Loss: 109.68546295166016
+[Actor] Episode 9 Step 2 Loss: 155.10191345214844
+[Actor] Episode 9 Step 3 Loss: 179.0599822998047
+[Actor] Episode 9 Step 4 Loss: 113.83638763427734
+[Actor] Episode 9 Step 5 Loss: 64.78455352783203
+-------------------------------------------------
+[Actor] Episode 9 Average Loss: 123.00354385375977
+[Actor] Learning Rate: 0.008796481415629387
+[Actor] Epoch Time: 5.4493467807769775s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Dataset <PrefetchDataset shapes: (((15, 6), (15, 40, 40), (15, 40)), ((15, 40, 12), (15, 1))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+[Actor] Episode 0 Step 0 Loss: 0.22464309632778168
+[Actor] Episode 0 Step 1 Loss: 0.2612277865409851
+[Actor] Episode 0 Step 2 Loss: 0.42290589213371277
+[Actor] Episode 0 Step 3 Loss: 0.3416273295879364
+[Actor] Episode 0 Step 4 Loss: 0.37981677055358887
+[Actor] Episode 0 Step 5 Loss: 0.32030779123306274
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 0.3250881110628446
+[Actor] Learning Rate: 0.009872585535049438
+[Actor] Epoch Time: 5.361658811569214s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 0.3915145695209503
+[Actor] Episode 1 Step 1 Loss: 0.36393415927886963
+[Actor] Episode 1 Step 2 Loss: 0.24046266078948975
+[Actor] Episode 1 Step 3 Loss: 0.4262690842151642
+[Actor] Episode 1 Step 4 Loss: 0.3478410840034485
+[Actor] Episode 1 Step 5 Loss: 0.24252425134181976
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 0.335424301524957
+[Actor] Learning Rate: 0.009746793657541275
+[Actor] Epoch Time: 5.93022608757019s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 2
+[Actor] Episode 2 Step 0 Loss: 0.38035351037979126
+[Actor] Episode 2 Step 1 Loss: 0.3382909893989563
+[Actor] Episode 2 Step 2 Loss: 0.3608825206756592
+[Actor] Episode 2 Step 3 Loss: 0.3344399929046631
+[Actor] Episode 2 Step 4 Loss: 0.43253791332244873
+[Actor] Episode 2 Step 5 Loss: 0.36402827501296997
+-------------------------------------------------
+[Actor] Episode 2 Average Loss: 0.36842220028241474
+[Actor] Learning Rate: 0.0096226055175066
+[Actor] Epoch Time: 5.432949781417847s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 3
+[Actor] Episode 3 Step 0 Loss: 0.36149996519088745
+[Actor] Episode 3 Step 1 Loss: 0.3287070393562317
+[Actor] Episode 3 Step 2 Loss: 0.3055490255355835
+[Actor] Episode 3 Step 3 Loss: 0.3259690999984741
+[Actor] Episode 3 Step 4 Loss: 0.28676754236221313
+[Actor] Episode 3 Step 5 Loss: 0.2851702570915222
+-------------------------------------------------
+[Actor] Episode 3 Average Loss: 0.31561048825581867
+[Actor] Learning Rate: 0.009499999694526196
+[Actor] Epoch Time: 5.8206048011779785s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 4
+[Actor] Episode 4 Step 0 Loss: 0.339759886264801
+[Actor] Episode 4 Step 1 Loss: 0.23046088218688965
+[Actor] Episode 4 Step 2 Loss: 0.2985401451587677
+[Actor] Episode 4 Step 3 Loss: 0.22414878010749817
+[Actor] Episode 4 Step 4 Loss: 0.30422669649124146
+[Actor] Episode 4 Step 5 Loss: 0.24202558398246765
+-------------------------------------------------
+[Actor] Episode 4 Average Loss: 0.2731936623652776
+[Actor] Learning Rate: 0.009378955699503422
+[Actor] Epoch Time: 6.032810926437378s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 5
+[Actor] Episode 5 Step 0 Loss: 0.2917073667049408
+[Actor] Episode 5 Step 1 Loss: 0.20088374614715576
+[Actor] Episode 5 Step 2 Loss: 0.3038713335990906
+[Actor] Episode 5 Step 3 Loss: 0.21912235021591187
+[Actor] Episode 5 Step 4 Loss: 0.26741304993629456
+[Actor] Episode 5 Step 5 Loss: 0.24699653685092926
+-------------------------------------------------
+[Actor] Episode 5 Average Loss: 0.2549990639090538
+[Actor] Learning Rate: 0.009259453974664211
+[Actor] Epoch Time: 6.311580419540405s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 6
+[Actor] Episode 6 Step 0 Loss: 0.209010049700737
+[Actor] Episode 6 Step 1 Loss: 0.2733679711818695
+[Actor] Episode 6 Step 2 Loss: 0.19418948888778687
+[Actor] Episode 6 Step 3 Loss: 0.1872415840625763
+[Actor] Episode 6 Step 4 Loss: 0.18562819063663483
+[Actor] Episode 6 Step 5 Loss: 0.17475181818008423
+-------------------------------------------------
+[Actor] Episode 6 Average Loss: 0.20403151710828146
+[Actor] Learning Rate: 0.009141474962234497
+[Actor] Epoch Time: 6.384671926498413s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 7
+[Actor] Episode 7 Step 0 Loss: 0.21149004995822906
+[Actor] Episode 7 Step 1 Loss: 0.1878466159105301
+[Actor] Episode 7 Step 2 Loss: 0.18459507822990417
+[Actor] Episode 7 Step 3 Loss: 0.1789569854736328
+[Actor] Episode 7 Step 4 Loss: 0.18424373865127563
+[Actor] Episode 7 Step 5 Loss: 0.20373469591140747
+-------------------------------------------------
+[Actor] Episode 7 Average Loss: 0.19181119402249655
+[Actor] Learning Rate: 0.009024999104440212
+[Actor] Epoch Time: 8.34783935546875s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 8
+[Actor] Episode 8 Step 0 Loss: 0.22972774505615234
+[Actor] Episode 8 Step 1 Loss: 0.17106664180755615
+[Actor] Episode 8 Step 2 Loss: 0.18509094417095184
+[Actor] Episode 8 Step 3 Loss: 0.17195332050323486
+[Actor] Episode 8 Step 4 Loss: 0.19295166432857513
+[Actor] Episode 8 Step 5 Loss: 0.18776428699493408
+-------------------------------------------------
+[Actor] Episode 8 Average Loss: 0.18975910047690073
+[Actor] Learning Rate: 0.008910007774829865
+[Actor] Epoch Time: 8.797250032424927s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 9
+[Actor] Episode 9 Step 0 Loss: 0.21911828219890594
+[Actor] Episode 9 Step 1 Loss: 0.18764552474021912
+[Actor] Episode 9 Step 2 Loss: 0.18741723895072937
+[Actor] Episode 9 Step 3 Loss: 0.17510825395584106
+[Actor] Episode 9 Step 4 Loss: 0.17804227769374847
+[Actor] Episode 9 Step 5 Loss: 0.18185940384864807
+-------------------------------------------------
+[Actor] Episode 9 Average Loss: 0.18819849689801535
+[Actor] Learning Rate: 0.008796481415629387
+[Actor] Epoch Time: 4.627058982849121s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 10
+[Actor] Episode 10 Step 0 Loss: 0.18037717044353485
+[Actor] Episode 10 Step 1 Loss: 0.14743012189865112
+[Actor] Episode 10 Step 2 Loss: 0.18530862033367157
+[Actor] Episode 10 Step 3 Loss: 0.14705179631710052
+[Actor] Episode 10 Step 4 Loss: 0.2402452528476715
+[Actor] Episode 10 Step 5 Loss: 0.15147650241851807
+-------------------------------------------------
+[Actor] Episode 10 Average Loss: 0.17531491070985794
+[Actor] Learning Rate: 0.008684401400387287
+[Actor] Epoch Time: 6.997291088104248s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 11
+[Actor] Episode 11 Step 0 Loss: 0.17671585083007812
+[Actor] Episode 11 Step 1 Loss: 0.1466338336467743
+[Actor] Episode 11 Step 2 Loss: 0.1825936734676361
+[Actor] Episode 11 Step 3 Loss: 0.16617265343666077
+[Actor] Episode 11 Step 4 Loss: 0.13906370103359222
+[Actor] Episode 11 Step 5 Loss: 0.172212153673172
+-------------------------------------------------
+[Actor] Episode 11 Average Loss: 0.1638986443479856
+[Actor] Learning Rate: 0.008573749102652073
+[Actor] Epoch Time: 6.777484178543091s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 12
+[Actor] Episode 12 Step 0 Loss: 0.19667452573776245
+[Actor] Episode 12 Step 1 Loss: 0.1761246770620346
+[Actor] Episode 12 Step 2 Loss: 0.14839833974838257
+[Actor] Episode 12 Step 3 Loss: 0.13322407007217407
+[Actor] Episode 12 Step 4 Loss: 0.17962580919265747
+[Actor] Episode 12 Step 5 Loss: 0.18923795223236084
+-------------------------------------------------
+[Actor] Episode 12 Average Loss: 0.17054756234089533
+[Actor] Learning Rate: 0.008464506827294827
+[Actor] Epoch Time: 7.224453926086426s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 13
+[Actor] Episode 13 Step 0 Loss: 0.17296598851680756
+[Actor] Episode 13 Step 1 Loss: 0.2028016746044159
+[Actor] Episode 13 Step 2 Loss: 0.16591215133666992
+[Actor] Episode 13 Step 3 Loss: 0.11150741577148438
+[Actor] Episode 13 Step 4 Loss: 0.17740924656391144
+[Actor] Episode 13 Step 5 Loss: 0.1720363199710846
+-------------------------------------------------
+[Actor] Episode 13 Average Loss: 0.16710546612739563
+[Actor] Learning Rate: 0.008356657810509205
+[Actor] Epoch Time: 6.73928165435791s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 14
+[Actor] Episode 14 Step 0 Loss: 0.2181493043899536
+[Actor] Episode 14 Step 1 Loss: 0.13655494153499603
+[Actor] Episode 14 Step 2 Loss: 0.1866299957036972
+[Actor] Episode 14 Step 3 Loss: 0.2003663182258606
+[Actor] Episode 14 Step 4 Loss: 0.16369351744651794
+[Actor] Episode 14 Step 5 Loss: 0.1481083333492279
+-------------------------------------------------
+[Actor] Episode 14 Average Loss: 0.17558373510837555
+[Actor] Learning Rate: 0.008250181563198566
+[Actor] Epoch Time: 5.624958038330078s
+-------------------------------------------------
+[Actor] Starting Actor Test
+[Actor] Finishing Actor Test
+[Actor] Starting Episode 15
+[Actor] Episode 15 Step 0 Loss: 0.1523478925228119
+[Actor] Episode 15 Step 1 Loss: 0.16774284839630127
+[Actor] Episode 15 Step 2 Loss: 0.17554467916488647
+[Actor] Episode 15 Step 3 Loss: 0.1839682161808014
+[Actor] Episode 15 Step 4 Loss: 0.18957102298736572
+[Actor] Episode 15 Step 5 Loss: 0.16385985910892487
+-------------------------------------------------
+[Actor] Episode 15 Average Loss: 0.1721724197268486
+[Actor] Learning Rate: 0.008145062252879143
+[Actor] Epoch Time: 6.657540321350098s
+-------------------------------------------------

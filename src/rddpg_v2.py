@@ -97,7 +97,7 @@ class Learner:
 
     def _pretrain_actor(self, x, y, W = [1,1]):
         with tf.GradientTape(persistent=False) as tape:
-            out, omega, _ = self.actor.model(x)
+            out, _, omega, _ = self.actor.model(x)
             loss_action = self.action_mse(y[0], out)
             loss_omega = self.omega_mse(y[1], omega)
             loss = W[0] * loss_action + W[1] * loss_omega
@@ -118,23 +118,13 @@ class Learner:
         print('[Actor] Starting Actor Test')
         step, (x, y) = next(enumerate(
             self.actor.create_pretrain_dataset(
-                'data/pretrain_rddpg_2',
+                'data/pretrain_rddpg_3',
                 self.params
             )
         ))
-        actions, omega, _ = self.actor.model(x)
-        bs = actions.shape[0]
-        action_dim = actions.shape[-1]
-        steps = actions.shape[2]
-        max_steps = actions.shape[1]
-        shape = (bs, steps * max_steps, action_dim)
-        actions = tf.reshape(actions, shape) * np.pi / 3
-        bs = y[0].shape[0]
-        action_dim = y[0].shape[-1]
-        steps = y[0].shape[2]
-        max_steps = y[0].shape[1]
-        shape = (bs, steps * max_steps, action_dim)
-        y = tf.reshape(y[0], shape) * np.pi / 3
+        actions, _, omega, _ = self.actor.model(x)
+        actions = actions * np.pi / 3
+        y = y[0] * np.pi / 3
         fig, ax = plt.subplots(4,1, figsize = (5,20))
         for i in range(4):
             ax[i].plot(actions[0][:,3*i], 'b', label = 'ankle')
@@ -220,7 +210,7 @@ class Learner:
             history_loss_omega = pickle.load(pkl)
             pkl.close()
         dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_2',
+            'data/pretrain_rddpg_3',
             self.params
         )
         print('[Actor] Dataset {ds}'.format(ds = dataset))
@@ -246,7 +236,7 @@ class Learner:
                 total_loss_action += loss_action
                 total_loss_omega += loss_omega
                 num += 1
-                if step > 100:
+                if step > 4:
                     break
             end = time.time()
             avg_loss = total_loss / num
@@ -325,7 +315,7 @@ class Learner:
                 ax5.plot(history_loss_omega)
                 ax5.set_xlabel('steps')
                 ax5.set_ylabel('loss')
-                ax5.set_title('Total Mean Loss')
+                ax5.set_title('Total Omega Loss')
                 fig5.savefig(
                     os.path.join(
                         path,
@@ -364,7 +354,7 @@ class Learner:
             name = 'pretrain_actor'):
         path = os.path.join(checkpoint_dir, 'exp{exp}'.format(exp = experiment))
         self.actor.set_model(
-            self.actor.create_pretrain_actor_network(
+            self.actor.create_pretrain_actor_cell(
                 self.params
             )
         )
@@ -442,7 +432,7 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, True)
+    learner = Learner(params, args.experiment, False)
     learner.pretrain_actor(
         args.experiment,
         args.out_path,
