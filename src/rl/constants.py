@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 action_dim = 12
-units_osc = 20
+units_osc = 30
 params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 4*action_dim + 4 + 8*3,
@@ -32,11 +32,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 20,
+    'max_steps'                   : 5,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 40,
+    'rnn_steps'                   : 200,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -228,10 +228,12 @@ pretraining = {
 
 num_data = len(pretraining['Tst'])
 params.update(pretraining)
-bs = 15
+bs = 1350
+num_data =135 * params['rnn_steps'] * params['max_steps']
 params.update({
-    'num_data' : 135 * params['rnn_steps'] / bs,
-    'pretrain_bs': bs
+    'num_data' : num_data,
+    'pretrain_bs': bs,
+    'train_test_split' : (num_data - bs * 10) / num_data
 })
 
 
