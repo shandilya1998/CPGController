@@ -58,7 +58,7 @@ class Learner:
                 self.params['rnn_steps'] * (self.params['max_steps'] + 2),
                 create_data
             )
-            self.create_dataset('data/pretrain_rddpg_3', self.signal_gen)
+            self.create_dataset('data/pretrain_rddpg_4', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.01,
             decay_steps=20,
@@ -69,6 +69,8 @@ class Learner:
         )
         self.action_mse = tf.keras.losses.MeanSquaredError()
         self.omega_mse = tf.keras.losses.MeanSquaredError()
+        self.mu_mse = tf.keras.losses.MeanSquaredError()
+        self.Z_mse = tf.keras.losses.MeanSquaredError()
 
     def create_dataset(self, path, signal_gen):
         self.actor.create_data(path, signal_gen, self.env)
@@ -95,12 +97,29 @@ class Learner:
         plt.close()
 
 
-    def _pretrain_actor(self, x, y, W = [1,1]):
+    def _test_pretrain_actor(self, x, y, W = [1,1,1,1]):
+        out, _, omega, mu, Z = self.actor.model(x)
+        loss_action = self.action_mse(y[0], out)
+        loss_omega = self.omega_mse(y[1], omega)
+        loss_mu = self.mu_mse(y[2], mu)
+        loss_Z = self.Z_mse(y[3], Z)
+        loss = W[0] * loss_action + \
+            W[1] * loss_omega + \
+            W[2] * loss_mu + \
+            W[3] * loss_Z
+        return loss, [loss_action, loss_omega, loss_mu, loss_Z]
+
+    def _pretrain_actor(self, x, y, W = [1,1,1,1]):
         with tf.GradientTape(persistent=False) as tape:
-            out, _, omega, _ = self.actor.model(x)
+            out, _, omega, mu, Z = self.actor.model(x)
             loss_action = self.action_mse(y[0], out)
             loss_omega = self.omega_mse(y[1], omega)
-            loss = W[0] * loss_action + W[1] * loss_omega
+            loss_mu = self.mu_mse(y[2], mu)
+            loss_Z = self.Z_mse(y[3], Z)
+            loss = W[0] * loss_action + \
+                W[1] * loss_omega + \
+                W[2] * loss_mu + \
+                W[3] * loss_Z
 
         grads = tape.gradient(
             loss,
@@ -112,17 +131,18 @@ class Learner:
                 self.actor.model.trainable_variables
             )
         )
-        return loss, [loss_action, loss_omega]
+        return loss, [loss_action, loss_omega, loss_mu, loss_Z]
 
     def test_actor(self, path, ep = None):
         print('[Actor] Starting Actor Test')
         step, (x, y) = next(enumerate(
             self.actor.create_pretrain_dataset(
-                'data/pretrain_rddpg_3',
-                self.params
+                'data/pretrain_rddpg_4',
+                self.params,
+                False
             )
         ))
-        actions, _, omega, _ = self.actor.model(x)
+        actions, _, omega, mu, _ = self.actor.model(x)
         actions = actions * np.pi / 3
         y = y[0] * np.pi / 3
         fig, ax = plt.subplots(4,1, figsize = (5,20))
@@ -159,12 +179,13 @@ class Learner:
     def _pretrain_loop(
         self,
         grad_update,
+        test_actor,
         experiment,
         checkpoint_dir,
         name,
         epochs = None,
         start = 0,
-        W = [1.0, 1.0]
+        W = [1.0, 1.0, 1.0, 1.0]
     ):
         self.test_actor(os.path.join(
             checkpoint_dir,
@@ -179,6 +200,13 @@ class Learner:
         history_loss = []
         history_loss_action = []
         history_loss_omega = []
+        history_loss_mu = []
+        history_loss_Z = []
+        test_history_loss = []
+        test_history_loss_action = []
+        test_history_loss_omega = []
+        test_history_loss_mu = []
+        test_history_loss_Z = []
         path = os.path.join(checkpoint_dir, 'exp{ex}'.format(ex = experiment))
         if not os.path.exists(path):
             os.mkdir(path)
@@ -209,24 +237,51 @@ class Learner:
             )), 'rb')
             history_loss_omega = pickle.load(pkl)
             pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_mu = pickle.load(pkl)
+            pkl.close()
+
+            pkl = open(os.path.join(path, 'loss_Z_{ex}_{name}_{ep}.pickle'.format(
+                name = name,
+                ex = experiment,
+                ep = start - 1
+            )), 'rb')
+            history_loss_Z = pickle.load(pkl)
+            pkl.close()
         dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_3',
+            'data/pretrain_rddpg_4',
             self.params
         )
-        print('[Actor] Dataset {ds}'.format(ds = dataset))
+        test_dataset = self.actor.create_pretrain_dataset(
+            'data/pretrain_rddpg_4',
+            self.params,
+            False
+        )
         print('[Actor] Starting Actor Pretraining')
         for episode in range(start, epochs):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
             total_loss = 0.0
             total_loss_action = 0.0
             total_loss_omega = 0.0
+            total_loss_mu = 0.0
+            total_loss_Z = 0.0
             start = time.time()
             num = 0
             for step, (x, y) in enumerate(dataset):
-                loss, [loss_action, loss_omega] = grad_update(x, y, W)
+                loss, [loss_action, \
+                        loss_omega, \
+                        loss_mu, \
+                        loss_Z] = grad_update(x, y, W)
                 loss = loss.numpy()
                 loss_action = loss_action.numpy()
                 loss_omega = loss_omega.numpy()
+                loss_mu = loss_mu.numpy()
+                loss_Z = loss_Z.numpy()
                 print('[Actor] Episode {ep} Step {st} Loss: {loss}'.format(
                     ep = episode,
                     st = step,
@@ -235,6 +290,8 @@ class Learner:
                 total_loss += loss
                 total_loss_action += loss_action
                 total_loss_omega += loss_omega
+                total_loss_mu += loss_mu
+                total_loss_Z += loss_Z
                 num += 1
                 if step > 4:
                     break
@@ -242,6 +299,8 @@ class Learner:
             avg_loss = total_loss / num
             avg_loss_action = total_loss_action / num
             avg_loss_omega = total_loss_omega / num
+            avg_loss_mu = total_loss_mu / num
+            avg_loss_Z = total_loss_Z / num
             print('-------------------------------------------------')
             print('[Actor] Episode {ep} Average Loss: {l}'.format(
                 ep = episode,
@@ -255,6 +314,54 @@ class Learner:
             history_loss.append(avg_loss)
             history_loss_action.append(avg_loss_action)
             history_loss_omega.append(avg_loss_omega)
+            history_loss_mu.append(avg_loss_mu)
+            history_loss_Z.append(avg_loss_Z)
+            total_loss = 0.0
+            total_loss_action = 0.0
+            total_loss_omega = 0.0
+            total_loss_mu = 0.0
+            total_loss_Z = 0.0
+            start = time.time()
+            num = 0
+            for step, (x, y) in enumerate(test_dataset):
+                loss, [loss_action, \
+                    loss_omega, \
+                    loss_mu, \
+                    loss_Z] = test_actor(x, y, W)
+                loss = loss.numpy()
+                loss_action = loss_action.numpy()
+                loss_omega = loss_omega.numpy()
+                loss_mu = loss_mu.numpy()
+                loss_Z = loss_Z.numpy()
+                print('[Actor] Test Episode {ep} Step {st} Loss: {loss}'.format(
+                    ep = episode,
+                    st = step,
+                    loss = loss
+                ))
+                total_loss += loss
+                total_loss_action += loss_action
+                total_loss_omega += loss_omega
+                total_loss_mu += loss_mu
+                total_loss_Z += loss_Z
+                num += 1
+            end = time.time()
+            avg_loss = total_loss / num
+            avg_loss_action = total_loss_action / num
+            avg_loss_omega = total_loss_omega / num
+            avg_loss_mu = total_loss_mu / num
+            avg_loss_Z = total_loss_Z / num
+            test_history_loss.append(avg_loss)
+            test_history_loss_action.append(avg_loss_action)
+            test_history_loss_omega.append(avg_loss_omega)
+            test_history_loss_mu.append(avg_loss_mu)
+            test_history_loss_Z.append(avg_loss_Z)
+            print('-------------------------------------------------')
+            print('[Actor] Episode {ep} Average Loss: {l}'.format(
+                ep = episode,
+                l = avg_loss
+            ))
+            print('[Actor] Test Time: {time}s'.format(time = end - start))
+            print('-------------------------------------------------')
             if episode % 3 == 0:
                 if math.isnan(avg_loss):
                     break
@@ -327,6 +434,169 @@ class Learner:
                     )
                 )
 
+                pkl = open(os.path.join(path, 'loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_mu, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(history_loss_mu)
+                ax5.set_xlabel('steps')
+                ax5.set_ylabel('loss')
+                ax5.set_title('Total mu Loss')
+                fig5.savefig(
+                    os.path.join(
+                        path,
+                        'loss_mu_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'loss_Z_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(history_loss_Z, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(history_loss_Z)
+                ax5.set_xlabel('steps')
+                ax5.set_ylabel('loss')
+                ax5.set_title('Total Z  Loss')
+                fig5.savefig(
+                    os.path.join(
+                        path,
+                        'loss_Z_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'test_loss_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(test_history_loss, pkl)
+                pkl.close()
+                fig1, ax1 = plt.subplots(1, 1, figsize = (5, 5))
+                ax1.plot(test_history_loss)
+                ax1.set_xlabel('steps')
+                ax1.set_ylabel('loss')
+                ax1.set_title('Total Loss')
+                fig1.savefig(
+                    os.path.join(
+                        path,
+                        'test_loss_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'test_loss_action_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(test_history_loss_action, pkl)
+                pkl.close()
+                fig2, ax2 = plt.subplots(1, 1, figsize = (5, 5))
+                ax2.plot(test_history_loss_action)
+                ax2.set_xlabel('steps')
+                ax2.set_ylabel('loss')
+                ax2.set_title('Total Action Loss')
+                fig2.savefig(
+                    os.path.join(
+                        path,
+                        'test_loss_action_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'test_loss_omega_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(test_history_loss_omega, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(test_history_loss_omega)
+                ax5.set_xlabel('steps')
+                ax5.set_ylabel('loss')
+                ax5.set_title('Total Omega Loss')
+                fig5.savefig(
+                    os.path.join(
+                        path,
+                        'test_loss_omega_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'test_loss_mu_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(test_history_loss_mu, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(test_history_loss_mu)
+                ax5.set_xlabel('steps')
+                ax5.set_ylabel('loss')
+                ax5.set_title('Total mu Loss')
+                fig5.savefig(
+                    os.path.join(
+                        path,
+                        'test_loss_mu_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                pkl = open(os.path.join(path, 'test_loss_Z_{ex}_{name}_{ep}.pickle'.format(
+                    name = name,
+                    ex = experiment,
+                    ep = episode
+                )), 'wb')
+                pickle.dump(test_history_loss_Z, pkl)
+                pkl.close()
+                fig5, ax5 = plt.subplots(1, 1, figsize = (5, 5))
+                ax5.plot(test_history_loss_Z)
+                ax5.set_xlabel('steps')
+                ax5.set_ylabel('loss')
+                ax5.set_title('Total Z  Loss')
+                fig5.savefig(
+                    os.path.join(
+                        path,
+                        'test_loss_Z_{ex}_{name}_{ep}.png'.format(
+                            name = name,
+                            ex = experiment,
+                            ep = episode
+                        )
+                    )
+                )
+
+                plt.close('all')
+
                 if prev_loss < avg_loss:
                     break
                 else:
@@ -341,13 +611,13 @@ class Learner:
                         )
                     )
                 prev_loss = avg_loss
-            self.test_actor(os.path.join(
-                checkpoint_dir,
-                'exp{exp}'.format(
-                    exp = experiment,
-                ),
-                name
-            ), episode)
+        self.test_actor(os.path.join(
+            checkpoint_dir,
+            'exp{exp}'.format(
+                exp = experiment,
+            ),
+            name
+        ))
 
     def pretrain_actor(self, experiment, \
             checkpoint_dir = 'weights/actor_pretrain', \
@@ -377,12 +647,14 @@ class Learner:
                 path, name
             ))
         self._pretrain_loop(
-            self._pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
-            W = [0.001, 1.0]
+            self._pretrain_actor, \
+            self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
+            W = [0.001, 1.0, 1.0, 1.0]
         )
         self._pretrain_loop(
-            self._pretrain_actor, experiment, checkpoint_dir, name,
-            W = [1.0, 0.001]
+            self._pretrain_actor, \
+            self._test_pretrain_actor, experiment, checkpoint_dir, name,
+            W = [1.0, 0.001, 0.001, 0.001]
         )
 
 def str2bool(v):

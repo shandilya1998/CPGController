@@ -361,63 +361,25 @@ class ActorNetwork(object):
 
         model = tf.keras.Model(
             inputs = [desired_motion, mod_state, z],
-            outputs = [actions, osc, omega, Z],
+            outputs = [actions, osc, omega, mu, Z],
             name = 'pretrain_actor_cell'
         )
         return model
 
-    def create_pretrain_actor_network(self, params, trainable = True):
-        desired_motion = tf.keras.Input(
-            shape = (
-                params['max_steps'],
-                params['observation_spec'][0].shape[-1]
-            ),
-            dtype = tf.dtypes.float32,
-            name = params['observation_spec'][0].name
-        )
-        mod_state = tf.keras.Input(
-            shape = (
-                params['max_steps'],
-                params['rnn_steps'],
-                2 * params['units_osc']
-            ),
-            dtype = tf.dtypes.float32,
-            name = 'mod_state'
-        )
-        z = tf.keras.Input(
-            shape = (2 * params['units_osc'],),
-            dtype = tf.dtypes.float32,
-            name = 'z' + '_cell'
-        )
-
-        actor_cell = self.create_pretrain_actor_cell(
-            params,
-            trainable
-        )
-
-        actor = TimeDistributed(
-            params,
-            actor_cell,
-            'TimeDistributedActor',
-            [
-                2 * params['units_osc'],
-            ],
-            steps = params['max_steps'],
-            return_state = False,
-            trainable = trainable
-        )
-
-        actions, _, omega, Z = actor([
-            desired_motion,
-            mod_state,
-            z
-        ])
-
-        model = tf.keras.Model(
-            inputs = [desired_motion, mod_state, z],
-            outputs = [actions, omega, Z]
-        )
-        return model
+    def hopf(self, z, omega, steps, mu, b, dt, rng):
+        x,y = np.split(z, 2, -1)
+        z = x + 1j * y
+        omega = omega * rng
+        r = np.abs(z)
+        phi = np.angle(z)
+        for i in range(steps):
+            r = r + (mu-np.square(np.abs(r))) * r * dt
+            phi = phi + omega * dt
+        z = r*np.exp(1j*phi) + b
+        x = np.real(z)
+        y = np.imag(z)
+        z = np.concatenate([x, y], -1)
+        return z
 
     def create_data(self, path, signal_gen, env):
         env.quadruped.reset()
@@ -425,7 +387,10 @@ class ActorNetwork(object):
         A = []
         B = []
         Y = []
+        Z = []
+        MU = []
         X = [[] for j in range(len(self.params['observation_spec']))]
+        count = 0
         for y, x, f_ in tqdm(signal_gen.generator()):
             f_ = f_ * 2 * np.pi
             y = y * np.pi / 180.0
@@ -445,6 +410,11 @@ class ActorNetwork(object):
                     a_ = a_ / (np.pi / 3)
                     for k, s in enumerate(_state):
                         X[k].append(s)
+                    MU.append(
+                        np.ones((
+                            1, self.params['units_osc']
+                        ))
+                    )
                     Y.append(np.expand_dims(y_, 0))
                     B.append(np.expand_dims(b_, 0))
                     A.append(np.expand_dims(a_, 0))
@@ -463,12 +433,24 @@ class ActorNetwork(object):
                     )
                     _state = env.quadruped.get_state_tensor()
             env.quadruped.reset()
+            count += 1
         for j in range(len(X)):
             X[j] = np.concatenate(X[j], axis = 0)
         Y = np.concatenate(Y, axis = 0)
+        MU = np.concatenate(MU, axis = 0)
         F = np.concatenate(F, axis = 0)
         A = np.concatenate(A, axis = 0)
         B = np.concatenate(B, axis = 0)
+        num_data = Y.shape[0]
+        Z = self.hopf(
+            X[-1],
+            F,
+            self.params['rnn_steps'],
+            MU,
+            np.zeros((num_data,self.params['units_osc'],)),
+            self.params['dt'],
+            np.arange(1, self.params['units_osc'] + 1)
+        )
         print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
         print('[Actor] X Shapes:')
         for i in range(len(X)):
@@ -476,8 +458,15 @@ class ActorNetwork(object):
         print('[Actor] A Shape : {sh}'.format(sh=A.shape))
         print('[Actor] B Shape : {sh}'.format(sh=B.shape))
         print('[Actor] F Shape : {sh}'.format(sh=F.shape))
+        print('[Axtor] Z Shape : {sh}'.format(sh=Z.shape))
         np.save(os.path.join(path, 'Y.npy'), \
             Y, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save(os.path.join(path, 'Z.npy'), \
+            Z, allow_pickle = True, fix_imports=True)
+        time.sleep(3)
+        np.save(os.path.join(path, 'MU.npy'), \
+            MU, allow_pickle = True, fix_imports=True)
         time.sleep(3)
         np.save(os.path.join(path, 'F.npy'), \
             F, allow_pickle = True, fix_imports=True)
@@ -497,9 +486,19 @@ class ActorNetwork(object):
             np.save(os.path.join(path, 'X_{j}.npy'.format(j=j)), \
                 X[j], allow_pickle = True, fix_imports=True)
 
-    def create_pretrain_dataset(self, data_dir, params):
+    def create_pretrain_dataset(self, data_dir, params, train = True):
         Y = np.load(
             os.path.join(data_dir, 'Y.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )
+        Z = np.load(
+            os.path.join(data_dir, 'Z.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )
+        MU = np.load(
+            os.path.join(data_dir, 'MU.npy'),
             allow_pickle = True,
             fix_imports=True
         )
@@ -547,8 +546,32 @@ class ActorNetwork(object):
             allow_pickle = True,
             fix_imports=True
         )
+        if train:
+            num_data = int(num_data * params['train_test_split']) // 10
+            Y = Y[:num_data]
+            Z = Z[:num_data]
+            MU = MU[:num_data]
+            desired_motion = desired_motion[:num_data]
+            mod_state = mod_state[:num_data]
+            z = z[:num_data]
+            F = F[:num_data]
+        else:
+            num_data = int(num_data * params['train_test_split'])
+            Y = Y[num_data:]
+            Z = Z[num_data:]
+            MU = MU[num_data:]
+            desired_motion = desired_motion[num_data:]
+            mod_state = mod_state[num_data:]
+            z = z[num_data:]
+            F = F[num_data:]
         Y = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(Y)
+        )
+        Z = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(Z)
+        )
+        MU = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(MU)
         )
         F = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(F)
@@ -568,13 +591,14 @@ class ActorNetwork(object):
             z
         ))
         Y = tf.data.Dataset.zip((
-            Y, F
+            Y, F, MU, Z
         ))
         dataset = tf.data.Dataset.zip((X, Y))
         dataset = dataset.shuffle(num_data).batch(
             params['pretrain_bs'],
             drop_remainder=True
         ).prefetch(tf.data.AUTOTUNE)
+        print('[Actor] Dataset {ds}'.format(ds = dataset))
         return dataset
 
     def make_untrainable(self, model):
