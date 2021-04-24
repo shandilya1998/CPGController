@@ -487,31 +487,34 @@ class ActorNetwork(object):
                 X[j], allow_pickle = True, fix_imports=True)
 
     def create_pretrain_dataset(self, data_dir, params, train = True):
+        
         Y = np.load(
             os.path.join(data_dir, 'Y.npy'),
             allow_pickle = True,
             fix_imports=True
         )
+        indices = np.random.choice(Y.shape[0], params['num_data'], replace = False)
+        Y = Y[indices]
         Z = np.load(
             os.path.join(data_dir, 'Z.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         MU = np.load(
             os.path.join(data_dir, 'MU.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         A = np.load(
             os.path.join(data_dir, 'A.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         B = np.load(
             os.path.join(data_dir, 'B.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         num_data = Y.shape[0]
         steps = Y.shape[1]
         Y = Y * tf.repeat(
@@ -528,7 +531,7 @@ class ActorNetwork(object):
             os.path.join(data_dir, 'X_0.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         mod_state = np.zeros(
             shape = (
                 num_data,
@@ -540,30 +543,12 @@ class ActorNetwork(object):
             os.path.join(data_dir, 'X_2.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
+        )[indices]
         F = np.load(
             os.path.join(data_dir, 'F.npy'),
             allow_pickle = True,
             fix_imports=True
-        )
-        if train:
-            num_data = int(num_data * params['train_test_split']) // 10
-            Y = Y[:num_data]
-            Z = Z[:num_data]
-            MU = MU[:num_data]
-            desired_motion = desired_motion[:num_data]
-            mod_state = mod_state[:num_data]
-            z = z[:num_data]
-            F = F[:num_data]
-        else:
-            num_data = int(num_data * params['train_test_split'])
-            Y = Y[num_data:]
-            Z = Z[num_data:]
-            MU = MU[num_data:]
-            desired_motion = desired_motion[num_data:]
-            mod_state = mod_state[num_data:]
-            z = z[num_data:]
-            F = F[num_data:]
+        )[indices]
         Y = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(Y)
         )
@@ -594,12 +579,18 @@ class ActorNetwork(object):
             Y, F, MU, Z
         ))
         dataset = tf.data.Dataset.zip((X, Y))
-        dataset = dataset.shuffle(num_data).batch(
+        dataset = dataset.shuffle(num_data // 10)
+        num_data = int(num_data * params['train_test_split'])
+        print('[Actor] Dataset {ds}'.format(ds = dataset))
+        train_dataset = dataset.take(num_data).batch(
             params['pretrain_bs'],
             drop_remainder=True
         ).prefetch(tf.data.AUTOTUNE)
-        print('[Actor] Dataset {ds}'.format(ds = dataset))
-        return dataset
+        test_dataset = dataset.skip(num_data).batch(
+            params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        return train_dataset, test_dataset
 
     def make_untrainable(self, model):
         for layer in model.layers:

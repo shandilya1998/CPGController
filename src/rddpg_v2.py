@@ -58,10 +58,10 @@ class Learner:
                 self.params['rnn_steps'] * (self.params['max_steps'] + 2),
                 create_data
             )
-            self.create_dataset('data/pretrain_rddpg_4', self.signal_gen)
+            self.create_dataset('../input/rddpgpretraindata4', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.01,
-            decay_steps=20,
+            0.005,
+            decay_steps=180,
             decay_rate=0.95
         )
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
@@ -135,12 +135,13 @@ class Learner:
 
     def test_actor(self, path, ep = None):
         print('[Actor] Starting Actor Test')
-        step, (x, y) = next(enumerate(
-            self.actor.create_pretrain_dataset(
+        _, test_ds = self.actor.create_pretrain_dataset(
                 'data/pretrain_rddpg_4',
                 self.params,
                 False
             )
+        step, (x, y) = next(enumerate(
+            test_ds
         ))
         actions, _, omega, mu, _ = self.actor.model(x)
         actions = actions * np.pi / 3
@@ -183,15 +184,12 @@ class Learner:
         experiment,
         checkpoint_dir,
         name,
+        train_dataset,
+        test_dataset,
         epochs = None,
         start = 0,
         W = [1.0, 1.0, 1.0, 1.0]
     ):
-        self.test_actor(os.path.join(
-            checkpoint_dir,
-            'exp{exp}'.format(exp = experiment),
-            name
-        ))
         if epochs is None:
             epochs = self.params['train_episode_count']
         total_loss = 0.0
@@ -253,15 +251,13 @@ class Learner:
             )), 'rb')
             history_loss_Z = pickle.load(pkl)
             pkl.close()
-        dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_4',
-            self.params
-        )
+        """
         test_dataset = self.actor.create_pretrain_dataset(
             'data/pretrain_rddpg_4',
             self.params,
             False
         )
+        """
         print('[Actor] Starting Actor Pretraining')
         for episode in range(start, epochs):
             print('[Actor] Starting Episode {ep}'.format(ep = episode))
@@ -272,7 +268,7 @@ class Learner:
             total_loss_Z = 0.0
             start = time.time()
             num = 0
-            for step, (x, y) in enumerate(dataset):
+            for step, (x, y) in enumerate(train_dataset):
                 loss, [loss_action, \
                         loss_omega, \
                         loss_mu, \
@@ -282,7 +278,7 @@ class Learner:
                 loss_omega = loss_omega.numpy()
                 loss_mu = loss_mu.numpy()
                 loss_Z = loss_Z.numpy()
-                print('[Actor] Episode {ep} Step {st} Loss: {loss}'.format(
+                print('[Actor] Episode {ep} Step {st} Loss: {loss:.5f}'.format(
                     ep = episode,
                     st = step,
                     loss = loss
@@ -293,7 +289,7 @@ class Learner:
                 total_loss_mu += loss_mu
                 total_loss_Z += loss_Z
                 num += 1
-                if step > 4:
+                if step > 100:
                     break
             end = time.time()
             avg_loss = total_loss / num
@@ -302,14 +298,14 @@ class Learner:
             avg_loss_mu = total_loss_mu / num
             avg_loss_Z = total_loss_Z / num
             print('-------------------------------------------------')
-            print('[Actor] Episode {ep} Average Loss: {l}'.format(
+            print('[Actor] Episode {ep} Average Loss: {l:.5f}'.format(
                 ep = episode,
                 l = avg_loss
             ))
-            print('[Actor] Learning Rate: {lr}'.format(
+            print('[Actor] Learning Rate: {lr:.5f}'.format(
                 lr = self.pretrain_actor_optimizer.lr((episode + 1) * 5))
             )
-            print('[Actor] Epoch Time: {time}s'.format(time = end - start))
+            print('[Actor] Epoch Time: {time:.5f}s'.format(time = end - start))
             print('-------------------------------------------------')
             history_loss.append(avg_loss)
             history_loss_action.append(avg_loss_action)
@@ -333,7 +329,7 @@ class Learner:
                 loss_omega = loss_omega.numpy()
                 loss_mu = loss_mu.numpy()
                 loss_Z = loss_Z.numpy()
-                print('[Actor] Test Episode {ep} Step {st} Loss: {loss}'.format(
+                print('[Actor] Test Episode {ep} Step {st} Loss: {loss:.5f}'.format(
                     ep = episode,
                     st = step,
                     loss = loss
@@ -356,13 +352,13 @@ class Learner:
             test_history_loss_mu.append(avg_loss_mu)
             test_history_loss_Z.append(avg_loss_Z)
             print('-------------------------------------------------')
-            print('[Actor] Episode {ep} Average Loss: {l}'.format(
+            print('[Actor] Episode {ep} Average Loss: {l:.5f}'.format(
                 ep = episode,
                 l = avg_loss
             ))
-            print('[Actor] Test Time: {time}s'.format(time = end - start))
+            print('[Actor] Test Time: {time:.5f}s'.format(time = end - start))
             print('-------------------------------------------------')
-            if episode % 3 == 0:
+            if episode % self.params['pretrain_test_interval'] == 0:
                 if math.isnan(avg_loss):
                     break
                 pkl = open(os.path.join(path, 'loss_{ex}_{name}_{ep}.pickle'.format(
@@ -623,10 +619,12 @@ class Learner:
             checkpoint_dir = 'weights/actor_pretrain', \
             name = 'pretrain_actor'):
         path = os.path.join(checkpoint_dir, 'exp{exp}'.format(exp = experiment))
+        model = self.actor.create_pretrain_actor_cell(
+            self.params
+        )
+        print(model.summary())
         self.actor.set_model(
-            self.actor.create_pretrain_actor_cell(
-                self.params
-            )
+            model
         )
         if not os.path.exists(path):
             os.mkdir(path)
@@ -646,15 +644,35 @@ class Learner:
             os.mkdir(os.path.join(
                 path, name
             ))
+        train_dataset, test_dataset = self.actor.create_pretrain_dataset(
+            'data/pretrain_rddpg_4',
+            self.params
+        )
+        
+        
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
-            W = [0.001, 1.0, 1.0, 1.0]
+            train_dataset = train_dataset,
+            test_dataset = test_dataset,
+            W = [0.1, 1.0, 0.0, 1.0]
         )
+        
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+            0.005,
+            decay_steps=180,
+            decay_rate=0.95
+        )
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
+            learning_rate = lr_schedule
+        )
+        
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, name,
-            W = [1.0, 0.001, 0.001, 0.001]
+            train_dataset = train_dataset,
+            test_dataset = test_dataset,
+            W = [1.0, 0.1, 0.0, 0.1]
         )
 
 def str2bool(v):
