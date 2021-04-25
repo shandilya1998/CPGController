@@ -58,7 +58,7 @@ class Learner:
             True
         )
         if create_data:
-            self.create_dataset('../input/rddpgpretraindata4', self.signal_gen)
+            self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -737,7 +737,7 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, False)
+    learner = Learner(params, args.experiment, True)
     learner.pretrain_actor(
         args.experiment,
         args.out_path,
