@@ -133,11 +133,19 @@ class Learner:
         )
         return loss, [loss_action, loss_omega, loss_mu, loss_Z]
 
+    def create_init_osc_state(self):
+        r = np.ones((self.params['units_osc'],), dtype = np.float32)
+        phi = np.zeros((self.params['units_osc'],), dtype = np.float32)
+        z = r * np.exp(1j * phi)
+        x = np.real(z)
+        y = np.imag(z)
+        return np.concatenate([x, y], -1)
+
     def test_actor(self, path, ep = None):
         print('[Actor] Starting Actor Test')
-        data = random.sample(self.signal_gen.data, self.params['pretrain_bs'])
-        y = [np.d[0] for d in data]
-        x = [np.expand_dims(d[1]) for d in data]
+        data = random.sample(self.signal_gen.data, 10)
+        y = [np.expand_dims(d[0], 0) for d in data]
+        x = [np.expand_dims(d[1], 0) for d in data]
         f = [np.array([[d[2]]], dtype = np.float32) \
             for d in data]
         y = np.concatenate(y, 0)
@@ -145,22 +153,29 @@ class Learner:
         f = np.concatenate(f, 0)
         z = np.concatenate(
             [np.expand_dims(
-                self.env.quadruped.create_init_osc_state(), 0
-        ) for i in range(self.params['pretrain_bs'])], 0)
+                self.create_init_osc_state(), 0
+        ) for i in range(10)], 0)
         mod_state = np.zeros(
-            (self.params['pretrain_bs'], 2 * self.params['units_osc']),
+            (10, 2 * self.params['units_osc']),
             dtype = np.float32
         )
         y_pred = []
-        for i in range(
-            self.params['max_steps'] * self.params['rnn_steps']
-        ):
+        print('[Actor] Generating Actions')
+        for i in tqdm(range(
+            self.params['rnn_steps'] * (self.params['max_steps'] + 2) + 1
+        )):
             inp = [x, mod_state, z]
             actions, _, _, z = self.actor.model(inp)
+            ac = actions[0].numpy()
+            #self.env.quadruped.all_legs.move(ac)
             actions = actions.numpy() * np.pi / 3
-            y_pred.append(actions)
-        y = y * np.pi / 3
-        y_pred = np.concatenate(y_pred, 0)
+            y_pred.append(np.expand_dims(
+                actions, 1
+            ))
+        y = y * np.pi / 180.0
+        y_pred = np.concatenate(y_pred, 1)
+        print(y_pred.shape)
+        print(y.shape)
         fig, ax = plt.subplots(4,1, figsize = (5,20))
         for i in range(4):
             ax[i].plot(y_pred[0][:,3*i], 'b', label = 'ankle')
@@ -208,6 +223,13 @@ class Learner:
     ):
         if epochs is None:
             epochs = self.params['train_episode_count']
+        self.test_actor(os.path.join(
+            checkpoint_dir,
+            'exp{exp}'.format(
+                exp = experiment,
+            ),
+            name
+        ))
         total_loss = 0.0
         avg_loss = 0.0
         prev_loss = 1e20
@@ -652,19 +674,19 @@ class Learner:
             os.mkdir(path)
         if not os.path.exists(
             os.path.join(
-                path, 'pretrain_omega'
+                path, 'pretrain_enc'
             )
         ):
             os.mkdir(os.path.join(
-                path, 'pretrain_omega'
+                path, 'pretrain_enc'
             ))
         if not os.path.exists(
             os.path.join(
-                path, 'pretrain_enc'
+                path, 'pretrain_omega'
             )
         ):
             os.mkdir(os.path.join(
-                path, 'pretrain_enc'
+                path, 'pretrain_omega'
             ))
         if not os.path.exists(
             os.path.join(
@@ -678,7 +700,6 @@ class Learner:
             'data/pretrain_rddpg_5',
             self.params
         )
-
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_omega',
@@ -687,7 +708,7 @@ class Learner:
             W = [0.01, 1.0, 1.0, 0.1],
             delta_W = [1.0, 1.0, 0.0, 0.0]
         )
-
+        
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -703,7 +724,7 @@ class Learner:
             train_dataset = train_dataset,
             test_dataset = test_dataset,
             W = [0.01, 0.1, 0.1, 1.0],
-            delta_W = [1.0, 0.9, 0.0, 1.0]
+            delta_W = [1.0, 1.0, 1.0, 1.0]
         )
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,

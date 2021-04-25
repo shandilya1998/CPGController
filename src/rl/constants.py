@@ -226,9 +226,9 @@ pretraining = {
 }
 
 
-num_data = 27000
+num_data = 135000
 params.update(pretraining)
-bs = 270
+bs = 1350
 #num_data =135 * params['rnn_steps'] * params['max_steps']
 params.update({
     'num_data' : num_data,
@@ -254,7 +254,7 @@ params_per = {
     'epsilon'                     : 1.0,
     'beta_init'                   : 0.4,
     'beta_final'                  : 1.0,
-    'beta_final_at'                : params['train_episode_count'],
+    'beta_final_at'               : params['train_episode_count'],
     'step_size'                   : params['LRA'] / 4
 }
 
