@@ -7,15 +7,15 @@ params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 4*action_dim + 4 + 8*3,
     'dt'                          : 0.001,
-    'units_output_mlp'            : [30, 45, action_dim],
+    'units_output_mlp'            : [60, 180, 360, 90, action_dim],
     'units_osc'                   : units_osc,
-    'units_combine_rddpg'         : [150, units_osc],
-    'units_combine'               : [60, units_osc],
-    'units_robot_state'           : [120, units_osc],
-    'units_motion_state'          : [30, 30],
-    'units_mu'                    : [45, 20],
-    'units_mean'                  : [45, 20],
-    'units_omega'                 : [45, 10],
+    'units_combine_rddpg'         : [150, 300, 100, units_osc],
+    'units_combine'               : [60, 240, 90, units_osc],
+    'units_robot_state'           : [120, 360, 90, units_osc],
+    'units_motion_state'          : [30, 300, 45],
+    'units_mu'                    : [45, 120, 20],
+    'units_mean'                  : [45, 120, 20],
+    'units_omega'                 : [45, 120, 10],
     'units_robot_state_critic'    : 152,
     'units_gru_rddpg'             : 40,
     'units_q'                     : 1,
@@ -82,10 +82,10 @@ observation_spec = [
 
 params_spec = [
     tf.TensorSpec(
-        shape = ( 
+        shape = (
             params['rnn_steps'],
             params['action_dim']
-        ),  
+        ),
         dtype = tf.dtypes.float32,
         name = 'quadruped action'
     )
@@ -168,7 +168,7 @@ robot_data = {
         'back_right_leg',
         'back_left_leg'
     ],
-    'link_name_lst' :  [ 
+    'link_name_lst' :  [
         'quadruped::base_link',
         'quadruped::front_right_leg1',
         'quadruped::front_right_leg2',
@@ -183,7 +183,7 @@ robot_data = {
         'quadruped::back_left_leg2',
         'quadruped::back_left_leg3'
     ],
-    'joint_name_lst' : [ 
+    'joint_name_lst' : [
         'front_right_leg1_joint',
         'front_right_leg2_joint',
         'front_right_leg3_joint',
@@ -226,14 +226,15 @@ pretraining = {
 }
 
 
-num_data = len(pretraining['Tst'])
+num_data = 27000
 params.update(pretraining)
-bs = 1350
-num_data =135 * params['rnn_steps'] * params['max_steps']
+bs = 270
+#num_data =135 * params['rnn_steps'] * params['max_steps']
 params.update({
     'num_data' : num_data,
     'pretrain_bs': bs,
-    'train_test_split' : (num_data - bs * 10) / num_data
+    'train_test_split' : (num_data - bs * 10) / num_data,
+    'pretrain_test_interval' : 5
 })
 
 
