@@ -58,7 +58,7 @@ class Learner:
             True
         )
         if create_data:
-            self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
+            self.create_dataset('data/pretrain_rddpg_5', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -203,7 +203,8 @@ class Learner:
         test_dataset,
         epochs = None,
         start = 0,
-        W = [1.0, 1.0, 1.0, 1.0]
+        W = [1.0, 1.0, 1.0, 1.0],
+        delta_W = None
     ):
         if epochs is None:
             epochs = self.params['train_episode_count']
@@ -268,7 +269,7 @@ class Learner:
             pkl.close()
         """
         test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_4',
+            'data/pretrain_rddpg_5',
             self.params,
             False
         )
@@ -373,6 +374,12 @@ class Learner:
             ))
             print('[Actor] Test Time: {time:.5f}s'.format(time = end - start))
             print('-------------------------------------------------')
+            if delta_W is not None:
+                W = [
+                    w * delta_w for w, delta_w in zip(
+                        W, delta_W
+                    )
+                ]
             if episode % self.params['pretrain_test_interval'] == 0:
                 if math.isnan(avg_loss):
                     break
@@ -660,19 +667,17 @@ class Learner:
                 path, name
             ))
         train_dataset, test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_4',
+            'data/pretrain_rddpg_5',
             self.params
         )
-        
-        
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
             train_dataset = train_dataset,
             test_dataset = test_dataset,
-            W = [0.1, 1.0, 0.0, 1.0]
+            W = [0.1, 1.0, 0.0, 1.0],
+            delta_W = [1.0, 0.9, 0.0, 1.0]
         )
-        
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -681,13 +686,13 @@ class Learner:
         self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
             learning_rate = lr_schedule
         )
-        
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, name,
             train_dataset = train_dataset,
             test_dataset = test_dataset,
-            W = [1.0, 0.1, 0.0, 0.1]
+            W = [1.0, 0.1, 0.0, 0.1],
+            delta_W = [1.0, 0.9, 0.0, 1.0]
         )
 
 def str2bool(v):
@@ -737,7 +742,7 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, True)
+    learner = Learner(params, args.experiment, False)
     learner.pretrain_actor(
         args.experiment,
         args.out_path,

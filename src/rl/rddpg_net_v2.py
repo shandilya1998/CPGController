@@ -340,7 +340,7 @@ class ActorNetwork(object):
         )
 
         omega, mu = param_net(desired_motion)
-        actions, Z, _, _ = rhythm_gen([
+        actions, Z, _, _ = rhythm_generator([
             mod_state, z, omega, mu
         ])
 
@@ -378,21 +378,20 @@ class ActorNetwork(object):
                             1, self.params['units_osc']
                         ))
                     )
-                    Y.append(np.expand_dims(y_, 0))
+                    Y.append(np.expand_dims(ac, 0))
                     F.append(np.array([[f_]], dtype = np.float32))
                     if np.isinf(ac).any():
                         print('Inf in unprocessed')
                         continue
                     env.quadruped.all_legs.move(ac)
-                    ac = ac / (np/pi / 3)
-                    Y.append(np.expand_dims(ac, 0))
+                    ac = ac / (np.pi / 3)
                     env.quadruped._hopf_oscillator(
                         f_,
                         np.ones((self.params['units_osc'],)),
                         np.zeros((self.params['units_osc'],)),
                     )
                     _state = env.quadruped.get_state_tensor()
-                    Z.append(np.expand_dims(_state[-1])
+                    Z.append(np.expand_dims(_state[-1], 0))
             env.quadruped.reset()
             count += 1
         for j in range(len(X)):
@@ -410,18 +409,13 @@ class ActorNetwork(object):
         print('[Axtor] Z Shape : {sh}'.format(sh=Z.shape))
         np.save(os.path.join(path, 'Y.npy'), \
             Y, allow_pickle = True, fix_imports=True)
-        time.sleep(3)
         np.save(os.path.join(path, 'Z.npy'), \
             Z, allow_pickle = True, fix_imports=True)
-        time.sleep(3)
         np.save(os.path.join(path, 'MU.npy'), \
             MU, allow_pickle = True, fix_imports=True)
-        time.sleep(3)
         np.save(os.path.join(path, 'F.npy'), \
             F, allow_pickle = True, fix_imports=True)
-        time.sleep(3)
         for j in range(len(X)):
-            time.sleep(3)
             np.save(os.path.join(path, 'X_{j}.npy'.format(j=j)), \
                 X[j], allow_pickle = True, fix_imports=True)
 
@@ -434,7 +428,7 @@ class ActorNetwork(object):
             fix_imports=True
         )
         indices = np.random.choice(Y.shape[0], params['num_data'], replace = False)
-        np.save(indices, os.path.join(output_dir, 'indices.npy'), \
+        np.save(os.path.join(output_dir, 'indices.npy'), \
             indices, allow_pickle = True, fix_imports=True
         )
         Y = Y[indices]
