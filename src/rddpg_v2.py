@@ -52,12 +52,12 @@ class Learner:
         print('[Actor] {lst}'.format(lst = physical_devices))
         self.p1 = 1.0
         self.epsilon = 1
+        self.signal_gen = SignalDataGen(params)
+        self.signal_gen.set_N(
+            self.params['rnn_steps'] * (self.params['max_steps'] + 2),
+            True
+        )
         if create_data:
-            self.signal_gen = SignalDataGen(params)
-            self.signal_gen.set_N(
-                self.params['rnn_steps'] * (self.params['max_steps'] + 2),
-                create_data
-            )
             self.create_dataset('../input/rddpgpretraindata4', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
@@ -98,7 +98,7 @@ class Learner:
 
 
     def _test_pretrain_actor(self, x, y, W = [1,1,1,1]):
-        out, _, omega, mu, Z = self.actor.model(x)
+        out, omega, mu, Z = self.actor.model(x)
         loss_action = self.action_mse(y[0], out)
         loss_omega = self.omega_mse(y[1], omega)
         loss_mu = self.mu_mse(y[2], mu)
@@ -111,7 +111,7 @@ class Learner:
 
     def _pretrain_actor(self, x, y, W = [1,1,1,1]):
         with tf.GradientTape(persistent=False) as tape:
-            out, _, omega, mu, Z = self.actor.model(x)
+            out, omega, mu, Z = self.actor.model(x)
             loss_action = self.action_mse(y[0], out)
             loss_omega = self.omega_mse(y[1], omega)
             loss_mu = self.mu_mse(y[2], mu)
@@ -135,22 +135,37 @@ class Learner:
 
     def test_actor(self, path, ep = None):
         print('[Actor] Starting Actor Test')
-        _, test_ds = self.actor.create_pretrain_dataset(
-                'data/pretrain_rddpg_4',
-                self.params,
-                False
-            )
-        step, (x, y) = next(enumerate(
-            test_ds
-        ))
-        actions, _, omega, mu, _ = self.actor.model(x)
-        actions = actions * np.pi / 3
-        y = y[0] * np.pi / 3
+        data = random.sample(self.signal_gen.data, self.params['pretrain_bs'])
+        y = [np.d[0] for d in data]
+        x = [np.expand_dims(d[1]) for d in data]
+        f = [np.array([[d[2]]], dtype = np.float32) \
+            for d in data]
+        y = np.concatenate(y, 0)
+        x = np.concatenate(x, 0)
+        f = np.concatenate(f, 0)
+        z = np.concatenate(
+            [np.expand_dims(
+                self.env.quadruped.create_init_osc_state(), 0
+        ) for i in range(self.params['pretrain_bs'])], 0)
+        mod_state = np.zeros(
+            (self.params['pretrain_bs'], 2 * self.params['units_osc']),
+            dtype = np.float32
+        )
+        y_pred = []
+        for i in range(
+            self.params['max_steps'] * self.params['rnn_steps']
+        ):
+            inp = [x, mod_state, z]
+            actions, _, _, z = self.actor.model(inp)
+            actions = actions.numpy() * np.pi / 3
+            y_pred.append(actions)
+        y = y * np.pi / 3
+        y_pred = np.concatenate(y_pred, 0)
         fig, ax = plt.subplots(4,1, figsize = (5,20))
         for i in range(4):
-            ax[i].plot(actions[0][:,3*i], 'b', label = 'ankle')
-            ax[i].plot(actions[0][:,3*i + 1], 'g', label = 'knee')
-            ax[i].plot(actions[0][:,3*i + 2], 'r', label = 'hip')
+            ax[i].plot(y_pred[0][:,3*i], 'b', label = 'ankle')
+            ax[i].plot(y_pred[0][:,3*i + 1], 'g', label = 'knee')
+            ax[i].plot(y_pred[0][:,3*i + 2], 'r', label = 'hip')
             ax[i].legend()
         if ep is not None:
             fig.savefig(os.path.join(
