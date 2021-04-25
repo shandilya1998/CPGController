@@ -394,7 +394,7 @@ class ComplexGRUCell(tf.keras.layers.Layer):
 
         r_real, u_real, r_imag, u_imag = tf.split(
             value=value,
-            num_or_size_splits=4, 
+            num_or_size_splits=4,
             axis=--1
         )
 
