@@ -652,6 +652,14 @@ class Learner:
             os.mkdir(path)
         if not os.path.exists(
             os.path.join(
+                path, 'pretrain_omega'
+            )
+        ):
+            os.mkdir(os.path.join(
+                path, 'pretrain_omega'
+            ))
+        if not os.path.exists(
+            os.path.join(
                 path, 'pretrain_enc'
             )
         ):
@@ -670,12 +678,31 @@ class Learner:
             'data/pretrain_rddpg_5',
             self.params
         )
+
+        self._pretrain_loop(
+            self._pretrain_actor, \
+            self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_omega',
+            train_dataset = train_dataset,
+            test_dataset = test_dataset,
+            W = [0.01, 1.0, 1.0, 0.1],
+            delta_W = [1.0, 1.0, 0.0, 0.0]
+        )
+
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+            0.005,
+            decay_steps=180,
+            decay_rate=0.95
+        )
+        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
+            learning_rate = lr_schedule
+        )
+
         self._pretrain_loop(
             self._pretrain_actor, \
             self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
             train_dataset = train_dataset,
             test_dataset = test_dataset,
-            W = [0.1, 1.0, 0.0, 1.0],
+            W = [0.01, 0.1, 0.1, 1.0],
             delta_W = [1.0, 0.9, 0.0, 1.0]
         )
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -691,8 +718,8 @@ class Learner:
             self._test_pretrain_actor, experiment, checkpoint_dir, name,
             train_dataset = train_dataset,
             test_dataset = test_dataset,
-            W = [1.0, 0.1, 0.0, 0.1],
-            delta_W = [1.0, 0.9, 0.0, 1.0]
+            W = [1.0, 0.01, 0.01, 0.01],
+            delta_W = [0.98, 1.0, 1.0, 1.0]
         )
 
 def str2bool(v):
