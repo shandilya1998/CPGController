@@ -3710,3 +3710,1102 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 [Actor] Test Time: 27.76208519935608s
 -------------------------------------------------
 [Actor] Starting Actor Test
+2021-04-25 06:38:32.416161: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:38:32.416231: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 7, in <module>
+    from rl.rddpg_net_v2 import ActorNetwork, CriticNetwork
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 396
+    env.quadruped.reset()
+    ^
+SyntaxError: invalid syntax
+2021-04-25 06:41:10.088019: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:41:10.088074: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:41:15.994499: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:41:16.017008: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:41:16.017078: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:41:16.017109: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:41:16.043579: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:41:16.044357: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619313079.065376753, 0.847000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619313079.068441298, 0.848000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619313079.068611752, 0.848000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619313080.700474755, 1.403000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619313082.403712835, 2.024000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619313084.966263767, 3.024000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619313086.956076039, 3.824000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  2.69it/s]2it [00:00,  4.41it/s]4it [00:00,  7.48it/s]5it [00:00,  7.74it/s]6it [00:00,  7.86it/s]8it [00:01,  8.94it/s]10it [00:01, 10.09it/s]12it [00:01,  8.51it/s]13it [00:01,  7.24it/s]15it [00:02,  7.48it/s]16it [00:02,  6.79it/s]17it [00:02,  6.82it/s]18it [00:02,  6.21it/s]19it [00:02,  6.25it/s]21it [00:02,  8.03it/s]22it [00:03,  6.54it/s]23it [00:03,  6.13it/s]24it [00:03,  5.81it/s]25it [00:03,  6.34it/s]26it [00:03,  4.95it/s]27it [00:04,  5.35it/s]28it [00:04,  5.35it/s]29it [00:04,  4.62it/s]30it [00:04,  5.20it/s]31it [00:04,  5.19it/s]32it [00:05,  5.96it/s]33it [00:05,  6.41it/s]34it [00:05,  4.49it/s]35it [00:05,  4.12it/s]36it [00:06,  4.23it/s]37it [00:06,  4.50it/s]38it [00:06,  5.08it/s]39it [00:06,  5.55it/s]40it [00:06,  5.99it/s]41it [00:06,  6.25it/s]43it [00:06,  8.65it/s]44it [00:07,  8.25it/s]45it [00:07,  7.84it/s]47it [00:07, 10.35it/s]49it [00:07, 10.61it/s]51it [00:07,  8.13it/s]53it [00:07,  9.05it/s]55it [00:08,  8.53it/s]56it [00:08,  7.54it/s]57it [00:08,  6.56it/s]58it [00:08,  5.55it/s]60it [00:09,  6.76it/s]62it [00:09,  7.15it/s]63it [00:09,  6.77it/s]65it [00:09,  7.86it/s]66it [00:09,  7.48it/s]67it [00:10,  6.65it/s]68it [00:10,  6.15it/s]69it [00:10,  6.19it/s]70it [00:10,  6.72it/s]72it [00:10,  8.94it/s]73it [00:10,  8.72it/s]74it [00:11,  7.35it/s]75it [00:11,  6.23it/s]76it [00:11,  6.91it/s]77it [00:11,  6.78it/s]78it [00:11,  7.25it/s]79it [00:11,  6.20it/s]80it [00:12,  5.67it/s]81it [00:12,  6.02it/s]82it [00:12,  4.51it/s]83it [00:12,  5.11it/s]85it [00:12,  6.55it/s]87it [00:13,  6.67it/s]88it [00:13,  7.14it/s]89it [00:13,  7.64it/s]91it [00:13,  9.77it/s]94it [00:13, 11.84it/s]96it [00:13, 10.28it/s]98it [00:14,  8.00it/s]100it [00:14,  9.16it/s]102it [00:14,  7.57it/s]103it [00:14,  7.76it/s]104it [00:15,  6.70it/s]105it [00:15,  6.28it/s]106it [00:15,  6.80it/s]108it [00:15,  9.29it/s]110it [00:16,  7.03it/s]111it [00:16,  7.36it/s]112it [00:16,  7.24it/s]114it [00:16,  7.80it/s]115it [00:16,  7.80it/s]117it [00:16,  9.61it/s]119it [00:16, 10.01it/s]121it [00:17,  9.96it/s]123it [00:17,  7.25it/s]124it [00:17,  7.42it/s]125it [00:17,  7.35it/s]127it [00:18,  8.11it/s]129it [00:18,  9.17it/s]130it [00:18,  8.05it/s]131it [00:18,  8.30it/s]132it [00:18,  5.75it/s]133it [00:19,  4.32it/s]134it [00:19,  4.83it/s]135it [00:19,  4.62it/s]135it [00:19,  6.87it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 740, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
+  File "rddpg_v2.py", line 76, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 381, in create_data
+    Y.append(np.expand_dims(y_, 0))
+NameError: name 'y_' is not defined
+2021-04-25 06:43:57.874602: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:43:57.874668: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:44:02.350122: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:44:02.350477: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:44:02.350510: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:44:02.350548: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:44:02.355523: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:44:02.355789: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619313246.994434577, 0.704000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619313246.998632017, 0.705000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619313246.999695458, 0.705000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619313248.673422360, 1.126000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619313250.261948016, 1.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619313252.572151222, 2.600000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619313254.462582556, 3.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]2it [00:00, 12.64it/s]4it [00:00, 11.81it/s]6it [00:00,  9.65it/s]8it [00:00,  9.79it/s]10it [00:00, 10.90it/s]12it [00:01, 10.89it/s]14it [00:01, 11.60it/s]16it [00:01,  9.60it/s]18it [00:01,  9.77it/s]21it [00:01, 12.53it/s]23it [00:01, 13.86it/s]25it [00:02, 13.31it/s]27it [00:02, 12.17it/s]29it [00:02,  9.11it/s]31it [00:03,  8.05it/s]32it [00:03,  8.02it/s]33it [00:03,  8.16it/s]35it [00:03,  9.09it/s]36it [00:03,  8.93it/s]38it [00:03,  7.62it/s]39it [00:04,  7.69it/s]40it [00:04,  7.86it/s]41it [00:04,  7.48it/s]42it [00:04,  6.45it/s]43it [00:04,  6.12it/s]44it [00:04,  5.63it/s]46it [00:05,  7.45it/s]47it [00:05,  7.19it/s]48it [00:05,  7.65it/s]50it [00:05,  8.18it/s]51it [00:05,  8.49it/s]53it [00:05,  8.51it/s]55it [00:06,  9.34it/s]56it [00:06,  9.21it/s]57it [00:06,  8.35it/s]58it [00:06,  8.61it/s]59it [00:06,  8.92it/s]60it [00:06,  7.18it/s]61it [00:06,  6.24it/s]62it [00:07,  6.68it/s]64it [00:07,  8.38it/s]65it [00:07,  8.25it/s]66it [00:07,  7.86it/s]67it [00:07,  7.36it/s]68it [00:07,  7.81it/s]70it [00:07, 10.55it/s]72it [00:08,  8.86it/s]74it [00:08,  8.25it/s]75it [00:08,  7.75it/s]76it [00:08,  6.41it/s]77it [00:08,  6.65it/s]78it [00:09,  6.13it/s]79it [00:09,  6.27it/s]80it [00:09,  5.50it/s]81it [00:09,  5.48it/s]82it [00:09,  5.91it/s]83it [00:10,  6.36it/s]85it [00:10,  7.12it/s]86it [00:10,  7.21it/s]87it [00:10,  6.22it/s]88it [00:10,  5.85it/s]89it [00:10,  6.29it/s]90it [00:11,  6.54it/s]92it [00:11,  7.35it/s]93it [00:11,  7.84it/s]94it [00:11,  7.16it/s]96it [00:11,  7.86it/s]97it [00:11,  7.64it/s]98it [00:12,  7.12it/s]100it [00:12,  7.97it/s]102it [00:12,  8.79it/s]103it [00:12,  8.78it/s]104it [00:12,  8.27it/s]106it [00:13,  7.41it/s]107it [00:13,  7.22it/s]109it [00:13,  7.40it/s]110it [00:13,  7.02it/s]111it [00:13,  6.82it/s]112it [00:14,  6.46it/s]113it [00:14,  7.08it/s]114it [00:14,  6.74it/s]115it [00:14,  5.69it/s]117it [00:14,  6.49it/s]119it [00:14,  7.64it/s]120it [00:15,  7.63it/s]121it [00:15,  8.01it/s]122it [00:15,  6.61it/s]124it [00:15,  7.25it/s]125it [00:15,  7.12it/s]126it [00:16,  6.64it/s]127it [00:16,  6.16it/s]128it [00:16,  6.43it/s]129it [00:16,  7.11it/s]131it [00:16,  8.50it/s]132it [00:16,  7.33it/s]133it [00:17,  6.51it/s]135it [00:17,  7.28it/s]135it [00:17,  7.82it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 740, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
+  File "rddpg_v2.py", line 76, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 387, in create_data
+    ac = ac / (np/pi / 3)
+NameError: name 'pi' is not defined
+2021-04-25 06:47:12.527691: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:47:12.527743: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:47:17.000656: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:47:17.001297: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:47:17.001521: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:47:17.001681: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:47:17.007471: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:47:17.008058: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619313441.261813913, 1.360000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619313441.263650778, 1.360000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619313441.263852874, 1.360000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619313442.929241201, 2.223000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619313444.697473286, 2.870000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619313446.277314687, 3.669000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619313448.196363146, 4.471000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  8.79it/s]3it [00:00,  9.32it/s]5it [00:00, 11.49it/s]7it [00:00, 11.58it/s]9it [00:00,  9.77it/s]11it [00:01,  7.04it/s]12it [00:01,  7.06it/s]14it [00:01,  6.46it/s]16it [00:02,  7.35it/s]17it [00:02,  7.06it/s]18it [00:02,  6.25it/s]19it [00:02,  6.40it/s]20it [00:02,  6.73it/s]21it [00:02,  6.16it/s]23it [00:03,  7.03it/s]24it [00:03,  7.20it/s]25it [00:03,  7.57it/s]26it [00:03,  7.80it/s]28it [00:03,  9.53it/s]30it [00:03, 10.32it/s]32it [00:04,  9.78it/s]34it [00:04,  9.35it/s]35it [00:04,  6.81it/s]36it [00:04,  7.22it/s]37it [00:04,  6.46it/s]38it [00:05,  6.27it/s]39it [00:05,  6.43it/s]40it [00:05,  6.46it/s]41it [00:05,  6.40it/s]42it [00:05,  6.36it/s]43it [00:05,  6.45it/s]44it [00:05,  6.53it/s]45it [00:06,  6.80it/s]46it [00:06,  7.37it/s]48it [00:06,  9.16it/s]49it [00:06,  7.65it/s]51it [00:06,  8.77it/s]53it [00:06, 10.48it/s]55it [00:07,  8.72it/s]56it [00:07,  8.10it/s]58it [00:07,  6.45it/s]59it [00:07,  6.90it/s]60it [00:07,  7.08it/s]62it [00:08,  6.40it/s]63it [00:08,  6.72it/s]65it [00:08,  8.63it/s]67it [00:09,  6.25it/s]69it [00:09,  6.69it/s]70it [00:09,  6.42it/s]72it [00:09,  7.19it/s]73it [00:09,  7.44it/s]74it [00:09,  7.34it/s]75it [00:10,  7.54it/s]77it [00:10,  8.98it/s]79it [00:10,  8.63it/s]81it [00:10,  8.85it/s]83it [00:11,  7.77it/s]84it [00:11,  7.97it/s]85it [00:11,  6.03it/s]86it [00:11,  6.14it/s]87it [00:11,  6.77it/s]89it [00:11,  8.05it/s]91it [00:12,  9.81it/s]93it [00:12, 11.28it/s]95it [00:12, 10.60it/s]97it [00:12,  8.88it/s]98it [00:12,  8.22it/s]99it [00:13,  6.73it/s]101it [00:13,  6.80it/s]102it [00:13,  6.27it/s]103it [00:13,  6.49it/s]104it [00:13,  6.52it/s]106it [00:14,  8.27it/s]107it [00:14,  8.46it/s]109it [00:14,  9.83it/s]112it [00:14, 12.92it/s]114it [00:14, 13.53it/s]116it [00:14, 14.03it/s]118it [00:14, 12.20it/s]120it [00:15,  9.74it/s]122it [00:15,  8.25it/s]123it [00:15,  8.49it/s]124it [00:15,  7.75it/s]125it [00:16,  6.14it/s]126it [00:16,  5.73it/s]127it [00:16,  4.64it/s]128it [00:16,  4.52it/s]129it [00:17,  3.86it/s]130it [00:17,  3.30it/s]131it [00:17,  3.76it/s]132it [00:18,  3.73it/s]133it [00:18,  4.42it/s]134it [00:18,  4.50it/s]135it [00:18,  3.38it/s]135it [00:18,  7.14it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 740, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
+  File "rddpg_v2.py", line 76, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 395, in create_data
+    Z.append(np.expand_dims(_state[-1]))
+  File "<__array_function__ internals>", line 4, in expand_dims
+TypeError: _expand_dims_dispatcher() missing 1 required positional argument: 'axis'
+2021-04-25 06:49:35.382109: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:49:35.382159: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:49:38.837243: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:49:38.837627: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:49:38.837658: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:49:38.837696: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:49:38.844048: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:49:38.844545: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619313581.968974568, 1.308000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619313581.971664747, 1.310000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619313581.971843114, 1.310000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619313583.463159900, 2.365000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619313583.789395960, 2.600000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619313584.074741102, 2.801000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619313584.615704206, 3.201000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  3.14it/s]2it [00:00,  3.87it/s]3it [00:00,  4.43it/s]4it [00:00,  4.29it/s]5it [00:01,  4.68it/s]6it [00:01,  4.39it/s]7it [00:01,  4.25it/s]8it [00:01,  4.37it/s]9it [00:02,  3.89it/s]10it [00:02,  4.27it/s]11it [00:02,  4.26it/s]12it [00:02,  4.13it/s]13it [00:03,  4.19it/s]14it [00:03,  3.97it/s]15it [00:03,  3.93it/s]16it [00:03,  4.49it/s]17it [00:03,  4.97it/s]19it [00:04,  4.95it/s]20it [00:04,  5.01it/s]21it [00:04,  4.79it/s]22it [00:05,  4.53it/s]23it [00:05,  5.32it/s]24it [00:05,  5.05it/s]25it [00:05,  4.41it/s]26it [00:05,  4.34it/s]27it [00:06,  3.84it/s]28it [00:06,  4.41it/s]29it [00:06,  4.40it/s]30it [00:06,  4.84it/s]32it [00:07,  4.84it/s]33it [00:07,  4.63it/s]34it [00:07,  5.18it/s]35it [00:07,  5.28it/s]36it [00:07,  5.57it/s]37it [00:08,  4.67it/s]38it [00:08,  4.15it/s]39it [00:08,  3.15it/s]40it [00:09,  3.52it/s]41it [00:09,  3.97it/s]42it [00:09,  3.38it/s]43it [00:10,  3.20it/s]44it [00:10,  3.34it/s]45it [00:10,  3.62it/s]46it [00:10,  3.80it/s]47it [00:11,  3.35it/s]48it [00:11,  4.02it/s]49it [00:11,  4.61it/s]50it [00:11,  4.48it/s]51it [00:11,  4.47it/s]52it [00:12,  4.42it/s]53it [00:12,  4.61it/s]54it [00:12,  4.19it/s]55it [00:12,  4.52it/s]56it [00:12,  5.07it/s]57it [00:13,  5.12it/s]58it [00:13,  4.92it/s]59it [00:13,  5.52it/s]60it [00:13,  4.29it/s]61it [00:14,  4.13it/s]62it [00:14,  4.08it/s]63it [00:14,  4.82it/s]64it [00:14,  5.02it/s]65it [00:15,  4.21it/s]66it [00:15,  4.45it/s]67it [00:15,  4.83it/s]69it [00:15,  5.72it/s]70it [00:15,  5.00it/s]71it [00:16,  4.24it/s]72it [00:16,  4.33it/s]73it [00:16,  4.74it/s]74it [00:17,  3.99it/s]75it [00:17,  4.66it/s]76it [00:17,  5.12it/s]77it [00:17,  5.44it/s]78it [00:17,  6.00it/s]80it [00:17,  5.82it/s]82it [00:18,  5.57it/s]83it [00:18,  5.04it/s]84it [00:18,  4.46it/s]85it [00:19,  4.10it/s]86it [00:19,  4.38it/s]87it [00:19,  3.82it/s]88it [00:19,  4.47it/s]89it [00:19,  4.86it/s]90it [00:20,  4.45it/s]91it [00:20,  4.49it/s]92it [00:20,  4.40it/s]93it [00:21,  4.06it/s]94it [00:21,  4.49it/s]95it [00:21,  5.22it/s]96it [00:21,  5.68it/s]98it [00:21,  6.80it/s]99it [00:21,  5.67it/s]101it [00:22,  5.43it/s]102it [00:22,  5.13it/s]104it [00:22,  6.19it/s]105it [00:22,  6.38it/s]106it [00:23,  6.09it/s]107it [00:23,  6.42it/s]108it [00:23,  5.39it/s]109it [00:23,  5.89it/s]110it [00:23,  5.77it/s]112it [00:24,  6.15it/s]113it [00:24,  6.02it/s]114it [00:24,  5.09it/s]115it [00:24,  4.91it/s]116it [00:25,  4.75it/s]117it [00:25,  4.26it/s]118it [00:25,  4.65it/s]119it [00:25,  4.81it/s]120it [00:25,  5.03it/s]122it [00:26,  5.50it/s]124it [00:26,  5.16it/s]125it [00:26,  4.81it/s]126it [00:27,  4.34it/s]127it [00:27,  3.95it/s]128it [00:27,  4.48it/s]129it [00:27,  3.95it/s]130it [00:28,  4.70it/s]131it [00:28,  4.42it/s]132it [00:28,  4.85it/s]133it [00:28,  4.60it/s]134it [00:28,  5.03it/s]135it [00:29,  4.85it/s]135it [00:29,  4.64it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:35, 35.73s/it]2it [01:11, 35.71s/it]2it [01:46, 53.35s/it]
+[Actor] Y Shape : (6000, 12)
+[Actor] X Shapes:
+[Actor] (3000, 6)
+[Actor] (3000, 76)
+[Actor] (3000, 60)
+[Actor] F Shape : (3000, 1)
+[Axtor] Z Shape : (3000, 1, 60)
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 740, in <module>
+    learner = Learner(params, args.experiment, True)
+  File "rddpg_v2.py", line 61, in __init__
+    self.create_dataset('../input/rddpgpretraindata5', self.signal_gen)
+  File "rddpg_v2.py", line 76, in create_dataset
+    self.actor.create_data(path, signal_gen, self.env)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 413, in create_data
+    np.save(os.path.join(path, 'Y.npy'), \
+  File "<__array_function__ internals>", line 5, in save
+  File "/home/shandilya/.local/lib/python3.8/site-packages/numpy/lib/npyio.py", line 524, in save
+    file_ctx = open(file, "wb")
+FileNotFoundError: [Errno 2] No such file or directory: '../input/rddpgpretraindata5/Y.npy'
+2021-04-25 06:53:34.930401: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:53:34.930447: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:53:38.378300: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:53:38.378701: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:53:38.378905: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:53:38.379054: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:53:38.384832: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:53:38.385401: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619313821.475450588, 1.018000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619313821.477080653, 1.018000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619313821.477352105, 1.018000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619313822.929414985, 2.035000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619313823.941972241, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619313825.014163358, 3.602000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619313826.070044777, 4.402000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  4.03it/s]2it [00:00,  5.94it/s]3it [00:00,  3.99it/s]4it [00:00,  4.41it/s]6it [00:01,  5.95it/s]7it [00:01,  5.71it/s]8it [00:01,  5.70it/s]9it [00:01,  4.87it/s]10it [00:02,  4.62it/s]11it [00:02,  3.84it/s]12it [00:02,  3.91it/s]13it [00:02,  4.68it/s]14it [00:03,  4.29it/s]15it [00:03,  4.39it/s]16it [00:03,  4.50it/s]17it [00:03,  4.15it/s]18it [00:03,  4.42it/s]19it [00:04,  4.35it/s]20it [00:04,  4.18it/s]21it [00:04,  3.82it/s]22it [00:05,  3.31it/s]23it [00:05,  3.39it/s]24it [00:05,  4.20it/s]25it [00:05,  3.82it/s]26it [00:06,  3.88it/s]27it [00:06,  4.66it/s]28it [00:06,  4.81it/s]29it [00:06,  4.90it/s]30it [00:06,  4.88it/s]31it [00:07,  4.30it/s]32it [00:07,  3.95it/s]33it [00:07,  4.19it/s]34it [00:07,  3.80it/s]35it [00:08,  3.93it/s]36it [00:08,  3.64it/s]37it [00:08,  3.86it/s]38it [00:08,  4.19it/s]39it [00:09,  4.17it/s]40it [00:09,  4.84it/s]41it [00:09,  4.53it/s]42it [00:09,  4.12it/s]43it [00:10,  3.94it/s]44it [00:10,  3.58it/s]45it [00:10,  3.96it/s]46it [00:10,  4.62it/s]47it [00:10,  5.29it/s]48it [00:11,  4.82it/s]49it [00:11,  4.94it/s]50it [00:11,  5.36it/s]51it [00:11,  5.27it/s]52it [00:11,  5.57it/s]53it [00:12,  5.30it/s]54it [00:12,  4.17it/s]55it [00:12,  4.57it/s]56it [00:12,  4.86it/s]57it [00:12,  5.58it/s]58it [00:13,  4.75it/s]59it [00:13,  5.43it/s]60it [00:13,  5.44it/s]61it [00:13,  5.57it/s]62it [00:13,  5.08it/s]63it [00:14,  4.30it/s]64it [00:14,  4.39it/s]65it [00:14,  4.62it/s]66it [00:14,  5.22it/s]67it [00:14,  4.60it/s]68it [00:15,  5.08it/s]69it [00:15,  4.71it/s]70it [00:15,  4.25it/s]71it [00:16,  3.67it/s]72it [00:16,  3.65it/s]73it [00:16,  4.18it/s]74it [00:16,  3.82it/s]75it [00:17,  3.63it/s]76it [00:17,  3.79it/s]77it [00:17,  3.80it/s]78it [00:17,  4.51it/s]79it [00:17,  5.13it/s]80it [00:18,  4.89it/s]81it [00:18,  5.60it/s]82it [00:18,  5.47it/s]83it [00:18,  4.81it/s]84it [00:18,  5.46it/s]85it [00:18,  5.45it/s]86it [00:19,  4.86it/s]87it [00:19,  4.64it/s]88it [00:19,  4.20it/s]89it [00:19,  4.90it/s]90it [00:20,  5.11it/s]91it [00:20,  4.89it/s]92it [00:20,  5.34it/s]93it [00:20,  5.59it/s]94it [00:20,  5.61it/s]95it [00:21,  4.71it/s]96it [00:21,  4.50it/s]98it [00:21,  5.30it/s]99it [00:21,  5.36it/s]100it [00:21,  5.30it/s]101it [00:22,  5.41it/s]102it [00:22,  4.91it/s]103it [00:22,  4.55it/s]104it [00:22,  3.89it/s]106it [00:23,  4.82it/s]107it [00:23,  4.64it/s]108it [00:23,  4.61it/s]109it [00:24,  4.31it/s]110it [00:24,  4.74it/s]111it [00:24,  4.95it/s]112it [00:24,  4.41it/s]114it [00:24,  6.09it/s]115it [00:24,  6.12it/s]116it [00:25,  4.75it/s]117it [00:25,  4.61it/s]118it [00:25,  4.58it/s]119it [00:26,  4.28it/s]120it [00:26,  4.26it/s]121it [00:26,  4.74it/s]122it [00:26,  4.24it/s]123it [00:27,  4.12it/s]124it [00:27,  3.52it/s]125it [00:27,  3.61it/s]126it [00:27,  3.36it/s]127it [00:28,  3.73it/s]128it [00:28,  4.04it/s]129it [00:28,  4.33it/s]130it [00:28,  4.24it/s]131it [00:29,  3.57it/s]132it [00:29,  3.61it/s]133it [00:29,  3.46it/s]134it [00:30,  3.63it/s]135it [00:30,  4.09it/s]135it [00:30,  4.46it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:36, 36.10s/it]2it [01:11, 35.67s/it]2it [01:47, 53.76s/it]
+[Actor] Y Shape : (6000, 12)
+[Actor] X Shapes:
+[Actor] (3000, 6)
+[Actor] (3000, 76)
+[Actor] (3000, 60)
+[Actor] F Shape : (3000, 1)
+[Axtor] Z Shape : (3000, 1, 60)
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 741, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 637, in pretrain_actor
+    model = self.actor.create_pretrain_actor_cell(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 343, in create_pretrain_actor_cell
+    actions, Z, _, _ = rhythm_gen([
+NameError: name 'rhythm_gen' is not defined
+2021-04-25 06:57:59.017784: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:57:59.017826: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 06:58:02.543937: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 06:58:02.544299: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 06:58:02.544495: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 06:58:02.544662: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 06:58:02.549965: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 06:58:02.550539: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619314085.368657911, 1.126000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619314085.372772857, 1.129000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619314085.373279292, 1.130000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619314086.977397271, 2.286000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619314087.842255052, 2.842000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619314088.671198097, 3.442000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619314089.503077948, 4.042000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  6.25it/s]2it [00:00,  5.62it/s]3it [00:00,  6.33it/s]4it [00:00,  5.34it/s]5it [00:00,  4.83it/s]6it [00:01,  4.55it/s]7it [00:01,  5.18it/s]8it [00:01,  4.91it/s]9it [00:01,  4.37it/s]10it [00:02,  4.04it/s]11it [00:02,  3.95it/s]13it [00:02,  4.52it/s]14it [00:03,  4.02it/s]15it [00:03,  4.20it/s]17it [00:03,  4.69it/s]18it [00:03,  4.69it/s]19it [00:04,  4.69it/s]20it [00:04,  5.07it/s]21it [00:04,  5.26it/s]22it [00:04,  5.22it/s]23it [00:04,  4.28it/s]25it [00:05,  5.06it/s]26it [00:05,  5.01it/s]27it [00:05,  4.46it/s]28it [00:06,  4.39it/s]29it [00:06,  4.06it/s]30it [00:06,  4.61it/s]31it [00:06,  4.18it/s]32it [00:06,  5.00it/s]33it [00:07,  4.58it/s]34it [00:07,  4.16it/s]35it [00:07,  3.54it/s]36it [00:07,  4.24it/s]37it [00:08,  3.76it/s]38it [00:08,  3.97it/s]39it [00:08,  3.39it/s]40it [00:09,  2.70it/s]41it [00:09,  2.71it/s]42it [00:10,  2.75it/s]43it [00:10,  2.87it/s]44it [00:10,  2.97it/s]45it [00:10,  3.27it/s]46it [00:11,  3.88it/s]47it [00:11,  4.21it/s]48it [00:11,  3.56it/s]49it [00:11,  3.64it/s]50it [00:12,  3.97it/s]51it [00:12,  4.70it/s]52it [00:12,  4.96it/s]53it [00:12,  4.43it/s]54it [00:12,  4.31it/s]55it [00:13,  4.80it/s]56it [00:13,  4.62it/s]57it [00:13,  4.73it/s]58it [00:13,  4.84it/s]59it [00:13,  5.65it/s]60it [00:14,  5.51it/s]61it [00:14,  4.87it/s]62it [00:14,  4.81it/s]63it [00:14,  3.86it/s]64it [00:15,  4.17it/s]65it [00:15,  4.11it/s]66it [00:15,  3.98it/s]67it [00:15,  3.75it/s]69it [00:16,  4.50it/s]70it [00:16,  4.50it/s]71it [00:16,  4.65it/s]72it [00:16,  4.61it/s]73it [00:17,  4.30it/s]74it [00:17,  4.53it/s]76it [00:17,  5.09it/s]77it [00:17,  4.58it/s]78it [00:18,  3.81it/s]79it [00:18,  4.18it/s]80it [00:18,  3.89it/s]81it [00:18,  4.69it/s]82it [00:19,  3.84it/s]83it [00:19,  3.55it/s]84it [00:19,  3.67it/s]85it [00:20,  3.84it/s]86it [00:20,  4.00it/s]87it [00:20,  3.88it/s]88it [00:20,  4.16it/s]89it [00:21,  4.36it/s]90it [00:21,  4.01it/s]91it [00:21,  3.97it/s]92it [00:21,  4.39it/s]93it [00:22,  4.29it/s]94it [00:22,  3.96it/s]95it [00:22,  4.04it/s]96it [00:22,  4.69it/s]97it [00:22,  4.56it/s]98it [00:23,  4.84it/s]99it [00:23,  5.13it/s]101it [00:23,  5.37it/s]102it [00:23,  5.97it/s]103it [00:23,  5.47it/s]104it [00:24,  5.96it/s]105it [00:24,  5.98it/s]106it [00:24,  5.47it/s]107it [00:24,  4.70it/s]108it [00:24,  5.19it/s]109it [00:25,  5.66it/s]110it [00:25,  4.87it/s]111it [00:25,  5.22it/s]112it [00:25,  5.63it/s]113it [00:25,  5.33it/s]114it [00:26,  5.32it/s]115it [00:26,  5.71it/s]116it [00:26,  5.60it/s]118it [00:26,  7.44it/s]119it [00:26,  6.89it/s]120it [00:26,  5.72it/s]121it [00:27,  5.67it/s]122it [00:27,  5.59it/s]123it [00:27,  5.09it/s]124it [00:27,  4.31it/s]125it [00:28,  3.59it/s]126it [00:28,  3.23it/s]127it [00:28,  3.55it/s]128it [00:29,  3.81it/s]129it [00:29,  4.28it/s]130it [00:29,  4.03it/s]131it [00:29,  3.82it/s]132it [00:29,  4.59it/s]133it [00:30,  4.38it/s]134it [00:30,  4.86it/s]135it [00:30,  4.38it/s]135it [00:30,  4.40it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:36, 36.53s/it]2it [01:12, 36.17s/it]2it [01:48, 54.45s/it]
+[Actor] Y Shape : (3000, 12)
+[Actor] X Shapes:
+[Actor] (3000, 6)
+[Actor] (3000, 76)
+[Actor] (3000, 60)
+[Actor] F Shape : (3000, 1)
+[Axtor] Z Shape : (3000, 1, 60)
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 741, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 637, in pretrain_actor
+    model = self.actor.create_pretrain_actor_cell(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 343, in create_pretrain_actor_cell
+    actions, Z, _, _ = rhythm_gen([
+NameError: name 'rhythm_gen' is not defined
+2021-04-25 07:02:56.575577: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 07:02:56.575612: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 07:03:00.030831: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 07:03:00.031478: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 07:03:00.031660: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 07:03:00.031803: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 07:03:00.037408: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 07:03:00.037965: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619314383.296568156, 1.364000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619314383.298572608, 1.365000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619314383.298879897, 1.365000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619314384.721010461, 2.373000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619314386.113141950, 3.329000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619314387.196026737, 4.130000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619314388.297502924, 4.930000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  4.16it/s]2it [00:00,  5.52it/s]3it [00:00,  4.94it/s]4it [00:00,  4.25it/s]6it [00:01,  5.84it/s]7it [00:01,  5.22it/s]8it [00:01,  5.18it/s]9it [00:01,  4.90it/s]10it [00:01,  5.17it/s]11it [00:02,  5.91it/s]12it [00:02,  4.87it/s]13it [00:02,  4.27it/s]14it [00:02,  4.90it/s]15it [00:03,  4.77it/s]16it [00:03,  4.12it/s]17it [00:03,  4.62it/s]18it [00:03,  4.67it/s]19it [00:04,  4.07it/s]20it [00:04,  3.89it/s]21it [00:04,  4.11it/s]22it [00:04,  4.68it/s]23it [00:04,  4.99it/s]24it [00:05,  4.47it/s]25it [00:05,  4.08it/s]26it [00:05,  4.37it/s]27it [00:05,  4.15it/s]28it [00:06,  4.02it/s]29it [00:06,  4.54it/s]30it [00:06,  5.15it/s]31it [00:06,  5.07it/s]32it [00:06,  4.35it/s]33it [00:07,  3.71it/s]34it [00:07,  3.79it/s]35it [00:07,  4.48it/s]36it [00:08,  3.66it/s]37it [00:08,  4.18it/s]38it [00:08,  5.03it/s]39it [00:08,  4.47it/s]40it [00:08,  3.74it/s]41it [00:09,  3.97it/s]42it [00:09,  3.95it/s]43it [00:09,  3.56it/s]44it [00:10,  3.64it/s]45it [00:10,  3.67it/s]46it [00:10,  4.07it/s]47it [00:10,  3.86it/s]48it [00:10,  4.36it/s]49it [00:11,  4.55it/s]51it [00:11,  6.07it/s]52it [00:11,  4.95it/s]53it [00:11,  4.38it/s]54it [00:12,  4.18it/s]55it [00:12,  3.99it/s]57it [00:12,  4.83it/s]58it [00:13,  4.14it/s]60it [00:13,  5.31it/s]61it [00:13,  5.36it/s]63it [00:13,  6.23it/s]64it [00:14,  5.95it/s]65it [00:14,  5.07it/s]66it [00:14,  4.96it/s]68it [00:14,  5.11it/s]69it [00:15,  5.14it/s]70it [00:15,  4.57it/s]71it [00:15,  4.28it/s]72it [00:15,  4.54it/s]73it [00:15,  5.02it/s]74it [00:16,  4.50it/s]75it [00:16,  3.85it/s]76it [00:16,  3.72it/s]77it [00:17,  4.38it/s]78it [00:17,  4.31it/s]79it [00:17,  4.06it/s]80it [00:17,  3.71it/s]81it [00:18,  3.69it/s]82it [00:18,  4.01it/s]83it [00:18,  3.94it/s]84it [00:18,  3.93it/s]85it [00:19,  4.18it/s]86it [00:19,  3.64it/s]87it [00:19,  3.63it/s]88it [00:19,  4.22it/s]89it [00:20,  3.87it/s]91it [00:20,  4.59it/s]92it [00:20,  5.16it/s]93it [00:20,  5.50it/s]94it [00:20,  5.84it/s]95it [00:21,  6.33it/s]96it [00:21,  6.64it/s]98it [00:21,  7.65it/s]100it [00:21,  6.70it/s]101it [00:21,  6.28it/s]102it [00:22,  5.03it/s]103it [00:22,  4.89it/s]104it [00:22,  4.77it/s]105it [00:23,  4.04it/s]106it [00:23,  4.36it/s]107it [00:23,  4.75it/s]108it [00:23,  4.90it/s]109it [00:23,  4.35it/s]110it [00:24,  4.79it/s]111it [00:24,  4.29it/s]112it [00:24,  4.98it/s]113it [00:24,  4.01it/s]114it [00:25,  3.63it/s]115it [00:25,  4.05it/s]116it [00:25,  3.75it/s]118it [00:25,  5.59it/s]119it [00:25,  5.54it/s]120it [00:26,  4.48it/s]121it [00:26,  4.92it/s]122it [00:26,  4.98it/s]123it [00:26,  4.62it/s]124it [00:27,  4.30it/s]125it [00:27,  4.80it/s]126it [00:27,  4.51it/s]127it [00:27,  4.01it/s]128it [00:28,  3.82it/s]129it [00:28,  3.71it/s]130it [00:28,  3.69it/s]131it [00:28,  4.07it/s]132it [00:29,  3.98it/s]133it [00:29,  4.22it/s]134it [00:29,  4.46it/s]135it [00:29,  3.90it/s]135it [00:29,  4.51it/s]
+[Actor] Number of Data Points: 135
+0it [00:00, ?it/s]1it [00:34, 34.25s/it]2it [01:09, 34.82s/it]3it [01:45, 35.40s/it]4it [02:20, 35.19s/it]5it [02:55, 35.27s/it]6it [03:32, 35.69s/it]7it [04:08, 35.71s/it]8it [04:45, 36.29s/it]9it [05:21, 36.04s/it]10it [05:56, 35.98s/it]11it [06:33, 36.24s/it]12it [07:09, 35.94s/it]13it [07:44, 35.76s/it]14it [08:21, 36.23s/it]15it [08:57, 36.12s/it]16it [09:33, 35.95s/it]17it [10:09, 36.22s/it]18it [10:46, 36.39s/it]19it [11:22, 36.34s/it]20it [11:59, 36.31s/it]21it [12:36, 36.48s/it]22it [13:11, 36.24s/it]23it [13:47, 35.98s/it]24it [14:23, 36.20s/it]25it [14:58, 35.77s/it]26it [15:35, 36.10s/it]27it [16:13, 36.80s/it]28it [16:50, 36.68s/it]29it [17:26, 36.52s/it]30it [18:03, 36.71s/it]31it [18:39, 36.53s/it]32it [19:16, 36.48s/it]33it [19:52, 36.59s/it]34it [20:29, 36.44s/it]35it [21:05, 36.39s/it]36it [21:40, 36.14s/it]37it [22:16, 36.07s/it]38it [22:53, 36.19s/it]39it [23:29, 36.16s/it]40it [24:04, 35.98s/it]41it [24:41, 36.21s/it]42it [25:18, 36.46s/it]43it [25:55, 36.59s/it]44it [26:31, 36.42s/it]45it [27:08, 36.63s/it]46it [27:43, 36.18s/it]47it [28:22, 36.79s/it]48it [28:58, 36.65s/it]49it [29:35, 36.75s/it]50it [30:11, 36.62s/it]51it [30:48, 36.67s/it]52it [31:24, 36.33s/it]53it [32:00, 36.29s/it]54it [32:36, 36.15s/it]55it [33:11, 36.00s/it]56it [33:48, 36.14s/it]57it [34:23, 36.03s/it]58it [35:00, 36.18s/it]59it [35:38, 36.69s/it]60it [36:13, 36.24s/it]61it [36:49, 36.13s/it]62it [37:26, 36.32s/it]63it [38:01, 36.13s/it]64it [38:37, 35.94s/it]65it [39:10, 35.12s/it]66it [39:47, 35.68s/it]67it [40:23, 35.62s/it]68it [40:59, 35.98s/it]69it [41:36, 36.25s/it]70it [42:12, 36.18s/it]71it [42:49, 36.23s/it]72it [43:25, 36.34s/it]73it [44:02, 36.41s/it]74it [44:39, 36.52s/it]75it [45:15, 36.38s/it]76it [45:51, 36.26s/it]77it [46:28, 36.54s/it]78it [47:04, 36.50s/it]79it [47:41, 36.55s/it]80it [48:17, 36.35s/it]81it [48:53, 36.23s/it]82it [49:28, 35.97s/it]83it [50:05, 36.24s/it]84it [50:42, 36.56s/it]85it [51:18, 36.31s/it]86it [51:55, 36.38s/it]87it [52:31, 36.27s/it]88it [53:07, 36.43s/it]89it [53:44, 36.41s/it]90it [54:20, 36.53s/it]91it [54:57, 36.60s/it]92it [55:33, 36.37s/it]93it [56:11, 36.73s/it]94it [56:46, 36.39s/it]95it [57:23, 36.60s/it]96it [58:00, 36.66s/it]97it [58:36, 36.42s/it]98it [59:11, 36.08s/it]99it [59:47, 36.07s/it]100it [1:00:25, 36.47s/it]101it [1:01:01, 36.37s/it]102it [1:01:37, 36.32s/it]103it [1:02:16, 37.03s/it]104it [1:02:51, 36.39s/it]105it [1:03:27, 36.50s/it]106it [1:04:05, 36.77s/it]107it [1:04:41, 36.67s/it]108it [1:05:17, 36.51s/it]109it [1:05:54, 36.47s/it]110it [1:06:31, 36.74s/it]111it [1:07:08, 36.78s/it]112it [1:07:45, 36.90s/it]113it [1:08:23, 37.10s/it]114it [1:08:59, 36.81s/it]115it [1:09:36, 36.83s/it]116it [1:10:13, 36.82s/it]117it [1:10:49, 36.80s/it]118it [1:11:26, 36.62s/it]119it [1:12:02, 36.68s/it]120it [1:12:40, 36.84s/it]121it [1:13:15, 36.38s/it]122it [1:13:52, 36.66s/it]123it [1:14:29, 36.76s/it]124it [1:15:06, 36.67s/it]125it [1:15:42, 36.61s/it]126it [1:16:19, 36.79s/it]127it [1:16:56, 36.64s/it]128it [1:17:33, 36.80s/it]129it [1:18:09, 36.52s/it]130it [1:18:44, 36.24s/it]131it [1:19:19, 35.82s/it]132it [1:19:56, 36.04s/it]133it [1:20:32, 36.15s/it]134it [1:21:08, 36.21s/it]135it [1:21:44, 36.12s/it]135it [1:21:44, 36.33s/it]
+[Actor] Y Shape : (135000, 12)
+[Actor] X Shapes:
+[Actor] (135000, 6)
+[Actor] (135000, 76)
+[Actor] (135000, 60)
+[Actor] F Shape : (135000, 1)
+[Axtor] Z Shape : (135000, 1, 60)
+Model: "pretrain_actor_cell"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+motion_state_inp_cell (InputLay [(None, 6)]          0                                            
+__________________________________________________________________________________________________
+mod_state_cell (InputLayer)     [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+z_cell (InputLayer)             [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+param_net (Functional)          [(None, 1), (None, 3 42506       motion_state_inp_cell[0][0]      
+__________________________________________________________________________________________________
+rhythm_generator (Functional)   [(None, 12), (None,  223164      mod_state_cell[0][0]             
+                                                                 z_cell[0][0]                     
+                                                                 param_net[0][0]                  
+                                                                 param_net[0][1]                  
+==================================================================================================
+Total params: 265,670
+Trainable params: 265,670
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 741, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 662, in pretrain_actor
+    train_dataset, test_dataset = self.actor.create_pretrain_dataset(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/rddpg_net_v2.py", line 431, in create_pretrain_dataset
+    np.save(indices, os.path.join(output_dir, 'indices.npy'), \
+  File "<__array_function__ internals>", line 4, in save
+TypeError: _save_dispatcher() got multiple values for argument 'allow_pickle'
+2021-04-25 08:28:28.567405: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:28:28.567443: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 08:28:31.978328: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 08:28:31.978891: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:28:31.979092: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 08:28:31.979257: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 08:28:31.984434: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 08:28:31.984848: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619319515.153330777, 1.296000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619319515.155909583, 1.299000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619319515.156432950, 1.299000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619319516.653175144, 2.351000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619319517.533805582, 3.000000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619319518.707079583, 3.802000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619319519.818152411, 4.601000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  5.33it/s]3it [00:00,  5.95it/s]4it [00:00,  5.40it/s]6it [00:00,  6.75it/s]7it [00:01,  6.06it/s]8it [00:01,  5.50it/s]9it [00:01,  5.30it/s]10it [00:01,  5.05it/s]11it [00:02,  4.61it/s]12it [00:02,  4.25it/s]13it [00:02,  4.49it/s]14it [00:02,  4.73it/s]15it [00:02,  4.79it/s]16it [00:03,  4.21it/s]17it [00:03,  3.75it/s]18it [00:03,  4.27it/s]19it [00:03,  4.92it/s]20it [00:04,  5.20it/s]21it [00:04,  5.85it/s]22it [00:04,  4.81it/s]23it [00:04,  4.45it/s]24it [00:04,  5.12it/s]25it [00:05,  4.23it/s]26it [00:05,  4.23it/s]27it [00:05,  4.17it/s]28it [00:05,  4.08it/s]29it [00:06,  4.09it/s]30it [00:06,  3.91it/s]31it [00:06,  4.01it/s]32it [00:06,  3.86it/s]33it [00:07,  3.89it/s]34it [00:07,  4.15it/s]35it [00:07,  4.37it/s]36it [00:07,  4.50it/s]37it [00:08,  4.61it/s]38it [00:08,  4.11it/s]39it [00:08,  4.57it/s]40it [00:08,  4.10it/s]41it [00:09,  4.13it/s]42it [00:09,  3.96it/s]43it [00:09,  3.94it/s]44it [00:09,  4.19it/s]45it [00:09,  4.44it/s]46it [00:10,  5.25it/s]47it [00:10,  4.86it/s]48it [00:10,  5.57it/s]49it [00:10,  5.97it/s]50it [00:10,  5.15it/s]51it [00:11,  5.16it/s]52it [00:11,  5.63it/s]53it [00:11,  5.16it/s]54it [00:11,  4.56it/s]55it [00:11,  5.35it/s]56it [00:12,  4.96it/s]57it [00:12,  5.22it/s]58it [00:12,  4.90it/s]59it [00:12,  5.56it/s]60it [00:12,  5.48it/s]61it [00:12,  4.91it/s]62it [00:13,  4.97it/s]63it [00:13,  4.66it/s]64it [00:13,  5.06it/s]65it [00:13,  5.04it/s]66it [00:14,  4.41it/s]67it [00:14,  3.95it/s]68it [00:14,  4.01it/s]69it [00:14,  3.85it/s]70it [00:15,  3.76it/s]71it [00:15,  3.64it/s]72it [00:15,  3.79it/s]73it [00:15,  3.79it/s]74it [00:16,  3.84it/s]75it [00:16,  4.34it/s]76it [00:16,  4.46it/s]77it [00:16,  4.48it/s]78it [00:17,  4.64it/s]79it [00:17,  4.82it/s]80it [00:17,  4.36it/s]81it [00:17,  3.60it/s]82it [00:18,  3.61it/s]83it [00:18,  3.77it/s]84it [00:18,  3.81it/s]85it [00:18,  3.69it/s]86it [00:19,  3.81it/s]87it [00:19,  4.26it/s]88it [00:19,  3.70it/s]89it [00:19,  3.99it/s]90it [00:20,  4.50it/s]91it [00:20,  5.19it/s]92it [00:20,  5.96it/s]93it [00:20,  6.48it/s]94it [00:20,  7.00it/s]95it [00:20,  7.67it/s]96it [00:20,  7.25it/s]97it [00:20,  6.70it/s]98it [00:21,  6.77it/s]99it [00:21,  6.64it/s]100it [00:21,  5.66it/s]101it [00:21,  4.78it/s]102it [00:22,  4.24it/s]103it [00:22,  4.14it/s]104it [00:22,  3.63it/s]105it [00:23,  3.12it/s]106it [00:23,  3.73it/s]107it [00:23,  4.24it/s]108it [00:23,  4.70it/s]109it [00:23,  4.89it/s]110it [00:23,  5.17it/s]111it [00:24,  5.28it/s]112it [00:24,  4.22it/s]113it [00:24,  4.80it/s]114it [00:24,  5.01it/s]115it [00:24,  5.44it/s]116it [00:25,  4.24it/s]117it [00:25,  3.66it/s]118it [00:26,  3.41it/s]119it [00:26,  3.44it/s]120it [00:26,  3.71it/s]121it [00:26,  4.05it/s]122it [00:26,  4.08it/s]123it [00:27,  3.90it/s]124it [00:27,  4.23it/s]125it [00:27,  3.78it/s]126it [00:27,  4.50it/s]127it [00:28,  4.51it/s]128it [00:28,  4.52it/s]129it [00:28,  4.38it/s]131it [00:28,  4.81it/s]132it [00:29,  4.53it/s]133it [00:29,  4.69it/s]134it [00:29,  4.28it/s]135it [00:30,  3.76it/s]135it [00:30,  4.49it/s]
+[Actor] Number of Data Points: 135
+Model: "pretrain_actor_cell"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+motion_state_inp_cell (InputLay [(None, 6)]          0                                            
+__________________________________________________________________________________________________
+mod_state_cell (InputLayer)     [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+z_cell (InputLayer)             [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+param_net (Functional)          [(None, 1), (None, 3 42506       motion_state_inp_cell[0][0]      
+__________________________________________________________________________________________________
+rhythm_generator (Functional)   [(None, 12), (None,  223164      mod_state_cell[0][0]             
+                                                                 z_cell[0][0]                     
+                                                                 param_net[0][0]                  
+                                                                 param_net[0][1]                  
+==================================================================================================
+Total params: 265,670
+Trainable params: 265,670
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+[Actor] Dataset <ShuffleDataset shapes: (((6,), (60,), (60,)), ((200, 12), (1,), (30,), (60,))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float64))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 741, in <module>
+    learner.pretrain_actor(
+  File "rddpg_v2.py", line 668, in pretrain_actor
+    self._pretrain_loop(
+  File "rddpg_v2.py", line 290, in _pretrain_loop
+    loss_Z] = grad_update(x, y, W)
+  File "rddpg_v2.py", line 115, in _pretrain_actor
+    loss_action = self.action_mse(y[0], out)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 152, in __call__
+    losses = call_fn(y_true, y_pred)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 256, in call
+    return ag_fn(y_true, y_pred, **self._fn_kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/util/dispatch.py", line 201, in wrapper
+    return target(*args, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/keras/losses.py", line 1198, in mean_squared_error
+    return K.mean(math_ops.squared_difference(y_pred, y_true), axis=-1)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/ops/gen_math_ops.py", line 10233, in squared_difference
+    _ops.raise_from_not_ok_status(e, name)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/tensorflow/python/framework/ops.py", line 6862, in raise_from_not_ok_status
+    six.raise_from(core._status_to_exception(e.code, message), None)
+  File "<string>", line 3, in raise_from
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Incompatible shapes: [270,12] vs. [270,200,12] [Op:SquaredDifference]
+2021-04-25 08:31:32.938194: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:31:32.938232: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 08:31:36.508546: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 08:31:36.508929: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:31:36.509004: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 08:31:36.509062: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 08:31:36.514312: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 08:31:36.514828: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+Traceback (most recent call last):
+  File "rddpg_v2.py", line 740, in <module>
+    learner = Learner(params, args.experiment, False)
+  File "rddpg_v2.py", line 31, in __init__
+    self.env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/env.py", line 46, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 453, in __init__
+    self.all_legs = AllLegs(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 262, in __init__
+    self.front_left = Leg(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 44, in __init__
+    self.jta = actionlib.SimpleActionClient(
+  File "/opt/ros/noetic/lib/python3/dist-packages/actionlib/simple_action_client.py", line 55, in __init__
+    self.action_client = ActionClient(ns, ActionSpec)
+  File "/opt/ros/noetic/lib/python3/dist-packages/actionlib/action_client.py", line 521, in __init__
+    self.pub_queue_size = rospy.get_param('actionlib_client_pub_queue_size', 10)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/client.py", line 467, in get_param
+    return _param_server[param_name] #MasterProxy does all the magic for us
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/msproxy.py", line 121, in __getitem__
+    code, msg, value = self.target.getParam(rospy.names.get_caller_id(), resolved_key)
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1109, in __call__
+    return self.__send(self.__name, args)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/core.py", line 669, in _ServerProxy__request
+    return xmlrpcclient.ServerProxy._ServerProxy__request(
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1450, in __request
+    response = self.__transport.request(
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1153, in request
+    return self.single_request(host, handler, request_body, verbose)
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1165, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1278, in send_request
+    self.send_content(connection, request_body)
+  File "/usr/lib/python3.8/xmlrpc/client.py", line 1308, in send_content
+    connection.endheaders(request_body)
+  File "/usr/lib/python3.8/http/client.py", line 1250, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.8/http/client.py", line 1010, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.8/http/client.py", line 950, in send
+    self.connect()
+  File "/usr/lib/python3.8/http/client.py", line 921, in connect
+    self.sock = self._create_connection(
+  File "/usr/lib/python3.8/socket.py", line 808, in create_connection
+    raise err
+  File "/usr/lib/python3.8/socket.py", line 796, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+2021-04-25 08:34:23.384041: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:34:23.384080: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 08:34:26.883678: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 08:34:26.884228: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:34:26.884698: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 08:34:26.884859: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 08:34:26.890479: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 08:34:26.890785: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619319870.248715181, 1.275000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619319870.251291785, 1.277000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619319870.251605488, 1.277000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619319871.802378871, 2.368000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619319872.446005603, 2.844000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619319872.995847528, 3.245000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619319874.220323339, 4.044000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  8.12it/s]3it [00:00,  5.79it/s]4it [00:00,  5.17it/s]5it [00:00,  6.04it/s]6it [00:01,  6.12it/s]7it [00:01,  5.77it/s]8it [00:01,  6.50it/s]10it [00:01,  7.26it/s]12it [00:01,  7.65it/s]13it [00:02,  5.74it/s]15it [00:02,  6.07it/s]16it [00:02,  4.97it/s]17it [00:03,  4.29it/s]18it [00:03,  4.41it/s]19it [00:03,  4.13it/s]20it [00:03,  4.70it/s]21it [00:03,  4.86it/s]22it [00:04,  5.58it/s]23it [00:04,  6.08it/s]24it [00:04,  4.75it/s]25it [00:04,  5.51it/s]26it [00:04,  5.03it/s]27it [00:04,  5.35it/s]28it [00:05,  5.83it/s]29it [00:05,  5.11it/s]30it [00:05,  4.52it/s]31it [00:05,  4.14it/s]32it [00:06,  4.64it/s]33it [00:06,  5.51it/s]34it [00:06,  4.98it/s]35it [00:06,  5.22it/s]37it [00:06,  5.78it/s]38it [00:07,  5.42it/s]39it [00:07,  4.99it/s]40it [00:07,  4.83it/s]41it [00:07,  4.03it/s]42it [00:08,  4.52it/s]43it [00:08,  3.77it/s]44it [00:08,  3.38it/s]45it [00:08,  4.18it/s]46it [00:09,  4.80it/s]47it [00:09,  4.24it/s]48it [00:09,  4.38it/s]49it [00:09,  4.49it/s]50it [00:10,  3.98it/s]51it [00:10,  3.74it/s]53it [00:10,  4.41it/s]54it [00:11,  4.37it/s]55it [00:11,  4.42it/s]56it [00:11,  4.03it/s]57it [00:11,  4.78it/s]59it [00:12,  4.95it/s]60it [00:12,  5.31it/s]61it [00:12,  5.67it/s]62it [00:12,  5.34it/s]63it [00:12,  5.42it/s]64it [00:12,  5.24it/s]65it [00:13,  4.87it/s]66it [00:13,  4.59it/s]67it [00:13,  4.43it/s]68it [00:13,  4.14it/s]69it [00:14,  3.89it/s]70it [00:14,  4.16it/s]71it [00:14,  4.14it/s]72it [00:14,  4.35it/s]73it [00:15,  4.75it/s]74it [00:15,  4.42it/s]76it [00:15,  5.37it/s]77it [00:15,  5.27it/s]78it [00:15,  5.17it/s]79it [00:16,  4.48it/s]80it [00:16,  4.23it/s]81it [00:16,  4.65it/s]82it [00:16,  4.52it/s]83it [00:17,  3.76it/s]84it [00:17,  4.00it/s]85it [00:17,  4.32it/s]86it [00:17,  4.30it/s]87it [00:18,  3.89it/s]88it [00:18,  3.74it/s]89it [00:18,  3.54it/s]90it [00:19,  3.51it/s]91it [00:19,  3.66it/s]92it [00:19,  3.87it/s]93it [00:19,  4.68it/s]94it [00:19,  4.95it/s]95it [00:20,  4.26it/s]96it [00:20,  4.38it/s]97it [00:20,  5.12it/s]98it [00:20,  4.66it/s]99it [00:21,  5.09it/s]101it [00:21,  5.26it/s]102it [00:21,  4.78it/s]103it [00:21,  4.23it/s]104it [00:22,  4.20it/s]105it [00:22,  4.45it/s]106it [00:22,  4.01it/s]107it [00:22,  3.88it/s]108it [00:23,  4.27it/s]109it [00:23,  4.41it/s]110it [00:23,  4.16it/s]111it [00:23,  4.34it/s]112it [00:24,  4.48it/s]113it [00:24,  5.12it/s]114it [00:24,  5.39it/s]115it [00:24,  5.28it/s]116it [00:24,  5.19it/s]117it [00:25,  4.61it/s]118it [00:25,  4.94it/s]119it [00:25,  4.27it/s]120it [00:25,  4.16it/s]121it [00:25,  4.63it/s]122it [00:26,  4.50it/s]123it [00:26,  4.88it/s]124it [00:26,  4.68it/s]125it [00:26,  4.28it/s]126it [00:26,  4.62it/s]127it [00:27,  5.16it/s]128it [00:27,  4.34it/s]129it [00:27,  3.96it/s]130it [00:28,  3.45it/s]131it [00:28,  3.21it/s]132it [00:28,  3.44it/s]133it [00:28,  3.76it/s]134it [00:29,  4.19it/s]135it [00:29,  4.54it/s]135it [00:29,  4.61it/s]
+[Actor] Number of Data Points: 135
+Model: "pretrain_actor_cell"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+motion_state_inp_cell (InputLay [(None, 6)]          0                                            
+__________________________________________________________________________________________________
+mod_state_cell (InputLayer)     [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+z_cell (InputLayer)             [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+param_net (Functional)          [(None, 1), (None, 3 42506       motion_state_inp_cell[0][0]      
+__________________________________________________________________________________________________
+rhythm_generator (Functional)   [(None, 12), (None,  223164      mod_state_cell[0][0]             
+                                                                 z_cell[0][0]                     
+                                                                 param_net[0][0]                  
+                                                                 param_net[0][1]                  
+==================================================================================================
+Total params: 265,670
+Trainable params: 265,670
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+[Actor] Dataset <ShuffleDataset shapes: (((6,), (60,), (60,)), ((12,), (1,), (30,), (1, 60))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float64))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+[Actor] Episode 0 Step 0 Loss: 129.08524
+[Actor] Episode 0 Step 1 Loss: 84.90564
+[Actor] Episode 0 Step 2 Loss: 44.14164
+[Actor] Episode 0 Step 3 Loss: 15.29934
+[Actor] Episode 0 Step 4 Loss: 34.88501
+[Actor] Episode 0 Step 5 Loss: 29.35901
+[Actor] Episode 0 Step 6 Loss: 17.60752
+[Actor] Episode 0 Step 7 Loss: 21.93089
+[Actor] Episode 0 Step 8 Loss: 24.88588
+[Actor] Episode 0 Step 9 Loss: 26.87217
+[Actor] Episode 0 Step 10 Loss: 20.44294
+[Actor] Episode 0 Step 11 Loss: 17.61406
+[Actor] Episode 0 Step 12 Loss: 16.45719
+[Actor] Episode 0 Step 13 Loss: 20.53250
+[Actor] Episode 0 Step 14 Loss: 19.34437
+[Actor] Episode 0 Step 15 Loss: 20.68687
+[Actor] Episode 0 Step 16 Loss: 17.69028
+[Actor] Episode 0 Step 17 Loss: 20.90578
+[Actor] Episode 0 Step 18 Loss: 17.70798
+[Actor] Episode 0 Step 19 Loss: 18.15399
+[Actor] Episode 0 Step 20 Loss: 19.29915
+[Actor] Episode 0 Step 21 Loss: 19.52399
+[Actor] Episode 0 Step 22 Loss: 17.96449
+[Actor] Episode 0 Step 23 Loss: 16.46940
+[Actor] Episode 0 Step 24 Loss: 18.54783
+[Actor] Episode 0 Step 25 Loss: 17.78941
+[Actor] Episode 0 Step 26 Loss: 14.63776
+[Actor] Episode 0 Step 27 Loss: 16.89799
+[Actor] Episode 0 Step 28 Loss: 14.75011
+[Actor] Episode 0 Step 29 Loss: 17.06816
+[Actor] Episode 0 Step 30 Loss: 14.85937
+[Actor] Episode 0 Step 31 Loss: 16.51977
+[Actor] Episode 0 Step 32 Loss: 17.67204
+[Actor] Episode 0 Step 33 Loss: 17.03644
+[Actor] Episode 0 Step 34 Loss: 16.83424
+[Actor] Episode 0 Step 35 Loss: 16.62778
+[Actor] Episode 0 Step 36 Loss: 15.81037
+[Actor] Episode 0 Step 37 Loss: 16.06989
+[Actor] Episode 0 Step 38 Loss: 16.43062
+[Actor] Episode 0 Step 39 Loss: 16.57263
+[Actor] Episode 0 Step 40 Loss: 17.69477
+[Actor] Episode 0 Step 41 Loss: 16.88201
+[Actor] Episode 0 Step 42 Loss: 16.33335
+[Actor] Episode 0 Step 43 Loss: 16.58652
+[Actor] Episode 0 Step 44 Loss: 16.35055
+[Actor] Episode 0 Step 45 Loss: 16.01128
+[Actor] Episode 0 Step 46 Loss: 17.34147
+[Actor] Episode 0 Step 47 Loss: 15.38195
+[Actor] Episode 0 Step 48 Loss: 14.78520
+[Actor] Episode 0 Step 49 Loss: 18.51773
+[Actor] Episode 0 Step 50 Loss: 19.59840
+[Actor] Episode 0 Step 51 Loss: 17.18417
+[Actor] Episode 0 Step 52 Loss: 16.78669
+[Actor] Episode 0 Step 53 Loss: 17.56632
+[Actor] Episode 0 Step 54 Loss: 15.55805
+[Actor] Episode 0 Step 55 Loss: 17.56030
+[Actor] Episode 0 Step 56 Loss: 16.51569
+[Actor] Episode 0 Step 57 Loss: 14.93132
+[Actor] Episode 0 Step 58 Loss: 18.04543
+[Actor] Episode 0 Step 59 Loss: 17.14120
+[Actor] Episode 0 Step 60 Loss: 16.98277
+[Actor] Episode 0 Step 61 Loss: 17.65232
+[Actor] Episode 0 Step 62 Loss: 18.78105
+[Actor] Episode 0 Step 63 Loss: 19.62407
+[Actor] Episode 0 Step 64 Loss: 17.20539
+[Actor] Episode 0 Step 65 Loss: 16.05783
+[Actor] Episode 0 Step 66 Loss: 17.57018
+[Actor] Episode 0 Step 67 Loss: 18.83310
+[Actor] Episode 0 Step 68 Loss: 14.16914
+[Actor] Episode 0 Step 69 Loss: 16.10957
+[Actor] Episode 0 Step 70 Loss: 18.06637
+[Actor] Episode 0 Step 71 Loss: 15.47798
+[Actor] Episode 0 Step 72 Loss: 16.67413
+[Actor] Episode 0 Step 73 Loss: 17.37881
+[Actor] Episode 0 Step 74 Loss: 18.57058
+[Actor] Episode 0 Step 75 Loss: 16.45695
+[Actor] Episode 0 Step 76 Loss: 15.42020
+[Actor] Episode 0 Step 77 Loss: 17.05421
+[Actor] Episode 0 Step 78 Loss: 17.74160
+[Actor] Episode 0 Step 79 Loss: 19.65409
+[Actor] Episode 0 Step 80 Loss: 15.91374
+[Actor] Episode 0 Step 81 Loss: 15.33891
+[Actor] Episode 0 Step 82 Loss: 18.31134
+[Actor] Episode 0 Step 83 Loss: 17.74590
+[Actor] Episode 0 Step 84 Loss: 17.12439
+[Actor] Episode 0 Step 85 Loss: 15.79735
+[Actor] Episode 0 Step 86 Loss: 15.89034
+[Actor] Episode 0 Step 87 Loss: 16.82870
+[Actor] Episode 0 Step 88 Loss: 14.48318
+[Actor] Episode 0 Step 89 Loss: 14.74161
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 20.00353
+[Actor] Learning Rate: 0.00499
+[Actor] Epoch Time: 196.45024s
+-------------------------------------------------
+[Actor] Test Episode 0 Step 0 Loss: 17.53218
+[Actor] Test Episode 0 Step 1 Loss: 15.22902
+[Actor] Test Episode 0 Step 2 Loss: 15.86249
+[Actor] Test Episode 0 Step 3 Loss: 16.45220
+[Actor] Test Episode 0 Step 4 Loss: 14.17465
+[Actor] Test Episode 0 Step 5 Loss: 15.44366
+[Actor] Test Episode 0 Step 6 Loss: 16.56441
+[Actor] Test Episode 0 Step 7 Loss: 15.14264
+[Actor] Test Episode 0 Step 8 Loss: 16.62709
+[Actor] Test Episode 0 Step 9 Loss: 16.05201
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 15.90803
+[Actor] Test Time: 9.44003s
+-------------------------------------------------
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 16.80399
+[Actor] Episode 1 Step 1 Loss: 16.28280
+[Actor] Episode 1 Step 2 Loss: 15.96373
+[Actor] Episode 1 Step 3 Loss: 15.96850
+[Actor] Episode 1 Step 4 Loss: 18.54302
+[Actor] Episode 1 Step 5 Loss: 16.41879
+[Actor] Episode 1 Step 6 Loss: 16.66245
+[Actor] Episode 1 Step 7 Loss: 14.28601
+[Actor] Episode 1 Step 8 Loss: 15.55653
+[Actor] Episode 1 Step 9 Loss: 16.48716
+[Actor] Episode 1 Step 10 Loss: 14.49305
+[Actor] Episode 1 Step 11 Loss: 17.16613
+[Actor] Episode 1 Step 12 Loss: 15.26504
+[Actor] Episode 1 Step 13 Loss: 15.67488
+[Actor] Episode 1 Step 14 Loss: 16.70254
+[Actor] Episode 1 Step 15 Loss: 16.65703
+[Actor] Episode 1 Step 16 Loss: 18.98163
+[Actor] Episode 1 Step 17 Loss: 14.51264
+[Actor] Episode 1 Step 18 Loss: 15.50797
+[Actor] Episode 1 Step 19 Loss: 17.59427
+[Actor] Episode 1 Step 20 Loss: 16.17964
+[Actor] Episode 1 Step 21 Loss: 16.19458
+[Actor] Episode 1 Step 22 Loss: 17.30806
+[Actor] Episode 1 Step 23 Loss: 14.61271
+[Actor] Episode 1 Step 24 Loss: 15.15958
+[Actor] Episode 1 Step 25 Loss: 16.41143
+[Actor] Episode 1 Step 26 Loss: 14.60083
+[Actor] Episode 1 Step 27 Loss: 15.73232
+[Actor] Episode 1 Step 28 Loss: 15.03403
+[Actor] Episode 1 Step 29 Loss: 14.31093
+[Actor] Episode 1 Step 30 Loss: 16.29816
+[Actor] Episode 1 Step 31 Loss: 15.44687
+[Actor] Episode 1 Step 32 Loss: 12.57463
+[Actor] Episode 1 Step 33 Loss: 13.89281
+[Actor] Episode 1 Step 34 Loss: 13.62352
+[Actor] Episode 1 Step 35 Loss: 12.60797
+  File "rddpg_v2.py", line 377
+    if delta_W in not None:
+                  ^
+SyntaxError: invalid syntax
+2021-04-25 08:44:45.495330: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:44:45.495368: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 08:44:48.696020: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 08:44:48.696485: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:44:48.696620: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 08:44:48.696750: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 08:44:48.701646: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 08:44:48.702042: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619320492.460960844, 1.381000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619320492.463894524, 1.382000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619320492.464019972, 1.382000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619320494.000033267, 2.478000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619320494.449819081, 2.802000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619320495.000814599, 3.201000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619320495.557651505, 3.601000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  7.51it/s]2it [00:00,  4.70it/s]3it [00:00,  4.49it/s]4it [00:00,  3.95it/s]5it [00:01,  4.85it/s]7it [00:01,  4.85it/s]8it [00:01,  5.35it/s]10it [00:01,  5.71it/s]11it [00:02,  5.63it/s]12it [00:02,  4.02it/s]13it [00:02,  3.78it/s]14it [00:03,  3.82it/s]15it [00:03,  3.95it/s]16it [00:03,  4.69it/s]17it [00:03,  4.20it/s]18it [00:04,  3.88it/s]19it [00:04,  3.75it/s]20it [00:04,  3.70it/s]21it [00:04,  3.92it/s]22it [00:04,  4.60it/s]23it [00:05,  4.27it/s]24it [00:05,  3.80it/s]25it [00:05,  3.77it/s]26it [00:06,  3.72it/s]27it [00:06,  3.91it/s]28it [00:06,  4.14it/s]29it [00:06,  4.05it/s]30it [00:07,  4.17it/s]31it [00:07,  4.37it/s]32it [00:07,  4.02it/s]33it [00:07,  3.39it/s]34it [00:08,  3.51it/s]35it [00:08,  3.26it/s]36it [00:08,  3.67it/s]37it [00:08,  4.40it/s]38it [00:09,  4.12it/s]39it [00:09,  3.50it/s]40it [00:09,  3.95it/s]41it [00:09,  4.03it/s]42it [00:10,  3.23it/s]43it [00:10,  3.51it/s]44it [00:10,  3.36it/s]45it [00:11,  3.72it/s]46it [00:11,  4.21it/s]48it [00:11,  5.48it/s]49it [00:11,  5.36it/s]50it [00:12,  5.01it/s]51it [00:12,  5.21it/s]52it [00:12,  4.99it/s]53it [00:12,  4.70it/s]54it [00:12,  5.13it/s]55it [00:13,  4.91it/s]56it [00:13,  4.13it/s]57it [00:13,  4.39it/s]58it [00:13,  3.99it/s]59it [00:14,  4.62it/s]60it [00:14,  4.47it/s]61it [00:14,  4.70it/s]62it [00:14,  5.17it/s]63it [00:14,  4.37it/s]64it [00:15,  3.91it/s]65it [00:15,  3.71it/s]66it [00:15,  3.59it/s]67it [00:15,  4.05it/s]68it [00:16,  4.06it/s]69it [00:16,  4.15it/s]70it [00:16,  3.96it/s]71it [00:16,  4.18it/s]72it [00:17,  4.49it/s]73it [00:17,  4.18it/s]74it [00:17,  4.44it/s]75it [00:17,  4.45it/s]76it [00:17,  5.05it/s]77it [00:18,  4.91it/s]78it [00:18,  3.91it/s]79it [00:18,  3.77it/s]80it [00:19,  3.71it/s]81it [00:19,  3.98it/s]82it [00:19,  3.87it/s]83it [00:19,  3.58it/s]84it [00:20,  3.45it/s]85it [00:20,  3.88it/s]86it [00:20,  3.63it/s]87it [00:21,  3.62it/s]88it [00:21,  3.23it/s]89it [00:21,  3.54it/s]90it [00:21,  3.62it/s]91it [00:22,  3.66it/s]92it [00:22,  4.36it/s]93it [00:22,  5.13it/s]94it [00:22,  4.17it/s]95it [00:22,  4.22it/s]96it [00:23,  3.96it/s]97it [00:23,  4.19it/s]98it [00:23,  4.33it/s]100it [00:24,  4.83it/s]101it [00:24,  5.19it/s]102it [00:24,  5.06it/s]103it [00:24,  4.03it/s]104it [00:25,  4.09it/s]105it [00:25,  3.60it/s]106it [00:25,  4.20it/s]107it [00:25,  4.08it/s]108it [00:25,  4.59it/s]109it [00:26,  4.46it/s]110it [00:26,  4.38it/s]111it [00:26,  4.24it/s]112it [00:27,  3.52it/s]113it [00:27,  3.33it/s]114it [00:27,  3.46it/s]115it [00:27,  3.94it/s]116it [00:28,  3.70it/s]117it [00:28,  3.57it/s]118it [00:28,  3.59it/s]119it [00:28,  3.99it/s]120it [00:29,  4.58it/s]121it [00:29,  4.97it/s]122it [00:29,  4.87it/s]123it [00:29,  5.41it/s]124it [00:29,  5.00it/s]125it [00:30,  4.17it/s]126it [00:30,  4.09it/s]127it [00:30,  3.89it/s]128it [00:31,  3.39it/s]129it [00:31,  3.28it/s]130it [00:31,  3.50it/s]131it [00:31,  3.68it/s]132it [00:32,  3.90it/s]133it [00:32,  3.60it/s]134it [00:32,  3.31it/s]135it [00:32,  3.75it/s]135it [00:32,  4.09it/s]
+[Actor] Number of Data Points: 135
+Model: "pretrain_actor_cell"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+motion_state_inp_cell (InputLay [(None, 6)]          0                                            
+__________________________________________________________________________________________________
+mod_state_cell (InputLayer)     [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+z_cell (InputLayer)             [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+param_net (Functional)          [(None, 1), (None, 3 42506       motion_state_inp_cell[0][0]      
+__________________________________________________________________________________________________
+rhythm_generator (Functional)   [(None, 12), (None,  223164      mod_state_cell[0][0]             
+                                                                 z_cell[0][0]                     
+                                                                 param_net[0][0]                  
+                                                                 param_net[0][1]                  
+==================================================================================================
+Total params: 265,670
+Trainable params: 265,670
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+[Actor] Dataset <ShuffleDataset shapes: (((6,), (60,), (60,)), ((12,), (1,), (30,), (1, 60))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float64))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+[Actor] Episode 0 Step 0 Loss: 117.48457
+[Actor] Episode 0 Step 1 Loss: 69.01446
+[Actor] Episode 0 Step 2 Loss: 35.78863
+[Actor] Episode 0 Step 3 Loss: 16.86156
+[Actor] Episode 0 Step 4 Loss: 46.43760
+[Actor] Episode 0 Step 5 Loss: 36.13190
+[Actor] Episode 0 Step 6 Loss: 20.42853
+[Actor] Episode 0 Step 7 Loss: 19.52353
+[Actor] Episode 0 Step 8 Loss: 23.09700
+[Actor] Episode 0 Step 9 Loss: 30.65229
+[Actor] Episode 0 Step 10 Loss: 24.65557
+[Actor] Episode 0 Step 11 Loss: 32.41357
+[Actor] Episode 0 Step 12 Loss: 18.25488
+[Actor] Episode 0 Step 13 Loss: 19.76968
+[Actor] Episode 0 Step 14 Loss: 16.62571
+[Actor] Episode 0 Step 15 Loss: 21.54369
+[Actor] Episode 0 Step 16 Loss: 23.23762
+[Actor] Episode 0 Step 17 Loss: 19.28514
+[Actor] Episode 0 Step 18 Loss: 21.10819
+[Actor] Episode 0 Step 19 Loss: 17.89655
+[Actor] Episode 0 Step 20 Loss: 16.77598
+[Actor] Episode 0 Step 21 Loss: 17.44599
+[Actor] Episode 0 Step 22 Loss: 20.10458
+[Actor] Episode 0 Step 23 Loss: 19.35112
+[Actor] Episode 0 Step 24 Loss: 20.75593
+[Actor] Episode 0 Step 25 Loss: 16.39597
+[Actor] Episode 0 Step 26 Loss: 19.53469
+[Actor] Episode 0 Step 27 Loss: 18.51451
+[Actor] Episode 0 Step 28 Loss: 15.34639
+[Actor] Episode 0 Step 29 Loss: 16.57193
+[Actor] Episode 0 Step 30 Loss: 16.78752
+[Actor] Episode 0 Step 31 Loss: 19.17067
+[Actor] Episode 0 Step 32 Loss: 16.58891
+[Actor] Episode 0 Step 33 Loss: 18.80568
+[Actor] Episode 0 Step 34 Loss: 17.23053
+[Actor] Episode 0 Step 35 Loss: 15.01715
+[Actor] Episode 0 Step 36 Loss: 16.35477
+[Actor] Episode 0 Step 37 Loss: 17.89630
+[Actor] Episode 0 Step 38 Loss: 19.34854
+[Actor] Episode 0 Step 39 Loss: 16.76230
+[Actor] Episode 0 Step 40 Loss: 15.38388
+[Actor] Episode 0 Step 41 Loss: 17.52551
+[Actor] Episode 0 Step 42 Loss: 17.60995
+[Actor] Episode 0 Step 43 Loss: 17.01387
+[Actor] Episode 0 Step 44 Loss: 17.44923
+[Actor] Episode 0 Step 45 Loss: 16.81214
+[Actor] Episode 0 Step 46 Loss: 16.71124
+[Actor] Episode 0 Step 47 Loss: 15.55663
+[Actor] Episode 0 Step 48 Loss: 17.63414
+[Actor] Episode 0 Step 49 Loss: 16.53108
+[Actor] Episode 0 Step 50 Loss: 18.22003
+[Actor] Episode 0 Step 51 Loss: 16.66892
+2021-04-25 08:48:51.249905: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:48:51.249949: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-04-25 08:48:54.600027: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-25 08:48:54.600477: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-04-25 08:48:54.600554: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-04-25 08:48:54.600667: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (shandilya-notebook): /proc/driver/nvidia/version does not exist
+2021-04-25 08:48:54.605971: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-25 08:48:54.606289: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1619320737.910395533, 1.090000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619320737.913684602, 1.093000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1619320737.913791918, 1.093000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1619320739.426571703, 2.172000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1619320740.256245203, 2.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1619320741.351984057, 3.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1619320742.451804012, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[Actor] GPU>>>>>>>>>>>>
+[Actor] []
+[Actor] Creating Data.
+0it [00:00, ?it/s]1it [00:00,  4.28it/s]2it [00:00,  4.67it/s]3it [00:00,  5.00it/s]4it [00:00,  4.95it/s]5it [00:01,  4.52it/s]6it [00:01,  5.20it/s]7it [00:01,  5.55it/s]8it [00:01,  3.90it/s]9it [00:01,  4.63it/s]11it [00:02,  5.50it/s]12it [00:02,  4.85it/s]13it [00:02,  4.77it/s]14it [00:02,  5.22it/s]15it [00:02,  5.83it/s]16it [00:03,  6.20it/s]17it [00:03,  5.40it/s]18it [00:03,  5.14it/s]19it [00:03,  5.30it/s]20it [00:03,  4.85it/s]21it [00:04,  4.65it/s]22it [00:04,  4.81it/s]23it [00:04,  4.18it/s]24it [00:04,  4.24it/s]25it [00:05,  4.37it/s]26it [00:05,  5.14it/s]27it [00:05,  4.22it/s]28it [00:05,  4.93it/s]29it [00:06,  4.16it/s]30it [00:06,  3.96it/s]31it [00:06,  4.36it/s]32it [00:06,  4.20it/s]33it [00:07,  3.74it/s]34it [00:07,  3.41it/s]35it [00:07,  3.76it/s]36it [00:07,  4.08it/s]37it [00:08,  4.37it/s]38it [00:08,  4.90it/s]39it [00:08,  4.22it/s]40it [00:08,  3.54it/s]41it [00:09,  3.92it/s]42it [00:09,  3.49it/s]43it [00:09,  3.33it/s]44it [00:09,  3.81it/s]45it [00:10,  3.85it/s]46it [00:10,  3.90it/s]47it [00:10,  4.40it/s]49it [00:10,  5.06it/s]50it [00:11,  4.86it/s]51it [00:11,  4.21it/s]52it [00:11,  4.99it/s]53it [00:11,  5.18it/s]55it [00:12,  6.21it/s]56it [00:12,  5.53it/s]58it [00:12,  7.17it/s]59it [00:12,  5.94it/s]60it [00:12,  5.89it/s]61it [00:13,  6.23it/s]62it [00:13,  5.65it/s]63it [00:13,  5.51it/s]64it [00:13,  5.37it/s]65it [00:13,  5.38it/s]66it [00:14,  3.27it/s]67it [00:14,  3.75it/s]68it [00:14,  4.53it/s]69it [00:15,  3.74it/s]70it [00:15,  3.91it/s]71it [00:15,  4.66it/s]72it [00:15,  5.06it/s]73it [00:15,  5.68it/s]74it [00:15,  6.33it/s]75it [00:16,  4.42it/s]76it [00:16,  3.39it/s]77it [00:16,  3.68it/s]78it [00:17,  3.70it/s]79it [00:17,  3.45it/s]80it [00:17,  3.33it/s]81it [00:18,  3.25it/s]82it [00:18,  3.82it/s]83it [00:18,  3.93it/s]84it [00:18,  3.51it/s]85it [00:19,  4.06it/s]86it [00:19,  3.67it/s]87it [00:19,  4.45it/s]88it [00:19,  4.22it/s]89it [00:19,  4.34it/s]90it [00:20,  4.04it/s]92it [00:20,  5.54it/s]93it [00:20,  5.34it/s]94it [00:20,  4.67it/s]95it [00:21,  4.87it/s]96it [00:21,  5.56it/s]97it [00:21,  5.26it/s]98it [00:21,  4.72it/s]99it [00:21,  4.51it/s]100it [00:22,  4.26it/s]101it [00:22,  4.78it/s]102it [00:22,  4.51it/s]103it [00:22,  5.35it/s]104it [00:22,  5.97it/s]105it [00:23,  4.79it/s]106it [00:23,  4.54it/s]107it [00:23,  4.85it/s]108it [00:23,  4.69it/s]109it [00:23,  5.23it/s]110it [00:24,  5.26it/s]111it [00:24,  4.84it/s]112it [00:24,  4.03it/s]113it [00:25,  3.77it/s]114it [00:25,  4.08it/s]115it [00:25,  4.35it/s]116it [00:25,  4.54it/s]117it [00:25,  4.52it/s]118it [00:26,  4.37it/s]119it [00:26,  4.53it/s]120it [00:26,  4.79it/s]121it [00:26,  4.19it/s]122it [00:27,  4.19it/s]123it [00:27,  4.78it/s]124it [00:27,  4.04it/s]125it [00:27,  3.58it/s]126it [00:28,  3.84it/s]127it [00:28,  3.55it/s]128it [00:28,  4.36it/s]129it [00:28,  4.78it/s]130it [00:28,  4.83it/s]131it [00:29,  4.08it/s]132it [00:29,  4.04it/s]133it [00:29,  4.06it/s]134it [00:29,  4.24it/s]135it [00:30,  4.01it/s]135it [00:30,  4.47it/s]
+[Actor] Number of Data Points: 135
+Model: "pretrain_actor_cell"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+motion_state_inp_cell (InputLay [(None, 6)]          0                                            
+__________________________________________________________________________________________________
+mod_state_cell (InputLayer)     [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+z_cell (InputLayer)             [(None, 60)]         0                                            
+__________________________________________________________________________________________________
+param_net (Functional)          [(None, 1), (None, 3 42506       motion_state_inp_cell[0][0]      
+__________________________________________________________________________________________________
+rhythm_generator (Functional)   [(None, 12), (None,  223164      mod_state_cell[0][0]             
+                                                                 z_cell[0][0]                     
+                                                                 param_net[0][0]                  
+                                                                 param_net[0][1]                  
+==================================================================================================
+Total params: 265,670
+Trainable params: 265,670
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+[Actor] Dataset <ShuffleDataset shapes: (((6,), (60,), (60,)), ((12,), (1,), (30,), (1, 60))), types: ((tf.float32, tf.float64, tf.float64), (tf.float32, tf.float32, tf.float64, tf.float64))>
+[Actor] Starting Actor Pretraining
+[Actor] Starting Episode 0
+[Actor] Episode 0 Step 0 Loss: 124.53109
+[Actor] Episode 0 Step 1 Loss: 92.25275
+[Actor] Episode 0 Step 2 Loss: 39.55704
+[Actor] Episode 0 Step 3 Loss: 17.51082
+[Actor] Episode 0 Step 4 Loss: 39.33397
+[Actor] Episode 0 Step 5 Loss: 39.49753
+[Actor] Episode 0 Step 6 Loss: 20.71074
+[Actor] Episode 0 Step 7 Loss: 18.59438
+[Actor] Episode 0 Step 8 Loss: 25.43476
+[Actor] Episode 0 Step 9 Loss: 30.32823
+[Actor] Episode 0 Step 10 Loss: 25.70204
+[Actor] Episode 0 Step 11 Loss: 22.09593
+[Actor] Episode 0 Step 12 Loss: 20.77803
+[Actor] Episode 0 Step 13 Loss: 15.20068
+[Actor] Episode 0 Step 14 Loss: 17.92533
+[Actor] Episode 0 Step 15 Loss: 18.50680
+[Actor] Episode 0 Step 16 Loss: 18.98954
+[Actor] Episode 0 Step 17 Loss: 19.75365
+[Actor] Episode 0 Step 18 Loss: 21.13798
+[Actor] Episode 0 Step 19 Loss: 16.88661
+[Actor] Episode 0 Step 20 Loss: 18.54076
+[Actor] Episode 0 Step 21 Loss: 17.67862
+[Actor] Episode 0 Step 22 Loss: 18.46313
+[Actor] Episode 0 Step 23 Loss: 20.59708
+[Actor] Episode 0 Step 24 Loss: 22.54561
+[Actor] Episode 0 Step 25 Loss: 16.68295
+[Actor] Episode 0 Step 26 Loss: 18.64326
+[Actor] Episode 0 Step 27 Loss: 18.01772
+[Actor] Episode 0 Step 28 Loss: 17.94962
+[Actor] Episode 0 Step 29 Loss: 17.32738
+[Actor] Episode 0 Step 30 Loss: 17.05968
+[Actor] Episode 0 Step 31 Loss: 18.05565
+[Actor] Episode 0 Step 32 Loss: 17.19370
+[Actor] Episode 0 Step 33 Loss: 16.58099
+[Actor] Episode 0 Step 34 Loss: 16.53691
+[Actor] Episode 0 Step 35 Loss: 16.75745
+[Actor] Episode 0 Step 36 Loss: 15.46235
+[Actor] Episode 0 Step 37 Loss: 17.27437
+[Actor] Episode 0 Step 38 Loss: 15.04948
+[Actor] Episode 0 Step 39 Loss: 17.80647
+[Actor] Episode 0 Step 40 Loss: 15.69528
+[Actor] Episode 0 Step 41 Loss: 15.08666
+[Actor] Episode 0 Step 42 Loss: 17.31412
+[Actor] Episode 0 Step 43 Loss: 17.24492
+[Actor] Episode 0 Step 44 Loss: 16.07157
+[Actor] Episode 0 Step 45 Loss: 16.48248
+[Actor] Episode 0 Step 46 Loss: 20.02180
+[Actor] Episode 0 Step 47 Loss: 17.78700
+[Actor] Episode 0 Step 48 Loss: 15.76636
+[Actor] Episode 0 Step 49 Loss: 17.68997
+[Actor] Episode 0 Step 50 Loss: 17.57225
+[Actor] Episode 0 Step 51 Loss: 17.37505
+[Actor] Episode 0 Step 52 Loss: 14.96162
+[Actor] Episode 0 Step 53 Loss: 16.42673
+[Actor] Episode 0 Step 54 Loss: 17.14887
+[Actor] Episode 0 Step 55 Loss: 15.81984
+[Actor] Episode 0 Step 56 Loss: 18.25831
+[Actor] Episode 0 Step 57 Loss: 19.17989
+[Actor] Episode 0 Step 58 Loss: 19.46674
+[Actor] Episode 0 Step 59 Loss: 18.66515
+[Actor] Episode 0 Step 60 Loss: 15.38551
+[Actor] Episode 0 Step 61 Loss: 16.41063
+[Actor] Episode 0 Step 62 Loss: 17.37032
+[Actor] Episode 0 Step 63 Loss: 17.29806
+[Actor] Episode 0 Step 64 Loss: 18.07235
+[Actor] Episode 0 Step 65 Loss: 14.63882
+[Actor] Episode 0 Step 66 Loss: 17.86542
+[Actor] Episode 0 Step 67 Loss: 14.38754
+[Actor] Episode 0 Step 68 Loss: 20.66095
+[Actor] Episode 0 Step 69 Loss: 18.24393
+[Actor] Episode 0 Step 70 Loss: 15.04585
+[Actor] Episode 0 Step 71 Loss: 16.05013
+[Actor] Episode 0 Step 72 Loss: 18.46881
+[Actor] Episode 0 Step 73 Loss: 16.86349
+[Actor] Episode 0 Step 74 Loss: 15.27810
+[Actor] Episode 0 Step 75 Loss: 17.44169
+[Actor] Episode 0 Step 76 Loss: 15.08100
+[Actor] Episode 0 Step 77 Loss: 17.25807
+[Actor] Episode 0 Step 78 Loss: 16.49868
+[Actor] Episode 0 Step 79 Loss: 17.40391
+[Actor] Episode 0 Step 80 Loss: 16.53476
+[Actor] Episode 0 Step 81 Loss: 15.88327
+[Actor] Episode 0 Step 82 Loss: 15.27259
+[Actor] Episode 0 Step 83 Loss: 16.34852
+[Actor] Episode 0 Step 84 Loss: 16.65247
+[Actor] Episode 0 Step 85 Loss: 16.28560
+[Actor] Episode 0 Step 86 Loss: 15.86677
+[Actor] Episode 0 Step 87 Loss: 15.49010
+[Actor] Episode 0 Step 88 Loss: 16.43647
+[Actor] Episode 0 Step 89 Loss: 16.93663
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 20.44907
+[Actor] Learning Rate: 0.00499
+[Actor] Epoch Time: 235.70765s
+-------------------------------------------------
+[Actor] Test Episode 0 Step 0 Loss: 16.76807
+[Actor] Test Episode 0 Step 1 Loss: 15.30367
+[Actor] Test Episode 0 Step 2 Loss: 14.46600
+[Actor] Test Episode 0 Step 3 Loss: 16.35288
+[Actor] Test Episode 0 Step 4 Loss: 17.00573
+[Actor] Test Episode 0 Step 5 Loss: 16.10584
+[Actor] Test Episode 0 Step 6 Loss: 17.39573
+[Actor] Test Episode 0 Step 7 Loss: 15.24675
+[Actor] Test Episode 0 Step 8 Loss: 16.69454
+[Actor] Test Episode 0 Step 9 Loss: 14.91999
+-------------------------------------------------
+[Actor] Episode 0 Average Loss: 16.02592
+[Actor] Test Time: 9.97432s
+-------------------------------------------------
+[0.1, 0.9, 0.0, 1.0]
+[Actor] Starting Episode 1
+[Actor] Episode 1 Step 0 Loss: 16.11516
+[Actor] Episode 1 Step 1 Loss: 16.01980
+[Actor] Episode 1 Step 2 Loss: 15.57328
+[Actor] Episode 1 Step 3 Loss: 14.47258
+[Actor] Episode 1 Step 4 Loss: 16.29992
+[Actor] Episode 1 Step 5 Loss: 15.10992
+[Actor] Episode 1 Step 6 Loss: 14.78601
+[Actor] Episode 1 Step 7 Loss: 15.94116
+[Actor] Episode 1 Step 8 Loss: 15.41288
+[Actor] Episode 1 Step 9 Loss: 14.85390
+[Actor] Episode 1 Step 10 Loss: 14.04270
+[Actor] Episode 1 Step 11 Loss: 13.62546
+[Actor] Episode 1 Step 12 Loss: 14.37339
+[Actor] Episode 1 Step 13 Loss: 15.76741
+[Actor] Episode 1 Step 14 Loss: 15.96926
+[Actor] Episode 1 Step 15 Loss: 15.96764
+[Actor] Episode 1 Step 16 Loss: 14.40145
+[Actor] Episode 1 Step 17 Loss: 15.53503
+[Actor] Episode 1 Step 18 Loss: 15.33569
+[Actor] Episode 1 Step 19 Loss: 14.97779
+[Actor] Episode 1 Step 20 Loss: 15.86368
+[Actor] Episode 1 Step 21 Loss: 16.58225
+[Actor] Episode 1 Step 22 Loss: 15.07999
+[Actor] Episode 1 Step 23 Loss: 16.03771
+[Actor] Episode 1 Step 24 Loss: 16.29154
+[Actor] Episode 1 Step 25 Loss: 12.83930
+[Actor] Episode 1 Step 26 Loss: 14.53302
+[Actor] Episode 1 Step 27 Loss: 15.44420
+[Actor] Episode 1 Step 28 Loss: 14.79268
+[Actor] Episode 1 Step 29 Loss: 13.45546
+[Actor] Episode 1 Step 30 Loss: 15.03195
+[Actor] Episode 1 Step 31 Loss: 12.17229
+[Actor] Episode 1 Step 32 Loss: 16.77181
+[Actor] Episode 1 Step 33 Loss: 15.25243
+[Actor] Episode 1 Step 34 Loss: 14.33654
+[Actor] Episode 1 Step 35 Loss: 14.24799
+[Actor] Episode 1 Step 36 Loss: 13.49019
+[Actor] Episode 1 Step 37 Loss: 14.17544
+[Actor] Episode 1 Step 38 Loss: 13.92594
+[Actor] Episode 1 Step 39 Loss: 14.20828
+[Actor] Episode 1 Step 40 Loss: 13.03543
+[Actor] Episode 1 Step 41 Loss: 13.21299
+[Actor] Episode 1 Step 42 Loss: 14.84861
+[Actor] Episode 1 Step 43 Loss: 11.43855
+[Actor] Episode 1 Step 44 Loss: 11.64703
+[Actor] Episode 1 Step 45 Loss: 12.02272
+[Actor] Episode 1 Step 46 Loss: 12.51499
+[Actor] Episode 1 Step 47 Loss: 11.56467
+[Actor] Episode 1 Step 48 Loss: 10.07127
+[Actor] Episode 1 Step 49 Loss: 9.83517
+[Actor] Episode 1 Step 50 Loss: 8.13630
+[Actor] Episode 1 Step 51 Loss: 8.41863
+[Actor] Episode 1 Step 52 Loss: 6.39228
+[Actor] Episode 1 Step 53 Loss: 6.45149
+[Actor] Episode 1 Step 54 Loss: 20.53259
+[Actor] Episode 1 Step 55 Loss: 79.20119
+[Actor] Episode 1 Step 56 Loss: 6.48198
+[Actor] Episode 1 Step 57 Loss: 24.16533
+[Actor] Episode 1 Step 58 Loss: 7.76050
+[Actor] Episode 1 Step 59 Loss: 17.46420
+[Actor] Episode 1 Step 60 Loss: 12.56477
+[Actor] Episode 1 Step 61 Loss: 8.66681
+[Actor] Episode 1 Step 62 Loss: 12.86228
+[Actor] Episode 1 Step 63 Loss: 11.09682
+[Actor] Episode 1 Step 64 Loss: 11.23990
+[Actor] Episode 1 Step 65 Loss: 10.29302
+[Actor] Episode 1 Step 66 Loss: 10.47298
+[Actor] Episode 1 Step 67 Loss: 13.98020
+[Actor] Episode 1 Step 68 Loss: 13.15014
+[Actor] Episode 1 Step 69 Loss: 10.01507
+[Actor] Episode 1 Step 70 Loss: 9.91110
+[Actor] Episode 1 Step 71 Loss: 9.73708
+[Actor] Episode 1 Step 72 Loss: 9.57283
+[Actor] Episode 1 Step 73 Loss: 8.78981
+[Actor] Episode 1 Step 74 Loss: 8.57436
+[Actor] Episode 1 Step 75 Loss: 8.58986
+[Actor] Episode 1 Step 76 Loss: 6.68408
+[Actor] Episode 1 Step 77 Loss: 5.94696
+[Actor] Episode 1 Step 78 Loss: 4.93005
+[Actor] Episode 1 Step 79 Loss: 5.46653
+[Actor] Episode 1 Step 80 Loss: 4.35899
+[Actor] Episode 1 Step 81 Loss: 3.17862
+[Actor] Episode 1 Step 82 Loss: 3.87623
+[Actor] Episode 1 Step 83 Loss: 2.30867
+[Actor] Episode 1 Step 84 Loss: 3.20998
+[Actor] Episode 1 Step 85 Loss: 1.70054
+[Actor] Episode 1 Step 86 Loss: 2.34629
+[Actor] Episode 1 Step 87 Loss: 3.75006
+[Actor] Episode 1 Step 88 Loss: 2.27044
+[Actor] Episode 1 Step 89 Loss: 2.11097
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 12.51072
+[Actor] Learning Rate: 0.00499
+[Actor] Epoch Time: 242.37522s
+-------------------------------------------------
+[Actor] Test Episode 1 Step 0 Loss: 4.52950
+[Actor] Test Episode 1 Step 1 Loss: 4.42741
+[Actor] Test Episode 1 Step 2 Loss: 4.49215
+[Actor] Test Episode 1 Step 3 Loss: 4.37793
+[Actor] Test Episode 1 Step 4 Loss: 4.35032
+[Actor] Test Episode 1 Step 5 Loss: 4.67589
+[Actor] Test Episode 1 Step 6 Loss: 4.28055
+[Actor] Test Episode 1 Step 7 Loss: 4.54161
+[Actor] Test Episode 1 Step 8 Loss: 4.77531
+[Actor] Test Episode 1 Step 9 Loss: 4.17009
+-------------------------------------------------
+[Actor] Episode 1 Average Loss: 4.46208
+[Actor] Test Time: 10.28701s
+-------------------------------------------------
+[0.1, 0.81, 0.0, 1.0]
+[Actor] Starting Episode 2
+[Actor] Episode 2 Step 0 Loss: 4.36200
+[Actor] Episode 2 Step 1 Loss: 4.75045
+[Actor] Episode 2 Step 2 Loss: 3.01155
+[Actor] Episode 2 Step 3 Loss: 1.90707
+[Actor] Episode 2 Step 4 Loss: 3.05797
+[Actor] Episode 2 Step 5 Loss: 1.65281
+[Actor] Episode 2 Step 6 Loss: 2.84607
+[Actor] Episode 2 Step 7 Loss: 2.31220
+[Actor] Episode 2 Step 8 Loss: 2.01246
+[Actor] Episode 2 Step 9 Loss: 2.24756
+[Actor] Episode 2 Step 10 Loss: 2.00241
+[Actor] Episode 2 Step 11 Loss: 1.87453
+[Actor] Episode 2 Step 12 Loss: 2.35419
+[Actor] Episode 2 Step 13 Loss: 1.71319
+[Actor] Episode 2 Step 14 Loss: 2.49815
+[Actor] Episode 2 Step 15 Loss: 2.02730
+[Actor] Episode 2 Step 16 Loss: 2.51557
+[Actor] Episode 2 Step 17 Loss: 1.87552
+[Actor] Episode 2 Step 18 Loss: 2.21465
+[Actor] Episode 2 Step 19 Loss: 1.84507
+[Actor] Episode 2 Step 20 Loss: 1.72156
+[Actor] Episode 2 Step 21 Loss: 1.84121
+[Actor] Episode 2 Step 22 Loss: 1.60069
+[Actor] Episode 2 Step 23 Loss: 1.89820
+[Actor] Episode 2 Step 24 Loss: 1.60104
+[Actor] Episode 2 Step 25 Loss: 1.55909
+[Actor] Episode 2 Step 26 Loss: 1.48417
+[Actor] Episode 2 Step 27 Loss: 1.64920
+[Actor] Episode 2 Step 28 Loss: 1.60542
+[Actor] Episode 2 Step 29 Loss: 1.57965
+[Actor] Episode 2 Step 30 Loss: 1.74941
+[Actor] Episode 2 Step 31 Loss: 1.56116
+[Actor] Episode 2 Step 32 Loss: 1.72616
+[Actor] Episode 2 Step 33 Loss: 1.49526
+[Actor] Episode 2 Step 34 Loss: 1.69664
+[Actor] Episode 2 Step 35 Loss: 1.49304
+[Actor] Episode 2 Step 36 Loss: 1.76311
+[Actor] Episode 2 Step 37 Loss: 1.44954
+[Actor] Episode 2 Step 38 Loss: 1.66208
