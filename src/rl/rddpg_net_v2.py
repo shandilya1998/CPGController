@@ -100,46 +100,42 @@ class TimeDistributed(tf.keras.Model):
             return outputs
 
 class ActorNetwork(object):
-    def __init__(self, params, create_target = True):
+    def __init__(self, params, create_target = True, \
+            train_param_net = False, weights_path = \
+            'weights/actor_pretrain/exp52/pretrain_actor/\
+                actor_pretrained_pretrain_actor_52_335.ckpt'):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
         self.params = copy.deepcopy(params)
         #Now create the model
-        """
-        self.model , self.weights, self.state = \
-            self.create_actor_network(self.params, \
-            steps = self.params['max_steps'])
+        self.model = self.create_actor_network(
+            self.params, cell = None, \
+            trainable = True, weights_path = weights_path, \
+            train_param_net = train_parma_net, \
+            steps = self.params['max_steps'] * self.params['rnn_steps']
+        )
         if create_target:
-            self.target_model, self.target_weights, self.target_state = \
-                self.create_actor_network(self.params, \
-                steps = self.params['max_steps'] + 1)
-        """
-        self.optimizer = tf.keras.optimizers.SGD(
+            self.target_model = self.create_actor_network(
+                self.params, cell = None, \
+                trainable = True, weights_path = weights_path, \
+                train_param_net = train_parma_net, \
+                steps = 1 + self.params['max_steps'] * self.params['rnn_steps']
+            )
+        self.optimizer = tf.keras.optimizers.Adam(
             learning_rate = self.LEARNING_RATE
         )
         self.pretrain_loss = tf.keras.losses.MeanSquaredError()
-        self.recurrent_state_init = []
-        self.recurrent_state_init.append(
-            tf.zeros(
-                shape = (1, params['units_combine_rddpg'][0]),
-                dtype = tf.dtypes.float32
-            )
-        )
-        self.recurrent_state_init.append(
-            tf.zeros(
-                shape = (1, params['units_omega'][0]),
-                dtype = tf.dtypes.float32
-            )
+        self.gru_recurrent_state_init = tf.zeros(
+            shape = (1, params['units_robot_state'][0]),
+            dtype = tf.dtypes.float32
         )
 
     def train(self, states, rc_state, q_grads):
         with tf.GradientTape() as tape:
-            out, osc, omega, a, b, state, z_out, combine_state, \
-                    omega_state = self.model(states[:-1] + rc_state)
-            action = [out, osc]
+            action, Z, state = self.model(states + rc_state)
         grads = tape.gradient(
-            action + [a, b],
+            action,
             self.model.trainable_variables,
             [-1 * grad for grad in q_grads]
         )
@@ -308,7 +304,10 @@ class ActorNetwork(object):
         )
         return model
 
-    def create_pretrain_actor_cell(self, params, trainable = True):
+    def create_pretrain_actor_cell(self, params, trainable = True, \
+            train_param_net = None):
+        if train_param_net is None:
+            train_param_net = trainable
         desired_motion = tf.keras.Input(
             shape = (
                 params['observation_spec'][0].shape[-1]
@@ -331,7 +330,7 @@ class ActorNetwork(object):
 
         param_net = self.create_param_net(
             params,
-            trainable
+            train_param_net
         )
 
         rhythm_generator = self.create_rhythm_generator(
@@ -349,6 +348,125 @@ class ActorNetwork(object):
             outputs = [actions, omega, mu, Z],
             name = 'pretrain_actor_cell'
         )
+        return model
+
+    def create_actor_cell(self, params, trainable = True, \
+            weights_path = None, train_param_net = False):
+        cell = self.create_pretrain_actor_cell(params, trainable, \
+            train_param_net)
+        if weights_path is not None:
+            cell.load_weights(weights_path)
+        desired_motion, _ z = cell.inputs
+        robot_state = tf.keras.Input(
+            shape = params['observation_spec'][1].shape,
+            dtype = params['observation_spec'][1].dtype,
+            name = params['observation_spec'][1].name
+        )
+        robot_enc_state = tf.keras.Input(
+            shape = (params['units_robot_state'][0],)
+            dtype = tf.dtypes.float32,
+            name = 'robot_enc_state_inp'
+        )
+        gru = tf.keras.layers.GRUCell(
+            units = units_omega[0],
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+            name = 'robot_state_enc_gru'
+        )
+
+        robot_enc = tf.keras.Sequential(name = 'robot_enc')
+        for i, units in enumerate(params['units_robot_state'][1:]):
+            robot_enc.add(
+                complex.ComplexDense(
+                    units = units,
+                    activation = activation_omega,
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'robot_enc_dense_{i}'.format(i = i)
+                )
+            )
+
+        x_R, state = gru(robo_state, robot_enc_state)
+        x_I = tf.zeros_like(x_R)
+        x = tf.concat([x_R, x_I], -1)
+        x = robot_enc(x)
+        actions, omega, mu, Z = cell([
+            desired_motion, x, z
+        ])
+        model = tf.keras.Model(
+            inputs = [
+                desired_motion, robot_state, z, robot_state_enc
+            ],
+            outputs = [actions, omega, mu, state, Z]
+        )
+        return model
+
+     def create_actor_network(self, params, cell = None, \
+            trainable = True, weights_path = None, \
+            train_param_net = False, steps = None):
+
+        if steps is None:
+            steps = params['max_steps'] * params['rnn_steps']
+        if cell is  None:
+            cell = self.create_actor_cell(
+                params, trainable, weights_path, \
+                    train_param_net
+            )
+        desired_motion = tf.keras.Input(
+            shape = (
+                steps,
+                params['observation_spec'][0].shape[-1]
+            ),
+            dtype = tf.dtypes.float32,
+            name = 'td_' + params['observation_spec'][0].name
+        )
+        robot_state = tf.keras.Input(
+            shape = (
+                steps,
+                params['observation_spec'][1].shape[-1]
+            ),
+            dtype = tf.dtypes.float32,
+            name = 'td_' + params['observation_spec'][1].name
+        )
+        robot_enc_state = tf.keras.Input(
+            shape = (params['units_robot_state'][0],)
+            dtype = tf.dtypes.float32,
+            name = 'robot_enc_state_inp'
+        )
+        z = tf.keras.Input(
+            shape = (2 * params['units_osc'],),
+            dtype = tf.dtypes.float32,
+            name = 'z'
+        )
+        rnn = TimeDistributed(
+            params,
+            cell,
+            'ActorRNN',
+            [
+                params['units_robot_state'][0],
+                2 * params['units_osc']
+            ],
+            steps = steps,
+            return_state = True,
+            trainable = trainable
+        )
+
+        [actions, _, _, _, _], [Z, state] = rnn([
+            desired_motion, robot_state, robot_enc_state, z
+        ])
+        model = tf.keras.Model(
+            inputs = [
+                desired_motion,
+                robot_state,
+                z,
+                robot_enc_state
+            ],
+            outputs = [
+                actions,
+                Z,
+                state,
+            ],
+            name = 'actor'
+        )
+
         return model
 
     def create_data(self, path, signal_gen, env):
@@ -527,10 +645,10 @@ class CriticNetwork(object):
         # Now create the model
         self.model, self.action, self.state = \
             self.create_critic_network(self.params, \
-            steps = self.params['max_steps'])
+            steps = self.params['max_steps'] * self.params['rnn_steps'])
         self.target_model, self.target_action, self.target_state = \
             self.create_critic_network(self.params, \
-            steps = self.params['max_steps'] + 1)
+            steps = self.params['max_steps'] * self.params['rnn_steps'] + 1)
         self.optimizer = tf.keras.optimizers.SGD(
             learning_rate = self.LEARNING_RATE
         )
@@ -542,19 +660,18 @@ class CriticNetwork(object):
         ]
         self.mse =tf.keras.losses.MeanSquaredError()
 
-    def q_grads(self, states, actions, a, b, rc_state):
+    def q_grads(self, states, actions):
         with tf.GradientTape() as tape:
-            watch = actions + [a, b]
+            watch = actions
             tape.watch(watch)
-            inputs = states + actions + [a, b] + rc_state
-            q_values, _ = self.model(inputs)
+            inputs = states + [actions]
+            q_values = self.model(inputs)
         return tape.gradient(q_values, watch)
 
-    def train(self, states, actions, a, b, rc_state, \
-            y, per = False, W = None):
+    def train(self, states, actions, y, per = False, W = None):
         with tf.GradientTape() as tape:
-            inputs = states + actions + [a, b, rc_state]
-            y_pred, _ = self.model(inputs)
+            inputs = states + [actions]
+            y_pred = self.model(inputs)
             deltas = None
             loss = self.loss(y, y_pred, sample_weight = W)
             if per:
@@ -583,106 +700,105 @@ class CriticNetwork(object):
     def loss(self, y_true, y_pred, sample_weight):
         return self.mse(y_true, y_pred, sample_weight)
 
-    def create_critic_cell(self, params):
-        print('[DDPG] Building the critic cell')
-
-        S = [
-            tf.keras.Input(
-                shape = spec.shape,
-                dtype = spec.dtype
-            ) for spec in params['observation_spec']
-        ]
-
-        A = [
-            tf.keras.Input(
-                shape = spec.shape,
-                dtype = spec.dtype
-            ) for spec in params['action_spec']
-        ]
-
-        a = tf.keras.Input(
-            shape = (params['action_dim'],),
-            dtype = params['action_spec'][0].dtype
-        )
-
-        b = tf.keras.Input(
-            shape = (params['action_dim'],),
-            dtype = params['action_spec'][0].dtype
-        )
-
-        state = tf.keras.Input(
-            shape = (params['units_gru_rddpg'],),
-            dtype = tf.dtypes.float32
-        )
-
-        self.recurrent_state_init = [
-            tf.zeros(
-                shape = (1, params['units_gru_rddpg']),
-                dtype = tf.dtypes.float32
-            )
-        ]
-
-        inputs = S + A + [a, b, state]
-
-        cr = get_critic_v2(params)
-        out = cr(inputs)
-        model = tf.keras.Model(
-            inputs = inputs,
-            outputs = out
-        )
-
-        return model, A, S
-
-    def create_critic_network(self, params, steps = None):
-        if steps is not None:
-            params['max_steps'] = steps
-        critic_cell, _, _ = self.create_critic_cell(params)
+    def create_critic_network(self, params, trainable = True, steps = None):
+        if steps is None:
+            steps = params['max_steps'] * params['rnn_steps']
         print('[DDPG] Building the critic model')
         S = [
             tf.keras.Input(
-                shape = (params['max_steps'], spec.shape[-1]),
-                dtype = spec.dtype
-            ) for spec in params['observation_spec']
-        ]
-
-        A = [
-            tf.keras.Input(
                 shape = (
-                    params['max_steps'],
-                    spec.shape[-2],
-                    spec.shape[-1]),
-                dtype = spec.dtype
-            ) for spec in params['action_spec']
+                    steps,
+                    spec.shape[-1]
+                ),
+                dtype = spec.dtype,
+                name = spec.name
+            ) for spec in params['observation_spec'][:-1]
         ]
 
-        a = tf.keras.Input(
-            shape = (params['max_steps'], params['action_dim']),
-            dtype = params['action_spec'][0].dtype
+        A = tf.keras.Input(
+            shape = (
+                steps,
+                params['action_dim']
+            ),
+            dtype = tf.dtypes.float32,
+            name = 'action_critic_inp'
         )
 
-        b = tf.keras.Input(
-            shape = (params['max_steps'], params['action_dim']),
-            dtype = params['action_spec'][0].dtype
+        motion_state_seq = tf.keras.Sequential(name = 'motion_state_seq_critic')
+        for i, units in enumerate(params['units_motion_state_critic']):
+            motion_state_seq.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = 'elu',
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'motion_state_dense_critic_{i}'.format(
+                        i = i
+                    ),
+                    trainable = trainable
+                )
+            )
+
+        robot_state_seq = tf.keras.Sequential(name = 'robot_state_seq_critic')
+        for i, units in enumerate(params['units_robot_state_critic']):
+            robot_state_seq.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = 'elu',
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'robot_state_dense_critic_{i}'.format(
+                        i = i
+                    ),
+                    trainable = trainable
+                )
+            )
+
+        action_seq = tf.keras.Sequential(name = 'action_seq_critic')
+        for i, units in enumerate(params['units_action_critic']):
+            action_seq.add(
+                tf.keras.layers.Dense(
+                    units = units,
+                    activation = 'elu',
+                    kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+                    name = 'action_dense_critic_{i}'.format(
+                        i = i
+                    ),
+                    trainable = trainable
+                )
+            )
+
+        gru = tf.keras.layers.GRU(
+            units = params['units_gru_rddpg'],
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+            return_sequences = True,
+            name = 'critic_GRU',
+            trainable = trainable
         )
 
-        state = tf.keras.Input(
-            shape = (params['units_gru_rddpg'],),
-            dtype = tf.dtypes.float32
+        out_dense = tf.keras.layers.Dense(
+            units = params['units_q'],
+            activation = 'elu',
+            kernel_regularizer = tf.keras.regularizers.l2(1e-3),
+            name = 'out_dense_critic',
+            trainable = trainable
+
         )
 
-        inputs = S + A + [a, b, state]
+        x1 = tf.keras.layers.TimeDistributed(
+            motion_state_seq
+        )(S[0])
+        x2 = tf.keras.layers.TimeDistributed(
+            robot_state_seq
+        )(S[1])
+        x3 = tf.keras.layers.TimeDistributed(
+            action_seq
+        )(A)
 
-        outputs = TimeDistributed(
-            params,
-            critic_cell,
-            'TimeDistributedCritic',
-            [
-                params['units_gru_rddpg']
-            ],
-            trainable = True
-        )(inputs)
+        x = tf.concat([x1, x2, x3], -1)
+        x = gru(x)
+        x = tf.keras.layers.TimeDistributed(out_dense)(x)
+
         model = tf.keras.Model(
-            inputs = inputs,
-            outputs = outputs
+            inputs = S + [A],
+            outputs = [x]
         )
         return model, A, S
