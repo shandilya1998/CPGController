@@ -5,6 +5,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 import time
+import random
 
 def swap_batch_timestep(input_t):
     # Swap the batch and timestep dim for the incoming tensor.
@@ -102,8 +103,7 @@ class TimeDistributed(tf.keras.Model):
 class ActorNetwork(object):
     def __init__(self, params, create_target = True, \
             train_param_net = False, weights_path = \
-            'weights/actor_pretrain/exp52/pretrain_actor/\
-                actor_pretrained_pretrain_actor_52_335.ckpt'):
+            'weights/actor_pretrain/exp52/pretrain_actor/actor_pretrained_pretrain_actor_52_335.ckpt'):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
@@ -112,14 +112,14 @@ class ActorNetwork(object):
         self.model = self.create_actor_network(
             self.params, cell = None, \
             trainable = True, weights_path = weights_path, \
-            train_param_net = train_parma_net, \
+            train_param_net = train_param_net, \
             steps = self.params['max_steps'] * self.params['rnn_steps']
         )
         if create_target:
             self.target_model = self.create_actor_network(
                 self.params, cell = None, \
                 trainable = True, weights_path = weights_path, \
-                train_param_net = train_parma_net, \
+                train_param_net = train_param_net, \
                 steps = 1 + self.params['max_steps'] * self.params['rnn_steps']
             )
         self.optimizer = tf.keras.optimizers.Adam(
@@ -133,9 +133,11 @@ class ActorNetwork(object):
 
     def train(self, states, rc_state, q_grads):
         with tf.GradientTape() as tape:
-            action, Z, state = self.model(states + rc_state)
+            actions, Z, state = self.model(states + rc_state)
+        print(actions)
+        print(q_grads)
         grads = tape.gradient(
-            action,
+            [actions],
             self.model.trainable_variables,
             [-1 * grad for grad in q_grads]
         )
@@ -356,19 +358,19 @@ class ActorNetwork(object):
             train_param_net)
         if weights_path is not None:
             cell.load_weights(weights_path)
-        desired_motion, _ z = cell.inputs
+        desired_motion, _, z = cell.inputs
         robot_state = tf.keras.Input(
             shape = params['observation_spec'][1].shape,
             dtype = params['observation_spec'][1].dtype,
             name = params['observation_spec'][1].name
         )
         robot_enc_state = tf.keras.Input(
-            shape = (params['units_robot_state'][0],)
+            shape = (params['units_robot_state'][0],),
             dtype = tf.dtypes.float32,
             name = 'robot_enc_state_inp'
         )
         gru = tf.keras.layers.GRUCell(
-            units = units_omega[0],
+            units = params['units_robot_state'][0],
             kernel_regularizer = tf.keras.regularizers.l2(1e-3),
             name = 'robot_state_enc_gru'
         )
@@ -378,13 +380,13 @@ class ActorNetwork(object):
             robot_enc.add(
                 complex.ComplexDense(
                     units = units,
-                    activation = activation_omega,
+                    activation = 'elu',
                     kernel_regularizer = tf.keras.regularizers.l2(1e-3),
                     name = 'robot_enc_dense_{i}'.format(i = i)
                 )
             )
 
-        x_R, state = gru(robo_state, robot_enc_state)
+        x_R, state = gru(robot_state, robot_enc_state)
         x_I = tf.zeros_like(x_R)
         x = tf.concat([x_R, x_I], -1)
         x = robot_enc(x)
@@ -393,16 +395,15 @@ class ActorNetwork(object):
         ])
         model = tf.keras.Model(
             inputs = [
-                desired_motion, robot_state, z, robot_state_enc
+                desired_motion, robot_state, z, robot_enc_state
             ],
-            outputs = [actions, omega, mu, state, Z]
+            outputs = [actions, omega, mu, Z, state]
         )
         return model
 
-     def create_actor_network(self, params, cell = None, \
+    def create_actor_network(self, params, cell = None, \
             trainable = True, weights_path = None, \
             train_param_net = False, steps = None):
-
         if steps is None:
             steps = params['max_steps'] * params['rnn_steps']
         if cell is  None:
@@ -427,7 +428,7 @@ class ActorNetwork(object):
             name = 'td_' + params['observation_spec'][1].name
         )
         robot_enc_state = tf.keras.Input(
-            shape = (params['units_robot_state'][0],)
+            shape = (params['units_robot_state'][0],),
             dtype = tf.dtypes.float32,
             name = 'robot_enc_state_inp'
         )
@@ -450,7 +451,7 @@ class ActorNetwork(object):
         )
 
         [actions, _, _, _, _], [Z, state] = rnn([
-            desired_motion, robot_state, robot_enc_state, z
+            desired_motion, robot_state, z, robot_enc_state
         ])
         model = tf.keras.Model(
             inputs = [
@@ -662,11 +663,11 @@ class CriticNetwork(object):
 
     def q_grads(self, states, actions):
         with tf.GradientTape() as tape:
-            watch = actions
-            tape.watch(watch)
+            tape.watch(actions)
             inputs = states + [actions]
             q_values = self.model(inputs)
-        return tape.gradient(q_values, watch)
+        print(q_values.shape)
+        return tape.gradient(q_values, actions)
 
     def train(self, states, actions, y, per = False, W = None):
         with tf.GradientTape() as tape:

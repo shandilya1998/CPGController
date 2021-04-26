@@ -71,14 +71,75 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self.current_time_step = self._create_initial_time_step()
         return self.current_time_step
 
-    def step(self, action, desired_motion, last_step = False, first_step=False):
-        return self._step(action, desired_motion, last_step, first_step)
+    def step(self, action, desired_motion, last_step = False, \
+            first_step=False, version = 1):
+        if version == 1:
+            return self._step(action, desired_motion, last_step, first_step)
+        elif version == 2:
+            return self._step_v2(action, desired_motion, last_step, first_step)
+        else:
+            raise NotImplementedError
 
     def set_motion_state(self, desired_motion):
         self.quadruped.set_motion_state(desired_motion)
 
     def set_osc_state(self, osc_state):
         self.quadruped.set_osc_state = osc_state
+
+    def _step_v2(
+        self, action, desired_motion, last_step=False, first_step=False
+    ):
+        observation = self.quadruped.get_state()
+        reward = 0.0
+        self.quadruped.set_last_pos()
+        self.COT = 0.0
+        self.r_motion = 0.0
+        self.stability = 0.0
+        _action = [action[0], action[1]]
+        observation =  self.quadruped.step(
+            _action,
+            desired_motion
+        )
+        self.COT +=  0.002 * self.quadruped.get_COT()
+        self.r_motion += self.quadruped.get_motion_reward()
+        self.quadruped.set_support_lines()
+        self.stability += 0.002 * self.quadruped.get_stability_reward()
+        reward += self.quadruped.reward
+        reward += self.COT + self.r_motion + self.stability
+        observation = [
+            tf.expand_dims(
+                tf.convert_to_tensor(ob),
+                0
+            ) for ob in observation
+        ]
+        reward = tf.convert_to_tensor(reward, dtype = tf.dtypes.float32)
+        step_type = tfa.trajectories.time_step.StepType.MID
+        self._episode_ended = last_step
+        if first_step:
+            step_type = tfa.trajectories.time_step.StepType.FIRST
+        if last_step:
+            print('[DDPG] Last Step of episode')
+            step_type = tfa.trajectories.time_step.StepType.LAST
+        if not self.quadruped.upright:
+            print('[DDPG] Quadruped Not Upright')
+            if not self.rddpg:
+                step_type = tfa.trajectories.time_step.StepType.LAST
+            else:
+                pass
+        step_type = tf.stack([step_type \
+            for i in range(self.batch_size)])
+
+        discount = tf.ones((self.batch_size,), dtype = tf.dtypes.float32)
+
+        self.current_time_step = TimeStep(
+            step_type,
+            reward,
+            discount,
+            observation,
+        )
+
+        return self.current_time_step
+
 
     def _step(self, action, desired_motion, last_step=False, first_step=False):
         observation = self.quadruped.get_state()
