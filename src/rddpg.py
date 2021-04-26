@@ -1243,6 +1243,8 @@ class Learner:
             q_grad = self.critic.q_grads(states, a_for_grad, \
                 a, b, recurrent_state)
             self.actor.train(states, actor_recurrent_states, q_grad)
+            self.actor.target_train()
+            self.critic.target_train()
             print('[DDPG] Critic Loss {loss}'.format(
                 loss = loss.numpy(),
             ))

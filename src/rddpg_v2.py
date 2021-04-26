@@ -167,7 +167,7 @@ class Learner:
             inp = [x, mod_state, z]
             actions, _, _, z = self.actor.model(inp)
             ac = actions[0].numpy()
-            #self.env.quadruped.all_legs.move(ac)
+            self.env.quadruped.all_legs.move(ac)
             actions = actions.numpy() * np.pi / 3
             y_pred.append(np.expand_dims(
                 actions, 1
@@ -708,7 +708,6 @@ class Learner:
             W = [0.01, 1.0, 1.0, 0.1],
             delta_W = [1.0, 1.0, 0.0, 0.0]
         )
-        
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -742,6 +741,637 @@ class Learner:
             W = [1.0, 0.01, 0.01, 0.01],
             delta_W = [0.98, 1.0, 1.0, 1.0]
         )
+
+    def _add_noise(self, action):
+        # noise theta and sigma scaled by 0.1 for exp5
+        self._noise = max(self.epsilon, 0) * self.OU.function(
+            action,
+            0.0,
+            0.15,
+            0.2
+        )
+        action = action + self._noise
+        return action
+
+    def learn(self, model_dir, experiment, start_epoch = 0, per = False, \
+            her = False):
+        if per:
+            print('[RDDPG] Initializing PER')
+            self.replay_buffer = PER(self.params)
+            raise NotImplementedError
+        if her:
+            print('[RDDPG] Initializing HER')
+            raise NotImplementedError
+        print('[RDDPG] Training Start')
+        hist_critic_loss = []
+        hist_rewards = []
+        total_rewards = []
+        avg_reward = []
+        COT = []
+        stability = []
+        d1 = []
+        d2 = []
+        d3 = []
+        motion = []
+        print('[RDDPG] Starting Pretraining Test')
+        total_reward = 0.0
+        step = 0
+        tot_loss = 0.0
+        break_loop = False
+        self.epsilon -= 1/self.params['EXPLORE']
+        self.test_actor(model_dir)
+        self.current_time_step = self.env.reset()
+        self._state = self.current_time_step.observation
+        enc_goals = []
+        ep = start_epoch
+        if ep != 0:
+            if her:
+                path = os.path.join(
+                    model_dir,
+                    'enc_goals.pickle'
+                )
+                pkl = open(path, 'rb')
+                enc_goals = pickle.load(pkl)
+                pkl.close()
+            if per:
+                path = os.path.join(
+                    model_dir,
+                    'per_tree.pickle'
+                )
+                pkl = open(path, 'rb')
+                tree = pickle.load(pkl)
+                pkl.close()
+                self.replay_buffer.set_priority_tree(tree)
+            data_path = os.path.join(
+                model_dir,
+                'data.pickle'
+            )
+            pkl = open(data_path, 'rb')
+            buff = pickle.load(pkl)
+            pkl.close()
+            self.replay_buffer.set_buffer(buff)
+            self.actor.model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'actor',
+                    'model',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.actor.target_model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'actor',
+                    'target',
+                    'target_model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.critic.model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'critic',
+                    'model',
+                    'model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            self.critic.target_model.load_weights(
+                os.path.join(
+                    model_dir,
+                    'critic',
+                    'target',
+                    'target_model_ep{ep}.ckpt'.format(
+                        ep = ep,
+                    )
+                )
+            )
+            pkl = open(os.path.join(
+                model_dir,
+                'rewards_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            hist_rewards = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'total_rewards_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            total_rewards = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'hist_critic_loss_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            hist_critic_loss = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'COT_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            COT = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'motion_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            motion = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'stability_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            stability = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd1_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d1 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd2_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d2 = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
+                'd3_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            d3 = pickle.load(pkl)
+            pkl.close()
+        while ep < self.params['train_episode_count']:
+            goal_id = np.random.randint(0, len(self.desired_motion))
+            desired_motion = self.desired_motion[goal_id]
+            enc_goals.append(desired_motion[0])
+            self._action = self.env._action_init
+            self._gru_state = self.actor.gru_recurrent_state_init
+            self._noise = self._noise_init
+            self.env.set_motion_state(desired_motion[0])
+            self.current_time_step = self.env.reset()
+            self._state = self.current_time_step.observation
+            self._osc_state = self._state[-1]
+            print('[RDDPG] Starting Episode {i}'.format(i = ep))
+            total_reward = 0.0
+            step = 0
+            tot_loss = 0.0
+            break_loop = False
+            self.epsilon -= 1/self.params['EXPLORE']
+            start = None
+            observations = []
+            actions = []
+            rewards = []
+            next_states = []
+            next_states.append(self._state)
+            recurrent_state_init = [
+                self._state[-1],
+                self.actor.gru_recurrent_state_init
+            ]
+            done = False
+            while(not done):
+                penalty = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+                start = time.perf_counter()
+                action, _, _, Z, state = \
+                    self.actor.model.layers[-1].rnn_cell(
+                        self._state + [self._gru_state]
+                    )
+                self._action = self._add_noise(action)
+                self._gru_state = state
+                self._osc_state = Z
+                if math.isnan(np.sum(self._action.numpy())):
+                    print('[RDDPG] Action value NaN. Ending Episode')
+                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                    self._action = tf.zeros_like(self._action)
+                try:
+                    last_step = False
+                    first_step = False
+                    if step == 0:
+                        first_step = True
+                    if step < self.params['max_steps'] * self.params['rnn_steps']:
+                        last_step = False
+                    else:
+                        last_step = True
+                    self.current_time_step = self.env.step(
+                        [self._action, self._osc_state],
+                        self._state[0],
+                        last_step = last_step,
+                        first_step = first_step,
+                        version = '2'
+                    )
+                except FloatingPointError:
+                    print('[RDDPG] Floating Point Error in reward computation')
+                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                reward = self.current_time_step.reward + penalty
+                motion.append(self.env.quadruped.r_motion)
+                COT.append(self.env.quadruped.COT)
+                stability.append(self.env.quadruped.stability)
+                d1.append(self.env.quadruped.d1)
+                d2.append(self.env.quadruped.d2)
+                d3.append(self.env.quadruped.d3)
+                hist_rewards.append(r.numpy())
+
+                rewards.append(reward)
+                observations.append(self._state)
+                self._state = self.current_time_step.observation
+                next_states.append(self_state)
+                actions.append(self._action)
+                total_reward += reward.numpy()
+                print('[RDDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
+                    ep = ep,
+                    step = step,
+                    reward = r.numpy(),
+                    time = time.perf_counter() - start
+                ))
+                if self.current_time_step.step_type == \
+                    tfa.trajectories.time_step.StepType.LAST:
+                    done = True
+                elif step > self.params['max_steps'] * self.params['rnn_steps']:
+                    done = True
+                else:
+                    done = False
+                step += 1
+            experience = [
+                observations,
+                rewards,
+                actions,
+                next_states,
+                recurrent_state_init
+            ]
+            self.replay_buffer.add_batch(experience)
+            start = time.perf_counter()
+            states, actions, rewards, next_states, \
+                recurrent_state_init, batch_size = \
+                self.get_batch()
+            actions, Z, state = self.actor.target_model([
+                next_states + recurrent_state_init
+            ])
+            recurrent_state = [tf.repeat(
+                rci,
+                batch_size,
+                0
+            ) for rci in self.critic.recurrent_state_init]
+            inputs = next_states + [actions]
+            target_q_values = self.critic.target_model(inputs)
+            y = tf.concat([
+                rewards[:, :-1] + \
+                    self.params['GAMMA'] * target_q_values[:, 1:-1],
+                rewards[:, -1:]
+            ], 1)
+            loss = self.critic.train(states, actions, y)
+            hist_critic_loss.append(loss.numpy())
+            a_for_grad, Z, state = self.actor.model([
+                states + recurrent_state_init
+            ])
+            q_grad = self.critic.q_grads(states, a_for_grad)
+            self.actor.train(states, recurrent_state_init, q_grad)
+            self.actor.target_train()
+            self.critic.target_train()
+            print('[RDDPG] Critic Loss {loss}'.format(
+                loss = loss.numpy(),
+            ))
+            print('[RDDPG] Total Reward {reward:.5f} Avg Critic Loss {loss:.5f} Time {time:.5f}'.format(
+                reward = self.total_reward,
+                loss = tot_loss,
+                time = time.perf_counter() - start
+            ))
+            if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
+                self.save(model_dir, ep, hist_rewards, total_reward, \
+                    hist_critic_loss, COT, motion, \
+                    stability, d1, d2, d3)
+            total_reward.append(self.total_reward)
+            ep += 1
+            print('[DDPG] Starting Next Episode')
+
+    def save(self, model_dir, ep, rewards, total_reward, hist_critic_loss, \
+            COT, motion, stability, d1, d2, d3, tree = None, enc_goals = None):
+        print('[RDDPG] Saving Data')
+        data_path = os.path.join(
+            model_dir,
+            'data.pickle'
+        )
+        if os.path.exists(data_path):
+            os.remove(data_path)
+        pkl = open(data_path, 'wb')
+        pickle.dump(self.replay_buffer.buffer, pkl)
+        pkl.close()
+        if tree is not None:
+            print('[RDDPG] Saving PER priorities')
+            path = os.path.join(
+                model_dir,
+                'per_tree.pickle'
+            )
+            if os.path.exists(path):
+                os.remove(path)
+            pkl = open(path, 'wb')
+            pickle.dump(tree, pkl)
+            pkl.close()
+        if enc_goals is not None:
+            print('[RDDPG] Saving HER goals')
+            path = os.path.join(
+                model_dir,
+                'enc_goals.pickle'
+            )
+            pkl = open(path, 'wb')
+            pickle.dump(enc_goals, pkl)
+            pkl.close()
+        print('[RDDPG] Saving Model')
+        self.actor.model.save_weights(
+            os.path.join(
+                model_dir,
+                'actor',
+                'model',
+                'model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        self.actor.target_model.save_weights(
+            os.path.join(
+                model_dir,
+                'actor',
+                'target',
+                'target_model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        self.critic.model.save_weights(
+            os.path.join(
+                model_dir,
+                'critic',
+                'model',
+                'model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        self.critic.model.save_weights(
+            os.path.join(
+                model_dir,
+                'critic',
+                'target',
+                'target_model_ep{ep}.ckpt'.format(
+                    ep = ep,
+                )
+            )
+        )
+
+        pkl = open(os.path.join(
+            model_dir,
+            'rewards_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(rewards, pkl)
+        pkl.close()
+        fig1, ax1 = plt.subplots(1,1,figsize = (5,5))
+        ax1.plot(rewards)
+        ax1.set_ylabel('reward')
+        ax1.set_xlabel('steps')
+        fig1.savefig(os.path.join(
+            model_dir,
+            'rewards_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+           'total_reward_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(total_reward, pkl)
+        pkl.close()
+        fig2, ax2 = plt.subplots(1,1,figsize = (5,5))
+        ax2.plot(total_reward)
+        ax2.set_ylabel('total reward')
+        ax2.set_xlabel('episodes')
+        fig2.savefig(os.path.join(
+            model_dir,
+            'total_reward_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'hist_critic_loss_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(hist_critic_loss, pkl)
+        pkl.close()
+        fig3, ax3 = plt.subplots(1,1,figsize = (5,5))
+        ax3.plot(hist_critic_loss)
+        ax3.set_ylabel('critic loss')
+        ax3.set_xlabel('steps')
+        fig3.savefig(os.path.join(
+            model_dir,
+            'hist_critic_loss_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'COT_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(COT, pkl)
+        pkl.close()
+        fig9, ax9 = plt.subplots(1,1,figsize = (5,5))
+        ax9.plot(COT)
+        ax9.set_ylabel('COT')
+        ax9.set_xlabel('steps')
+        fig9.savefig(os.path.join(
+            model_dir,
+            'COT_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'motion_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(motion, pkl)
+        pkl.close()
+        fig10, ax10 = plt.subplots(1,1,figsize = (5,5))
+        ax10.plot(motion)
+        ax10.set_ylabel('motion')
+        ax10.set_xlabel('steps')
+        fig10.savefig(os.path.join(
+            model_dir,
+            'motion_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'stability_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(stability, pkl)
+        pkl.close()
+        fig11, ax11 = plt.subplots(1,1,figsize = (5,5))
+        ax11.plot(stability)
+        ax11.set_ylabel('stability')
+        ax11.set_xlabel('steps')
+        fig11.savefig(os.path.join(
+            model_dir,
+            'stability_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd1_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d1, pkl)
+        pkl.close()
+        fig12, ax12 = plt.subplots(1,1,figsize = (5,5))
+        ax12.plot(d1)
+        ax12.set_ylabel('d1')
+        ax12.set_xlabel('steps')
+        fig12.savefig(os.path.join(
+            model_dir,
+                'd1_ep{ep}.png'.format(
+                    ep = ep
+                )
+            )
+        )
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd2_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d2, pkl)
+        pkl.close()
+        fig13, ax13 = plt.subplots(1,1,figsize = (5,5))
+        ax13.plot(d2)
+        ax13.set_ylabel('d2')
+        ax13.set_xlabel('steps')
+        fig13.savefig(os.path.join(
+            model_dir,
+            'd2_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'd3_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(d3, pkl)
+        pkl.close()
+        fig14, ax14 = plt.subplots(1,1,figsize = (5,5))
+        ax14.plot(d3)
+        ax14.set_ylabel('d3')
+        ax14.set_xlabel('steps')
+        fig14.savefig(os.path.join(
+            model_dir,
+            'd3_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        plt.close('all')
+
+    def get_batch(self):
+        batch = self.replay_buffer.get_next(
+            self.params['BATCH_SIZE']
+        )
+        batch_size = len(batch)
+        states = [[] for i in range(
+            len(
+                self.params['observation_spec']
+            ) - 1
+        )]
+        rewards = []
+        actions = []
+        next_states = [[] for i in range(
+            len(
+                self.params['observation_spec']
+            ) - 1
+        )]
+        _recurrent_state_init = [[] for i in range(2)]
+        step_types = []
+        for item in batch:
+            state = [[] for i in range(len(states))]
+            next_state = [[] for i in range(len(next_states))]
+            step_type = []
+            for j, st in enumerate(item[0]):
+                for k, s in enumerate(st[:-1]):
+                    state[k].append(s)
+            state = [tf.expand_dims(tf.concat(s, 0), 0) for s in state]
+            reward = tf.expand_dims(tf.concat([tf.expand_dims(
+                tf.expand_dims(
+                    rw, 0
+                ), 0
+            ) for rw in item[1]], 0), 0)
+            action = tf.expand_dims(tf.concat(item[2], 0), 0)
+            for j, st in enumerate(item[3]):
+                for k, s in enumerate(st[:-1]):
+                    new_state[k].append(s)
+            next_state = [tf.expand_dims(tf.concat(s, 0), 0) \
+                for s in next_state]
+
+            for i in range(len(states)):
+                states[i].append(state[i])
+            rewards.append(reward)
+            actions.append(action)
+            for i in range(len(next_states)):
+                next_states[i].append(next_state[i])
+            for j, rc in enumerate(item[4]):
+                _recurrent_state_init[j].append(rc)
+
+        states = [tf.concat(state, 0) for state in states]
+        rewards = tf.concat(rewards, 0)
+        actions = tf.concat(actions, 0)
+        next_states = [tf.concat(state, 0) for state in next_states]
+        _recurrent_state_init = [tf.concat(ars, 0) \
+            for ars in _recurrent_state_init]
+
+        return states, rewards, actions, next_states, \
+            _recurrent_state_init, batch_size
 
 def str2bool(v):
     if isinstance(v, bool):
@@ -791,6 +1421,7 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     learner = Learner(params, args.experiment, False)
+    """
     learner.pretrain_actor(
         args.experiment,
         args.out_path,
@@ -823,4 +1454,3 @@ if __name__ == '__main__':
         per = args.per,
         her = args.her
     )
-    """
