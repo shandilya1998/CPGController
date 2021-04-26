@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import math
 import tensorflow_probability as tfp
+import random
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:

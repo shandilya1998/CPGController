@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 from learn import SignalDataGen
 from tqdm import tqdm
+import random
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
@@ -24,10 +25,12 @@ class Learner:
         self.params = params
         self.experiment = experiment
         self.actor = ActorNetwork(self.params)
+        self.critic = CriticNetwork(self.params)
         self.time_step_spec = tfa.trajectories.time_step.time_step_spec(
             observation_spec = self.params['observation_spec'],
             reward_spec = self.params['reward_spec']
         )
+        self.replay_buffer = ReplayBuffer(self.params)
         self.env = Env(
             self.time_step_spec,
             self.params,
@@ -71,6 +74,11 @@ class Learner:
         self.omega_mse = tf.keras.losses.MeanSquaredError()
         self.mu_mse = tf.keras.losses.MeanSquaredError()
         self.Z_mse = tf.keras.losses.MeanSquaredError()
+        data = random.sample(self.signal_gen.data, 35)
+        self.desired_motion = [
+            np.expand_dims(x, 0) for y, x, f in data
+        ]
+
 
     def create_dataset(self, path, signal_gen):
         self.actor.create_data(path, signal_gen, self.env)
@@ -155,17 +163,19 @@ class Learner:
             [np.expand_dims(
                 self.create_init_osc_state(), 0
         ) for i in range(10)], 0)
-        mod_state = np.zeros(
-            (10, 2 * self.params['units_osc']),
+        robot_state = np.zeros(
+            (10, self.params['robot_state_size']),
             dtype = np.float32
         )
         y_pred = []
+        state = tf.repeat(self.actor.gru_recurrent_state_init, 10, 0)
         print('[Actor] Generating Actions')
+        steps = 10#self.params['rnn_steps'] * 2 + 1
         for i in tqdm(range(
-            self.params['rnn_steps'] * (self.params['max_steps'] + 2) + 1
+            steps
         )):
-            inp = [x, mod_state, z]
-            actions, _, _, z = self.actor.model(inp)
+            inp = [x, robot_state, z, state]
+            actions, _, _, z, state = self.actor.model.layers[-1].rnn_cell(inp)
             ac = actions[0].numpy()
             self.env.quadruped.all_legs.move(ac)
             actions = actions.numpy() * np.pi / 3
@@ -174,8 +184,6 @@ class Learner:
             ))
         y = y * np.pi / 180.0
         y_pred = np.concatenate(y_pred, 1)
-        print(y_pred.shape)
-        print(y.shape)
         fig, ax = plt.subplots(4,1, figsize = (5,20))
         for i in range(4):
             ax[i].plot(y_pred[0][:,3*i], 'b', label = 'ankle')
@@ -192,9 +200,9 @@ class Learner:
             fig.savefig(os.path.join(path,'y_pred.png'))
         fig, ax = plt.subplots(4,1, figsize = (5,20))
         for i in range(4):
-            ax[i].plot(y[0][:,3*i], 'b', label = 'ankle real')
-            ax[i].plot(y[0][:,3*i + 1], 'g', label = 'knee real')
-            ax[i].plot(y[0][:,3*i + 2], 'r', label = 'hip real')
+            ax[i].plot(y[0][:steps,3*i], 'b', label = 'ankle real')
+            ax[i].plot(y[0][:steps,3*i + 1], 'g', label = 'knee real')
+            ax[i].plot(y[0][:steps,3*i + 2], 'r', label = 'hip real')
             ax[i].legend()
         if ep is not None:
             fig.savefig(os.path.join(
@@ -764,6 +772,7 @@ class Learner:
             raise NotImplementedError
         print('[RDDPG] Training Start')
         hist_critic_loss = []
+        hist_actor_loss = []
         hist_rewards = []
         total_rewards = []
         avg_reward = []
@@ -780,6 +789,58 @@ class Learner:
         break_loop = False
         self.epsilon -= 1/self.params['EXPLORE']
         self.test_actor(model_dir)
+        done = False
+        self.current_time_step = self.env.reset()
+        self._state = self.current_time_step.observation
+        self._gru_state = self.actor.gru_recurrent_state_init
+        while(not done):
+            penalty = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+            start = time.perf_counter()
+            action, _, _, Z, state = \
+                self.actor.model.layers[-1].rnn_cell(
+                    self._state + [self._gru_state]
+                )
+            self._action = self._add_noise(action)
+            self._gru_state = state
+            self._osc_state = Z
+            if math.isnan(np.sum(self._action.numpy())):
+                print('[RDDPG] Action value NaN. Ending Episode')
+                penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                self._action = tf.zeros_like(self._action)
+            try:
+                last_step = False
+                first_step = False
+                if step == 0:
+                    first_step = True
+                if step < 10: #self.params['max_steps'] * self.params['rnn_steps']:
+                    last_step = False
+                else:
+                    last_step = True
+                    done = True
+                self.current_time_step = self.env.step(
+                    [self._action, self._osc_state],
+                    self._state[0][0].numpy(),
+                    last_step = last_step,
+                    first_step = first_step,
+                    version = 2
+                )
+            except FloatingPointError:
+                print('[RDDPG] Floating Point Error in reward computation')
+                penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+            reward = self.current_time_step.reward + penalty
+
+            self._state = self.current_time_step.observation
+            print('[RDDPG] Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
+                step = step,
+                reward = reward.numpy(),
+                time = time.perf_counter() - start
+            ))
+            if self.current_time_step.step_type == \
+                tfa.trajectories.time_step.StepType.LAST:
+                done = True
+            if step > 10:#self.params['max_steps'] * self.params['rnn_steps']:
+                done = True
+            step += 1
         self.current_time_step = self.env.reset()
         self._state = self.current_time_step.observation
         enc_goals = []
@@ -876,6 +937,14 @@ class Learner:
             pkl.close()
             pkl = open(os.path.join(
                 model_dir,
+                'hist_actor_loss_ep{ep}.pickle'.format(
+                    ep = ep,
+                )
+            ), 'rb')
+            hist_actor_loss = pickle.load(pkl)
+            pkl.close()
+            pkl = open(os.path.join(
+                model_dir,
                 'COT_ep{ep}.pickle'.format(
                     ep = ep,
                 )
@@ -969,16 +1038,17 @@ class Learner:
                     first_step = False
                     if step == 0:
                         first_step = True
-                    if step < self.params['max_steps'] * self.params['rnn_steps']:
+                    if step < self.params['max_steps'] * self.params['rnn_steps'] - 1:
                         last_step = False
                     else:
                         last_step = True
+                        done = True
                     self.current_time_step = self.env.step(
                         [self._action, self._osc_state],
-                        self._state[0],
+                        self._state[0][0].numpy(),
                         last_step = last_step,
                         first_step = first_step,
-                        version = '2'
+                        version = 2
                     )
                 except FloatingPointError:
                     print('[RDDPG] Floating Point Error in reward computation')
@@ -990,27 +1060,25 @@ class Learner:
                 d1.append(self.env.quadruped.d1)
                 d2.append(self.env.quadruped.d2)
                 d3.append(self.env.quadruped.d3)
-                hist_rewards.append(r.numpy())
+                hist_rewards.append(reward.numpy())
 
                 rewards.append(reward)
                 observations.append(self._state)
                 self._state = self.current_time_step.observation
-                next_states.append(self_state)
+                next_states.append(self._state)
                 actions.append(self._action)
                 total_reward += reward.numpy()
                 print('[RDDPG] Episode {ep} Step {step} Reward {reward:.5f} Time {time:.5f}'.format(
                     ep = ep,
                     step = step,
-                    reward = r.numpy(),
+                    reward = reward.numpy(),
                     time = time.perf_counter() - start
                 ))
                 if self.current_time_step.step_type == \
                     tfa.trajectories.time_step.StepType.LAST:
                     done = True
-                elif step > self.params['max_steps'] * self.params['rnn_steps']:
+                if step > self.params['max_steps'] * self.params['rnn_steps'] - 1:
                     done = True
-                else:
-                    done = False
                 step += 1
             experience = [
                 observations,
@@ -1021,10 +1089,10 @@ class Learner:
             ]
             self.replay_buffer.add_batch(experience)
             start = time.perf_counter()
-            states, actions, rewards, next_states, \
+            states, rewards, actions, next_states, \
                 recurrent_state_init, batch_size = \
                 self.get_batch()
-            actions, Z, state = self.actor.target_model([
+            target_actions, Z, state = self.actor.target_model([
                 next_states + recurrent_state_init
             ])
             recurrent_state = [tf.repeat(
@@ -1032,7 +1100,7 @@ class Learner:
                 batch_size,
                 0
             ) for rci in self.critic.recurrent_state_init]
-            inputs = next_states + [actions]
+            inputs = next_states + [target_actions]
             target_q_values = self.critic.target_model(inputs)
             y = tf.concat([
                 rewards[:, :-1] + \
@@ -1041,31 +1109,55 @@ class Learner:
             ], 1)
             loss = self.critic.train(states, actions, y)
             hist_critic_loss.append(loss.numpy())
-            a_for_grad, Z, state = self.actor.model([
-                states + recurrent_state_init
-            ])
-            q_grad = self.critic.q_grads(states, a_for_grad)
-            self.actor.train(states, recurrent_state_init, q_grad)
+            actor_loss = self.train_actor(
+                states, recurrent_state_init, \
+                actions
+            )
+            hist_actor_loss.append(actor_loss.numpy())
             self.actor.target_train()
             self.critic.target_train()
-            print('[RDDPG] Critic Loss {loss}'.format(
+            print('[RDDPG] Critic Loss {loss} Actor Loss {ac_loss}'.format(
                 loss = loss.numpy(),
+                ac_loss = actor_loss.numpy()
             ))
-            print('[RDDPG] Total Reward {reward:.5f} Avg Critic Loss {loss:.5f} Time {time:.5f}'.format(
-                reward = self.total_reward,
-                loss = tot_loss,
+            print('[RDDPG] Total Reward {reward:.5f} Time {time:.5f}'.format(
+                reward = total_reward,
                 time = time.perf_counter() - start
             ))
             if ep % self.params['TEST_AFTER_N_EPISODES'] == 0:
-                self.save(model_dir, ep, hist_rewards, total_reward, \
-                    hist_critic_loss, COT, motion, \
+                self.save(model_dir, ep, hist_rewards, total_rewards, \
+                    hist_critic_loss, hist_actor_loss, COT, motion, \
                     stability, d1, d2, d3)
-            total_reward.append(self.total_reward)
+            total_rewards.append(total_reward)
             ep += 1
             print('[DDPG] Starting Next Episode')
 
+    def train_actor(self, \
+        states, recurrent_state_init, \
+        actions
+    ):
+        with tf.GradientTape() as tape:
+            a_for_grad, Z, state = self.actor.model([
+                states + recurrent_state_init
+            ])
+            inputs = states + [a_for_grad]
+            q_val = self.critic.model(inputs)
+            actor_loss = -tf.math.reduce_mean(q_val)
+        actor_grads = tape.gradient(
+            actor_loss,
+            self.actor.model.trainable_variables
+        )
+        self.actor.optimizer.apply_gradients(
+            zip(
+                actor_grads,
+                self.actor.model.trainable_variables
+            )
+        )
+        return actor_loss
+
     def save(self, model_dir, ep, rewards, total_reward, hist_critic_loss, \
-            COT, motion, stability, d1, d2, d3, tree = None, enc_goals = None):
+            hist_actor_loss, COT, motion, stability, d1, d2, d3, \
+            tree = None, enc_goals = None):
         print('[RDDPG] Saving Data')
         data_path = os.path.join(
             model_dir,
@@ -1194,6 +1286,25 @@ class Learner:
         fig3.savefig(os.path.join(
             model_dir,
             'hist_critic_loss_ep{ep}.png'.format(
+                ep = ep,
+            )
+        ))
+
+        pkl = open(os.path.join(
+            model_dir,
+            'hist_actor_loss_ep{ep}.pickle'.format(
+                ep = ep,
+            )
+        ), 'wb')
+        pickle.dump(hist_actor_loss, pkl)
+        pkl.close()
+        fig3, ax3 = plt.subplots(1,1,figsize = (5,5))
+        ax3.plot(hist_actor_loss)
+        ax3.set_ylabel('critic loss')
+        ax3.set_xlabel('steps')
+        fig3.savefig(os.path.join(
+            model_dir,
+            'hist_actor_loss_ep{ep}.png'.format(
                 ep = ep,
             )
         ))
@@ -1350,7 +1461,7 @@ class Learner:
             action = tf.expand_dims(tf.concat(item[2], 0), 0)
             for j, st in enumerate(item[3]):
                 for k, s in enumerate(st[:-1]):
-                    new_state[k].append(s)
+                    next_state[k].append(s)
             next_state = [tf.expand_dims(tf.concat(s, 0), 0) \
                 for s in next_state]
 
