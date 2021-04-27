@@ -33,7 +33,7 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 10,
+    'max_steps'                   : 5,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
