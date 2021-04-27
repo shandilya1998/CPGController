@@ -170,7 +170,7 @@ class Learner:
         y_pred = []
         state = tf.repeat(self.actor.gru_recurrent_state_init, 10, 0)
         print('[Actor] Generating Actions')
-        steps = 10#self.params['rnn_steps'] * 2 + 1
+        steps = self.params['rnn_steps'] * self.params['max_steps'] + 1
         for i in tqdm(range(
             steps
         )):
@@ -812,7 +812,7 @@ class Learner:
                 first_step = False
                 if step == 0:
                     first_step = True
-                if step < -1 + self.params['max_steps'] * self.params['rnn_steps']:
+                if step < 19:#-1 + self.params['max_steps'] * self.params['rnn_steps']:
                     last_step = False
                 else:
                     last_step = True
@@ -826,7 +826,7 @@ class Learner:
                 )
             except FloatingPointError:
                 print('[RDDPG] Floating Point Error in reward computation')
-                penalty += tf.convert_to_tensor(-2.0, dtype = tf.dtypes.float32)
+                penalty += tf.convert_to_tensor(-1.0, dtype = tf.dtypes.float32)
             except Exception as e:
                 raise e
             reward = self.current_time_step.reward + penalty
@@ -840,7 +840,7 @@ class Learner:
             if self.current_time_step.step_type == \
                 tfa.trajectories.time_step.StepType.LAST:
                 done = True
-            if step > self.params['max_steps'] * self.params['rnn_steps']:
+            if step > 19:#self.params['max_steps'] * self.params['rnn_steps']:
                 done = True
             step += 1
         self.current_time_step = self.env.reset()
@@ -1541,6 +1541,7 @@ if __name__ == '__main__':
         'pretrain_actor'
     )
     """
+    print(learner.actor.model.summary())
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))

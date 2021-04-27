@@ -354,7 +354,7 @@ class ActorNetwork(object):
 
     def create_actor_cell(self, params, trainable = True, \
             weights_path = None, train_param_net = False):
-        cell = self.create_pretrain_actor_cell(params, trainable, \
+        cell = self.create_pretrain_actor_cell(params, False, \
             train_param_net)
         if weights_path is not None:
             cell.load_weights(weights_path)
