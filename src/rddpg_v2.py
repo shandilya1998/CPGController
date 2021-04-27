@@ -812,7 +812,7 @@ class Learner:
                 first_step = False
                 if step == 0:
                     first_step = True
-                if step < 10: #self.params['max_steps'] * self.params['rnn_steps']:
+                if step < -1 + self.params['max_steps'] * self.params['rnn_steps']:
                     last_step = False
                 else:
                     last_step = True
@@ -826,7 +826,9 @@ class Learner:
                 )
             except FloatingPointError:
                 print('[RDDPG] Floating Point Error in reward computation')
-                penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                penalty += tf.convert_to_tensor(-2.0, dtype = tf.dtypes.float32)
+            except Exception as e:
+                raise e
             reward = self.current_time_step.reward + penalty
 
             self._state = self.current_time_step.observation
@@ -838,7 +840,7 @@ class Learner:
             if self.current_time_step.step_type == \
                 tfa.trajectories.time_step.StepType.LAST:
                 done = True
-            if step > 10:#self.params['max_steps'] * self.params['rnn_steps']:
+            if step > self.params['max_steps'] * self.params['rnn_steps']:
                 done = True
             step += 1
         self.current_time_step = self.env.reset()
