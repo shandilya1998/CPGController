@@ -105,7 +105,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self.quadruped.set_support_lines()
         self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
-        reward += self.COT + self.r_motion + self.stability
+        reward += 1 + self.COT + self.r_motion + self.stability
         observation = [
             tf.expand_dims(
                 tf.convert_to_tensor(ob),
@@ -161,7 +161,7 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
         self.quadruped.set_support_lines()
         self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
-        reward += 1 + self.COT + self.r_motion + self.stability
+        reward += self.COT + self.r_motion + self.stability
         action[0] = swap_batch_timestep(action[0])
         action[1] = swap_batch_timestep(action[1])
         observation = [

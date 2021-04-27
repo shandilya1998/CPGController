@@ -61,7 +61,7 @@ class Learner:
             True
         )
         if create_data:
-            self.create_dataset('data/pretrain_rddpg_5', self.signal_gen)
+            self.create_dataset('data/pretrain_rddpg_6', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -116,6 +116,33 @@ class Learner:
             W[2] * loss_mu + \
             W[3] * loss_Z
         return loss, [loss_action, loss_omega, loss_mu, loss_Z]
+
+    def _pretrain_actor_v2(self, x, y, W = [1,1,1,1]):
+        with tf.GradientTape(persistent=False) as tape:
+            actions, Z, state = self.actor.model(x)
+            loss_action = self.action_mse(y[0], actions)
+            #loss_omega = self.omega_mse(y[1], omega)
+            #loss_mu = self.mu_mse(y[2], mu)
+            #loss_Z = self.Z_mse(y[3], Z)
+            loss = W[0] * loss_action #+ \
+                #W[1] * loss_omega + \
+                #W[2] * loss_mu + \
+                #W[3] * loss_Z
+        loss_omega = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+        loss_mu = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+        loss_Z = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+        grads = tape.gradient(
+            loss,
+            self.actor.model.trainable_variables
+        )
+        self.pretrain_actor_optimizer.apply_gradients(
+            zip(
+                grads,
+                self.actor.model.trainable_variables
+            )
+        )
+        return loss, [loss_action, loss_omega, loss_mu, loss_Z]
+
 
     def _pretrain_actor(self, x, y, W = [1,1,1,1]):
         with tf.GradientTape(persistent=False) as tape:
@@ -299,7 +326,7 @@ class Learner:
             pkl.close()
         """
         test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_5',
+            'data/pretrain_rddpg_6',
             self.params,
             False
         )
@@ -671,6 +698,7 @@ class Learner:
             checkpoint_dir = 'weights/actor_pretrain', \
             name = 'pretrain_actor'):
         path = os.path.join(checkpoint_dir, 'exp{exp}'.format(exp = experiment))
+        """
         model = self.actor.create_pretrain_actor_cell(
             self.params
         )
@@ -678,24 +706,10 @@ class Learner:
         self.actor.set_model(
             model
         )
+        """
+        print(model.summary())
         if not os.path.exists(path):
             os.mkdir(path)
-        if not os.path.exists(
-            os.path.join(
-                path, 'pretrain_enc'
-            )
-        ):
-            os.mkdir(os.path.join(
-                path, 'pretrain_enc'
-            ))
-        if not os.path.exists(
-            os.path.join(
-                path, 'pretrain_omega'
-            )
-        ):
-            os.mkdir(os.path.join(
-                path, 'pretrain_omega'
-            ))
         if not os.path.exists(
             os.path.join(
                 path, name
@@ -705,49 +719,16 @@ class Learner:
                 path, name
             ))
         train_dataset, test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_5',
+            'data/pretrain_rddpg_6',
             self.params
         )
         self._pretrain_loop(
-            self._pretrain_actor, \
+            self._pretrain_actor_v2, \
             self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_omega',
             train_dataset = train_dataset,
             test_dataset = test_dataset,
-            W = [0.01, 1.0, 1.0, 0.1],
+            W = [1.0, 1.0, 1.0, 0.1],
             delta_W = [1.0, 1.0, 0.0, 0.0]
-        )
-        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.005,
-            decay_steps=180,
-            decay_rate=0.95
-        )
-        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
-            learning_rate = lr_schedule
-        )
-
-        self._pretrain_loop(
-            self._pretrain_actor, \
-            self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_enc',
-            train_dataset = train_dataset,
-            test_dataset = test_dataset,
-            W = [0.01, 0.1, 0.1, 1.0],
-            delta_W = [1.0, 1.0, 1.0, 1.0]
-        )
-        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
-            0.005,
-            decay_steps=180,
-            decay_rate=0.95
-        )
-        self.pretrain_actor_optimizer = tf.keras.optimizers.Adam(
-            learning_rate = lr_schedule
-        )
-        self._pretrain_loop(
-            self._pretrain_actor, \
-            self._test_pretrain_actor, experiment, checkpoint_dir, name,
-            train_dataset = train_dataset,
-            test_dataset = test_dataset,
-            W = [1.0, 0.01, 0.01, 0.01],
-            delta_W = [0.98, 1.0, 1.0, 1.0]
         )
 
     def _add_noise(self, action):
@@ -1533,8 +1514,8 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, False)
-    """
+    learner = Learner(params, args.experiment, True)
+    #"""
     learner.pretrain_actor(
         args.experiment,
         args.out_path,
@@ -1568,3 +1549,4 @@ if __name__ == '__main__':
         per = args.per,
         her = args.her
     )
+    #"""

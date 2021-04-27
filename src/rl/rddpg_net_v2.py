@@ -470,6 +470,91 @@ class ActorNetwork(object):
 
         return model
 
+    def create_data_v2(self, path, signal_gen, env):
+        env.quadruped.reset()
+        F = []
+        Y = []
+        Z = []
+        MU = []
+        X = [[] for j in range(len(self.params['observation_spec']))]
+        count = 0
+        for y, x, f_ in tqdm(signal_gen.generator()):
+            f_ = f_ * 2 * np.pi
+            y = y * np.pi / 180.0
+            env.quadruped.set_motion_state(x)
+            _state = env.quadruped.get_state_tensor()
+            _F = []
+            _Y = []
+            _Z = []
+            _MU = []
+            _X = [[] for j in range(len(self.params['observation_spec']))]
+            for i in range(self.params['max_steps']):
+                for j in range(self.params['rnn_steps']):
+                    ac = y[
+                        i * self.params[
+                            'rnn_steps'
+                        ] + j
+                    ]
+                    for k, s in enumerate(_state):
+                        _X[k].append(s)
+                    _MU.append(
+                        np.ones((
+                            1, self.params['units_osc']
+                        ))
+                    )
+                    _Y.append(np.expand_dims(ac, 0))
+                    _F.append(np.array([[f_]], dtype = np.float32))
+                    if np.isinf(ac).any():
+                        print('Inf in unprocessed')
+                        continue
+                    env.quadruped.all_legs.move(ac)
+                    ac = ac / (np.pi / 3)
+                    env.quadruped._hopf_oscillator(
+                        f_,
+                        np.ones((self.params['units_osc'],)),
+                        np.zeros((self.params['units_osc'],)),
+                    )
+                    _state = env.quadruped.get_state_tensor()
+                    _Z.append(np.expand_dims(_state[-1], 0))
+            for j in range(len(X)):
+                _X[j] = np.expand_dims(np.concatenate(X[j], axis = 0), 0)
+            _Y = np.expand_dims(np.concatenate(Y, axis = 0), 0)
+            _MU = np.expand_dims(np.concatenate(MU, axis = 0), 0)
+            _F = np.expand_dims(np.concatenate(F, axis = 0), 0)
+            _Z = np.expand_dims(np.concatenate(Z, axis = 0), 0)
+            for k, s in enumerate(_X):
+                X[k].append(s)
+            Y.append(_Y)
+            F.append(_F)
+            MU.append(_MU)
+            Z.append(_Z)
+            env.quadruped.reset()
+            count += 1
+        for j in range(len(X)):
+            X[j] = np.concatenate(X[j], axis = 0)
+        Y = np.concatenate(Y, axis = 0)
+        MU = np.concatenate(MU, axis = 0)
+        F = np.concatenate(F, axis = 0)
+        Z = np.concatenate(Z, axis = 0)
+        num_data = Y.shape[0]
+        print('[Actor] Y Shape : {sh}'.format(sh=Y.shape))
+        print('[Actor] X Shapes:')
+        for i in range(len(X)):
+            print('[Actor] {sh}'.format(sh = X[i].shape))
+        print('[Actor] F Shape : {sh}'.format(sh=F.shape))
+        print('[Axtor] Z Shape : {sh}'.format(sh=Z.shape))
+        np.save(os.path.join(path, 'Y.npy'), \
+            Y, allow_pickle = True, fix_imports=True)
+        np.save(os.path.join(path, 'Z.npy'), \
+            Z, allow_pickle = True, fix_imports=True)
+        np.save(os.path.join(path, 'MU.npy'), \
+            MU, allow_pickle = True, fix_imports=True)
+        np.save(os.path.join(path, 'F.npy'), \
+            F, allow_pickle = True, fix_imports=True)
+        for j in range(len(X)):
+            np.save(os.path.join(path, 'X_{j}.npy'.format(j=j)), \
+                X[j], allow_pickle = True, fix_imports=True)
+
     def create_data(self, path, signal_gen, env):
         env.quadruped.reset()
         F = []
