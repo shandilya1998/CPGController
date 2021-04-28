@@ -33,11 +33,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 3,
+    'max_steps'                   : 20,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 40,
+    'rnn_steps'                   : 50,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -227,14 +227,14 @@ pretraining = {
 }
 
 
-num_data = 135000
+num_data = 135
 params.update(pretraining)
-bs = 1350
+bs = 15
 #num_data =135 * params['rnn_steps'] * params['max_steps']
 params.update({
     'num_data' : num_data,
     'pretrain_bs': bs,
-    'train_test_split' : (num_data - bs * 10) / num_data,
+    'train_test_split' : (num_data - bs) / num_data,
     'pretrain_test_interval' : 5
 })
 

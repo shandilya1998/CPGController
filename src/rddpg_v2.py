@@ -61,7 +61,7 @@ class Learner:
             True
         )
         if create_data:
-            self.create_dataset('data/pretrain_rddpg_6', self.signal_gen)
+            self.create_dataset('data/pretrain_rddpg_7', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -81,7 +81,7 @@ class Learner:
 
 
     def create_dataset(self, path, signal_gen):
-        self.actor.create_data(path, signal_gen, self.env)
+        self.actor.create_data_v2(path, signal_gen, self.env)
 
     def load_actor(self, path, path_target):
         print('[DDPG] Loading Actor Weights')
@@ -106,15 +106,18 @@ class Learner:
 
 
     def _test_pretrain_actor(self, x, y, W = [1,1,1,1]):
-        out, omega, mu, Z = self.actor.model(x)
+        out, Z, state = self.actor.model(x)
         loss_action = self.action_mse(y[0], out)
-        loss_omega = self.omega_mse(y[1], omega)
-        loss_mu = self.mu_mse(y[2], mu)
-        loss_Z = self.Z_mse(y[3], Z)
-        loss = W[0] * loss_action + \
-            W[1] * loss_omega + \
-            W[2] * loss_mu + \
-            W[3] * loss_Z
+        #loss_omega = self.omega_mse(y[1], omega)
+        #loss_mu = self.mu_mse(y[2], mu)
+        #loss_Z = self.Z_mse(y[3], Z)
+        loss = W[0] * loss_action #+ \
+            #W[1] * loss_omega + \
+            #W[2] * loss_mu + \
+            #W[3] * loss_Z
+        loss_omega = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+        loss_mu = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
+        loss_Z = tf.convert_to_tensor(0.0, dtype = tf.dtypes.float32)
         return loss, [loss_action, loss_omega, loss_mu, loss_Z]
 
     def _pretrain_actor_v2(self, x, y, W = [1,1,1,1]):
@@ -326,7 +329,7 @@ class Learner:
             pkl.close()
         """
         test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_6',
+            'data/pretrain_rddpg_7',
             self.params,
             False
         )
@@ -707,7 +710,7 @@ class Learner:
             model
         )
         """
-        print(model.summary())
+        print(self.actor.model.summary())
         if not os.path.exists(path):
             os.mkdir(path)
         if not os.path.exists(
@@ -719,12 +722,12 @@ class Learner:
                 path, name
             ))
         train_dataset, test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_6',
+            'data/pretrain_rddpg_7',
             self.params
         )
         self._pretrain_loop(
             self._pretrain_actor_v2, \
-            self._test_pretrain_actor, experiment, checkpoint_dir, 'pretrain_omega',
+            self._test_pretrain_actor, experiment, checkpoint_dir, name,
             train_dataset = train_dataset,
             test_dataset = test_dataset,
             W = [1.0, 1.0, 1.0, 0.1],

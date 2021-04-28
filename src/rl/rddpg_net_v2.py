@@ -517,11 +517,11 @@ class ActorNetwork(object):
                     _state = env.quadruped.get_state_tensor()
                     _Z.append(np.expand_dims(_state[-1], 0))
             for j in range(len(X)):
-                _X[j] = np.expand_dims(np.concatenate(X[j], axis = 0), 0)
-            _Y = np.expand_dims(np.concatenate(Y, axis = 0), 0)
-            _MU = np.expand_dims(np.concatenate(MU, axis = 0), 0)
-            _F = np.expand_dims(np.concatenate(F, axis = 0), 0)
-            _Z = np.expand_dims(np.concatenate(Z, axis = 0), 0)
+                _X[j] = np.expand_dims(np.concatenate(_X[j], axis = 0), 0)
+            _Y = np.expand_dims(np.concatenate(_Y, axis = 0), 0)
+            _MU = np.expand_dims(np.concatenate(_MU, axis = 0), 0)
+            _F = np.expand_dims(np.concatenate(_F, axis = 0), 0)
+            _Z = np.expand_dims(np.concatenate(_Z, axis = 0), 0)
             for k, s in enumerate(_X):
                 X[k].append(s)
             Y.append(_Y)
@@ -654,10 +654,15 @@ class ActorNetwork(object):
             allow_pickle = True,
             fix_imports=True
         )[indices]
+        robot_state = np.load(
+            os.path.join(data_dir, 'X_1.npy'),
+            allow_pickle = True,
+            fix_imports = True
+        )[indices]
         mod_state = np.zeros(
             shape = (
                 num_data,
-                2 * params['units_osc']
+                params['units_robot_state'][0]
             )
         )
         z =  np.load(
@@ -665,6 +670,7 @@ class ActorNetwork(object):
             allow_pickle = True,
             fix_imports=True
         )[indices]
+        z = z[:, 0]
         F = np.load(
             os.path.join(data_dir, 'F.npy'),
             allow_pickle = True,
@@ -685,6 +691,9 @@ class ActorNetwork(object):
         desired_motion = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(desired_motion)
         )
+        robot_state = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(robot_state)
+        )
         mod_state = tf.data.Dataset.from_tensor_slices(
             tf.convert_to_tensor(mod_state)
         )
@@ -693,8 +702,9 @@ class ActorNetwork(object):
         )
         X = tf.data.Dataset.zip((
             desired_motion,
+            robot_state,
+            z,
             mod_state,
-            z
         ))
         Y = tf.data.Dataset.zip((
             Y, F, MU, Z
