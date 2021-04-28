@@ -227,14 +227,14 @@ pretraining = {
 }
 
 
-num_data = 135000
+num_data = 135
 params.update(pretraining)
-bs = 1350
+bs = 15
 #num_data =135 * params['rnn_steps'] * params['max_steps']
 params.update({
     'num_data' : num_data,
     'pretrain_bs': bs,
-    'train_test_split' : (num_data - bs * 10) / num_data,
+    'train_test_split' : (num_data - bs) / num_data,
     'pretrain_test_interval' : 5
 })
 
