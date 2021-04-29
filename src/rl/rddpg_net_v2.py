@@ -353,7 +353,7 @@ class ActorNetwork(object):
         return model
 
     def create_actor_cell(self, params, trainable = True, \
-            weights_path = None, train_param_net = False):
+            weights_path = None, train_param_net = True):
         cell = self.create_pretrain_actor_cell(params, False, \
             train_param_net)
         if weights_path is not None:
@@ -403,7 +403,7 @@ class ActorNetwork(object):
 
     def create_actor_network(self, params, cell = None, \
             trainable = True, weights_path = None, \
-            train_param_net = False, steps = None):
+            train_param_net = True, steps = None):
         if steps is None:
             steps = params['max_steps'] * params['rnn_steps']
         if cell is  None:

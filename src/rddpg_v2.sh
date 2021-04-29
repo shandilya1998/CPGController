@@ -1,10 +1,10 @@
 #!/bin/sh
 
-export ROS_MASTER_URI=http://localhost:11317
-export GAZEBO_MASTER_URI=http://localhost:11318
+export ROS_MASTER_URI=http://localhost:11337
+export GAZEBO_MASTER_URI=http://localhost:11338
 
-OUT_PATH="weights/actor_pretrain"
-EXPERIMENT=53
+OUT_PATH="rl/out_dir/models"
+EXPERIMENT=38
 START=0
 PER="false"
 HER="false"

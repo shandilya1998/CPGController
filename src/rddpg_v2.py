@@ -61,7 +61,7 @@ class Learner:
             True
         )
         if create_data:
-            self.create_dataset('data/pretrain_rddpg_7', self.signal_gen)
+            self.create_dataset('data/pretrain_rddpg_6', self.signal_gen)
         lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
             0.005,
             decay_steps=180,
@@ -329,7 +329,7 @@ class Learner:
             pkl.close()
         """
         test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_7',
+            'data/pretrain_rddpg_6',
             self.params,
             False
         )
@@ -722,7 +722,7 @@ class Learner:
                 path, name
             ))
         train_dataset, test_dataset = self.actor.create_pretrain_dataset(
-            'data/pretrain_rddpg_7',
+            'data/pretrain_rddpg_6',
             self.params
         )
         self._pretrain_loop(
@@ -1517,8 +1517,8 @@ if __name__ == '__main__':
         help = "Toggle HER"
     )
     args = parser.parse_args()
-    learner = Learner(params, args.experiment, True)
-    #"""
+    learner = Learner(params, args.experiment, False)
+    """
     learner.pretrain_actor(
         args.experiment,
         args.out_path,
@@ -1526,6 +1526,8 @@ if __name__ == '__main__':
     )
     """
     print(learner.actor.model.summary())
+    learner.load_actor('weights/actor_pretrain/exp53/pretrain_actor/actor_pretrained_pretrain_actor_53_5.ckpt',
+            'weights/actor_pretrain/exp53/pretrain_actor/actor_pretrained_pretrain_actor_53_5.ckpt')
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
