@@ -102,7 +102,7 @@ class TimeDistributed(tf.keras.Model):
 
 class ActorNetwork(object):
     def __init__(self, params, create_target = True, \
-            train_param_net = False, weights_path = \
+            train_param_net = True, weights_path = \
             'weights/actor_pretrain/exp52/pretrain_actor/actor_pretrained_pretrain_actor_52_335.ckpt'):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
@@ -354,7 +354,7 @@ class ActorNetwork(object):
 
     def create_actor_cell(self, params, trainable = True, \
             weights_path = None, train_param_net = True):
-        cell = self.create_pretrain_actor_cell(params, False, \
+        cell = self.create_pretrain_actor_cell(params, True, \
             train_param_net)
         if weights_path is not None:
             cell.load_weights(weights_path)
