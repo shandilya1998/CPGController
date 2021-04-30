@@ -1,10 +1,10 @@
 #!/bin/sh
 
-export ROS_MASTER_URI=http://localhost:11311
-export GAZEBO_MASTER_URI=http://localhost:11312
+export ROS_MASTER_URI=http://localhost:11313
+export GAZEBO_MASTER_URI=http://localhost:11314
 
 OUT_PATH="rl/out_dir/models"
-EXPERIMENT=41
+EXPERIMENT=42
 START=0
 PER="false"
 HER="false"
