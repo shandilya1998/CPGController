@@ -789,7 +789,7 @@ class Learner:
             self._osc_state = Z
             if math.isnan(np.sum(self._action.numpy())):
                 print('[RDDPG] Action value NaN. Ending Episode')
-                penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                penalty += tf.convert_to_tensor(-1.0, dtype = tf.dtypes.float32)
                 self._action = tf.zeros_like(self._action)
             try:
                 last_step = False
@@ -1017,28 +1017,24 @@ class Learner:
                 self._osc_state = Z
                 if math.isnan(np.sum(self._action.numpy())):
                     print('[RDDPG] Action value NaN. Ending Episode')
-                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                    penalty += tf.convert_to_tensor(-1.0, dtype = tf.dtypes.float32)
                     self._action = tf.zeros_like(self._action)
-                try:
+                last_step = False
+                first_step = False
+                if step == 0:
+                    first_step = True
+                if step < self.params['max_steps'] * self.params['rnn_steps'] - 1:
                     last_step = False
-                    first_step = False
-                    if step == 0:
-                        first_step = True
-                    if step < self.params['max_steps'] * self.params['rnn_steps'] - 1:
-                        last_step = False
-                    else:
-                        last_step = True
-                        done = True
-                    self.current_time_step = self.env.step(
-                        [self._action, self._osc_state],
-                        self._state[0][0].numpy(),
-                        last_step = last_step,
-                        first_step = first_step,
-                        version = 2
-                    )
-                except FloatingPointError:
-                    print('[RDDPG] Floating Point Error in reward computation')
-                    penalty += tf.convert_to_tensor(-5.0, dtype = tf.dtypes.float32)
+                else:
+                    last_step = True
+                    done = True
+                self.current_time_step = self.env.step(
+                    [self._action, self._osc_state],
+                    self._state[0][0].numpy(),
+                    last_step = last_step,
+                    first_step = first_step,
+                    version = 2
+                )
                 reward = self.current_time_step.reward + penalty
                 motion.append(self.env.quadruped.r_motion)
                 COT.append(self.env.quadruped.COT)

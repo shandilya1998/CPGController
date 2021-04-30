@@ -65,9 +65,9 @@ def plot_reward_split(rewards, path, episodes, max_steps, rnn_steps):
         reward = rewards[i]
         if reward >= 0.0:
             p_r += reward
-        elif 0.0 > reward > -2.0:
+        elif 0.0 > reward > -1.0:
             p += reward
-        elif reward <= -2.0:
+        elif reward <= -1.0:
             err_p += reward
     pos_rewards = remove_outliers(pos_rewards)
     penalty = remove_outliers(penalty)
