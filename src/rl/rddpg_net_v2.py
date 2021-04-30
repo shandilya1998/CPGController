@@ -357,7 +357,8 @@ class ActorNetwork(object):
         cell = self.create_pretrain_actor_cell(params, True, \
             train_param_net)
         if weights_path is not None:
-            cell.load_weights(weights_path)
+            pass
+            #cell.load_weights(weights_path)
         desired_motion, _, z = cell.inputs
         robot_state = tf.keras.Input(
             shape = params['observation_spec'][1].shape,

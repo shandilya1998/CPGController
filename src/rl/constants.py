@@ -21,6 +21,20 @@ params = {
     'units_q'                     : 1,
     'units_motion_state_critic'   : [30, 120, 50],
     'units_action_critic'         : [48, 240, 50],
+    'units_output_mlp'            : [40, 60, action_dim],
+    'units_osc'                   : units_osc,
+    'units_combine_rddpg'         : [96, units_osc],
+    'units_combine'               : [64,  units_osc],
+    'units_robot_state'           : [96, units_osc],
+    'units_motion_state'          : [45],
+    'units_mu'                    : [45],
+    'units_mean'                  : [45],
+    'units_omega'                 : [45],
+    'units_robot_state_critic'    : [152, 50],
+    'units_gru_rddpg'             : 80,
+    'units_q'                     : 1,
+    'units_motion_state_critic'   : [64, 50],
+    'units_action_critic'         : [48, 50],
     'units_history'               : 24,
     'BATCH_SIZE'                  : 200,
     'BUFFER_SIZE'                 : 100000,
@@ -37,7 +51,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 30,
+    'rnn_steps'                   : 60,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -260,3 +274,4 @@ params_per = {
 }
 
 params.update(params_per)
+
