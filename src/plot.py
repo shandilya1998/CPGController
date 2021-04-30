@@ -69,16 +69,30 @@ def plot_reward_split(rewards, path, episodes, max_steps, rnn_steps):
             p += reward
         elif reward <= -1.0:
             err_p += reward
+    if len(pos_rewards) == 0:
+        pos_rewards = [0.0]* episodes
+    if len(err_penalty) == 0:
+        err_penalty = [0.0]* episodes
+    if len(penalty) == 0:
+        penalty = [0.0]* episodes
+    if len(sum_rewards) == 0:
+        sum_rewards = [0.0]* episodes
+    if len(sum_penalty) == 0:
+        sum_penalty = [0.0]* episodes
+    if len(total_rewards) == 0:
+        total_rewards = [0.0]* episodes
     pos_rewards = remove_outliers(pos_rewards)
     penalty = remove_outliers(penalty)
     err_penalty = remove_outliers(err_penalty)
     sum_rewards = remove_outliers(sum_rewards)
     sum_penalty = remove_outliers(sum_penalty)
     total_rewards = remove_outliers(total_rewards)
+    """
     x1 = np.arange(0, len(pos_rewards), 1.0)
     x_line_1, _pos_rewards = plot_fit_curve_polymonial_5(
         x1, pos_rewards, plot = False
     )
+    """
     x2 = np.arange(0, len(penalty), 1.0)
     x_line_2, _penalty = plot_fit_curve_polymonial_5(
         x2, penalty, plot = False
@@ -100,11 +114,13 @@ def plot_reward_split(rewards, path, episodes, max_steps, rnn_steps):
         x6, total_rewards, plot = False
     )
     fig, ax = plt.subplots(3,2, figsize = (12, 18))
+    """
     ax[0][0].scatter(x1, pos_rewards)
     ax[0][0].plot(x_line_1, _pos_rewards, '--', color = 'red')
     ax[0][0].set_title('Reinforcing Reward')
     ax[0][0].set_xlabel('episodes')
     ax[0][0].set_ylabel('reward')
+    """
     ax[0][1].scatter(x2, penalty)
     ax[0][1].plot(x_line_2, _penalty, '--', color = 'red')
     ax[0][1].set_title('Penalty')

@@ -904,7 +904,7 @@ class Learner:
             pkl.close()
             pkl = open(os.path.join(
                 model_dir,
-                'total_rewards_ep{ep}.pickle'.format(
+                'total_reward_ep{ep}.pickle'.format(
                     ep = ep,
                 )
             ), 'rb')
