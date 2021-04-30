@@ -800,13 +800,16 @@ class Learner:
             else:
                 last_step = True
                 done = True
-            self.current_time_step = self.env.step(
-                [self._action, self._osc_state],
-                self._state[0][0].numpy(),
-                last_step = last_step,
-                first_step = first_step,
-                version = 2
-            )
+            try:
+                self.current_time_step = self.env.step(
+                    [self._action, self._osc_state],
+                    self._state[0][0].numpy(),
+                    last_step = last_step,
+                    first_step = first_step,
+                    version = 2
+                )
+            except:
+                penalty += tf.convert_to_tensor(-1.0, dtype = tf.dtypes.float32)
             reward = self.current_time_step.reward + penalty
 
             self._state = self.current_time_step.observation
