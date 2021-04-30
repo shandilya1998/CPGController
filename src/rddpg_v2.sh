@@ -5,7 +5,7 @@ export GAZEBO_MASTER_URI=http://localhost:11314
 
 OUT_PATH="rl/out_dir/models"
 EXPERIMENT=42
-START=0
+START=175
 PER="false"
 HER="false"
 
