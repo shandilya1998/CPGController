@@ -158,38 +158,72 @@ class Leg:
         flag = False
         if states:
             flag = True
-            force = np.mean(
-                [[
-                    state.total_wrench.force.x,
-                    state.total_wrench.force.y,
-                    state.total_wrench.force.z
-                ] for state in states],
-                0, dtype = np.float32
-            )
-            torque = np.mean(
-                [[
-                    state.total_wrench.torque.x,
-                    state.total_wrench.torque.y,
-                    state.total_wrench.torque.z
-                ] for state in states],
-                0, dtype = np.float32
-            )
-            position = np.mean(
-                [[
-                    state.contact_positions[0].x,
-                    state.contact_positions[0].y,
-                    state.contact_positions[0].z
-                ] for state in states],
-                0, dtype = np.float32
-            )
-            normal = np.mean(
-                [[
-                    state.contact_normals[0].x,
-                    state.contact_normals[0].y,
-                    state.contact_normals[0].z
-                ] for state in states],
-                0
-            )
+            try:
+                force = np.mean(
+                    [[
+                        state.total_wrench.force.x,
+                        state.total_wrench.force.y,
+                        state.total_wrench.force.z
+                    ] for state in states],
+                    0, dtype = np.float32
+                )
+                torque = np.mean(
+                    [[
+                        state.total_wrench.torque.x,
+                        state.total_wrench.torque.y,
+                        state.total_wrench.torque.z
+                    ] for state in states],
+                    0, dtype = np.float32
+                )
+                position = np.mean(
+                    [[
+                        state.contact_positions[0].x,
+                        state.contact_positions[0].y,
+                        state.contact_positions[0].z
+                    ] for state in states],
+                    0, dtype = np.float32
+                )
+                normal = np.mean(
+                    [[
+                        state.contact_normals[0].x,
+                        state.contact_normals[0].y,
+                        state.contact_normals[0].z
+                    ] for state in states],
+                    0
+                )
+            except FloatingPointError:
+                forces = [
+                    np.nan_to_num(np.array([
+                        state.total_wrench.force.x,
+                        state.total_wrench.force.y,
+                        state.total_wrench.force.z
+                    ], dtype = 'float32')) for state in states
+                ]
+                torques = [
+                    np.nan_to_num(np.array([
+                        state.total_wrench.torque.x,
+                        state.total_wrench.torque.y,
+                        state.total_wrench.torque.z
+                    ], dtype = 'float32')) for state in states
+                ]
+                positions = [
+                    np.nan_to_num(np.array([
+                        state.contact_positions[0].x,
+                        state.contact_positions[0].y,
+                        state.contact_positions[0].z
+                    ], dtype = 'float32')) for state in states
+                ]
+                normals = [
+                    np.nan_to_num(np.array([
+                        state.contact_normals[0].x,
+                        state.contact_normals[0].y,
+                        state.contact_normals[0].z
+                    ], dtype = 'float32')) for state in states
+                ]
+                force = np.mean(forces)
+                torque = np.mean(torques)
+                position = np.mean(positions)
+                normal = np.mean(normals)
 
         contact_state = {
             'force' : force,
@@ -308,9 +342,7 @@ class AllLegs:
         if bl_contact['flag']:
             contacts.append(bl_contact)
         if len(contacts) == 1:
-            B = copy.deepcopy(contacts[0])
-            B['position'] = B['position'] + 1e-8
-            return contacts + [B]
+            return contacts
         elif len(contacts) == 2:
             return contacts
         elif len(contacts) == 3:
@@ -548,8 +580,12 @@ class Quadruped:
         self.mass = self.get_total_mass()
         self.force = np.zeros((3,))
         self.force.fill(1e-8)
+        self.next_force = np.zeros((3,))
+        self.next_force.fill(1e-8)
         self.torque = np.zeros((3,))
         self.torque.fill(1e-8)
+        self.next_torque = np.zeros((3,))
+        self.next_torque.fill(1e-8)
         self.com = np.zeros((3,))
         self.com.fill(1e-8)
         self.v_exp = np.zeros((3,))
@@ -989,6 +1025,10 @@ class Quadruped:
                 self.A.append(
                     self.get_contact_ob(AB[0]['leg_name'],current_pose)
                 )
+                self.force = self.next_force
+                self.torque = self.next_torque
+                self.next_force = self.mass * self.linear_acc
+                self.next_torque = self.get_moment()
             else:
                 self.A[-1] = self.get_contact_ob(AB[0]['leg_name'],current_pose)
             if self.B[-1]['leg_name'] != AB[1]['leg_name']:
@@ -998,6 +1038,10 @@ class Quadruped:
                 self.B.append(
                     self.get_contact_ob(AB[1]['leg_name'],current_pose)
                 )
+                self.force = self.next_force
+                self.torque = self.next_torque
+                self.next_force = self.mass * self.linear_acc
+                self.next_torque = self.get_moment()
             else:
                 self.B[-1] = self.get_contact_ob(AB[1]['leg_name'],current_pose)
 
@@ -1167,8 +1211,6 @@ class Quadruped:
         ]
         self.set_observation(action, desired_motion)
         rospy.sleep(15.0/60.0)
-        self.force = self.mass * self.linear_acc
-        self.torque = self.get_moment()
         vd = np.linalg.norm(self.v_exp)
         if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
             self.reward += -1.0
