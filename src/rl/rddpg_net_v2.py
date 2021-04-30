@@ -102,8 +102,7 @@ class TimeDistributed(tf.keras.Model):
 
 class ActorNetwork(object):
     def __init__(self, params, create_target = True, \
-            train_param_net = True, weights_path = \
-            'weights/actor_pretrain/exp52/pretrain_actor/actor_pretrained_pretrain_actor_52_335.ckpt'):
+            train_param_net = True, weights_path = None):
         self.BATCH_SIZE = params['BATCH_SIZE']
         self.TAU = params['TAU']
         self.LEARNING_RATE = params['LRA']
@@ -357,8 +356,7 @@ class ActorNetwork(object):
         cell = self.create_pretrain_actor_cell(params, True, \
             train_param_net)
         if weights_path is not None:
-            pass
-            #cell.load_weights(weights_path)
+            cell.load_weights(weights_path)
         desired_motion, _, z = cell.inputs
         robot_state = tf.keras.Input(
             shape = params['observation_spec'][1].shape,
