@@ -100,10 +100,10 @@ class Env(tfa.environments.tf_environment.TFEnvironment):
             _action,
             desired_motion
         )
-        self.COT +=  0.002 * self.quadruped.get_COT()
+        #self.COT +=  0.002 * self.quadruped.get_COT()
         self.r_motion += self.quadruped.get_motion_reward()
         self.quadruped.set_support_lines()
-        #self.stability += 0.002 * self.quadruped.get_stability_reward()
+        self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
         reward += self.COT + self.r_motion + self.stability
         observation = [
