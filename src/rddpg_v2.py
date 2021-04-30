@@ -1526,8 +1526,10 @@ if __name__ == '__main__':
     )
     """
     print(learner.actor.model.summary())
+    """
     learner.load_actor('weights/actor_pretrain/exp53/pretrain_actor/actor_pretrained_pretrain_actor_53_5.ckpt',
             'weights/actor_pretrain/exp53/pretrain_actor/actor_pretrained_pretrain_actor_53_5.ckpt')
+    """
     path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp=args.experiment
     ))
