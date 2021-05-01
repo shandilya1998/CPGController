@@ -104,6 +104,17 @@ class Learner:
         fig.savefig(name)
         plt.close()
 
+    def _test_pretrain_actor_cell(self, x, y, W = [1,1,1,1]):
+        out, omega, mu, Z = self.actor.model(x)
+        loss_action = self.action_mse(y[0], out)
+        loss_omega = self.omega_mse(y[1], omega)
+        loss_mu = self.mu_mse(y[2], mu)
+        loss_Z = self.Z_mse(y[3], Z)
+        loss = W[0] * loss_action + \
+            W[1] * loss_omega + \
+            W[2] * loss_mu + \
+            W[3] * loss_Z
+        return loss, [loss_action, loss_omega, loss_mu, loss_Z]
 
     def _test_pretrain_actor(self, x, y, W = [1,1,1,1]):
         out, Z, state = self.actor.model(x)
@@ -178,6 +189,73 @@ class Learner:
         x = np.real(z)
         y = np.imag(z)
         return np.concatenate([x, y], -1)
+        
+    def test_actor_cell(self, path, ep = None):
+        print('[Actor] Starting Actor Test')
+        data = random.sample(self.signal_gen.data, 10)
+        y = [np.expand_dims(d[0], 0) for d in data]
+        x = [np.expand_dims(d[1], 0) for d in data]
+        f = [np.array([[d[2]]], dtype = np.float32) \
+            for d in data]
+        y = np.concatenate(y, 0)
+        x = np.concatenate(x, 0)
+        f = np.concatenate(f, 0)
+        z = np.concatenate(
+            [np.expand_dims(
+                self.create_init_osc_state(), 0
+        ) for i in range(10)], 0)
+        mod_state = np.zeros(
+            (10, 2 * self.params['units_osc']),
+            dtype = np.float32
+        )
+        y_pred = []
+        print('[Actor] Generating Actions')
+        for i in tqdm(range(
+            self.params['rnn_steps'] * (self.params['max_steps'] + 2) + 1
+        )):
+            inp = [x, mod_state, z]
+            actions, _, _, z = self.actor.model(inp)
+            ac = actions[0].numpy()
+            #self.env.quadruped.all_legs.move(ac)
+            actions = actions.numpy() * np.pi / 3
+            y_pred.append(np.expand_dims(
+                actions, 1
+            ))
+        y = y * np.pi / 180.0
+        y_pred = np.concatenate(y_pred, 1)
+        print(y_pred.shape)
+        print(y.shape)
+        fig, ax = plt.subplots(4,1, figsize = (5,20))
+        for i in range(4):
+            ax[i].plot(y_pred[0][:,3*i], 'b', label = 'ankle')
+            ax[i].plot(y_pred[0][:,3*i + 1], 'g', label = 'knee')
+            ax[i].plot(y_pred[0][:,3*i + 2], 'r', label = 'hip')
+            ax[i].legend()
+        if ep is not None:
+            fig.savefig(os.path.join(
+                path,'y_pred_{ep}.png'.format(
+                    ep = ep
+                )
+            ))
+        else:
+            fig.savefig(os.path.join(path,'y_pred.png'))
+        fig, ax = plt.subplots(4,1, figsize = (5,20))
+        for i in range(4):
+            ax[i].plot(y[0][:,3*i], 'b', label = 'ankle real')
+            ax[i].plot(y[0][:,3*i + 1], 'g', label = 'knee real')
+            ax[i].plot(y[0][:,3*i + 2], 'r', label = 'hip real')
+            ax[i].legend()
+        if ep is not None:
+            fig.savefig(os.path.join(
+                path,'y_{ep}.png'.format(
+                    ep = ep
+                )
+            ))
+        else:
+            fig.savefig(os.path.join(path,'y.png'))
+        plt.close('all')
+        print('[Actor] Finishing Actor Test')
+
 
     def test_actor(self, path, ep = None):
         print('[Actor] Starting Actor Test')
