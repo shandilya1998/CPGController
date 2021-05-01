@@ -621,6 +621,96 @@ class ActorNetwork(object):
         for j in range(len(X)):
             np.save(os.path.join(path, 'X_{j}.npy'.format(j=j)), \
                 X[j], allow_pickle = True, fix_imports=True)
+                
+    def create_pretrain_cell_dataset(self, data_dir, params, train = True, output_dir = None):
+        if output_dir is None:
+            output_dir = data_dir
+        Y = np.load(
+            os.path.join(data_dir, 'Y.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )
+        indices = np.random.choice(Y.shape[0], params['num_data'], replace = False)
+        np.save(os.path.join('.', 'indices.npy'), \
+            indices, allow_pickle = True, fix_imports=True
+        )
+        Y = Y[indices]
+        Z = np.load(
+            os.path.join(data_dir, 'Z.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )[indices]
+        MU = np.load(
+            os.path.join(data_dir, 'MU.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )[indices]
+        num_data = Y.shape[0]
+        steps = Y.shape[1]
+        #Y = Y * (np.pi / 3)
+        desired_motion = np.load(
+            os.path.join(data_dir, 'X_0.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )[indices]
+        mod_state = np.zeros(
+            shape = (
+                num_data,
+                2 * params['units_osc']
+            )
+        )
+        z =  np.load(
+            os.path.join(data_dir, 'X_2.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )[indices]
+        F = np.load(
+            os.path.join(data_dir, 'F.npy'),
+            allow_pickle = True,
+            fix_imports=True
+        )[indices]
+        Y = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(Y)
+        )
+        Z = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(Z)
+        )
+        MU = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(MU)
+        )
+        F = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(F)
+        )
+        desired_motion = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(desired_motion)
+        )
+        mod_state = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(mod_state)
+        )
+        z = tf.data.Dataset.from_tensor_slices(
+            tf.convert_to_tensor(z)
+        )
+        X = tf.data.Dataset.zip((
+            desired_motion,
+            mod_state,
+            z
+        ))
+        Y = tf.data.Dataset.zip((
+            Y, F, MU, Z
+        ))
+        dataset = tf.data.Dataset.zip((X, Y))
+        dataset = dataset.shuffle(num_data // 10)
+        num_data = int(num_data * params['train_test_split'])
+        print('[Actor] Dataset {ds}'.format(ds = dataset))
+        train_dataset = dataset.take(num_data).batch(
+            params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        test_dataset = dataset.skip(num_data).batch(
+            params['pretrain_bs'],
+            drop_remainder=True
+        ).prefetch(tf.data.AUTOTUNE)
+        return train_dataset, test_dataset
 
     def create_pretrain_dataset(self, data_dir, params, train = True, output_dir = None):
         if output_dir is None:
