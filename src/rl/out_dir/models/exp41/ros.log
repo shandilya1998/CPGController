@@ -8103,4 +8103,1715 @@ You can start planning now!
 [0m[ INFO] [1619799218.544674932, 0.146000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
 [0m[ INFO] [1619799218.544713971, 0.146000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
 [0m[ INFO] [1619799218.556207888, 0.146000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
+[0m[ INFO] [[New Thread 0x7fffcd02a700 (LWP 228596)]
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+... logging to /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/roslaunch-ip-172-31-8-79-263471.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch
+[1mstarted roslaunch server http://ip-172-31-8-79:33287/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /joint_state_publisher/source_list: ['quadruped/joint...
+ * /move_group/allow_trajectory_execution: False
+ * /move_group/back_left_leg/default_planner_config: SBL
+ * /move_group/back_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_left_leg/projection_evaluator: joints(back_left_...
+ * /move_group/back_right_leg/default_planner_config: SBL
+ * /move_group/back_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_right_leg/projection_evaluator: joints(back_right...
+ * /move_group/base/default_planner_config: SBL
+ * /move_group/base/planner_configs: ['AnytimePathShor...
+ * /move_group/capabilities: 
+ * /move_group/disable_capabilities: 
+ * /move_group/front_left_leg/default_planner_config: SBL
+ * /move_group/front_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_left_leg/projection_evaluator: joints(front_left...
+ * /move_group/front_right_leg/default_planner_config: SBL
+ * /move_group/front_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_right_leg/projection_evaluator: joints(front_righ...
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/planner_configs/AnytimePathShortening/hybridize: True
+ * /move_group/planner_configs/AnytimePathShortening/max_hybrid_paths: 24
+ * /move_group/planner_configs/AnytimePathShortening/num_planners: 4
+ * /move_group/planner_configs/AnytimePathShortening/planners: 
+ * /move_group/planner_configs/AnytimePathShortening/shortcut: True
+ * /move_group/planner_configs/AnytimePathShortening/type: geometric::Anytim...
+ * /move_group/planner_configs/BFMT/balanced: 0
+ * /move_group/planner_configs/BFMT/cache_cc: 1
+ * /move_group/planner_configs/BFMT/extended_fmt: 1
+ * /move_group/planner_configs/BFMT/heuristics: 1
+ * /move_group/planner_configs/BFMT/nearest_k: 1
+ * /move_group/planner_configs/BFMT/num_samples: 1000
+ * /move_group/planner_configs/BFMT/optimality: 1
+ * /move_group/planner_configs/BFMT/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMT/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECE/range: 0.0
+ * /move_group/planner_configs/BKPIECE/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiEST/range: 0.0
+ * /move_group/planner_configs/BiEST/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRT/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRT/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRT/init_temperature: 100
+ * /move_group/planner_configs/BiTRRT/range: 0.0
+ * /move_group/planner_configs/BiTRRT/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRT/type: geometric::BiTRRT
+ * /move_group/planner_configs/EST/goal_bias: 0.05
+ * /move_group/planner_configs/EST/range: 0.0
+ * /move_group/planner_configs/EST/type: geometric::EST
+ * /move_group/planner_configs/FMT/cache_cc: 1
+ * /move_group/planner_configs/FMT/extended_fmt: 1
+ * /move_group/planner_configs/FMT/heuristics: 0
+ * /move_group/planner_configs/FMT/nearest_k: 1
+ * /move_group/planner_configs/FMT/num_samples: 1000
+ * /move_group/planner_configs/FMT/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMT/type: geometric::FMT
+ * /move_group/planner_configs/KPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECE/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECE/range: 0.0
+ * /move_group/planner_configs/KPIECE/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECE/range: 0.0
+ * /move_group/planner_configs/LBKPIECE/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRT/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRT/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRT/range: 0.0
+ * /move_group/planner_configs/LBTRRT/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRM/range: 0.0
+ * /move_group/planner_configs/LazyPRM/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstar/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDST/type: geometric::PDST
+ * /move_group/planner_configs/PRM/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRM/type: geometric::PRM
+ * /move_group/planner_configs/PRMstar/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjEST/goal_bias: 0.05
+ * /move_group/planner_configs/ProjEST/range: 0.0
+ * /move_group/planner_configs/ProjEST/type: geometric::ProjEST
+ * /move_group/planner_configs/RRT/goal_bias: 0.05
+ * /move_group/planner_configs/RRT/range: 0.0
+ * /move_group/planner_configs/RRT/type: geometric::RRT
+ * /move_group/planner_configs/RRTConnect/range: 0.0
+ * /move_group/planner_configs/RRTConnect/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTstar/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstar/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstar/range: 0.0
+ * /move_group/planner_configs/RRTstar/type: geometric::RRTstar
+ * /move_group/planner_configs/SBL/range: 0.0
+ * /move_group/planner_configs/SBL/type: geometric::SBL
+ * /move_group/planner_configs/SPARS/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARS/max_failures: 1000
+ * /move_group/planner_configs/SPARS/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARS/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARS/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwo/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwo/max_failures: 5000
+ * /move_group/planner_configs/SPARStwo/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwo/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwo/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDE/degree: 16
+ * /move_group/planner_configs/STRIDE/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDE/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDE/max_degree: 18
+ * /move_group/planner_configs/STRIDE/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDE/min_degree: 12
+ * /move_group/planner_configs/STRIDE/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDE/range: 0.0
+ * /move_group/planner_configs/STRIDE/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDE/use_projected_distance: 0
+ * /move_group/planner_configs/TRRT/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRT/goal_bias: 0.05
+ * /move_group/planner_configs/TRRT/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRT/k_constant: 0.0
+ * /move_group/planner_configs/TRRT/max_states_failed: 10
+ * /move_group/planner_configs/TRRT/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRT/range: 0.0
+ * /move_group/planner_configs/TRRT/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRT/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /quadruped/back_left_leg_controller/joints: ['back_left_leg1_...
+ * /quadruped/back_left_leg_controller/type: position_controll...
+ * /quadruped/back_right_leg_controller/joints: ['back_right_leg1...
+ * /quadruped/back_right_leg_controller/type: position_controll...
+ * /quadruped/front_left_leg_controller/joints: ['front_left_leg1...
+ * /quadruped/front_left_leg_controller/type: position_controll...
+ * /quadruped/front_right_leg_controller/joints: ['front_right_leg...
+ * /quadruped/front_right_leg_controller/type: position_controll...
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/p: 300
+ * /quadruped/generic_hw_control_loop/cycle_time_error_threshold: 0.01
+ * /quadruped/generic_hw_control_loop/loop_hz: 100
+ * /quadruped/hardware_interface/joints: ['back_left_leg3_...
+ * /quadruped/hardware_interface/sim_control_mode: 1
+ * /quadruped/joint_state_controller/publish_rate: 100
+ * /quadruped/joint_state_controller/type: joint_state_contr...
+ * /quadruped/moveit_sim_hw_interface/joint_model_group: todo_group_name
+ * /quadruped/moveit_sim_hw_interface/joint_model_group_pose: todo_state_name
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/back_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/default_acceleration_scaling_factor: 0.1
+ * /robot_description_planning/default_velocity_scaling_factor: 0.1
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_velocity: 10
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 60.0
+ * /rosdistro: noetic
+ * /rosversion: 1.15.9
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    move_group (moveit_ros_move_group/move_group)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    urdf_spawner (gazebo_ros/spawn_model)
+  /quadruped/
+    controller_spawner (controller_manager/spawner)
+[33m[ WARN] [1619847931.473245379, 39910.059000000]: Shutdown request received.[0m
+[33m[ WARN] [1619847931.476170121, 39910.060000000]: Reason given for shutdown: [[/robot_state_publisher] Reason: new node registered with same name][0m
+[33m[ WARN] [1619847931.482585028]: Shutdown request received.[0m
+[33m[ WARN] [1619847931.497035734]: Reason given for shutdown: [[/robot_state_publisher] Reason: new node registered with same name][0m
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/ros/noetic/lib/moveit_ros_move_group/move_group...
+(No debugging symbols found in /opt/ros/noetic/lib/moveit_ros_move_group/move_group)
+/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/gdb_settings.gdb: No such file or directory.
+Starting program: /opt/ros/noetic/lib/moveit_ros_move_group/move_group --debug __name:=move_group __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/move_group-7.log
+[31m[ERROR] [1619847932.370749778, 39910.512000000]: A controller named 'front_right_leg_controller' was already loaded inside the controller manager[0m
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[INFO] [1619799216.688561, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1619799218.511476, 0.146000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1619799218.515498, 0.146000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1619799218.520424, 0.146000]: Loading controller: front_right_leg_controller
+[INFO] [1619799218.576368, 0.158000]: Loading controller: front_left_leg_controller
+[INFO] [1619799218.610605, 0.188000]: Loading controller: back_right_leg_controller
+[INFO] [1619799218.655391, 0.225000]: Loading controller: back_left_leg_controller
+[INFO] [1619799218.702123, 0.265000]: Loading controller: joint_state_controller
+[INFO] [1619799218.715088, 0.277000]: Controller Spawner: Loaded controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1619799218.721011, 0.283000]: Started controllers: front_right_leg_controller, front_left_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+shutdown request: [/quadruped/controller_spawner] Reason: new node registered with same name
+[INFO] [1619847932.298238, 39910.475000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1619847932.303451, 39910.477000]: Stopping all controllers...
+[INFO] [1619847932.324550, 39910.489000]: Unloading all loaded controllers...
+[INFO] [1619847932.326312, 39910.490000]: Trying to unload joint_state_controller
+[INFO] [1619847932.343417, 39910.500000]: Succeeded in unloading joint_state_controller
+[INFO] [1619847932.344729, 39910.501000]: Trying to unload back_left_leg_controller
+[INFO] [1619847932.370871, 39910.512000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1619847932.375465, 39910.515000]: Trying to unload back_right_leg_controller
+[INFO] [1619847932.403331, 39910.528000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1619847932.404825, 39910.529000]: Trying to unload front_left_leg_controller
+[INFO] [1619847932.424886, 39910.537000]: Succeeded in unloading front_left_leg_controller
+[INFO] [1619847932.426408, 39910.538000]: Trying to unload front_right_leg_controller
+[INFO] [1619847932.453910, 39910.552000]: Succeeded in unloading front_right_leg_controller
+[31m[ERROR] [1619847932.957460480, 39910.900000000]: SpawnModel: Failure - model name quadruped already exist.[0m
+[ERROR] [1619847932.959226, 39910.901000]: Spawn service failed. Exiting.
+[ERROR] [1619847933.372213, 39910.559000]: Failed to load front_right_leg_controller
+[INFO] [1619847932.304258, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1619847932.316617, 0.000000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1619847932.331671, 0.000000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1619847932.351552, 39910.505000]: Loading controller: front_right_leg_controller
+shutdown request: [/quadruped/controller_spawner] Reason: new node registered with same name
+[INFO] [1619847932.411638, 39910.531000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1619847932.417007, 39910.533000]: Stopping all controllers...
+[INFO] [1619847932.464973, 39910.558000]: Unloading all loaded controllers...
+[INFO] [1619847933.374013, 39910.559000]: Loading controller: front_left_leg_controller
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/controller_manager/spawner", line 212, in <module>
+    if __name__ == '__main__': main()
+  File "/opt/ros/noetic/lib/controller_manager/spawner", line 190, in main
+    resp = load_controller(name)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 524, in call
+    raise ServiceException("service [%s] returned no response"%self.resolved_name)
+rospy.service.ServiceException: service [/quadruped/controller_manager/load_controller] returned no response
+[New Thread 0x7ffff0da7700 (LWP 263696)]
+[New Thread 0x7ffff05a6700 (LWP 263697)]
+[New Thread 0x7fffefda5700 (LWP 263698)]
+[New Thread 0x7fffef5a4700 (LWP 263703)]
+[New Thread 0x7fffeeda3700 (LWP 263704)]
+[33m[ WARN] [1619847934.477661767, 39911.991000000]: Shutdown request received.[0m
+[33m[ WARN] [1619847934.477728749, 39911.991000000]: Reason given for shutdown: [[/move_group] Reason: new node registered with same name][0m
+[New Thread 0x7fffee5a2700 (LWP 263713)]
+[33m[ WARN] [1619847934.508706305]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[Thread 0x7fffef5a4700 (LWP 75154) exited]
+[Thread 0x7fffefda5700 (LWP 75153) exited]
+[Thread 0x7ffff05a6700 (LWP 75152) exited]
+[Thread 0x7fffeeda3700 (LWP 75155) exited]
+[Thread 0x7ffff0da7700 (LWP 75151) exited]
+[Thread 0x7fffce8cd700 (LWP 75201) exited]
+[Thread 0x7fffedd52700 (LWP 75182) exited]
+[Thread 0x7fffcd82b700 (LWP 75204) exited]
+[Thread 0x7fffce02c700 (LWP 75203) exited]
+[Thread 0x7fffcf8cf700 (LWP 75199) exited]
+[Thread 0x7fffed551700 (LWP 75183) exited]
+[Thread 0x7fffcf0ce700 (LWP 75200) exited]
+[Thread 0x7fffee5a2700 (LWP 75160) exited]
+[Thread 0x7fffecd50700 (LWP 75185) exited]
+[Thread 0x7fffcd02a700 (LWP 228596) exited]
+[Inferior 1 (process 75021) exited normally]
+(gdb) quit
+[New Thread 0x7fffedd52700 (LWP 263724)]
+[New Thread 0x7fffed551700 (LWP 263725)]
+[33m[ WARN] [1619847934.884789854, 39912.256000000]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead[0m
+[31m[ERROR] [1619847934.885379789, 39912.256000000]: Failed to find 3D sensor plugin parameters for octomap generation[0m
+[New Thread 0x7fffecd50700 (LWP 263726)]
+[New Thread 0x7fffcf8cf700 (LWP 263733)]
+[New Thread 0x7fffcf0ce700 (LWP 263734)]
+[New Thread 0x7fffce8cd700 (LWP 263735)]
+[New Thread 0x7fffce02c700 (LWP 263736)]
+[New Thread 0x7fffcd82b700 (LWP 263737)]
+[0m[ INFO] [1619847934.504087349]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619847934.508575366]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1619847934.858870952, 39912.237000000]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1619847934.868822168, 39912.244000000]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1619847934.868848483, 39912.244000000]: Starting planning scene monitor[0m
+[0m[ INFO] [1619847934.872854575, 39912.246000000]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1619847934.872886297, 39912.246000000]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1619847934.878140155, 39912.251000000]: Listening to '/collision_object'[0m
+[0m[ INFO] [1619847934.884053308, 39912.255000000]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1619847934.907434493, 39912.274000000]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1619847935.396364313, 39912.654000000]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1619847935.406376116, 39912.663000000]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1619847935.406886212, 39912.663000000]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1619847935.407301805, 39912.663000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619847935.408049251, 39912.664000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619847935.408973073, 39912.664000000]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1619847935.410005138, 39912.665000000]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1619847935.410064009, 39912.665000000]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1619847935.410089021, 39912.665000000]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1619847935.410107832, 39912.665000000]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1619847935.410125178, 39912.665000000]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1619847935.410136145, 39912.665000000]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1619847935.410153009, 39912.665000000]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1619847935.599836911, 39912.799000000]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1619847935.599900811, 39912.799000000]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1619847935.599928183, 39912.799000000]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0mlibGL error: No matching fbConfigs or visuals found
+libGL error: failed to load driver: swrast
+X Error of failed request:  GLXBadContext
+  Major opcode of failed request:  149 (GLX)
+  Minor opcode of failed request:  6 (X_GLXIsDirect)
+  Serial number of failed request:  32
+  Current serial number in output stream:  31
+[New Thread 0x7fffcd02a700 (LWP 263809)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e83bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe250, rem=0x7fffffffe260)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 263550] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[31m[urdf_spawner-3] process has died [pid 263532, exit code 1, cmd /opt/ros/noetic/lib/gazebo_ros/spawn_model -param robot_description -urdf -model quadruped __name:=urdf_spawner __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/urdf_spawner-3.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/urdf_spawner-3*.log[0m
+[31m[quadruped/controller_spawner-4] process has died [pid 263535, exit code 1, cmd /opt/ros/noetic/lib/controller_manager/spawner front_right_leg_controller front_left_leg_controller back_right_leg_controller back_left_leg_controller joint_state_controller __name:=controller_spawner __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/quadruped-controller_spawner-4.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/quadruped-controller_spawner-4*.log[0m
+[31m[gazebo-1] process has died [pid 263525, exit code 255, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo-1.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo-1*.log[0m
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11311
+[1mprocess[gazebo-1]: started with pid [263525][0m
+[1mprocess[gazebo_gui-2]: started with pid [263527][0m
+[1mprocess[urdf_spawner-3]: started with pid [263532][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [263535][0m
+[1mprocess[joint_state_publisher-5]: started with pid [263537][0m
+[1mprocess[robot_state_publisher-6]: started with pid [263538][0m
+[1mprocess[move_group-7]: started with pid [263539][0m
+[1m[robot_state_publisher-6] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/robot_state_publisher-6*.log[0m
+[joint_state_publisher-5] killing on exit
+[move_group-7] killing on exit
+[gazebo_gui-2] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+... logging to /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/roslaunch-ip-172-31-8-79-263958.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch
+[1mstarted roslaunch server http://ip-172-31-8-79:37165/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /joint_state_publisher/source_list: ['quadruped/joint...
+ * /move_group/allow_trajectory_execution: False
+ * /move_group/back_left_leg/default_planner_config: SBL
+ * /move_group/back_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_left_leg/projection_evaluator: joints(back_left_...
+ * /move_group/back_right_leg/default_planner_config: SBL
+ * /move_group/back_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_right_leg/projection_evaluator: joints(back_right...
+ * /move_group/base/default_planner_config: SBL
+ * /move_group/base/planner_configs: ['AnytimePathShor...
+ * /move_group/capabilities: 
+ * /move_group/disable_capabilities: 
+ * /move_group/front_left_leg/default_planner_config: SBL
+ * /move_group/front_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_left_leg/projection_evaluator: joints(front_left...
+ * /move_group/front_right_leg/default_planner_config: SBL
+ * /move_group/front_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_right_leg/projection_evaluator: joints(front_righ...
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/planner_configs/AnytimePathShortening/hybridize: True
+ * /move_group/planner_configs/AnytimePathShortening/max_hybrid_paths: 24
+ * /move_group/planner_configs/AnytimePathShortening/num_planners: 4
+ * /move_group/planner_configs/AnytimePathShortening/planners: 
+ * /move_group/planner_configs/AnytimePathShortening/shortcut: True
+ * /move_group/planner_configs/AnytimePathShortening/type: geometric::Anytim...
+ * /move_group/planner_configs/BFMT/balanced: 0
+ * /move_group/planner_configs/BFMT/cache_cc: 1
+ * /move_group/planner_configs/BFMT/extended_fmt: 1
+ * /move_group/planner_configs/BFMT/heuristics: 1
+ * /move_group/planner_configs/BFMT/nearest_k: 1
+ * /move_group/planner_configs/BFMT/num_samples: 1000
+ * /move_group/planner_configs/BFMT/optimality: 1
+ * /move_group/planner_configs/BFMT/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMT/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECE/range: 0.0
+ * /move_group/planner_configs/BKPIECE/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiEST/range: 0.0
+ * /move_group/planner_configs/BiEST/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRT/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRT/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRT/init_temperature: 100
+ * /move_group/planner_configs/BiTRRT/range: 0.0
+ * /move_group/planner_configs/BiTRRT/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRT/type: geometric::BiTRRT
+ * /move_group/planner_configs/EST/goal_bias: 0.05
+ * /move_group/planner_configs/EST/range: 0.0
+ * /move_group/planner_configs/EST/type: geometric::EST
+ * /move_group/planner_configs/FMT/cache_cc: 1
+ * /move_group/planner_configs/FMT/extended_fmt: 1
+ * /move_group/planner_configs/FMT/heuristics: 0
+ * /move_group/planner_configs/FMT/nearest_k: 1
+ * /move_group/planner_configs/FMT/num_samples: 1000
+ * /move_group/planner_configs/FMT/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMT/type: geometric::FMT
+ * /move_group/planner_configs/KPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECE/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECE/range: 0.0
+ * /move_group/planner_configs/KPIECE/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECE/range: 0.0
+ * /move_group/planner_configs/LBKPIECE/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRT/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRT/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRT/range: 0.0
+ * /move_group/planner_configs/LBTRRT/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRM/range: 0.0
+ * /move_group/planner_configs/LazyPRM/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstar/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDST/type: geometric::PDST
+ * /move_group/planner_configs/PRM/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRM/type: geometric::PRM
+ * /move_group/planner_configs/PRMstar/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjEST/goal_bias: 0.05
+ * /move_group/planner_configs/ProjEST/range: 0.0
+ * /move_group/planner_configs/ProjEST/type: geometric::ProjEST
+ * /move_group/planner_configs/RRT/goal_bias: 0.05
+ * /move_group/planner_configs/RRT/range: 0.0
+ * /move_group/planner_configs/RRT/type: geometric::RRT
+ * /move_group/planner_configs/RRTConnect/range: 0.0
+ * /move_group/planner_configs/RRTConnect/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTstar/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstar/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstar/range: 0.0
+ * /move_group/planner_configs/RRTstar/type: geometric::RRTstar
+ * /move_group/planner_configs/SBL/range: 0.0
+ * /move_group/planner_configs/SBL/type: geometric::SBL
+ * /move_group/planner_configs/SPARS/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARS/max_failures: 1000
+ * /move_group/planner_configs/SPARS/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARS/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARS/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwo/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwo/max_failures: 5000
+ * /move_group/planner_configs/SPARStwo/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwo/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwo/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDE/degree: 16
+ * /move_group/planner_configs/STRIDE/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDE/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDE/max_degree: 18
+ * /move_group/planner_configs/STRIDE/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDE/min_degree: 12
+ * /move_group/planner_configs/STRIDE/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDE/range: 0.0
+ * /move_group/planner_configs/STRIDE/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDE/use_projected_distance: 0
+ * /move_group/planner_configs/TRRT/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRT/goal_bias: 0.05
+ * /move_group/planner_configs/TRRT/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRT/k_constant: 0.0
+ * /move_group/planner_configs/TRRT/max_states_failed: 10
+ * /move_group/planner_configs/TRRT/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRT/range: 0.0
+ * /move_group/planner_configs/TRRT/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRT/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /quadruped/back_left_leg_controller/joints: ['back_left_leg1_...
+ * /quadruped/back_left_leg_controller/type: position_controll...
+ * /quadruped/back_right_leg_controller/joints: ['back_right_leg1...
+ * /quadruped/back_right_leg_controller/type: position_controll...
+ * /quadruped/front_left_leg_controller/joints: ['front_left_leg1...
+ * /quadruped/front_left_leg_controller/type: position_controll...
+ * /quadruped/front_right_leg_controller/joints: ['front_right_leg...
+ * /quadruped/front_right_leg_controller/type: position_controll...
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/p: 300
+ * /quadruped/generic_hw_control_loop/cycle_time_error_threshold: 0.01
+ * /quadruped/generic_hw_control_loop/loop_hz: 100
+ * /quadruped/hardware_interface/joints: ['back_left_leg3_...
+ * /quadruped/hardware_interface/sim_control_mode: 1
+ * /quadruped/joint_state_controller/publish_rate: 100
+ * /quadruped/joint_state_controller/type: joint_state_contr...
+ * /quadruped/moveit_sim_hw_interface/joint_model_group: todo_group_name
+ * /quadruped/moveit_sim_hw_interface/joint_model_group_pose: todo_state_name
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/back_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/default_acceleration_scaling_factor: 0.1
+ * /robot_description_planning/default_velocity_scaling_factor: 0.1
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_velocity: 10
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 60.0
+ * /rosdistro: noetic
+ * /rosversion: 1.15.9
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    move_group (moveit_ros_move_group/move_group)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    urdf_spawner (gazebo_ros/spawn_model)
+  /quadruped/
+    controller_spawner (controller_manager/spawner)
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/ros/noetic/lib/moveit_ros_move_group/move_group...
+(No debugging symbols found in /opt/ros/noetic/lib/moveit_ros_move_group/move_group)
+/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/gdb_settings.gdb: No such file or directory.
+Starting program: /opt/ros/noetic/lib/moveit_ros_move_group/move_group --debug __name:=move_group __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/move_group-7.log
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[31m[ERROR] [1619847986.736902971, 39960.520000000]: A controller named 'front_left_leg_controller' was already loaded inside the controller manager[0m
+[31m[ERROR] [1619847986.935743652, 39960.613000000]: SpawnModel: Failure - model name quadruped already exist.[0m
+[ERROR] [1619847986.944058, 39960.613000]: Spawn service failed. Exiting.
+[New Thread 0x7ffff0da7700 (LWP 264159)]
+[New Thread 0x7ffff05a6700 (LWP 264160)]
+[New Thread 0x7fffefda5700 (LWP 264161)]
+[New Thread 0x7fffef5a4700 (LWP 264163)]
+[New Thread 0x7fffeeda3700 (LWP 264166)]
+[New Thread 0x7fffee5a2700 (LWP 264167)]
+[33m[ WARN] [1619847987.923589491]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[New Thread 0x7fffedd52700 (LWP 264190)]
+[New Thread 0x7fffed551700 (LWP 264192)]
+[33m[ WARN] [1619847988.180487720, 39961.457000000]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead[0m
+[31m[ERROR] [1619847988.180994727, 39961.457000000]: Failed to find 3D sensor plugin parameters for octomap generation[0m
+[New Thread 0x7fffecd50700 (LWP 264193)]
+Aborted (core dumped)
+[New Thread 0x7fffcf8cf700 (LWP 264203)]
+[New Thread 0x7fffcf0ce700 (LWP 264204)]
+[New Thread 0x7fffce8cd700 (LWP 264205)]
+[New Thread 0x7fffce02c700 (LWP 264206)]
+[New Thread 0x7fffcd82b700 (LWP 264207)]
+[0m[ INFO] [1619847987.922482415]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619847987.923455581]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1619847988.149467033]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1619847988.163229063, 39961.448000000]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1619847988.163280347, 39961.448000000]: Starting planning scene monitor[0m
+[0m[ INFO] [1619847988.168897114, 39961.451000000]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1619847988.168926977, 39961.451000000]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1619847988.173594498, 39961.453000000]: Listening to '/collision_object'[0m
+[0m[ INFO] [1619847988.179921924, 39961.457000000]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1619847988.196178946, 39961.465000000]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1619847988.726456909, 39961.813000000]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1619847988.735495630, 39961.819000000]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1619847988.736703097, 39961.820000000]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1619847988.737500414, 39961.820000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619847988.738255709, 39961.821000000]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619847988.739086405, 39961.821000000]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1619847988.739604115, 39961.821000000]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1619847988.739658662, 39961.821000000]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1619847988.739675577, 39961.821000000]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1619847988.739688057, 39961.821000000]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1619847988.739699946, 39961.821000000]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1619847988.739711760, 39961.821000000]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1619847988.739721645, 39961.821000000]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1619847988.953618131, 39961.969000000]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1619847988.953666630, 39961.969000000]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1619847988.953688788, 39961.969000000]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0m[31m[ERROR] [1619847996.966032073, 39968.627000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.292458646, 39984.453000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.457857176, 39984.571000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.530915316, 39984.626000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.674861485, 39984.728000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.724887926, 39984.761000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.833829451, 39984.838000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.899857290, 39984.879000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848019.962206356, 39984.918000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.017947580, 39984.955000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.138662973, 39985.040000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.254313113, 39985.123000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.360036623, 39985.193000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.471865331, 39985.277000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.599709949, 39985.368000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.698841434, 39985.437000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.784261266, 39985.498000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.884205926, 39985.568000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848020.954093006, 39985.618000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.037546369, 39985.677000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.122670356, 39985.738000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.196890054, 39985.789000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.273469876, 39985.841000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.404834864, 39985.938000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.475324320, 39985.984000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.560738037, 39986.043000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.635484905, 39986.095000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.726544065, 39986.160000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.854998066, 39986.255000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848021.953587301, 39986.328000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.049445899, 39986.403000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.134028363, 39986.458000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.229927893, 39986.526000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.317932717, 39986.591000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.425314634, 39986.671000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.536657885, 39986.752000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.676043532, 39986.852000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.808789777, 39986.943000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.878958525, 39986.984000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848022.974201848, 39987.044000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.059253854, 39987.106000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.127389447, 39987.152000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.195196726, 39987.197000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.238153799, 39987.223000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.281065230, 39987.250000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.375174576, 39987.317000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.480003964, 39987.387000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.569586458, 39987.448000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.660471704, 39987.513000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.749546802, 39987.577000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.866740814, 39987.662000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848023.943300017, 39987.716000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.027771945, 39987.774000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.111173455, 39987.829000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.193411068, 39987.886000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.293005942, 39987.959000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.411412742, 39988.043000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.538833403, 39988.134000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.645637996, 39988.210000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.743043496, 39988.281000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.787798026, 39988.313000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848024.853919328, 39988.357000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848030.140302528, 39992.195000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848034.414117344, 39995.257000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848034.870692773, 39995.576000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848035.312119130, 39995.910000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848035.755745127, 39996.233000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848036.211982450, 39996.563000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848036.662206368, 39996.887000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848037.137931317, 39997.222000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848037.638785953, 39997.594000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848038.120841970, 39997.936000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848038.564022515, 39998.255000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848038.962178472, 39998.544000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848039.423784340, 39998.884000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848039.894980139, 39999.232000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848040.323388220, 39999.550000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848040.788949989, 39999.896000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848041.277319211, 40000.256000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848041.732730444, 40000.591000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848042.116491636, 40000.880000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848042.605632536, 40001.253000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848043.046115983, 40001.584000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848043.463635733, 40001.886000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848058.749014070, 40012.483000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848063.493221812, 40015.902000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848063.943286500, 40016.232000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848064.398221237, 40016.552000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848064.932310530, 40016.946000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848065.367295004, 40017.260000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848065.834535492, 40017.612000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848066.263285858, 40017.917000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848066.715378505, 40018.258000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848067.130600715, 40018.558000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848067.558319073, 40018.856000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848068.036957618, 40019.206000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848068.476097057, 40019.525000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848068.926093571, 40019.846000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848069.350790210, 40020.150000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848069.812690535, 40020.477000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848070.242571642, 40020.787000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848070.721212937, 40021.148000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848071.151734510, 40021.464000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848071.661204816, 40021.824000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848072.160348599, 40022.193000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848072.631528199, 40022.526000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848073.087018533, 40022.859000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848073.535587444, 40023.185000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848074.022248490, 40023.542000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848074.446200180, 40023.848000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848074.837015673, 40024.129000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848075.250826618, 40024.431000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848075.744331236, 40024.800000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848076.161684635, 40025.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848076.658090745, 40025.478000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848077.098881180, 40025.793000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848077.511715391, 40026.084000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848078.022366145, 40026.463000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848078.491184706, 40026.791000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848078.932530241, 40027.109000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848079.342046112, 40027.403000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848079.862939730, 40027.788000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848080.330971200, 40028.128000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848080.768683464, 40028.453000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848081.192954757, 40028.761000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848081.642662513, 40029.095000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848082.088138283, 40029.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848082.531539301, 40029.748000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848083.030259778, 40030.125000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848083.508943639, 40030.509000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848083.961038593, 40030.859000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848084.444528798, 40031.221000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848084.950418559, 40031.591000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848085.452300934, 40031.956000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848085.897146905, 40032.286000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848086.345985307, 40032.626000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848086.839110486, 40032.980000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848087.261306315, 40033.293000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848087.744650731, 40033.654000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848088.228498043, 40034.017000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848088.680761927, 40034.349000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848089.129322403, 40034.689000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848089.582395509, 40035.013000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848090.032406901, 40035.346000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848090.460239457, 40035.645000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848131.396829944, 40064.393000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848135.555940702, 40067.446000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848136.045111234, 40067.807000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848136.516394558, 40068.163000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848137.015918570, 40068.535000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848137.441632002, 40068.848000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848137.907388485, 40069.190000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848138.398870397, 40069.550000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848138.808407103, 40069.846000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848139.242242544, 40070.175000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848139.695486599, 40070.516000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848140.080072092, 40070.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848140.523952895, 40071.143000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848140.984362151, 40071.489000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848141.438305969, 40071.829000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848141.911723954, 40072.180000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848142.399970688, 40072.555000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848142.797286660, 40072.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848143.207506327, 40073.146000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848143.630184488, 40073.457000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848144.105765263, 40073.814000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848144.509797040, 40074.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848144.957114211, 40074.440000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848145.415693789, 40074.774000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848145.856565725, 40075.112000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848146.305995036, 40075.447000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848146.701730442, 40075.740000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848147.148613101, 40076.067000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848147.625462452, 40076.426000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848148.059272896, 40076.745000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848148.524284261, 40077.086000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848148.982876993, 40077.427000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848149.469223878, 40077.796000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848149.936768847, 40078.144000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848150.394553010, 40078.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848150.845079914, 40078.821000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848151.325917205, 40079.191000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848151.756874470, 40079.511000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848152.269086862, 40079.900000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848152.694569086, 40080.217000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848153.117118328, 40080.531000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848153.605688684, 40080.888000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848154.028207489, 40081.199000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848154.492080486, 40081.554000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848154.945837563, 40081.882000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848155.394852353, 40082.216000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848155.856200136, 40082.554000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848156.345264989, 40082.926000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848156.795960989, 40083.248000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848157.268192744, 40083.598000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848157.682637995, 40083.910000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848158.151336338, 40084.262000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848158.567528413, 40084.561000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848159.004346441, 40084.880000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848159.468978796, 40085.224000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848159.919360188, 40085.560000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848160.417892134, 40085.936000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848160.884690267, 40086.274000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848161.371373621, 40086.643000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848161.823257059, 40086.979000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848162.237313454, 40087.282000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848179.449372402, 40099.368000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848179.450336916, 40099.368000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848183.882748158, 40102.563000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848184.330348846, 40102.890000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848184.796196267, 40103.234000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848185.264285938, 40103.587000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848185.707392864, 40103.914000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848186.169027863, 40104.261000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848186.631142377, 40104.609000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848187.072085604, 40104.925000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848187.561295792, 40105.306000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848188.035929074, 40105.667000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848188.436284991, 40106.007000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848188.824341535, 40106.288000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848189.330102591, 40106.646000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848189.830968341, 40107.016000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848190.306755476, 40107.372000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848190.830138483, 40107.760000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848191.299603674, 40108.107000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848191.790739491, 40108.471000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848192.253492182, 40108.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848192.670061738, 40109.126000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848193.119808316, 40109.453000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848193.570600806, 40109.799000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848194.030351069, 40110.136000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848194.563649988, 40110.491000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848195.024233386, 40110.796000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848195.482107653, 40111.142000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848195.898085813, 40111.451000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848196.333904577, 40111.770000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848196.796456181, 40112.115000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848197.292567999, 40112.494000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848197.775112020, 40112.846000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848198.265593126, 40113.210000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848198.709274835, 40113.522000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848199.170288094, 40113.870000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848199.623577118, 40114.213000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848200.042313045, 40114.520000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848200.519548868, 40114.876000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848200.940739890, 40115.186000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848201.418378458, 40115.535000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848201.838736613, 40115.844000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848202.301367774, 40116.194000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848202.823824421, 40116.581000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848203.316277702, 40116.952000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848203.737256836, 40117.263000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848204.161452512, 40117.579000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848204.571833023, 40117.877000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848205.031736243, 40118.233000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848205.489758919, 40118.579000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848205.897865881, 40118.874000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848206.325937590, 40119.181000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848206.748217772, 40119.485000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848207.236876673, 40119.851000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848207.661996446, 40120.170000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848208.111844448, 40120.494000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848208.538869146, 40120.809000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848209.018582290, 40121.148000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848209.457236149, 40121.471000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848209.901131093, 40121.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848210.333156713, 40122.135000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848210.817385310, 40122.492000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848227.617925321, 40134.178000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848232.252566997, 40137.532000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848232.675711354, 40137.828000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848233.110155076, 40138.144000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848233.567527502, 40138.472000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848233.995346082, 40138.773000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848234.496773393, 40139.128000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848234.948968601, 40139.454000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848235.476084886, 40139.852000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848235.883808879, 40140.151000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848236.344207897, 40140.489000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848236.755608073, 40140.789000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848237.196693847, 40141.113000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848237.689835050, 40141.480000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848238.132319009, 40141.786000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848238.543630863, 40142.093000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848238.976447397, 40142.404000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848239.419778793, 40142.729000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848239.808368138, 40143.004000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848240.241317997, 40143.315000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848240.704487205, 40143.653000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848241.162059297, 40143.985000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848241.609779880, 40144.345000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848242.052780285, 40144.689000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848242.586664519, 40145.085000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848243.046499305, 40145.414000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848243.489840812, 40145.741000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848243.932066073, 40146.067000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848244.509212745, 40146.500000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848244.930482175, 40146.809000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848245.349353147, 40147.115000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848245.793040364, 40147.450000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848246.215634631, 40147.763000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848246.661304431, 40148.086000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848247.107134553, 40148.414000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848247.567101631, 40148.757000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848248.004578611, 40149.080000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848248.486486641, 40149.432000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848248.931532254, 40149.763000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848249.375861869, 40150.091000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848249.831783399, 40150.433000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848250.270275322, 40150.758000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848250.764468636, 40151.130000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848251.239893528, 40151.464000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848251.736484306, 40151.811000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848252.170839627, 40152.117000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848252.645898479, 40152.460000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848253.098953636, 40152.787000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848253.559727880, 40153.135000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848253.980231159, 40153.442000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848254.446095580, 40153.784000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848254.880195668, 40154.095000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848255.344272173, 40154.432000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848255.817455744, 40154.778000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848256.225363377, 40155.079000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848256.695528840, 40155.428000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848257.126762928, 40155.750000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848257.589570261, 40156.098000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848258.068750649, 40156.452000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848258.542672142, 40156.803000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848258.964444973, 40157.120000000]: Can't accept new commands. Controller is not running.[0m
+[31m[ERROR] [1619848276.967558403, 40169.778000000]: Can't accept new commands. Controller is not running.[0m
+[New Thread 0x7fffcd02a700 (LWP 265926)]
+
+Thread 1 "move_group" received signal SIGINT, Interrupt.
+0x00007ffff77e83bf in __GI___clock_nanosleep (clock_id=clock_id@entry=0, 
+    flags=flags@entry=0, req=0x7fffffffe260, rem=0x7fffffffe270)
+    at ../sysdeps/unix/sysv/linux/clock_nanosleep.c:78
+78	../sysdeps/unix/sysv/linux/clock_nanosleep.c: No such file or directory.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 264036] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+terminate called after throwing an instance of 'boost::wrapexcept<boost::thread_resource_error>'
+  what():  boost thread: trying joining itself: Resource deadlock avoided
+[ERROR] [1619847987.738222, 39961.187000]: Failed to load front_left_leg_controller
+[INFO] [1619847986.622474, 0.000000]: Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [1619847986.633937, 0.000000]: Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [1619847986.659740, 39960.490000]: Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [1619847986.669666, 39960.494000]: Loading controller: front_right_leg_controller
+[INFO] [1619847986.720236, 39960.514000]: Loading controller: front_left_leg_controller
+[INFO] [1619847987.740207, 39961.187000]: Loading controller: back_right_leg_controller
+[INFO] [1619847987.794183, 39961.226000]: Loading controller: back_left_leg_controller
+[INFO] [1619847987.878073, 39961.265000]: Loading controller: joint_state_controller
+[INFO] [1619847987.891959, 39961.275000]: Controller Spawner: Loaded controllers: front_right_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1619847987.902976, 39961.281000]: Started controllers: front_right_leg_controller, back_right_leg_controller, back_left_leg_controller, joint_state_controller
+[INFO] [1619848863.726055, 40725.660000]: Shutting down spawner. Stopping and unloading controllers...
+[INFO] [1619848863.731980, 40725.665000]: Stopping all controllers...
+[INFO] [1619848863.750960, 40725.677000]: Unloading all loaded controllers...
+[INFO] [1619848863.753864, 40725.679000]: Trying to unload joint_state_controller
+[INFO] [1619848863.763311, 40725.686000]: Succeeded in unloading joint_state_controller
+[INFO] [1619848863.764571, 40725.687000]: Trying to unload back_left_leg_controller
+[INFO] [1619848863.780443, 40725.696000]: Succeeded in unloading back_left_leg_controller
+[INFO] [1619848863.781532, 40725.696000]: Trying to unload back_right_leg_controller
+[INFO] [1619848863.801665, 40725.709000]: Succeeded in unloading back_right_leg_controller
+[INFO] [1619848863.803036, 40725.710000]: Trying to unload front_right_leg_controller
+[INFO] [1619848863.814006, 40725.717000]: Succeeded in unloading front_right_leg_controller
+[31m[urdf_spawner-3] process has died [pid 264017, exit code 1, cmd /opt/ros/noetic/lib/gazebo_ros/spawn_model -param robot_description -urdf -model quadruped __name:=urdf_spawner __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/urdf_spawner-3.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/urdf_spawner-3*.log[0m
+[31m[gazebo-1] process has died [pid 264010, exit code 255, cmd /opt/ros/noetic/lib/gazebo_ros/gzserver -e ode /home/ubuntu/CPGController/src/simulations/ws/src/quadruped/worlds/quadruped.world __name:=gazebo __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo-1.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo-1*.log[0m
+[31m[gazebo_gui-2] process has died [pid 264011, exit code 134, cmd /opt/ros/noetic/lib/gazebo_ros/gzclient __name:=gazebo_gui __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo_gui-2.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo_gui-2*.log[0m
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11311
+[1mprocess[gazebo-1]: started with pid [264010][0m
+[1mprocess[gazebo_gui-2]: started with pid [264011][0m
+[1mprocess[urdf_spawner-3]: started with pid [264017][0m
+[1mprocess[quadruped/controller_spawner-4]: started with pid [264021][0m
+[1mprocess[joint_state_publisher-5]: started with pid [264022][0m
+[1mprocess[robot_state_publisher-6]: started with pid [264023][0m
+[1mprocess[move_group-7]: started with pid [264024][0m
+[joint_state_publisher-5] killing on exit
+[move_group-7] killing on exit
+[robot_state_publisher-6] killing on exit
+[quadruped/controller_spawner-4] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+Aborted (core dumped)
+[31m[gazebo_gui-3] process has died [pid 74982, exit code 134, cmd /opt/ros/noetic/lib/gazebo_ros/gzclient __name:=gazebo_gui __log:=/home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo_gui-3.log].
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/gazebo_gui-3*.log[0m
+
+auto-starting new master
+[1mprocess[master]: started with pid [74962][0m
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch http://localhost:11311
+[1msetting /run_id to 03654e1a-a9cf-11eb-b985-a3d0d644b805[0m
+[1mprocess[rosout-1]: started with pid [74972][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [74979][0m
+[1mprocess[gazebo_gui-3]: started with pid [74982][0m
+[1mprocess[urdf_spawner-4]: started with pid [74987][0m
+[1mprocess[quadruped/controller_spawner-5]: started with pid [74990][0m
+[1mprocess[joint_state_publisher-6]: started with pid [74991][0m
+[1mprocess[robot_state_publisher-7]: started with pid [74992][0m
+[1mprocess[move_group-8]: started with pid [74995][0m
+[1m[urdf_spawner-4] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/urdf_spawner-4*.log[0m
+[1m[robot_state_publisher-7] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/robot_state_publisher-7*.log[0m
+[1m[quadruped/controller_spawner-5] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/quadruped-controller_spawner-5*.log[0m
+[1m[joint_state_publisher-6] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/joint_state_publisher-6*.log[0m
+[1m[move_group-8] process has finished cleanly
+log file: /home/ubuntu/.ros/log/03654e1a-a9cf-11eb-b985-a3d0d644b805/move_group-8*.log[0m
+[gazebo-2] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+xacro: in-order processing became default in ROS Melodic. You can drop the option.
+... logging to /home/ubuntu/.ros/log/b672e6fc-aa42-11eb-b985-a3d0d644b805/roslaunch-ip-172-31-8-79-267514.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/quadruped_control.launch
+[1mstarted roslaunch server http://ip-172-31-8-79:45853/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /joint_state_publisher/source_list: ['quadruped/joint...
+ * /move_group/allow_trajectory_execution: False
+ * /move_group/back_left_leg/default_planner_config: SBL
+ * /move_group/back_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_left_leg/projection_evaluator: joints(back_left_...
+ * /move_group/back_right_leg/default_planner_config: SBL
+ * /move_group/back_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/back_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/back_right_leg/projection_evaluator: joints(back_right...
+ * /move_group/base/default_planner_config: SBL
+ * /move_group/base/planner_configs: ['AnytimePathShor...
+ * /move_group/capabilities: 
+ * /move_group/disable_capabilities: 
+ * /move_group/front_left_leg/default_planner_config: SBL
+ * /move_group/front_left_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_left_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_left_leg/projection_evaluator: joints(front_left...
+ * /move_group/front_right_leg/default_planner_config: SBL
+ * /move_group/front_right_leg/longest_valid_segment_fraction: 0.005
+ * /move_group/front_right_leg/planner_configs: ['AnytimePathShor...
+ * /move_group/front_right_leg/projection_evaluator: joints(front_righ...
+ * /move_group/jiggle_fraction: 0.05
+ * /move_group/max_safe_path_cost: 1
+ * /move_group/planner_configs/AnytimePathShortening/hybridize: True
+ * /move_group/planner_configs/AnytimePathShortening/max_hybrid_paths: 24
+ * /move_group/planner_configs/AnytimePathShortening/num_planners: 4
+ * /move_group/planner_configs/AnytimePathShortening/planners: 
+ * /move_group/planner_configs/AnytimePathShortening/shortcut: True
+ * /move_group/planner_configs/AnytimePathShortening/type: geometric::Anytim...
+ * /move_group/planner_configs/BFMT/balanced: 0
+ * /move_group/planner_configs/BFMT/cache_cc: 1
+ * /move_group/planner_configs/BFMT/extended_fmt: 1
+ * /move_group/planner_configs/BFMT/heuristics: 1
+ * /move_group/planner_configs/BFMT/nearest_k: 1
+ * /move_group/planner_configs/BFMT/num_samples: 1000
+ * /move_group/planner_configs/BFMT/optimality: 1
+ * /move_group/planner_configs/BFMT/radius_multiplier: 1.0
+ * /move_group/planner_configs/BFMT/type: geometric::BFMT
+ * /move_group/planner_configs/BKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/BKPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/BKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/BKPIECE/range: 0.0
+ * /move_group/planner_configs/BKPIECE/type: geometric::BKPIECE
+ * /move_group/planner_configs/BiEST/range: 0.0
+ * /move_group/planner_configs/BiEST/type: geometric::BiEST
+ * /move_group/planner_configs/BiTRRT/cost_threshold: 1e300
+ * /move_group/planner_configs/BiTRRT/frountier_node_ratio: 0.1
+ * /move_group/planner_configs/BiTRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/BiTRRT/init_temperature: 100
+ * /move_group/planner_configs/BiTRRT/range: 0.0
+ * /move_group/planner_configs/BiTRRT/temp_change_factor: 0.1
+ * /move_group/planner_configs/BiTRRT/type: geometric::BiTRRT
+ * /move_group/planner_configs/EST/goal_bias: 0.05
+ * /move_group/planner_configs/EST/range: 0.0
+ * /move_group/planner_configs/EST/type: geometric::EST
+ * /move_group/planner_configs/FMT/cache_cc: 1
+ * /move_group/planner_configs/FMT/extended_fmt: 1
+ * /move_group/planner_configs/FMT/heuristics: 0
+ * /move_group/planner_configs/FMT/nearest_k: 1
+ * /move_group/planner_configs/FMT/num_samples: 1000
+ * /move_group/planner_configs/FMT/radius_multiplier: 1.1
+ * /move_group/planner_configs/FMT/type: geometric::FMT
+ * /move_group/planner_configs/KPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/KPIECE/failed_expansion_score_factor: 0.5
+ * /move_group/planner_configs/KPIECE/goal_bias: 0.05
+ * /move_group/planner_configs/KPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/KPIECE/range: 0.0
+ * /move_group/planner_configs/KPIECE/type: geometric::KPIECE
+ * /move_group/planner_configs/LBKPIECE/border_fraction: 0.9
+ * /move_group/planner_configs/LBKPIECE/min_valid_path_fraction: 0.5
+ * /move_group/planner_configs/LBKPIECE/range: 0.0
+ * /move_group/planner_configs/LBKPIECE/type: geometric::LBKPIECE
+ * /move_group/planner_configs/LBTRRT/epsilon: 0.4
+ * /move_group/planner_configs/LBTRRT/goal_bias: 0.05
+ * /move_group/planner_configs/LBTRRT/range: 0.0
+ * /move_group/planner_configs/LBTRRT/type: geometric::LBTRRT
+ * /move_group/planner_configs/LazyPRM/range: 0.0
+ * /move_group/planner_configs/LazyPRM/type: geometric::LazyPRM
+ * /move_group/planner_configs/LazyPRMstar/type: geometric::LazyPR...
+ * /move_group/planner_configs/PDST/type: geometric::PDST
+ * /move_group/planner_configs/PRM/max_nearest_neighbors: 10
+ * /move_group/planner_configs/PRM/type: geometric::PRM
+ * /move_group/planner_configs/PRMstar/type: geometric::PRMstar
+ * /move_group/planner_configs/ProjEST/goal_bias: 0.05
+ * /move_group/planner_configs/ProjEST/range: 0.0
+ * /move_group/planner_configs/ProjEST/type: geometric::ProjEST
+ * /move_group/planner_configs/RRT/goal_bias: 0.05
+ * /move_group/planner_configs/RRT/range: 0.0
+ * /move_group/planner_configs/RRT/type: geometric::RRT
+ * /move_group/planner_configs/RRTConnect/range: 0.0
+ * /move_group/planner_configs/RRTConnect/type: geometric::RRTCon...
+ * /move_group/planner_configs/RRTstar/delay_collision_checking: 1
+ * /move_group/planner_configs/RRTstar/goal_bias: 0.05
+ * /move_group/planner_configs/RRTstar/range: 0.0
+ * /move_group/planner_configs/RRTstar/type: geometric::RRTstar
+ * /move_group/planner_configs/SBL/range: 0.0
+ * /move_group/planner_configs/SBL/type: geometric::SBL
+ * /move_group/planner_configs/SPARS/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARS/max_failures: 1000
+ * /move_group/planner_configs/SPARS/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARS/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARS/type: geometric::SPARS
+ * /move_group/planner_configs/SPARStwo/dense_delta_fraction: 0.001
+ * /move_group/planner_configs/SPARStwo/max_failures: 5000
+ * /move_group/planner_configs/SPARStwo/sparse_delta_fraction: 0.25
+ * /move_group/planner_configs/SPARStwo/stretch_factor: 3.0
+ * /move_group/planner_configs/SPARStwo/type: geometric::SPARStwo
+ * /move_group/planner_configs/STRIDE/degree: 16
+ * /move_group/planner_configs/STRIDE/estimated_dimension: 0.0
+ * /move_group/planner_configs/STRIDE/goal_bias: 0.05
+ * /move_group/planner_configs/STRIDE/max_degree: 18
+ * /move_group/planner_configs/STRIDE/max_pts_per_leaf: 6
+ * /move_group/planner_configs/STRIDE/min_degree: 12
+ * /move_group/planner_configs/STRIDE/min_valid_path_fraction: 0.2
+ * /move_group/planner_configs/STRIDE/range: 0.0
+ * /move_group/planner_configs/STRIDE/type: geometric::STRIDE
+ * /move_group/planner_configs/STRIDE/use_projected_distance: 0
+ * /move_group/planner_configs/TRRT/frountierNodeRatio: 0.1
+ * /move_group/planner_configs/TRRT/frountier_threshold: 0.0
+ * /move_group/planner_configs/TRRT/goal_bias: 0.05
+ * /move_group/planner_configs/TRRT/init_temperature: 10e-6
+ * /move_group/planner_configs/TRRT/k_constant: 0.0
+ * /move_group/planner_configs/TRRT/max_states_failed: 10
+ * /move_group/planner_configs/TRRT/min_temperature: 10e-10
+ * /move_group/planner_configs/TRRT/range: 0.0
+ * /move_group/planner_configs/TRRT/temp_change_factor: 2.0
+ * /move_group/planner_configs/TRRT/type: geometric::TRRT
+ * /move_group/planning_plugin: ompl_interface/OM...
+ * /move_group/planning_scene_monitor/publish_geometry_updates: True
+ * /move_group/planning_scene_monitor/publish_planning_scene: True
+ * /move_group/planning_scene_monitor/publish_state_updates: True
+ * /move_group/planning_scene_monitor/publish_transforms_updates: True
+ * /move_group/request_adapters: default_planner_r...
+ * /move_group/start_state_max_bounds_error: 0.1
+ * /quadruped/back_left_leg_controller/joints: ['back_left_leg1_...
+ * /quadruped/back_left_leg_controller/type: position_controll...
+ * /quadruped/back_right_leg_controller/joints: ['back_right_leg1...
+ * /quadruped/back_right_leg_controller/type: position_controll...
+ * /quadruped/front_left_leg_controller/joints: ['front_left_leg1...
+ * /quadruped/front_left_leg_controller/type: position_controll...
+ * /quadruped/front_right_leg_controller/joints: ['front_right_leg...
+ * /quadruped/front_right_leg_controller/type: position_controll...
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/back_right_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_left_leg3_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg1_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg2_joint/p: 300
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/d: 5
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/i: 0.01
+ * /quadruped/gazebo_ros_control/pid_gains/front_right_leg3_joint/p: 300
+ * /quadruped/generic_hw_control_loop/cycle_time_error_threshold: 0.01
+ * /quadruped/generic_hw_control_loop/loop_hz: 100
+ * /quadruped/hardware_interface/joints: ['back_left_leg3_...
+ * /quadruped/hardware_interface/sim_control_mode: 1
+ * /quadruped/joint_state_controller/publish_rate: 100
+ * /quadruped/joint_state_controller/type: joint_state_contr...
+ * /quadruped/moveit_sim_hw_interface/joint_model_group: todo_group_name
+ * /quadruped/moveit_sim_hw_interface/joint_model_group_pose: todo_state_name
+ * /robot_description: <?xml version="1....
+ * /robot_description_kinematics/back_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/back_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_left_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver: kdl_kinematics_pl...
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_search_resolution: 0.005
+ * /robot_description_kinematics/front_right_leg/kinematics_solver_timeout: 0.005
+ * /robot_description_planning/default_acceleration_scaling_factor: 0.1
+ * /robot_description_planning/default_velocity_scaling_factor: 0.1
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/back_right_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_left_leg3_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg1_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg2_joint/max_velocity: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_acceleration_limits: False
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/has_velocity_limits: True
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_acceleration: 10
+ * /robot_description_planning/joint_limits/front_right_leg3_joint/max_velocity: 10
+ * /robot_description_semantic: <?xml version="1....
+ * /robot_state_publisher/publish_frequency: 60.0
+ * /rosdistro: noetic
+ * /rosversion: 1.15.9
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    joint_state_publisher (joint_state_publisher/joint_state_publisher)
+    move_group (moveit_ros_move_group/move_group)
+    robot_state_publisher (robot_state_publisher/robot_state_publisher)
+    urdf_spawner (gazebo_ros/spawn_model)
+  /quadruped/
+    controller_spawner (controller_manager/spawner)
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/ros/noetic/lib/moveit_ros_move_group/move_group...
+(No debugging symbols found in /opt/ros/noetic/lib/moveit_ros_move_group/move_group)
+/home/ubuntu/CPGController/src/simulations/ws/src/quadruped/launch/gdb_settings.gdb: No such file or directory.
+Starting program: /opt/ros/noetic/lib/moveit_ros_move_group/move_group --debug __name:=move_group __log:=/home/ubuntu/.ros/log/b672e6fc-aa42-11eb-b985-a3d0d644b805/move_group-8.log
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff0da7700 (LWP 267684)]
+[New Thread 0x7ffff05a6700 (LWP 267685)]
+[New Thread 0x7fffefda5700 (LWP 267686)]
+[New Thread 0x7fffef5a4700 (LWP 267687)]
+[New Thread 0x7fffeeda3700 (LWP 267688)]
+[New Thread 0x7fffee5a2700 (LWP 267689)]
+[33m[ WARN] [1619848912.503972408]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[New Thread 0x7fffedd52700 (LWP 267690)]
+[New Thread 0x7fffed551700 (LWP 267693)]
+[33m[ WARN] [1619848912.745820166]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead[0m
+[31m[ERROR] [1619848912.748061020]: Failed to find 3D sensor plugin parameters for octomap generation[0m
+[New Thread 0x7fffecd50700 (LWP 267706)]
+[New Thread 0x7fffcf8cf700 (LWP 267748)]
+[New Thread 0x7fffcf0ce700 (LWP 267749)]
+[New Thread 0x7fffce8cd700 (LWP 267750)]
+[New Thread 0x7fffce02c700 (LWP 267751)]
+[New Thread 0x7fffcd82b700 (LWP 267753)]
+[0m[ INFO] [1619848912.502671431]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1619848912.503810823]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[0m[ INFO] [1619848912.717269004]: Publishing maintained planning scene on 'monitored_planning_scene'[0m
+[0m[ INFO] [1619848912.723871889]: MoveGroup debug mode is ON[0m
+[96mStarting planning scene monitors...
+[0m[0m[ INFO] [1619848912.723921771]: Starting planning scene monitor[0m
+[0m[ INFO] [1619848912.730130348]: Listening to '/planning_scene'[0m
+[0m[ INFO] [1619848912.730155755]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.[0m
+[0m[ INFO] [1619848912.736630378]: Listening to '/collision_object'[0m
+[0m[ INFO] [1619848912.744582150]: Listening to '/planning_scene_world' for planning scene world geometry[0m
+[0m[ INFO] [1619848912.778170036]: Listening to '/attached_collision_object' for attached collision objects[0m
+[96mPlanning scene monitors started.
+[0m[0m[ INFO] [1619848913.406367469]: Using planning interface 'OMPL'[0m
+[0m[ INFO] [1619848913.416337247]: Param 'default_workspace_bounds' was not set. Using default value: 10[0m
+[0m[ INFO] [1619848913.417039144]: Param 'start_state_max_bounds_error' was set to 0.1[0m
+[0m[ INFO] [1619848913.417495176]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619848913.417958800]: Param 'start_state_max_dt' was not set. Using default value: 0.5[0m
+[0m[ INFO] [1619848913.418387622]: Param 'jiggle_fraction' was set to 0.05[0m
+[0m[ INFO] [1619848913.418809480]: Param 'max_sampling_attempts' was not set. Using default value: 100[0m
+[0m[ INFO] [1619848913.418864737]: Using planning request adapter 'Add Time Parameterization'[0m
+[0m[ INFO] [1619848913.418888888]: Using planning request adapter 'Resolve constraint frames to robot links'[0m
+[0m[ INFO] [1619848913.418904773]: Using planning request adapter 'Fix Workspace Bounds'[0m
+[0m[ INFO] [1619848913.418935026]: Using planning request adapter 'Fix Start State Bounds'[0m
+[0m[ INFO] [1619848913.418946926]: Using planning request adapter 'Fix Start State In Collision'[0m
+[0m[ INFO] [1619848913.418965011]: Using planning request adapter 'Fix Start State Path Constraints'[0m
+[96mLoading 'move_group/ApplyPlanningSceneService'...
+[0m[96mLoading 'move_group/ClearOctomapService'...
+[0m[96mLoading 'move_group/MoveGroupCartesianPathService'...
+[0m[96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...
+[0m[96mLoading 'move_group/MoveGroupGetPlanningSceneService'...
+[0m[96mLoading 'move_group/MoveGroupKinematicsService'...
+[0m[96mLoading 'move_group/MoveGroupMoveAction'...
+[0m[96mLoading 'move_group/MoveGroupPickPlaceAction'...
+[0m[96mLoading 'move_group/MoveGroupPlanService'...
+[0m[96mLoading 'move_group/MoveGroupQueryPlannersService'...
+[0m[96mLoading 'move_group/MoveGroupStateValidationService'...
+[0m[0m[ INFO] [1619848913.642265290]: 
+
+********************************************************
+* MoveGroup using: 
+*     - ApplyPlanningSceneService
+*     - ClearOctomapService
+*     - CartesianPathService
+*     - ExecuteTrajectoryAction
+*     - GetPlanningSceneService
+*     - KinematicsService
+*     - MoveAction
+*     - PickPlaceAction
+*     - MotionPlanService
+*     - QueryPlannersService
+*     - StateValidationService
+********************************************************
+[0m
+[0m[ INFO] [1619848913.642319380]: MoveGroup context using planning plugin ompl_interface/OMPLPlanner[0m
+[0m[ INFO] [1619848913.642341497]: MoveGroup context initialization complete[0m
+[92m
+You can start planning now!
+
+[0mAborted (core dumped)
+[0m[ INFO] [1619848912.759307837]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1619848912.769624789]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[0m[ INFO] [1619848913.247163465]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[ INFO] [1619848913.337598600, 0.035000000]: Physics dynamic reconfigure ready.[0m
+[1;33mWarning [Model.cc:212][0m Non-unique names detected in XML children of model with name[quadruped].
+[0m[ INFO] [1619848913.994530824, 0.099000000]: <initialOrientationAsReference> is unset, using default value of false to comply with REP 145 (world as orientation reference)[0m
+[0m[ INFO] [1619848913.994741008, 0.099000000]: <robotNamespace> set to: /quadruped/[0m
+[0m[ INFO] [1619848913.994818695, 0.099000000]: <topicName> set to: imu[0m
+[0m[ INFO] [1619848913.994911031, 0.099000000]: <frameName> set to: imu_link[0m
+[0m[ INFO] [1619848913.994996561, 0.099000000]: <updateRateHZ> set to: 100[0m
+[0m[ INFO] [1619848913.995144422, 0.099000000]: <gaussianNoise> set to: 0[0m
+[0m[ INFO] [1619848913.995173914, 0.099000000]: <xyzOffset> set to: 0 0 0[0m
+[0m[ INFO] [1619848913.995223295, 0.099000000]: <rpyOffset> set to: 0 -0 0[0m
+[0m[ INFO] [1619848914.076560384, 0.099000000]: Loading gazebo_ros_control plugin[0m
+[0m[ INFO] [1619848914.076783694, 0.099000000]: Starting gazebo_ros_control plugin in namespace: /quadruped[0m
+[0m[ INFO] [1619848914.077217971, 0.099000000]: gazebo_ros_control plugin is waiting for model URDF in parameter [/robot_description] on the ROS param server.[0m
+[0m[ INFO] [1619848914.533029154, 0.099000000]: Loaded gazebo_ros_control.[0m
+[0m[ INFO] [1619848914.544349782, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg3][0m
+[0m[ INFO] [1619848914.544470275, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.546046677, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg2][0m
+[0m[ INFO] [1619848914.546155614, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.547411597, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_right_leg1][0m
+[0m[ INFO] [1619848914.547540571, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.549529716, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg3][0m
+[0m[ INFO] [1619848914.549799340, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.552072239, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg2][0m
+[0m[ INFO] [1619848914.552174348, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.553847665, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [front_left_leg1][0m
+[0m[ INFO] [1619848914.553966639, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.555485743, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg3][0m
+[0m[ INFO] [1619848914.555599162, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.556969905, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg2][0m
+[0m[ INFO] [1619848914.557081367, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.558612212, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_right_leg1][0m
+[0m[ INFO] [1619848914.558799868, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.560026605, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg3][0m
+[0m[ INFO] [1619848914.560115661, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.561714894, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg2][0m
+[0m[ INFO] [1619848914.561807103, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.563820488, 0.099000000]: ft_sensor plugin reporting wrench values to the frame [back_left_leg1][0m
+[0m[ INFO] [1619848914.563937509, 0.099000000]: imu plugin missing <gaussianNoise>, defaults to 0.0[0m
+[0m[ INFO] [1619848914.577969345, 0.099000000]: GazeboRosJointStatePublisher is going to publish joint: front_right_leg1_joint[0m
 [0m[ INFO] [
