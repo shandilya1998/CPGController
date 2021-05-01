@@ -6,26 +6,12 @@ units_osc = 30
 params = {
     'motion_state_size'           : 6,
     'robot_state_size'            : 4*action_dim + 4 + 8*3,
-    'dt'                          : 0.1,
-    'units_output_mlp'            : [60, 180, 360, 90, action_dim],
+    'dt'                          : 0.001,
+    'units_output_mlp'            : [60,100, action_dim],
     'units_osc'                   : units_osc,
-    'units_combine_rddpg'         : [150, 300, 100, units_osc],
-    'units_combine'               : [60, 240, 90, units_osc],
-    'units_robot_state'           : [120, 360, 90, units_osc],
-    'units_motion_state'          : [30, 300, 45],
-    'units_mu'                    : [45, 120, 20],
-    'units_mean'                  : [45, 120, 20],
-    'units_omega'                 : [45, 120, 10],
-    'units_robot_state_critic'    : [100, 200, 50],
-    'units_gru_rddpg'             : 180,
-    'units_q'                     : 1,
-    'units_motion_state_critic'   : [30, 120, 50],
-    'units_action_critic'         : [48, 240, 50],
-    'units_output_mlp'            : [60, action_dim],
-    'units_osc'                   : units_osc,
-    'units_combine_rddpg'         : [64, units_osc],
-    'units_combine'               : [64, units_osc],
-    'units_robot_state'           : [50, 45, units_osc],
+    'units_combine_rddpg'         : [80, units_osc],
+    'units_combine'               : [80, units_osc],
+    'units_robot_state'           : [45, 135, units_osc],
     'units_motion_state'          : [45],
     'units_mu'                    : [45],
     'units_mean'                  : [45],
@@ -38,20 +24,20 @@ params = {
     'units_history'               : 24,
     'BATCH_SIZE'                  : 200,
     'BUFFER_SIZE'                 : 100000,
-    'GAMMA'                       : 0.98,
+    'GAMMA'                       : 0.99,
     'TEST_AFTER_N_EPISODES'       : 25,
-    'TAU'                         : 0.003,
+    'TAU'                         : 0.001,
     'decay_steps'                 : int(20),
-    'LRA'                         : 1e-4,
+    'LRA'                         : 1e-5,
     'LRC'                         : 1e-4,
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 10000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 2,
+    'max_steps'                   : 5,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 30,
+    'rnn_steps'                   : 200,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -249,7 +235,7 @@ params.update({
     'num_data' : num_data,
     'pretrain_bs': bs,
     'train_test_split' : (num_data - bs) / num_data,
-    'pretrain_test_interval' : 5
+    'pretrain_test_interval' : 3
 })
 
 
@@ -274,4 +260,3 @@ params_per = {
 }
 
 params.update(params_per)
-

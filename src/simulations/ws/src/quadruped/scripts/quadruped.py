@@ -771,8 +771,11 @@ class Quadruped:
                 else np.zeros((3)) \
                 for position in positions
         ]
-        torque = [np.cross(r, f) for r, f in zip(r, forces)]
-        torque = np.sum(np.array(torque), 0)
+        try:
+            torque = [np.cross(r, f) for r, f in zip(r, forces)]
+            torque = np.sum(np.array(torque), 0)
+        except:
+            torque = np.array([1e-8]*3), dtype = np.float32
         return torque
 
     def get_contact(self):
