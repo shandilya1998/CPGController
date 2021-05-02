@@ -24,6 +24,7 @@ params = {
     'units_history'               : 24,
     'BATCH_SIZE'                  : 200,
     'BUFFER_SIZE'                 : 100000,
+    'WARMUP'                      : 1000,
     'GAMMA'                       : 0.99,
     'TEST_AFTER_N_EPISODES'       : 25,
     'TAU'                         : 0.001,
@@ -55,6 +56,11 @@ params = {
     'm2'                          : 0.026074,
     'm3'                          : 0.007661,
     'future_steps'                : 4,
+    'ou_theta'                    : 0.15,
+    'ou_sigma'                    : 0.2,
+    'ou_mu'                       : 0.0,
+    'seed'                        : 1,
+    'trajectory_length'           : 10,
 }
 
 observation_spec = [
