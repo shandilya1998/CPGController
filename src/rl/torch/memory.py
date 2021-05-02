@@ -287,6 +287,7 @@ class EpisodicMemory(Memory):
         return list(map(list, zip(*batch)))  # Transpose so that timesteps are packed together
 
     def sample_trajectory(self, maxlen=0):
+        print(len(self.memory))
         e = random.randrange(len(self.memory))
         mem = self.memory[e]
         T = len(mem)
