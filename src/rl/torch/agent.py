@@ -66,7 +66,7 @@ class Agent(object):
         action = np.clip(action, -1., 1.)
         if decay_epsilon:
             self.epsilon -= self.depsilon
-        return action
+        return to_tensor(np.expand_dims(action, 0))
 
     def reset_gru_hidden_state(self, done=True):
         self.actor.reset_gru_hidden_state(done)

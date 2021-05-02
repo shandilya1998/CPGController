@@ -24,7 +24,7 @@ class RDPG(object):
         if steps is None:
             self.steps = self.params['rnn_steps'] * self.params['max_steps']
         if window_length is None:
-            self.window_length = self.steps // 10
+            self.window_length = self.params['window_length']
 
         self.env = env
 
@@ -89,6 +89,10 @@ class RDPG(object):
                 # reset if it is the start of episode
                 if state0 is None:
                     state0 = deepcopy(self.env.reset())
+                    state0 = [
+                        to_tensor(state0[0]),
+                        to_tensor(state0[1])
+                    ]
                     self.agent.reset()
 
                 # agent pick action ...
@@ -100,10 +104,14 @@ class RDPG(object):
                 # env response with next_observation, reward, terminate_info
                 state, reward, done, info = self.env.step(
                     action,
-                    state0[0],
+                    state0[0].numpy(),
                     first_step,
                     last_step
                 )
+                state = [
+                    to_tensor(state[0]),
+                    to_tensor(state[1])
+                ]
                 state = deepcopy(state)
 
                 # agent observe and update policy

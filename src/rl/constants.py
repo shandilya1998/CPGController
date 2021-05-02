@@ -32,13 +32,13 @@ params = {
     'LRA'                         : 1e-5,
     'LRC'                         : 1e-4,
     'EXPLORE'                     : 10000,
-    'train_episode_count'         : 10000,
+    'train_episode_count'         : 20000000,
     'test_episode_count'          : 10,
     'max_steps'                   : 5,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 200,
+    'rnn_steps'                   : 100,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -61,6 +61,7 @@ params = {
     'ou_mu'                       : 0.0,
     'seed'                        : 1,
     'trajectory_length'           : 10,
+    'window_length'               : 5
 }
 
 observation_spec = [

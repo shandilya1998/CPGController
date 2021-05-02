@@ -7,7 +7,8 @@ USE_CUDA = False
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
 
 def complex_relu(input):
-    x, y = torch.split(input, 2, -1)
+    size = input.shape[-1]//2
+    x, y = torch.split(input, size, -1)
     out = torch.cat(
         [
             torch.nn.functional.relu(x),
@@ -17,7 +18,8 @@ def complex_relu(input):
     return out
 
 def complex_elu(input):
-    x, y = torch.split(input, 2, -1)
+    size = input.shape[-1]//2
+    x, y = torch.split(input, size, -1)
     out = torch.cat(
         [
             torch.nn.functional.elu(x),
@@ -27,7 +29,8 @@ def complex_elu(input):
     return out
 
 def complex_tanh(input):
-    x, y = torch.split(input, 2, -1)
+    size = input.shape[-1]//2
+    x, y = torch.split(input, size, -1)
     denominator = torch.cos(2*x) + torch.cosh(2*y)
     x = torch.sin(2*x) / denominator
     y = torch.sinh(2*y) / denominator
@@ -35,13 +38,15 @@ def complex_tanh(input):
     return out
 
 def apply_complex(fr, fi, input, dtype = torch.float32):
-    x, y = torch.split(input, 2, -1)
+    size = input.shape[-1]//2
+    x, y = torch.split(input, size, -1)
     out = torch.cat(
         [
             fr(x) - fi(y),
             fr(y) + fi(x)
         ], -1
     )
+    return out
 
 class ComplexReLU(torch.nn.Module):
 
@@ -130,7 +135,7 @@ class ParamNet(torch.nn.Module):
     def forward(self, desired_motion):
         x = self.motion_state_enc(desired_motion)
         omega = self.omega_dense_seq(x)
-        mu - self.mu_dense_seq(x)
+        mu = self.mu_dense_seq(x)
         return omega, mu
 
 class Hopf(torch.nn.Module):
@@ -141,10 +146,12 @@ class Hopf(torch.nn.Module):
         self.arange = torch.arange(0, self.params['units_osc'], 1.0)
 
     def forward(self, z, omega, mu):
-        x, y = torch.split(z, 2, -1)
+        units_osc = z.shape[-1]
+        x, y = torch.split(z, units_osc // 2, -1)
         r = torch.sqrt(x ** 2 + y ** 2)
         phi = torch.atan2(y,x)
-        phi = phi + self.dt * omega * self.arange
+        delta_phi = self.dt * omega * self.arange
+        phi = phi + delta_phi
         r = r + self.dt * (mu - r ** 2) * r
         z = torch.cat([x, y], -1)
         return z
@@ -174,11 +181,12 @@ class RhythmGenerator(torch.nn.Module):
             complex_seq
         )
 
-    def forward(self, z, mod_state, omega, m):
+    def forward(self, z, mod_state, omega, mu):
         z = self.hopf(z, omega, mu)
         z = z + mod_state
-        z = self.complex_mlp(z)
-        x, y = torch.split(z, 2, -1)
+        out = self.complex_mlp(z)
+        size = out.shape[-1]//2
+        x, y = torch.split(out, size, -1)
         return 2 * x, z, omega, mu
 
 class PretrainCell(torch.nn.Module):
@@ -190,9 +198,9 @@ class PretrainCell(torch.nn.Module):
 
     def forward(self, desired_motion, mod_state, z):
         omega, mu = self.param_net(desired_motion)
-        actions, Z, _, _ = rhythm_generator([
+        actions, Z, _, _ = self.rhythm_gen(
             z, mod_state, omega, mu
-        ])
+        )
         return actions, omega, mu, Z
 
 class ActorCell(torch.nn.Module):
@@ -243,10 +251,12 @@ class ActorCell(torch.nn.Module):
     def forward(self, desired_motion, robot_state, hidden_state = None):
         if hidden_state is not None:
             self.robot_enc_state, self.z = hidden_state
-        self.robot_enc_state = self.robot_state_enc(robot_state, self.robot_enc_state)
-        rs_i = torch.zeros_like(self.robot_enc_state)
-        rs = torch.cat([self.robot_enc_state, rs_i], -1)
-        actions, omega, mu, self.z = self.pretrain_cell(desired_motion, rs, self.z)
+        self.robot_enc_state = self.gru(robot_state, self.robot_enc_state)
+        rs_r = self.robot_state_enc(self.robot_enc_state)
+        rs_i = torch.zeros_like(rs_r)
+        rs = torch.cat([rs_r, rs_i], -1)
+        actions, omega, mu, self.z = \
+            self.pretrain_cell(desired_motion, rs, self.z)
         return actions, self.robot_enc_state, self.z
 
 class Actor(torch.nn.Module):
