@@ -241,28 +241,28 @@ class RDPG(object):
 
         policy_loss_total = 0
         value_loss_total = 0
-        for t in range(len(experiences) - 1): # iterate over episodes
-            target_robot_enc_state = torch.autograd.Variable(
-                torch.zeros(
-                    self.batch_size,
-                    self.params['units_robot_state'][0]
-                )
-            ).type(FLOAT)
-            target_z = torch.autograd.Variable(
-                torch.zeros(self.batch_size, 2 * self.params['units_osc']
-                )
-            ).type(FLOAT)
+        target_robot_enc_state = torch.autograd.Variable(
+            torch.zeros(
+                self.batch_size,
+                self.params['units_robot_state'][0]
+            )
+        ).type(FLOAT)
+        target_z = torch.autograd.Variable(
+            torch.zeros(self.batch_size, 2 * self.params['units_osc']
+            )
+        ).type(FLOAT)
 
-            robot_enc_state = torch.autograd.Variable(
-                torch.zeros(
-                    self.batch_size,
-                    self.params['units_robot_state'][0]
-                )
-            ).type(FLOAT)
-            z = torch.autograd.Variable(
-                torch.zeros(self.batch_size, 2 * self.params['units_osc']
-                )
-            ).type(FLOAT)
+        robot_enc_state = torch.autograd.Variable(
+            torch.zeros(
+                self.batch_size,
+                self.params['units_robot_state'][0]
+            )
+        ).type(FLOAT)
+        z = torch.autograd.Variable(
+            torch.zeros(self.batch_size, 2 * self.params['units_osc']
+            )
+        ).type(FLOAT)
+        for t in range(len(experiences) - 1): # iterate over episodes
 
             # we first get the data out of the sampled experience
             state0 = [trajectory.state0 for trajectory in experiences[t]]
