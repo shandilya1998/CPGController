@@ -31,5 +31,6 @@ if __name__ == '__main__':
     ))
     if not os.path.exists(checkpoint_path):
         os.mkdir(checkpoint_path)
-    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+    with torch.autograd.set_detect_anomaly(True):
+        rdpg.train(params['train_episode_count'], checkpoint_path, True)
 
