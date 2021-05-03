@@ -14,11 +14,7 @@ class Env:
     def reset(self):
         print('[RDDPG] Resetting Environment')
         self._state, self._reward = self.quadruped.reset()
-        self._state = [
-            np.expand_dims(
-                state, 0
-            ) for state in self._state[:-1]
-        ]
+        self._state = self._state[:-1]
         return self._state
 
     def set_motion_state(self, desired_motion):
@@ -39,7 +35,7 @@ class Env:
         _action = [action, torch.zeros(1, 2 * self.params['units_osc'])]
         observation =  self.quadruped.step(
             _action,
-            desired_motion[0]
+            desired_motion
         )
         observation = observation[:-1]
         self.COT +=  0.002 * self.quadruped.get_COT()
@@ -48,12 +44,7 @@ class Env:
         #self.stability += 0.002 * self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
         reward += self.COT + self.r_motion + self.stability
-        self._state = [
-            np.expand_dims(
-                ob,
-                0
-            ) for ob in observation
-        ]
+        self._state = observation
         done = False
         self._episode_ended = last_step
         if last_step:

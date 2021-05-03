@@ -2,7 +2,7 @@ import numpy as np
 import argparse
 from copy import deepcopy
 import torch
-
+import pickle
 from rl.torch.normalized_env import NormalizedEnv
 from rl.torch.evaluator import Evaluator
 from rl.torch.memory import EpisodicMemory
@@ -42,7 +42,7 @@ class RDPG(object):
         )
 
         self.evaluate = Evaluator(
-            self.params['TEST_AFTER_N_EPISODES'],
+            self.params['num_validation_episodes'],
             self.steps,
             max_episode_length = self.steps)
 
@@ -75,8 +75,14 @@ class RDPG(object):
         state0 = None
         last_step = False
         first_step = False
+        self.rewards = []
+        self.total_rewards = []
+        self.policy_loss = []
+        self.critic_loss = []
+        self.save(checkpoint_path, step)
         while step < num_iterations:
             episode_steps = 0
+            total_reward = 0.0
             while episode_steps < self.max_episode_length:
                 if episode_steps == self.max_episode_length - 1:
                     last_step = True
@@ -99,7 +105,9 @@ class RDPG(object):
                 if step <= self.warmup:
                     action = self.agent.random_action()
                 else:
-                    action = self.agent.select_action(state0)
+                    action = self.agent.select_action([
+                        state0[0], state0[1]
+                    ])
 
                 # env response with next_observation, reward, terminate_info
                 state, reward, done, info = self.env.step(
@@ -108,16 +116,16 @@ class RDPG(object):
                     first_step,
                     last_step
                 )
+                total_reward += reward
+                self.rewards.append(reward)
                 state = [
                     to_tensor(state[0]),
                     to_tensor(state[1])
                 ]
                 state = deepcopy(state)
-
                 # agent observe and update policy
-                self.memory.append(state0, action, reward, done)
-
-                # update 
+                self.memory.append(state0, torch.squeeze(action, 0), reward, done)
+                # update
                 step += 1
                 episode_steps += 1
                 trajectory_steps += 1
@@ -132,7 +140,9 @@ class RDPG(object):
 
                 # [optional] save intermideate model
                 if step % int(num_iterations/3) == 0:
+                    print('[RDDPG] Saving Model')
                     self.agent.save_model(checkpoint_path)
+                    self.save(checkpoint_path, step)
 
                 if done: # end of episode
                     if debug:
@@ -148,13 +158,16 @@ class RDPG(object):
                     state0 = None
                     episode_reward = 0.
                     episode += 1
+                    self.total_rewards.append(total_reward)
                     self.agent.reset_gru_hidden_state(done=True)
+                    print('[RDDPG] Episode Done')
                     break
 
             # [optional] evaluate
             if self.evaluate is not None and \
                 self.validate_steps > 0 and \
                 step % self.validate_steps == 0:
+                print('[RDDPG] Start Evaluation')
                 policy = lambda x: self.agent.select_action(
                     x,
                     decay_epsilon=False
@@ -173,9 +186,39 @@ class RDPG(object):
                         )
                     )
 
+    def save(self, checkpoint_path, step):
+        pkl = open(os.path.join(
+            checkpoint_path,
+            'rewards_{st}.pickle'.format(st = step)), 'wb'
+        )
+        pickle.dump(self.rewards, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(
+            checkpoint_path,
+            'total_rewards_{st}.pickle'.format(st = step)), 'wb'
+        )
+        pickle.dump(self.total_rewards, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(
+            checkpoint_path,
+            'policy_loss_{st}.pickle'.format(st = step)), 'wb'
+        )
+        pickle.dump(self.policy_loss, pkl)
+        pkl.close()
+
+        pkl = open(os.path.join(
+            checkpoint_path,
+            'critic_loss_{st}.pickle'.format(st = step)), 'wb'
+        )
+        pickle.dump(self.critic_loss, pkl)
+        pkl.close()
+
     def update_policy(self):
         # Sample batch
-        experiences = self.memory.sample(self.batch_size)
+        print('[RDDPG] Updating Policy')
+        experiences = self.memory.sample(self.batch_size, self.max_episode_length)
         if len(experiences) == 0: # not enough samples
             return
 
@@ -189,7 +232,7 @@ class RDPG(object):
                 )
             ).type(FLOAT)
             target_z = torch.autograd.Variable(
-                torch.zeros(self.batch_size, self.params['unit_osc']
+                torch.zeros(self.batch_size, 2 * self.params['units_osc']
                 )
             ).type(FLOAT)
 
@@ -200,7 +243,7 @@ class RDPG(object):
                 )
             ).type(FLOAT)
             z = torch.autograd.Variable(
-                torch.zeros(self.batch_size, self.params['unit_osc']
+                torch.zeros(self.batch_size, 2 * self.params['units_osc']
                 )
             ).type(FLOAT)
 
@@ -237,10 +280,9 @@ class RDPG(object):
                 to_tensor(state1[1], volatile=True),
                 target_action
             )
-            next_q_value.volatile=False
 
+            self.agent.critic.zero_grad()
             target_q = to_tensor(reward) + self.discount*next_q_value
-
             # Critic update
             current_q = self.agent.critic(
                 to_tensor(state0[0], volatile=True),
@@ -255,7 +297,12 @@ class RDPG(object):
             value_loss /= len(experiences) # divide by trajectory length
             value_loss_total += value_loss
 
+            self.agent.critic.zero_grad()
+            value_loss.backward()
+            self.critic_optim.step()
+
             # Actor update
+            self.agent.actor.zero_grad()
             action, (robot_enc_state, z) = self.agent.actor(
                 to_tensor(state0[0], volatile=True),
                 to_tensor(state0[1], volatile=True),
@@ -267,18 +314,12 @@ class RDPG(object):
                 action
             )
             policy_loss /= len(experiences) # divide by trajectory length
-            policy_loss_total += policy_loss.mean()
-
-            # update per trajectory
-            self.agent.critic.zero_grad()
-            value_loss.backward()
-            self.critic_optim.step()
-
-            self.agent.actor.zero_grad()
             policy_loss = policy_loss.mean()
             policy_loss.backward()
             self.actor_optim.step()
-
+            policy_loss_total += policy_loss.mean()
+        self.policy_loss.append(policy_loss_total)
+        self.critic_loss.append(value_loss_total)
         soft_update(self.agent.actor_target, self.agent.actor, self.tau)
         soft_update(self.agent.critic_target, self.agent.critic, self.tau)
 

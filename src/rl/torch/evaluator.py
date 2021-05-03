@@ -20,9 +20,6 @@ class Evaluator(object):
         for episode in range(self.num_episodes):
             # reset at the start of episode
             observation = env.reset()
-            observation = [
-                to_tensor(ob) for ob in observation
-            ]
             episode_steps = 0
             episode_reward = 0.
             assert observation is not None
@@ -33,7 +30,9 @@ class Evaluator(object):
             last_step = False
             while not done:
                 # basic operation, action ,reward, blablabla ...
-                action = policy(observation)
+                action = policy([
+                    to_tensor(ob) for ob in observation
+                ])
 
                 observation, reward, done, info = env.step(
                     action,
@@ -41,9 +40,6 @@ class Evaluator(object):
                     first_step,
                     last_step
                 )
-                observation = [
-                    to_tensor(ob) for ob in observation
-                ]
                 if self.max_episode_length and \
                     episode_steps >= self.max_episode_length -1:
                     done = True

@@ -58,7 +58,7 @@ class Agent(object):
         return action
 
     def select_action(self, state, noise_enable=True, decay_epsilon=True):
-        action, _ = self.actor(state[0], state[1])
+        action, _ = self.actor(torch.unsqueeze(state[0], 0), torch.unsqueeze(state[1], 0))
         action = to_numpy(action).squeeze(0)
         if noise_enable == True:
             action += self.is_training * max(self.epsilon, 0)*self.random_process.sample()
