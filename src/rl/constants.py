@@ -29,8 +29,8 @@ params = {
     'TEST_AFTER_N_EPISODES'       : 25,
     'TAU'                         : 0.001,
     'decay_steps'                 : int(20),
-    'LRA'                         : 1e-5,
-    'LRC'                         : 1e-4,
+    'LRA'                         : 5e-4,
+    'LRC'                         : 5e-4,
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 20000000,
     'test_episode_count'          : 10,
@@ -38,7 +38,7 @@ params = {
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 12,
+    'rnn_steps'                   : 40,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -61,9 +61,9 @@ params = {
     'ou_mu'                       : 0.0,
     'seed'                        : 1,
     'trajectory_length'           : 20,
-    'window_length'               : 5,
-    'num_validation_episodes'     : 5,
-    'validate_interval'           : 5,
+    'window_length'               : 10,
+    'num_validation_episodes'     : 4,
+    'validate_interval'           : 25,
 }
 
 observation_spec = [
