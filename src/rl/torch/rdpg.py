@@ -62,7 +62,7 @@ class RDPG(object):
         self.discount = self.params['GAMMA']
         self.depsilon = 1.0 / self.params['EXPLORE']
         self.warmup = self.params['WARMUP']
-        self.validate_steps = self.steps
+        self.validate_steps = self.params['validate_interval']
         self.epsilon = self.params['epsilon']
         self.is_training = True
 
@@ -156,7 +156,7 @@ class RDPG(object):
 
                     # reset
                     state0 = None
-                    episode_reward = 0.
+                    episode_reward = 0.0
                     episode += 1
                     self.total_rewards.append(total_reward)
                     self.agent.reset_gru_hidden_state(done=True)

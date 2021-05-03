@@ -63,6 +63,7 @@ params = {
     'trajectory_length'           : 3,
     'window_length'               : 5,
     'num_validation_episodes'     : 3,
+    'validate_interval'           : 5,
 }
 
 observation_spec = [
