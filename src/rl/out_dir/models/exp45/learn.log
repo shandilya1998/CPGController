@@ -1,0 +1,428 @@
+2021-05-03 07:11:29.548087: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-03 07:11:29.548130: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620006096.283036900, 1.056000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620006096.284895392, 1.056000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620006096.286296173, 1.057000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620006097.734052689, 2.069000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620006099.090542697, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620006100.178653416, 3.800000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620006101.281106376, 4.605000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 0: episode_reward:-2.10678002392578 steps:1[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 1: episode_reward:-1.5070202695312536 steps:2[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 2: episode_reward:-1.5739290526123058 steps:4[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 3: episode_reward:-1.6743150028076186 steps:6[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 4: episode_reward:-2.4013309418945274 steps:9[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 5: episode_reward:-2.9057634440917774 steps:11[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 6: episode_reward:-1.840111593750004 steps:12[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 7: episode_reward:-4.1149536296386735 steps:15[00m
+[RDDPG] Episode Done
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 175, in train
+    state0 = None
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/evaluator.py", line 22, in __call__
+    observation = env.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 16, in reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 857, in reset
+    rospy.sleep(1.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-03 07:13:27.638963: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-03 07:13:27.639005: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620006214.568236087, 1.082000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620006214.571019812, 1.083000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620006214.571167150, 1.083000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620006216.091258554, 2.138000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620006217.347520198, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620006218.442416424, 3.801000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620006219.582313883, 4.601000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 87, in train
+    validate_reward = self.evaluate(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1216, in step
+    self.set_observation(action, desired_motion)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1073, in set_observation
+    rospy.wait_for_service('/gazebo/get_model_state')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-05-03 07:21:14.544321: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-03 07:21:14.544356: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620006681.601954538, 1.380000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620006681.604921335, 1.385000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620006681.605102883, 1.385000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620006683.184789277, 2.507000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620006683.960621551, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620006684.541308687, 3.400000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620006685.126258961, 3.801000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:-1.5447985281188994[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 0: episode_reward:-1.175510164062494 steps:1[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 1: episode_reward:-1.7778881264648616 steps:2[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 2: episode_reward:-1.4448975408935507 steps:3[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 3: episode_reward:-2.437187889282247 steps:6[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 4: episode_reward:-1.5767268024902394 steps:7[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 5: episode_reward:-2.249871449707046 steps:9[00m
+[RDDPG] Episode Done
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[92m [RDDPG] 6: episode_reward:-1.2523706237792944 steps:10[00m
+[RDDPG] Episode Done
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 192, in train
+    validate_reward = self.evaluate(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1217, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-03 07:25:11.194041: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-03 07:25:11.194076: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620006918.037535878, 1.084000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620006918.040150836, 1.085000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620006918.042418448, 1.088000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620006919.834407981, 2.247000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620006920.863011172, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620006921.945244874, 3.801000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620006923.089380636, 4.602000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:-1.8449449662944821[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-4.917141188476597 steps:5[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000005: mean_reward:-1.6677209307971954[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-1.6056082714843725 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-2.4114595666503806 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-3.442751650878894 steps:12[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-2.912814464843748 steps:14[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-1.7922596948242213 steps:15[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000015: mean_reward:-1.5867240905044593[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:-2.9312811545410877 steps:17[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-1.8594256835937413 steps:19[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-4.058769458251917 steps:23[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-1.4660119426269471 steps:24[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-1.480947230590815 steps:25[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000025: mean_reward:-1.9252544056005534[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-2.5216073059081663 steps:27[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:-2.0818329423827917 steps:28[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:-2.4491773763428 steps:30[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 192, in train
+    validate_reward = self.evaluate(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1217, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-03 07:49:12.724699: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-03 07:49:12.724756: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620008359.735790952, 1.315000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620008359.737946858, 1.317000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620008359.738376880, 1.317000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620008361.490834948, 2.511000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620008362.340990856, 3.136000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620008363.432400336, 3.937000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620008364.563975782, 4.737000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:5391.784486808352[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:1.8653293778780855 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:5.452890335242435 steps:4[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-1.5564837308349737 steps:5[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000005: mean_reward:15831.519664380114[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-1.2685764384765643 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:52.29467727866711 steps:8[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:22927.724231137025 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:21198.92748577086 steps:14[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-1.7017416350097665 steps:15[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000015: mean_reward:19215.21156785565[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:106189.34779507213 steps:21[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:8.770021249984461 steps:23[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-1.9624703022460577 steps:24[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-2.4003961269531326 steps:25[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment

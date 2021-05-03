@@ -80,6 +80,23 @@ class RDPG(object):
         self.policy_loss = []
         self.critic_loss = []
         self.save(checkpoint_path, step)
+        policy = lambda x: self.agent.select_action(
+            x,
+            decay_epsilon=False
+        )
+        validate_reward = self.evaluate(
+            self.env,
+            policy,
+            debug=False,
+            visualize=False
+        )
+        if debug:
+            prYellow(
+                '[RDDPG] Step_{:07d}: mean_reward:{}'.format(
+                    step,
+                    validate_reward
+                )
+            )
         while step < num_iterations:
             episode_steps = 0
             total_reward = 0.0
@@ -145,6 +162,7 @@ class RDPG(object):
                     self.save(checkpoint_path, step)
 
                 if done: # end of episode
+                    print('[RDDPG] Episode Done')
                     if debug:
                         prGreen(
                             '[RDDPG] {}: episode_reward:{} steps:{}'.format(
@@ -160,7 +178,6 @@ class RDPG(object):
                     episode += 1
                     self.total_rewards.append(total_reward)
                     self.agent.reset_gru_hidden_state(done=True)
-                    print('[RDDPG] Episode Done')
                     break
 
             # [optional] evaluate
