@@ -249,16 +249,23 @@ class ActorCell(torch.nn.Module):
             ).type(FLOAT)
 
     def forward(self, desired_motion, robot_state, hidden_state = None):
-        robot_enc_state = self.robot_enc_state
-        z = self.z
         if hidden_state is not None:
             robot_enc_state, z = hidden_state
+        else:
+            robot_enc_state = self.robot_enc_state
+            z = self.z
         robot_enc_state = self.gru(robot_state, robot_enc_state)
         rs_r = self.robot_state_enc(self.robot_enc_state)
         rs_i = torch.zeros_like(rs_r)
-        rs = torch.cat([rs_r, rs_i], -1)
         actions, omega, mu, z = \
-            self.pretrain_cell(desired_motion, rs, z)
+            self.pretrain_cell(
+                desired_motion,
+                torch.cat([
+                    rs_r,
+                    torch.zeros_like(rs_r)
+                ], -1),
+                z
+            )
         if hidden_state is None:
             self.robot_enc_state = robot_enc_state
             self.z = z
@@ -348,6 +355,5 @@ class Critic(torch.nn.Module):
         ms = self.motion_state_seq(desired_motion)
         rs = self.robot_state_seq(robot_state)
         ac = self.action_seq(actions)
-        q = self.out_dense_seq(torch.cat([ms, rs, ac], -1))
-        return q
+        return self.out_dense_seq(torch.cat([ms, rs, ac], -1))
 

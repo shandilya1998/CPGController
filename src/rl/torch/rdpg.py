@@ -156,7 +156,7 @@ class RDPG(object):
                         self.update_policy()
 
                 # [optional] save intermideate model
-                if step % int(num_iterations/3) == 0:
+                if step % int(num_iterations/10) == 0:
                     print('[RDDPG] Saving Model')
                     self.agent.save_model(checkpoint_path)
                     self.save(checkpoint_path, step)
@@ -262,8 +262,11 @@ class RDPG(object):
             torch.zeros(self.batch_size, 2 * self.params['units_osc']
             )
         ).type(FLOAT)
-        for t in range(len(experiences) - 1): # iterate over episodes
 
+        self.agent.critic.zero_grad()
+        self.agent.actor.zero_grad()
+
+        for t in range(len(experiences) - 1): # iterate over episodes
             # we first get the data out of the sampled experience
             state0 = [trajectory.state0 for trajectory in experiences[t]]
             state0_0 = [state[0] for state in state0]
@@ -307,34 +310,40 @@ class RDPG(object):
                 to_tensor(action)
             )
 
-            # value_loss = criterion(q_batch, target_q_batch)
-            value_loss = torch.nn.functional.smooth_l1_loss(
-                current_q, target_q
-            )
-            value_loss /= len(experiences) # divide by trajectory length
-            value_loss_total += value_loss
-
-            self.agent.critic.zero_grad()
-            value_loss.backward()
-            self.critic_optim.step()
-
             # Actor update
-            self.agent.actor.zero_grad()
             action, (robot_enc_state, z) = self.agent.actor(
                 to_tensor(state0[0], volatile=True),
                 to_tensor(state0[1], volatile=True),
                 (robot_enc_state, z)
             )
-            policy_loss = -self.agent.critic(
+            q_val = self.agent.critic(
                 to_tensor(state0[0], volatile=True),
                 to_tensor(state0[1], volatile=True),
                 action
             )
-            policy_loss /= len(experiences) # divide by trajectory length
-            policy_loss = policy_loss.mean()
-            policy_loss.backward()
-            self.actor_optim.step()
-            policy_loss_total += policy_loss.mean()
+            # value_loss = criterion(q_batch, target_q_batch)
+            value_loss = torch.nn.functional.smooth_l1_loss(
+                current_q, target_q.detach()
+            ) / len(experiences)
+            value_loss_total += value_loss
+            #self.agent.critic.zero_grad()
+            #self.critic_optim.zero_grad()
+            policy_loss = -torch.mean(q_val) / len(experiences)
+            policy_loss_total += policy_loss
+            #self.agent.actor.zero_grad()
+            #self.actor_optim.zero_grad()
+            value_loss.backward(retain_graph = True)
+            policy_loss.backward(retain_graph = True)
+            #self.critic_optim.step()
+            #self.actor_optim.step()
+
+
+        self.critic_optim.step()
+        self.actor_optim.step()
+
+        self.critic_optim.zero_grad()
+        self.actor_optim.zero_grad()
+
         self.policy_loss.append(policy_loss_total)
         self.critic_loss.append(value_loss_total)
         soft_update(self.agent.actor_target, self.agent.actor, self.tau)
