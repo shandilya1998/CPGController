@@ -4763,3 +4763,3316 @@ rospy.exceptions.ROSInterruptException: ROS shutdown request
 [92m [RDDPG] 11: episode_reward:30267.712087416836 steps:25[00m
 [RDDPG] Start Evaluation
 [RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[93m [RDDPG] Step_0000025: mean_reward:55781.17250912765[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:16508.161367769702 steps:31[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:4320.9761961495 steps:35[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:-359.2090993651137 steps:36[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:4226.268390012268 steps:40[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:-311.93177929687687 steps:41[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:-534.9196761698986 steps:43[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:-237.6176860351046 steps:44[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:10195.383686742922 steps:48[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:614.578669316762 steps:51[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-253.57293444828198 steps:52[00m
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 130, in train
+    state, reward, done, info = self.env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1217, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-04 02:47:48.086793: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 02:47:48.086841: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620076675.000006128, 1.380000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620076675.002528237, 1.382000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620076675.002627293, 1.382000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620076676.719531078, 2.494000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620076677.465085593, 3.003000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620076678.288888205, 3.602000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620076679.127273432, 4.203000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:1824.419394240902[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-484.877484937361 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-320.2624773874046 steps:4[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-201.19856542968628 steps:5[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-276.3161565677496 steps:7[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-258.65957109803026 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-592.9240318915627 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:11943.162347244195 steps:14[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-422.6756544706833 steps:16[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-162.29966290283812 steps:17[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:13243.326517568308 steps:21[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-301.08929233402824 steps:23[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-449.4674345365022 steps:25[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:-410.6484021840348 steps:28[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:731.1018934185772 steps:31[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:-376.9946596543331 steps:33[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:-109.44174203490715 steps:34[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:-504.04550298865115 steps:36[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:-255.74228637695387 steps:37[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:-655.3736188644301 steps:39[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:-604.8061503151112 steps:42[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:-459.00810826425226 steps:45[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-146.1538090209942 steps:46[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:-102.88332815551657 steps:47[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:-86.35416815186026 steps:48[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:20413.404498351472 steps:55[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:-106.16930187988834 steps:56[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:-146.2552530517586 steps:57[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:-462.10064172536175 steps:59[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:-123.14889312744828 steps:60[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:-416.99984213561197 steps:63[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:-71.20402935791282 steps:64[00m
+[RDDPG] Resetting Environment
+2021-05-04 02:53:31.477353: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 02:53:31.477527: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:-222.82081611775547 steps:66[00m
+[RDDPG] Resetting Environment
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+shutdown request: [/joint_position_node_exp45] Reason: new node registered with same name
+[DDPG] Waiting for joint trajectory action
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 114, in train
+    state0 = deepcopy(self.env.reset())
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 16, in reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 857, in reset
+    rospy.sleep(1.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620077048.277478926, 176.922000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620077048.280581240, 176.922000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620077048.283502113, 176.923000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 24, in <module>
+    env = Env(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 12, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 489, in __init__
+    self.kinematics = Kinematics(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/kinematics.py", line 21, in __init__
+    self.front_right_leg = moveit_commander.MoveGroupCommander(
+  File "/opt/ros/noetic/lib/python3/dist-packages/moveit_commander/move_group.py", line 53, in __init__
+    self._g = _moveit_move_group_interface.MoveGroupInterface(name, robot_description, ns, wait_for_servers)
+RuntimeError: Unable to connect to move_group action server 'move_group' within allotted time (5s)
+2021-05-04 02:54:33.784048: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 02:54:33.784106: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620077081.353706099, 0.926000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620077081.355693119, 0.927000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620077081.356904114, 0.928000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620077083.099792902, 1.972000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620077084.388604968, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620077085.598146596, 3.600000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620077086.814809525, 4.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:122.53482245520988[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-106.6422441406257 steps:1[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-671.4686103445936 steps:3[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:3996.696917994505 steps:7[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-266.6070459488014 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-511.7176724130174 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-346.88170907556844 steps:13[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:-218.0959011230479 steps:14[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-185.8490412597667 steps:15[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-142.52913014975783 steps:17[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-317.415116088869 steps:18[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-120.3634191284174 steps:19[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-517.3038848345498 steps:21[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:4105.995734102757 steps:26[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:-230.74901293945115 steps:27[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:-182.83607714843887 steps:28[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:-361.22931562148324 steps:30[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:-471.35609003477055 steps:32[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:6883.973951674704 steps:35[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:-89.13134252929547 steps:36[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:-150.1651852814736 steps:38[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:-492.8923203612002 steps:40[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-441.6059567188595 steps:42[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:297.11894221811554 steps:45[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:-211.88127038573515 steps:46[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:-245.33187695312597 steps:47[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:-121.88960321044678 steps:48[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:6292.59850910332 steps:51[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:-568.9191014822761 steps:53[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:-181.9237138671887 steps:54[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:-147.6189512281258 steps:56[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:10292.639367413565 steps:59[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:-423.04769551048764 steps:61[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:-35.198352447509144 steps:62[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:-477.9926632380865 steps:64[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:14677.945212248049 steps:67[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:-75.16330619812395 steps:68[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:-417.4621140344318 steps:70[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:1165.858389603299 steps:73[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:-288.92387419749105 steps:75[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:-559.5339521818081 steps:77[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:-370.6483323286903 steps:79[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:5387.659125778613 steps:82[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:-314.115813663625 steps:84[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 43: episode_reward:8280.990022351434 steps:87[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 44: episode_reward:-83.78896005249211 steps:88[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 45: episode_reward:-514.1123739745185 steps:90[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 46: episode_reward:382.7026564146778 steps:93[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 47: episode_reward:-229.8218520507977 steps:94[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 48: episode_reward:-106.08504150390675 steps:95[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 49: episode_reward:-138.41535828687162 steps:97[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 50: episode_reward:9601.8978384341 steps:100[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 51: episode_reward:1682.0085460705498 steps:103[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 52: episode_reward:-526.3292421009044 steps:105[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 53: episode_reward:5328.634836900884 steps:109[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 54: episode_reward:1603.963303956636 steps:112[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 55: episode_reward:317.39327568287496 steps:115[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 56: episode_reward:-194.80727757441676 steps:117[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 57: episode_reward:4004.483026521872 steps:120[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 58: episode_reward:-405.5301559659134 steps:122[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 59: episode_reward:-165.40783886720484 steps:123[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 60: episode_reward:-121.2007862548837 steps:124[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 61: episode_reward:-204.91960314940744 steps:125[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 62: episode_reward:3623.4823257634407 steps:129[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 63: episode_reward:-512.4983594322642 steps:131[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 64: episode_reward:-306.3774938073095 steps:133[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 65: episode_reward:-93.87372491454494 steps:134[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 66: episode_reward:-343.6285762389191 steps:136[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 67: episode_reward:-175.88116380349675 steps:138[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 68: episode_reward:-216.56065434568802 steps:140[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 69: episode_reward:-88.38845214844082 steps:141[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 70: episode_reward:-424.03774361592536 steps:143[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 71: episode_reward:-184.0053043823148 steps:144[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 72: episode_reward:-357.55529157419346 steps:146[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 73: episode_reward:-231.66581217535173 steps:148[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 74: episode_reward:-266.37429508547206 steps:150[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 75: episode_reward:-258.6574400591339 steps:153[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 76: episode_reward:11089.785348307552 steps:156[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 77: episode_reward:-420.453896101096 steps:158[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 78: episode_reward:-209.42566687928735 steps:160[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 79: episode_reward:2845.649477461854 steps:163[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 80: episode_reward:257.15409614632136 steps:166[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 81: episode_reward:-292.7820751589081 steps:168[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 82: episode_reward:-288.54838821024543 steps:170[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 83: episode_reward:-52.201423645016526 steps:171[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 84: episode_reward:16432.00189727764 steps:174[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 85: episode_reward:19710.85552952941 steps:179[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 86: episode_reward:-585.2898203135131 steps:182[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 87: episode_reward:7591.511515016881 steps:185[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 88: episode_reward:-255.31265974590087 steps:187[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 89: episode_reward:-309.96692110871095 steps:189[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 90: episode_reward:-232.63432519530582 steps:190[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 91: episode_reward:-329.699793090816 steps:191[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 92: episode_reward:-62.83509381103575 steps:192[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 93: episode_reward:-173.17060224301414 steps:194[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 94: episode_reward:-242.6478020679413 steps:196[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 95: episode_reward:-582.7178190732672 steps:198[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 96: episode_reward:8623.534399655302 steps:202[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 97: episode_reward:-529.2515846779767 steps:205[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 98: episode_reward:4708.433491823233 steps:208[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 99: episode_reward:-107.22195874022174 steps:209[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 100: episode_reward:1027.187997676958 steps:212[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 101: episode_reward:-132.26653967285267 steps:213[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 102: episode_reward:-705.3316771544211 steps:216[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 103: episode_reward:-714.8532697963135 steps:218[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 104: episode_reward:-83.26445666504499 steps:219[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 105: episode_reward:-244.3805618695906 steps:221[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 106: episode_reward:51174.33804326503 steps:225[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 107: episode_reward:-529.4545707777207 steps:227[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 108: episode_reward:-580.4480717771321 steps:229[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 109: episode_reward:-267.3261264648857 steps:230[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 110: episode_reward:-740.9431579375544 steps:232[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 111: episode_reward:-162.68075878907868 steps:233[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 112: episode_reward:-117.90799859618234 steps:234[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 113: episode_reward:-486.92499160768136 steps:236[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 114: episode_reward:-199.38050317382633 steps:237[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 115: episode_reward:-206.6487521972766 steps:238[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 116: episode_reward:-433.7672373421334 steps:240[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 117: episode_reward:-291.07733064678223 steps:242[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 118: episode_reward:-141.7682279052411 steps:243[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 119: episode_reward:-916.2535851845134 steps:246[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 120: episode_reward:-136.51248962402425 steps:247[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 121: episode_reward:-48.5810695037988 steps:248[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 122: episode_reward:-552.4289991223753 steps:250[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 123: episode_reward:-270.6387502668855 steps:252[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 124: episode_reward:-421.6204793720231 steps:254[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 125: episode_reward:15717.008405631806 steps:258[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 126: episode_reward:-222.61851599123992 steps:259[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 127: episode_reward:4768.523227659785 steps:263[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 128: episode_reward:-191.49207275390452 steps:264[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 129: episode_reward:9664.068170348377 steps:269[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 130: episode_reward:-353.12909876021484 steps:271[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 131: episode_reward:-260.61286303713604 steps:272[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 132: episode_reward:-203.78763867188266 steps:273[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 133: episode_reward:-143.2595199279816 steps:274[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 134: episode_reward:-143.5761889343461 steps:275[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 135: episode_reward:-243.17585840529765 steps:277[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 136: episode_reward:-533.9582352041213 steps:279[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 137: episode_reward:-254.94790821737223 steps:281[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 138: episode_reward:-70.05496051024525 steps:282[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 139: episode_reward:8297.7343206307 steps:287[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 140: episode_reward:-263.50009266317204 steps:289[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 141: episode_reward:-179.65016796871444 steps:290[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 142: episode_reward:24889.757241050775 steps:294[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 143: episode_reward:5680.659292641163 steps:298[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 144: episode_reward:-294.71921236115674 steps:300[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 145: episode_reward:-214.3094868164012 steps:301[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 146: episode_reward:6290.925069085362 steps:306[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 147: episode_reward:-128.20214117431476 steps:307[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 148: episode_reward:6045.057139529468 steps:310[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 149: episode_reward:-173.2420977172993 steps:311[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 150: episode_reward:-672.1938046304044 steps:313[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 151: episode_reward:-288.75846649622406 steps:315[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 152: episode_reward:22976.200336613452 steps:319[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 153: episode_reward:-469.2895071248966 steps:321[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 154: episode_reward:-555.8253281519496 steps:323[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 155: episode_reward:-581.3136269113013 steps:325[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 156: episode_reward:-159.75406439206614 steps:326[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 157: episode_reward:-214.9222321606328 steps:328[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 158: episode_reward:-154.25851538085035 steps:329[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 159: episode_reward:-41.28183456421798 steps:330[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 160: episode_reward:-431.52721196415257 steps:333[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 161: episode_reward:-55.461640319822166 steps:334[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 162: episode_reward:-126.49054376219966 steps:335[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 163: episode_reward:-344.48058605110987 steps:337[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 164: episode_reward:-126.83624139403557 steps:338[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 165: episode_reward:4043.878765438739 steps:342[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 166: episode_reward:-413.7685574481257 steps:344[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 167: episode_reward:-181.6176009521968 steps:345[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 168: episode_reward:-1086.3004326178889 steps:347[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 169: episode_reward:-199.46350055571122 steps:349[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 170: episode_reward:-116.54435123859213 steps:352[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 171: episode_reward:-232.08731439780078 steps:354[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 172: episode_reward:-226.56334454351264 steps:355[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 173: episode_reward:-625.7228563731143 steps:357[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 174: episode_reward:-158.27189831547486 steps:358[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 175: episode_reward:-165.87921899409577 steps:359[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 176: episode_reward:2257.5503410532174 steps:362[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 177: episode_reward:-221.0746763915274 steps:363[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 178: episode_reward:-321.50644760070924 steps:365[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 179: episode_reward:27522.470902314075 steps:371[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 180: episode_reward:-472.69232082529714 steps:373[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 181: episode_reward:11000.654946904304 steps:376[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 182: episode_reward:-261.89236421665873 steps:378[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 183: episode_reward:-102.10411093141514 steps:379[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 184: episode_reward:-617.046144845418 steps:381[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 185: episode_reward:-310.681457077377 steps:383[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 186: episode_reward:-364.8988761964829 steps:385[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 187: episode_reward:-472.9888611520636 steps:387[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 188: episode_reward:-619.7064525037474 steps:389[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 189: episode_reward:-37.12992989966435 steps:391[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 190: episode_reward:3088.88992594009 steps:394[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 191: episode_reward:-331.5901779197414 steps:396[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 192: episode_reward:1604.4526055667425 steps:399[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 193: episode_reward:-510.44620376267557 steps:401[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 194: episode_reward:36608.45854056779 steps:423[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 195: episode_reward:16058.850993188596 steps:430[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 196: episode_reward:60827.092417074986 steps:449[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 197: episode_reward:11821.562533592145 steps:454[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 198: episode_reward:13639.30163487089 steps:459[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 199: episode_reward:5900.366657760486 steps:464[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 200: episode_reward:5215.195860423254 steps:469[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 201: episode_reward:7086.510290222608 steps:474[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 202: episode_reward:-162.08832503623998 steps:479[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 203: episode_reward:17685.20436539049 steps:495[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 204: episode_reward:9433.880197410266 steps:504[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 205: episode_reward:5234.74896563529 steps:512[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 206: episode_reward:3198.073702685382 steps:521[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 207: episode_reward:3245.567189588152 steps:529[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 208: episode_reward:12577.246986415978 steps:538[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 209: episode_reward:10673.001256525273 steps:550[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 210: episode_reward:20416.36378323588 steps:562[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 211: episode_reward:20373.82368592329 steps:572[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 212: episode_reward:12098.540356261181 steps:579[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 213: episode_reward:12582.673970050513 steps:589[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Episode Done
+[92m [RDDPG] 214: episode_reward:18748.209561019023 steps:600[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 215: episode_reward:-138.72242364631202 steps:604[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 216: episode_reward:-115.89367752929701 steps:608[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 217: episode_reward:-133.47287014108576 steps:612[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 218: episode_reward:3823.963911629744 steps:627[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 219: episode_reward:1434.3156047636312 steps:638[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 220: episode_reward:7958.818952072301 steps:644[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 221: episode_reward:25426.065764524832 steps:664[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 222: episode_reward:18647.751072117426 steps:678[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 223: episode_reward:-93.04200216896919 steps:685[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 224: episode_reward:6644.96705028856 steps:693[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 225: episode_reward:-178.82201517743349 steps:699[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 226: episode_reward:-41.481581793567585 steps:710[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 227: episode_reward:6885.455268064313 steps:722[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 228: episode_reward:8519.248787668404 steps:734[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 229: episode_reward:28641.053927187855 steps:744[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 230: episode_reward:10230.590156690432 steps:752[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 231: episode_reward:13190.688234056553 steps:762[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 232: episode_reward:19854.90922201255 steps:770[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 233: episode_reward:-206.5177263253525 steps:776[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 234: episode_reward:-2829.955114654879 steps:791[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 235: episode_reward:-97.80400901606748 steps:795[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 236: episode_reward:6230.776935199501 steps:799[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 237: episode_reward:24580.403915970073 steps:810[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 238: episode_reward:19184.817125780126 steps:819[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 239: episode_reward:50981.26946985073 steps:832[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 240: episode_reward:194707.98476612577 steps:983[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 241: episode_reward:12764.586943682001 steps:995[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 242: episode_reward:1533.8837677605566 steps:1008[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 243: episode_reward:7287.344073969253 steps:1021[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 244: episode_reward:357.0424442000741 steps:1028[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 245: episode_reward:8158.1305805301945 steps:1048[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 246: episode_reward:14379.29723215474 steps:1066[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 247: episode_reward:28075.53484403311 steps:1078[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 248: episode_reward:8562.427078831895 steps:1089[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 249: episode_reward:-61.14432758500094 steps:1092[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 250: episode_reward:157365.01467860112 steps:1292[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 251: episode_reward:-137.19264072847642 steps:1295[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 252: episode_reward:7227.708465489055 steps:1303[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 253: episode_reward:227079.02377929687 steps:1503[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 254: episode_reward:32312.155860455794 steps:1519[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 255: episode_reward:34842.646787531514 steps:1535[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 256: episode_reward:-99.22117362194389 steps:1539[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 257: episode_reward:-2046.7480785320336 steps:1548[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 258: episode_reward:190.2604484468673 steps:1559[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 259: episode_reward:9877.910990058623 steps:1566[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 260: episode_reward:26655.14843372475 steps:1575[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 261: episode_reward:34537.81559369884 steps:1588[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 262: episode_reward:2236.7918001163357 steps:1598[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 263: episode_reward:191.03913871470814 steps:1604[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 264: episode_reward:-189.59547849499356 steps:1614[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Updating Policy
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 265: episode_reward:312436.89277712494 steps:1814[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 266: episode_reward:12706.494536160146 steps:1822[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 267: episode_reward:5118.093170145003 steps:1835[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 268: episode_reward:42300.96018139583 steps:1850[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 269: episode_reward:12185.673912355158 steps:1855[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 270: episode_reward:20877.64564474786 steps:1864[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 271: episode_reward:16729.157837029874 steps:1871[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 272: episode_reward:27893.637323325518 steps:1887[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+2021-05-04 12:59:25.322712: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 12:59:25.322975: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-05-04 13:00:14.325690: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:00:14.325739: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620113501.592114230, 62.029000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620113501.598608360, 62.032000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620113501.598709244, 62.032000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620113503.512998793, 62.945000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620113504.751092903, 63.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620113505.432289739, 64.007000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620113506.237514449, 64.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:1157.6134677658035[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:17611.850098424962 steps:4[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-396.96168925701465 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-484.95307672701347 steps:8[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-96.85408593749891 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-77.34208251953177 steps:10[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-147.16944378661609 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+/home/shandilya/.local/lib/python3.8/site-packages/torch/autograd/__init__.py:130: UserWarning: Error detected in EluBackward. Traceback of forward call that caused the error:
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 156, in train
+    self.update_policy()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 314, in update_policy
+    action, (robot_enc_state, z) = self.agent.actor(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/Desktop/CNS/DDP/src/layers/torch_l.py", line 287, in forward
+    action, robot_enc_state, z = self.cell(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/Desktop/CNS/DDP/src/layers/torch_l.py", line 258, in forward
+    rs_r = self.robot_state_enc(self.robot_enc_state)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/container.py", line 117, in forward
+    input = module(input)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/activation.py", line 477, in forward
+    return F.elu(input, self.alpha, self.inplace)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 1227, in elu
+    result = torch._C._nn.elu(input, alpha)
+ (Triggered internally at  /pytorch/torch/csrc/autograd/python_anomaly_mode.cpp:104.)
+  Variable._execution_engine.run_backward(
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 156, in train
+    self.update_policy()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 336, in update_policy
+    policy_loss.backward()
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/tensor.py", line 221, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 130, in backward
+    Variable._execution_engine.run_backward(
+RuntimeError: Trying to backward through the graph a second time, but the saved intermediate results have already been freed. Specify retain_graph=True when calling backward the first time.
+2021-05-04 13:06:45.937981: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:06:45.938017: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620113813.289006925, 1.116000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620113813.291766971, 1.118000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620113813.292011009, 1.118000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620113814.850826626, 2.133000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620113816.272063121, 3.000000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620113817.557558387, 3.801000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620113818.825810684, 4.600000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:756.8055723758283[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-664.8161435660701 steps:4[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-691.1982902793518 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-288.5565187522129 steps:8[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-81.316551635741 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-516.9676497486041 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+/home/shandilya/.local/lib/python3.8/site-packages/torch/autograd/__init__.py:130: UserWarning: Error detected in EluBackward. Traceback of forward call that caused the error:
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 156, in train
+    self.update_policy()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 314, in update_policy
+    action, (robot_enc_state, z) = self.agent.actor(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/Desktop/CNS/DDP/src/layers/torch_l.py", line 287, in forward
+    action, robot_enc_state, z = self.cell(
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/Desktop/CNS/DDP/src/layers/torch_l.py", line 258, in forward
+    rs_r = self.robot_state_enc(self.robot_enc_state)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/container.py", line 117, in forward
+    input = module(input)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/modules/activation.py", line 477, in forward
+    return F.elu(input, self.alpha, self.inplace)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 1227, in elu
+    result = torch._C._nn.elu(input, alpha)
+ (Triggered internally at  /pytorch/torch/csrc/autograd/python_anomaly_mode.cpp:104.)
+  Variable._execution_engine.run_backward(
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 156, in train
+    self.update_policy()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 336, in update_policy
+    policy_loss.backward()#retain_graph = True)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/tensor.py", line 221, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph)
+  File "/home/shandilya/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 130, in backward
+    Variable._execution_engine.run_backward(
+RuntimeError: Trying to backward through the graph a second time, but the saved intermediate results have already been freed. Specify retain_graph=True when calling backward the first time.
+2021-05-04 13:20:42.041830: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:20:42.041886: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2021-05-04 13:23:09.830357: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:23:09.830397: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620114796.719966116, 1.042000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620114796.723154944, 1.045000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620114796.723295391, 1.045000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620114798.248942648, 2.164000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620114799.429658893, 3.002000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620114800.507592802, 3.802000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620114801.542857469, 4.603000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[93m [RDDPG] Step_0000000: mean_reward:665.6388646424573[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-312.75856678214996 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:243.8706258738826 steps:5[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:19915.749425672147 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-365.8895598251662 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 156, in train
+    self.update_policy()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 238, in update_policy
+    start = time.perf_counter()
+NameError: name 'time' is not defined
+2021-05-04 13:27:34.840964: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:27:34.841015: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620115062.399940934, 1.146000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620115062.404723776, 1.155000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620115062.405258278, 1.156000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620115064.016092967, 2.216000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620115064.914675622, 2.809000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620115065.786992784, 3.408000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620115066.429247299, 3.808000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:-173.31352596398835[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-100.5466450195299 steps:1[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-259.13573668046837 steps:3[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-575.5324602961402 steps:5[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:2096.2872830600936 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-248.43687939452596 steps:10[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-287.65971630859315 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+[RDDPG] Update Time: 3.25616
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:-20.11053491113137 steps:15[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-103.9444161058523 steps:19[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.95366
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-116.2352833412819 steps:23[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.75133
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-146.60021381006322 steps:27[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.32343
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-160.8634620058292 steps:31[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.92043
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-133.16577859008478 steps:35[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:-143.18603701298179 steps:39[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.66823
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:4289.476230063934 steps:43[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.20726
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:6710.992867201611 steps:47[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.73009
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:17586.481139730226 steps:51[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.97870
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:3318.5238710895455 steps:55[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:4469.216596594433 steps:59[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.64892
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:4029.448273193282 steps:63[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.04644
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:2984.514922093608 steps:67[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.23297
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:3579.7027051901887 steps:71[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-158.76540319621915 steps:74[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.53863
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:-217.69405686610355 steps:77[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.76020
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:-138.0495282121596 steps:80[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:6211.190595974148 steps:83[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.52898
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:14883.533406524293 steps:87[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.18240
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:-129.80811755200654 steps:90[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:13140.114134101947 steps:94[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.55718
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:9511.709100723678 steps:98[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.40869
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:6857.917609309164 steps:101[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.43177
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:6799.046273900292 steps:105[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:13178.12229744108 steps:109[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.10184
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:2067.51160055456 steps:112[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:-247.02494070088636 steps:114[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.97429
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:-164.8688285251772 steps:116[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:-218.3629531973408 steps:118[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.43844
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:-270.8974874748637 steps:120[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:6695.118832465937 steps:123[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.39513
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:-185.03279524410917 steps:125[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:162.66440796520538 steps:128[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.35544
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:11719.596239072878 steps:131[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:-339.15811782380723 steps:133[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.43790
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:10318.132766790623 steps:137[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.80126
+[RDDPG] Episode Done
+[92m [RDDPG] 43: episode_reward:1673.2423108120913 steps:140[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 44: episode_reward:-340.2690786132289 steps:141[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 45: episode_reward:-323.9621168623556 steps:143[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 46: episode_reward:-271.5378586425836 steps:144[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.81851
+[RDDPG] Episode Done
+[92m [RDDPG] 47: episode_reward:-142.24956631470488 steps:145[00m
+[RDDPG] Resetting Environment
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 48: episode_reward:7097.900315622462 steps:149[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.25280
+[RDDPG] Episode Done
+[92m [RDDPG] 49: episode_reward:-190.35870251465863 steps:150[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 50: episode_reward:-186.23915423583816 steps:151[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 51: episode_reward:-359.32621411134795 steps:152[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 52: episode_reward:-363.9868710937124 steps:153[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 53: episode_reward:-349.3289853516003 steps:154[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.95841
+[RDDPG] Episode Done
+[92m [RDDPG] 54: episode_reward:-279.1541706543119 steps:155[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 55: episode_reward:-233.19184185792267 steps:156[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 56: episode_reward:-386.4943964843374 steps:157[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 57: episode_reward:-143.07746359253687 steps:158[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 58: episode_reward:-359.3916860351459 steps:159[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.13990
+[RDDPG] Episode Done
+[92m [RDDPG] 59: episode_reward:-132.79067590330615 steps:160[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 60: episode_reward:-199.00942578124577 steps:161[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 61: episode_reward:27.41670636395805 steps:164[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.60411
+[RDDPG] Episode Done
+[92m [RDDPG] 62: episode_reward:-380.07420703118953 steps:165[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 63: episode_reward:-437.02795849609583 steps:166[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 64: episode_reward:-340.1653462985694 steps:168[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.19038
+[RDDPG] Episode Done
+[92m [RDDPG] 65: episode_reward:-479.95394092643994 steps:170[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 66: episode_reward:12023.236186329026 steps:173[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.01963
+[RDDPG] Episode Done
+[92m [RDDPG] 67: episode_reward:-203.43377971734958 steps:175[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 68: episode_reward:-253.5721801260231 steps:177[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 69: episode_reward:-394.2856128738164 steps:179[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.29165
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 70: episode_reward:-296.9523279828226 steps:181[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 71: episode_reward:-163.38005290866133 steps:183[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.28024
+[RDDPG] Episode Done
+[92m [RDDPG] 72: episode_reward:-340.5339634899714 steps:185[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 73: episode_reward:-334.5567415941681 steps:187[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 74: episode_reward:-341.88306424750624 steps:189[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.97078
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 75: episode_reward:-248.87680655613445 steps:191[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 76: episode_reward:-285.6900429715155 steps:193[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.56154
+[RDDPG] Episode Done
+[92m [RDDPG] 77: episode_reward:-300.4529810851303 steps:195[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 78: episode_reward:-267.648673731807 steps:197[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 79: episode_reward:-406.75003995676786 steps:199[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.16111
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 80: episode_reward:-249.0748824261055 steps:201[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 81: episode_reward:-321.84007375995486 steps:203[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.45773
+[RDDPG] Episode Done
+[92m [RDDPG] 82: episode_reward:-131.9614984959877 steps:205[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 83: episode_reward:-208.683709597155 steps:207[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 84: episode_reward:-337.9066372775564 steps:209[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.06839
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 85: episode_reward:-315.2141964030933 steps:211[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 86: episode_reward:-173.33537727068267 steps:213[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.21713
+[RDDPG] Episode Done
+[92m [RDDPG] 87: episode_reward:-288.6717499410129 steps:215[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 88: episode_reward:-170.51600343561196 steps:217[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 89: episode_reward:-273.45830105177964 steps:219[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.39333
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 90: episode_reward:-162.6220476385228 steps:221[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 91: episode_reward:-273.1841590976527 steps:223[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.13636
+[RDDPG] Episode Done
+[92m [RDDPG] 92: episode_reward:-290.9418908460671 steps:225[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 93: episode_reward:-276.4244242604584 steps:227[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 94: episode_reward:-61.46349437355516 steps:229[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.04458
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 95: episode_reward:-207.3854695407056 steps:231[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 96: episode_reward:-310.9272595541736 steps:233[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.99484
+[RDDPG] Episode Done
+[92m [RDDPG] 97: episode_reward:-117.36164097111472 steps:235[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 98: episode_reward:-235.42536874115564 steps:237[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 99: episode_reward:-260.2319629048822 steps:239[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.13477
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 100: episode_reward:-340.9755545509125 steps:241[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 101: episode_reward:-292.449729629932 steps:243[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.01518
+[RDDPG] Episode Done
+[92m [RDDPG] 102: episode_reward:-270.5255306162984 steps:245[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 103: episode_reward:-268.01876893192104 steps:247[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 104: episode_reward:-304.84599659616197 steps:249[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 2.86411
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 105: episode_reward:-272.820634583804 steps:251[00m
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 131, in train
+    state, reward, done, info = self.env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1217, in step
+    rospy.sleep(15.0/60.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-04 13:49:42.931054: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:49:42.931103: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620116389.900293191, 1.090000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620116389.903165709, 1.092000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620116389.903501170, 1.092000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620116391.436118175, 2.154000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620116392.285906991, 2.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620116393.432899000, 3.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620116394.521878667, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[93m [RDDPG] Step_0000000: mean_reward:6352.298474408503[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-405.7542963971527 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:3682.1072418932854 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-121.72213787841866 steps:7[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-240.52749737549323 steps:8[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-121.3113931274418 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-205.01366406249565 steps:10[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:-128.15677221679965 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-630.2210873936788 steps:13[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-80.38568835449267 steps:14[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-157.62266839599468 steps:15[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-66.70131481933844 steps:16[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-638.8068824611462 steps:18[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:-694.1399100259814 steps:20[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:-150.97095037706885 steps:22[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:11449.009322289468 steps:26[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:-283.7624096627156 steps:29[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:-378.1617672118987 steps:30[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:-183.24294366455462 steps:31[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:13534.1436844989 steps:35[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:-377.613388756775 steps:37[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:-267.5926167439174 steps:39[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-128.4053293762189 steps:40[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:-152.20112200926522 steps:41[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:7257.185661043537 steps:44[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:-94.96406860351317 steps:45[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:212.7136909552949 steps:48[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:-267.5162698233017 steps:50[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:-257.50364608978794 steps:52[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:-376.43162937225105 steps:54[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:-98.65363903808647 steps:55[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:-58.864989669797446 steps:56[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:-292.3485288453369 steps:58[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:-269.03589746093894 steps:59[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:-644.8378008321777 steps:61[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:-396.1726571485547 steps:63[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:-217.92217187500037 steps:64[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:-805.0768513549012 steps:66[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:-555.0833643497622 steps:68[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:-383.6931199219834 steps:70[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:-585.2210592935229 steps:72[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:-316.25670962368207 steps:74[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:-321.2675195738422 steps:76[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:-68.19567979431098 steps:77[00m
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 115, in train
+    state0 = deepcopy(self.env.reset())
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 16, in reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 958, in reset
+    #rospy.sleep(2.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-04 13:58:05.442308: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:58:05.442362: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620116892.596757197, 1.000000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620116892.599039673, 1.001000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620116892.599374955, 1.001000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620116894.013774562, 2.030000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620116895.131120978, 2.801000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620116896.230236019, 3.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620116897.311753740, 4.400000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[]
+[DDPG] Error in Resetting End Training
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 88, in train
+    validate_reward = self.evaluate(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/evaluator.py", line 22, in __call__
+    observation = env.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 16, in reset
+    self._state, self._reward = self.quadruped.reset()
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 965, in reset
+    A, B = AB
+ValueError: not enough values to unpack (expected 2, got 1)
+2021-05-04 13:59:41.892961: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 13:59:41.892995: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620116988.339703922, 1.004000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620116988.342987847, 1.005000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620116988.343338505, 1.005000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620116990.188908486, 2.257000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620116991.179739614, 3.001000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620116992.289250066, 3.801000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620116993.377244276, 4.601000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[RDDPG] Resetting Environment
+[93m [RDDPG] Step_0000000: mean_reward:31154.018759291474[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:8158.70338909847 steps:3[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:27187.075344285506 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:22879.549483034178 steps:15[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:40187.24205738 steps:24[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:4873.515501589055 steps:26[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:4293.054029262193 steps:28[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:24649.565458131747 steps:32[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:22523.464315406618 steps:36[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:5101.274457143429 steps:39[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:2932.5254138157493 steps:41[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:11480.279430831137 steps:44[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:11620.463864692496 steps:47[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:10137.841031473787 steps:50[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:5240.9491704114935 steps:52[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:6154.47617738491 steps:54[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:4352.99962198431 steps:58[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:6545.652555579224 steps:60[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:26887.023478396906 steps:64[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:7557.615319770049 steps:67[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:3844.833504170856 steps:69[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:17090.581136231194 steps:75[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:21935.134709322767 steps:80[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:9862.450032006256 steps:83[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:-123.43721740724071 steps:84[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:17423.371366840798 steps:87[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:42796.22994367374 steps:94[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:2409.150938881294 steps:96[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:4220.726446614157 steps:98[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:-246.16518024852112 steps:100[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:21355.889712121294 steps:108[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+[RDDPG] Update Time: 10.52126
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.77425
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:26514.004994096522 steps:120[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 12.97662
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:30017.97154698303 steps:132[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:5922.697025847687 steps:134[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.60221
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:39765.24990670321 steps:146[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.36009
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:28286.076265118583 steps:158[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.73382
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.30744
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:21514.354100835502 steps:170[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:1945.756108395894 steps:172[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 12.74436
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:7002.773904374634 steps:181[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.95640
+[RDDPG] Last Step of episode
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:34725.274731306235 steps:193[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:8138.46340636908 steps:198[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 12.45322
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:5462.457347256696 steps:204[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:11968.421214808388 steps:209[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.86574
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:3776.439634373421 steps:214[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.07723
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 43: episode_reward:7923.520271567668 steps:223[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 12.04508
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 44: episode_reward:17148.993028991652 steps:232[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 45: episode_reward:6440.471740877716 steps:235[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 12.50675
+[RDDPG] Episode Done
+[92m [RDDPG] 46: episode_reward:10290.850211075254 steps:240[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 47: episode_reward:1750.3700463259731 steps:244[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 48: episode_reward:2011.1161109473471 steps:249[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 1.68316
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/rdpg.py", line 131, in train
+    state, reward, done, info = self.env.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/rl/torch/env.py", line 36, in step
+    observation =  self.quadruped.step(
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1216, in step
+    self.set_observation(action, desired_motion)
+  File "/home/shandilya/Desktop/CNS/DDP/src/simulations/ws/src/quadruped/scripts/quadruped.py", line 1073, in set_observation
+    rospy.wait_for_service('/gazebo/get_model_state')
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 166, in wait_for_service
+    raise ROSInterruptException("rospy shutdown")
+rospy.exceptions.ROSInterruptException: rospy shutdown
+2021-05-04 14:08:16.497485: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu
+2021-05-04 14:08:16.497524: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+/home/shandilya/.local/lib/python3.8/site-packages/torch/cuda/__init__.py:52: UserWarning: CUDA initialization: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx (Triggered internally at  /pytorch/c10/cuda/CUDAFunctions.cpp:100.)
+  return torch._C._cuda_getDeviceCount() > 0
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620117503.588179977, 1.225000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620117503.593651838, 1.227000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620117503.594087600, 1.227000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620117505.109905652, 2.304000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620117506.240039389, 3.084000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620117507.379898388, 3.885000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620117508.463548773, 4.684000000]: Ready to take commands for planning group back_left_leg.[0m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:18313.66800707766[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:10326.286360359993 steps:4[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:1776.4988793814302 steps:6[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:12388.13794999711 steps:9[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:6454.567056474539 steps:11[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:2819.8827851869783 steps:13[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:3559.716074722042 steps:16[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:18309.18552602581 steps:21[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:52572.83811720019 steps:30[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:4762.704506222974 steps:32[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:8379.822790048938 steps:34[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:14206.54282311995 steps:38[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:29159.886565010183 steps:42[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:3335.620394132768 steps:44[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:15996.84612777935 steps:46[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:21427.963575014706 steps:52[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:5006.822920010278 steps:54[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:15969.091275711717 steps:58[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:55470.87728307046 steps:63[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:16211.994411453676 steps:68[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:15692.528527686467 steps:71[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:89918.64969709575 steps:79[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:10521.4711351621 steps:81[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:13328.378854988649 steps:85[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:7769.830755294766 steps:87[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:6503.609060319815 steps:89[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:17224.99084786401 steps:92[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:6238.232719508508 steps:95[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:5501.031066834199 steps:97[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:2192.9301119707097 steps:100[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:1508.9132965041817 steps:102[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:2371.647595515136 steps:104[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:13551.5004950996 steps:108[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:9715.226254104316 steps:111[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:7038.934854292181 steps:113[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:8476.932996762222 steps:117[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:23893.57052866758 steps:121[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:1349.0174939235233 steps:123[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:6579.414793535035 steps:129[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:12616.027175391038 steps:133[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:8143.781269402647 steps:136[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:5905.75414360126 steps:138[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:6556.549283075453 steps:141[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:8165.597151824458 steps:144[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 43: episode_reward:10522.116778693133 steps:149[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 44: episode_reward:3705.804382873383 steps:152[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 45: episode_reward:10361.56272541785 steps:154[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 46: episode_reward:781.529281728368 steps:156[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 47: episode_reward:2128.8279012257276 steps:158[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 48: episode_reward:12859.181199295463 steps:160[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 49: episode_reward:12669.438678376095 steps:165[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 50: episode_reward:7472.463107455854 steps:167[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 51: episode_reward:1556.5173339652285 steps:170[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 52: episode_reward:3370.6917008169976 steps:173[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 53: episode_reward:-94.87903906251557 steps:174[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 54: episode_reward:3385.0932609700913 steps:176[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 55: episode_reward:5516.994669857575 steps:178[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 56: episode_reward:2436.9701519948526 steps:181[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 57: episode_reward:1617.0711532701396 steps:184[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 58: episode_reward:1014.899053147152 steps:186[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 59: episode_reward:10549.463583018905 steps:189[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 60: episode_reward:5368.61323644176 steps:193[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 61: episode_reward:2884.6691302420268 steps:195[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 62: episode_reward:5066.604361153111 steps:198[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 63: episode_reward:-111.75917724609162 steps:199[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 64: episode_reward:-74.83110107422968 steps:200[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 65: episode_reward:5632.659496831703 steps:202[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 66: episode_reward:19616.50390258208 steps:205[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 67: episode_reward:2152.0825040314394 steps:207[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 68: episode_reward:51785.18420591032 steps:212[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 69: episode_reward:30937.832805024438 steps:218[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 70: episode_reward:8547.587844538546 steps:220[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 71: episode_reward:-124.29900000000468 steps:221[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 72: episode_reward:4491.432530920721 steps:223[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 73: episode_reward:19584.320175529574 steps:227[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 74: episode_reward:48227.61327577682 steps:236[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 75: episode_reward:36881.111038277464 steps:242[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 76: episode_reward:2278.2204512796966 steps:244[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 77: episode_reward:5248.046862447512 steps:248[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 78: episode_reward:65528.22024816038 steps:254[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 79: episode_reward:2286.7473696960246 steps:256[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 80: episode_reward:3102.2975175702936 steps:258[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 81: episode_reward:5277.966181586242 steps:260[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 82: episode_reward:16166.569162987922 steps:265[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 83: episode_reward:36146.06691190753 steps:269[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 84: episode_reward:12903.038860347979 steps:272[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 85: episode_reward:60934.49537238866 steps:280[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 86: episode_reward:8666.604713730134 steps:284[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 87: episode_reward:10823.507095802737 steps:287[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 88: episode_reward:28576.79593991367 steps:292[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 89: episode_reward:38231.17328954655 steps:298[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 90: episode_reward:11470.170348270263 steps:300[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 91: episode_reward:20044.94633767936 steps:303[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 92: episode_reward:1838.5059293103675 steps:306[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 93: episode_reward:5456.624546139313 steps:308[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 94: episode_reward:12379.595750750674 steps:314[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 95: episode_reward:2926.0032978309596 steps:317[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 96: episode_reward:21613.96921040136 steps:321[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 97: episode_reward:3616.5513970893426 steps:323[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 98: episode_reward:18681.087138108887 steps:329[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 99: episode_reward:25934.421273722674 steps:335[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 100: episode_reward:3706.563014844055 steps:338[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 101: episode_reward:3405.121643470197 steps:340[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 102: episode_reward:1357.042384332862 steps:342[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 103: episode_reward:7729.538636220984 steps:344[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 104: episode_reward:7848.037010119568 steps:348[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 105: episode_reward:2691.814996904165 steps:350[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 106: episode_reward:1069.2417783134297 steps:352[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 107: episode_reward:3746.8110250453956 steps:354[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 108: episode_reward:4001.334342669578 steps:356[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 109: episode_reward:-121.30327978515005 steps:357[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 110: episode_reward:9911.290195148373 steps:359[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 111: episode_reward:1184.948233371431 steps:361[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 112: episode_reward:1538.862073240331 steps:363[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 113: episode_reward:13487.588129642323 steps:367[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 114: episode_reward:7483.156641079565 steps:370[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 115: episode_reward:17226.24824803049 steps:377[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 116: episode_reward:5222.055652621012 steps:380[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 117: episode_reward:36176.91995600057 steps:388[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 118: episode_reward:10930.868663821802 steps:391[00m
+[RDDPG] Resetting Environment
