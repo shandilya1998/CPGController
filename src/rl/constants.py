@@ -34,11 +34,11 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 20000000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 5,
+    'max_steps'                   : 10,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
-    'rnn_steps'                   : 40,
+    'rnn_steps'                   : 12,
     'units_critic_hidden'         : 20,
     'lstm_units'                  : action_dim,
     'lstm_state_dense_activation' : 'relu',
@@ -60,10 +60,10 @@ params = {
     'ou_sigma'                    : 0.2,
     'ou_mu'                       : 0.0,
     'seed'                        : 1,
-    'trajectory_length'           : 20,
-    'window_length'               : 10,
-    'num_validation_episodes'     : 4,
-    'validate_interval'           : 25,
+    'trajectory_length'           : 50,
+    'window_length'               : 5,
+    'num_validation_episodes'     : 3,
+    'validate_interval'           : 1000,
 }
 
 observation_spec = [

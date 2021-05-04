@@ -854,7 +854,7 @@ class Quadruped:
     def reset(self):
         self._reset()
         self.upright = True
-        rospy.sleep(1.0)
+        #rospy.sleep(1.0)
         start = time.time()
         self.reward = 0.0
         self.osc_state = self.create_init_osc_state()
@@ -955,7 +955,7 @@ class Quadruped:
         self.com = self.get_com()
         current_pose = self.kinematics.get_current_end_effector_fk()
 
-        rospy.sleep(2.0)
+        rospy.sleep(0.5)
         AB = self.all_legs.get_AB()
         if not AB:
             print(AB)
@@ -1214,7 +1214,7 @@ class Quadruped:
             a.numpy() for a in action
         ]
         self.set_observation(action, desired_motion)
-        rospy.sleep(15.0/60.0)
+        #rospy.sleep(15.0/60.0)
         vd = np.linalg.norm(self.v_exp)
         if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
             self.reward += -1.0

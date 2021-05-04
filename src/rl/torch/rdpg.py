@@ -8,6 +8,7 @@ from rl.torch.evaluator import Evaluator
 from rl.torch.memory import EpisodicMemory
 from rl.torch.agent import Agent
 from rl.torch.util import *
+import time
 
 USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
@@ -235,6 +236,7 @@ class RDPG(object):
     def update_policy(self):
         # Sample batch
         print('[RDDPG] Updating Policy')
+        start = time.perf_counter()
         experiences = self.memory.sample(self.batch_size, self.max_episode_length)
         if len(experiences) == 0: # not enough samples
             return
@@ -337,7 +339,6 @@ class RDPG(object):
             #self.critic_optim.step()
             #self.actor_optim.step()
 
-
         self.critic_optim.step()
         self.actor_optim.step()
 
@@ -348,6 +349,7 @@ class RDPG(object):
         self.critic_loss.append(value_loss_total)
         soft_update(self.agent.actor_target, self.agent.actor, self.tau)
         soft_update(self.agent.critic_target, self.agent.critic, self.tau)
+        print('[RDDPG] Update Time: {t:.5f}'.format(t = time.perf_counter() - start))
 
     def test(self, num_episodes, model_path, visualize=False, debug=False):
         if self.agent.load_weights(model_path) == False:
