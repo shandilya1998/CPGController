@@ -1156,6 +1156,15 @@ class Quadruped:
         )
         return self.r_motion
 
+    def get_motion_reward_v2(self):
+        self.r_motion = self.compute_reward.motion_reward_v2(
+            self.pos,
+            self.last_pos,
+            self.v_real,
+            self.motion_state
+        )
+        return self.r_motion
+
     def get_stability_reward(self, v_exp = None):
         reward = 0.0
         if self.upright:
