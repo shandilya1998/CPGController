@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.0.3-devel-ubuntu20.04
+FROM nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04
 WORKDIR /app
 RUN apt-get update && \
     apt-get install -y lsb-release \
@@ -9,13 +9,14 @@ RUN apt-get update && \
         bzip2 \
         libx11-6 && \
     apt-get clean all
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
     curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add - && \
     sudo apt update && \
     apt install -y ros-noetic-desktop-full && \
     echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
-    source ~/.bashrc && \
+    /bin/bash -c "source ~/.bashrc" && \
     apt -y install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-rosdep && \
     rosdep init && rosdep update && \
     apt -y install ros-noetic-moveit ros-noetic-*-controllers && \
@@ -47,3 +48,4 @@ RUN conda install -y -c pytorch \
         "pytorch=1.7.0=py3.8_cuda11.0.221_cudnn8.0.3_0" \
         "torchvision=0.8.1=py38_cu110" && \
     conda clean -ya
+
