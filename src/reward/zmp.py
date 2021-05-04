@@ -19,7 +19,7 @@ class ZMP:
         ])
         self.zmp_s = np.zeros((3,))
         self.zmp = np.zeros((3,))
-        self.inertial_plane = np.eye(N = 3, k = 1)
+        self.inertial_plane = np.eye(N = 3)
         self.plane = self.inertial_plane
 
     def update_g(self):

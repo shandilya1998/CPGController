@@ -41,6 +41,7 @@ class FitnessFunction:
             wc = 0
         d_spt = wc * dc + wl * dl
 
+
         d11 = np.linalg.norm(np.cross(
             (self.A - zmp),
             (self.A - self.BL)
@@ -58,7 +59,6 @@ class FitnessFunction:
             (self.BL - self.B)
         ) / np.linalg.norm((self.BL - self.B)))
         d_edge = (min(d11, d12) + min(d21, d22))
-
         u = zmp - com
         cosT = np.dot(u, self.zmp.plane[0])/(np.linalg.norm(u) * np.linalg.norm(self.zmp.plane[0]))
         sinT = np.sqrt(1-cosT*cosT)
