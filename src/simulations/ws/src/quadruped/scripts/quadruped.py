@@ -679,7 +679,7 @@ class Quadruped:
 
     def get_state_tensor(self):
         diff_joint = self.joint_position - self.last_joint
-
+        self.com = self.get_com()
         self.robot_state = np.concatenate([
             np.sin(self.joint_position),
             np.sin(diff_joint),
@@ -884,6 +884,7 @@ class Quadruped:
             ], 0
         )
 
+        self.com = self.get_com()
         self.last_joint = self.joint_position
         diff_joint = np.zeros(self.nb_joints, dtype = np.float32)
         self.joint_torque = self.all_legs.get_all_torques()
@@ -958,7 +959,6 @@ class Quadruped:
         rospy.sleep(0.5)
         AB = self.all_legs.get_AB()
         if not AB:
-            print(AB)
             print('[DDPG] Error in Resetting End Training')
             self.upright = False
             AB = [self.A_init, self.B_init]
@@ -1084,6 +1084,7 @@ class Quadruped:
             model_state.twist.linear.y,
             model_state.twist.linear.z
         ], dtype = np.float32)
+        self.com = self.get_com()
         self.robot_state = np.concatenate([
             np.sin(self.joint_position),
             np.sin(diff_joint),
@@ -1219,8 +1220,9 @@ class Quadruped:
         if (self.action > np.pi/3).any() or (self.action < -np.pi/3).any():
             self.reward += -1.0
         if vd == 0:
-            vd = 1e-8
-        self.eta = (self.params['L'] + self.params['W'])/(2*vd)
+            self.eta = 0
+        else:
+            self.eta = (self.params['L'] + self.params['W'])/(2*vd)
         #self.set_support_lines()
         self.set_history(desired_motion)
         self.delta = rospy.get_rostime().to_sec() - now

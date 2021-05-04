@@ -20,7 +20,7 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"
     rosdep init && rosdep update && \
     apt -y install ros-noetic-moveit ros-noetic-*-controllers && \
     apt install -y python3-pip && \
-    pip3 install tqdm numpy pandas matplotlib pybullet tensorflow tf_agents && \
+    pip3 install tqdm numpy pandas matplotlib pybullet tensorflow tf_agents
 
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user && \
     chown -R user:user /app
