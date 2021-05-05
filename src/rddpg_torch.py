@@ -1,7 +1,7 @@
 from rl.torch.env import Env
 from rl.torch.rdpg import RDPG
 from rl.torch.util import *
-from rl.constants import params
+from rl.torch.constants import params
 import numpy as np
 import argparse
 from copy import deepcopy

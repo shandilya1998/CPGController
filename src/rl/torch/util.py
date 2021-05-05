@@ -5,6 +5,9 @@ from torch.autograd import Variable
 
 USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
+DEVICE = 'cpu'
+if USE_CUDA:
+    DEVICE = 'gpu'
 
 def prRed(prt): print("\033[91m {}\033[00m" .format(prt))
 def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))

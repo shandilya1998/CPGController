@@ -1,51 +1,50 @@
-FROM nvidia/cuda:11.3.0-cudnn8-devel-ubuntu20.04
+FROM nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
 WORKDIR /app
+RUN apt-get update
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
 RUN apt-get update && \
     apt-get install -y lsb-release \
         curl \
         ca-certificates \
         sudo \
+	gdb \
         git \
+	vim \
         bzip2 \
         libx11-6 && \
     apt-get clean all
-RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata keyboard-configuration
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
-    apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
-    curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | apt-key add - && \
-    sudo apt update && \
-    apt install -y ros-noetic-desktop-full && \
-    echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc && \
-    /bin/bash -c "source ~/.bashrc" && \
-    apt -y install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-rosdep && \
+
+# install packages
+RUN apt-get update && apt-get install -q -y --no-install-recommends \
+    dirmngr \
+    gnupg2
+
+# setup keys
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros1-latest.list
+
+# setup environment
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+ENV ROS_DISTRO noetic
+
+# install ros packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-noetic-desktop-full
+RUN apt -y install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-rosdep && \
     rosdep init && rosdep update && \
     apt -y install ros-noetic-moveit ros-noetic-*-controllers && \
     apt install -y python3-pip && \
-    pip3 install tqdm numpy pandas matplotlib pybullet tensorflow tf_agents
+    pip3 install tqdm numpy pandas matplotlib pybullet tensorflow tf_agents && \
+    pip3 install torch==1.8.1+cu111 torchsummary torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 
-RUN adduser --disabled-password --gecos '' --shell /bin/bash user && \
-    chown -R user:user /app
-RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
-USER user
+# setup entrypoint
+COPY ./ros_entrypoint.sh /
+RUN bash -c "chmod +x /ros_entrypoint.sh"
 
-# All users can use /home/user as their home directory
-ENV HOME=/home/user
-RUN chmod 777 /home/user
-
-# Install Miniconda and Python 3.8
-ENV CONDA_AUTO_UPDATE_CONDA=false
-ENV PATH=/home/user/miniconda/bin:$PATH
-RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-py38_4.8.3-Linux-x86_64.sh && \
-    chmod +x ~/miniconda.sh && \
-    ~/miniconda.sh -b -p ~/miniconda && \
-    rm ~/miniconda.sh && \
-    conda install -y python==3.8.3 && \
-    conda clean -ya
-
-# CUDA 11.0-specific steps
-RUN conda install -y -c pytorch \
-        cudatoolkit=11.0.221 \
-        "pytorch=1.7.0=py3.8_cuda11.0.221_cudnn8.0.3_0" \
-        "torchvision=0.8.1=py38_cu110" && \
-    conda clean -ya
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
 

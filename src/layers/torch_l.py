@@ -1,10 +1,12 @@
 import torch
-from torch.nn.functional import relu, max_pool2d, avg_pool2d, dropout, dropout2d, interpolate
-import torch
+#torch.cuda.current_device()
 from collections import OrderedDict
 
-USE_CUDA = False
+USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
+DEVICE = 'cpu'
+if USE_CUDA:
+    DEVICE = 'gpu'
 
 def complex_relu(input):
     size = input.shape[-1]//2
@@ -31,7 +33,7 @@ def complex_elu(input):
 def complex_tanh(input):
     size = input.shape[-1]//2
     x, y = torch.split(input, size, -1)
-    denominator = torch.cos(2*x) + torch.cosh(2*y)
+    denominator = torch.cosh(2*x) + torch.cos(2*y)
     x = torch.sin(2*x) / denominator
     y = torch.sinh(2*y) / denominator
     out = torch.cat([x, y], -1)
@@ -79,57 +81,57 @@ class ParamNet(torch.nn.Module):
     ):
         super(ParamNet, self).__init__()
         self.params = params
-        motion_seq = OrderedDict()
+        motion_seq = []
         input_size = params['motion_state_size']
         output_size_motion_state_enc = None
         for i, units in enumerate(params['units_motion_state']):
-            motion_seq['fc{i}'.format(i = i)] = torch.nn.Linear(
+            motion_seq.append(torch.nn.Linear(
                 input_size,
                 units
-            )
-            motion_seq['ac{i}'.format(i = i)] = torch.nn.ELU()
+            ))
+            motion_seq.append(torch.nn.ELU())
             input_size = units
             output_size_motion_state_enc = units
         self.motion_state_enc = torch.nn.Sequential(
-            motion_seq
+            *motion_seq
         )
 
-        omega_seq = OrderedDict()
+        omega_seq = []
         for i, units in enumerate(params['units_omega']):
-            omega_seq['fc{i}'.format(i = i)] = torch.nn.Linear(
+            omega_seq.append(torch.nn.Linear(
                 input_size,
                 units
-            )
-            omega_seq['ac{i}'.format(i = i)] = torch.nn.ELU()
+            ))
+            omega_seq.append(torch.nn.ELU())
             input_size = units
 
-        omega_seq['out_fc'] = torch.nn.Linear(
+        omega_seq.append(torch.nn.Linear(
             input_size,
             1
-        )
-        omega_seq['out_ac'] = torch.nn.ReLU()
+        ))
+        omega_seq.append(torch.nn.ReLU())
 
         self.omega_dense_seq = torch.nn.Sequential(
-            omega_seq
+            *omega_seq
         )
 
-        mu_seq = OrderedDict()
+        mu_seq = []
         for i, units in enumerate(params['units_mu']):
-            mu_seq['fc{i}'.format(i = i)] = torch.nn.Linear(
+            mu_seq.append(torch.nn.Linear(
                 input_size,
                 units
-            )
-            mu_seq['ac{i}'.format( i = i)] = torch.nn.ELU()
+            ))
+            mu_seq.append(torch.nn.ELU())
             input_size = units
 
-        mu_seq['out_fc'] = torch.nn.Linear(
+        mu_seq.append(torch.nn.Linear(
             input_size,
             params['units_osc']
-        )
-        mu_seq['out_ac'] = torch.nn.ReLU()
+        ))
+        mu_seq.append(torch.nn.ReLU())
 
         self.mu_dense_seq = torch.nn.Sequential(
-            mu_seq
+            *mu_seq
         )
 
     def forward(self, desired_motion):
@@ -142,8 +144,8 @@ class Hopf(torch.nn.Module):
     def __init__(self, params):
         super(Hopf, self).__init__()
         self.params = params
-        self.dt = self.params['dt']
-        self.arange = torch.arange(0, self.params['units_osc'], 1.0)
+        self.dt = torch.Tensor([self.params['dt']]).type(FLOAT)
+        self.arange = torch.arange(0, self.params['units_osc'], 1.0).type(FLOAT)
 
     def forward(self, z, omega, mu):
         units_osc = z.shape[-1]
@@ -176,7 +178,7 @@ class RhythmGenerator(torch.nn.Module):
             input_size,
             self.params['action_dim']
         )
-        complex_seq['out_ac'] = ComplexTanh()
+        complex_seq['out_ac'] = torch.nn.Tanh()
         self.complex_mlp = torch.nn.Sequential(
             complex_seq
         )
@@ -340,10 +342,15 @@ class Critic(torch.nn.Module):
             action_state_seq
         )
 
-        out_dense_seq = []
-        out_dense_seq.append(torch.nn.Linear(
+        self.gru = torch.nn.GRUCell(
             output_size_action_state + output_size_robot_state + \
                 output_size_motion_state,
+            self.params['units_gru_rddpg']
+        )
+
+        out_dense_seq = []
+        out_dense_seq.append(torch.nn.Linear(
+            self.params['units_gru_rddpg'],
             1,
         ))
         out_dense_seq.append(torch.nn.ELU())
@@ -351,9 +358,19 @@ class Critic(torch.nn.Module):
             *out_dense_seq
         )
 
-    def forward(self, desired_motion, robot_state, actions):
+        self.h = torch.autograd.Variable(
+            torch.zeros(1, self.params['units_gru_rddpg'])
+        ).type(FLOAT)
+
+    def forward(self, desired_motion, robot_state, actions, hidden_state = None):
+        h = self.h
+        if hidden_state is not None:
+            h = hidden_state
         ms = self.motion_state_seq(desired_motion)
         rs = self.robot_state_seq(robot_state)
         ac = self.action_seq(actions)
-        return self.out_dense_seq(torch.cat([ms, rs, ac], -1))
+        x = self.gru(torch.cat([ms, rs, ac], -1), h)
+        if hidden_state is None:
+            self.h = x
+        return self.out_dense_seq(x), x
 

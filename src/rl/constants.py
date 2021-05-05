@@ -34,7 +34,7 @@ params = {
     'EXPLORE'                     : 10000,
     'train_episode_count'         : 20000000,
     'test_episode_count'          : 10,
-    'max_steps'                   : 10,
+    'max_steps'                   : 1,
     'action_dim'                  : action_dim,
 
     'units_action_input'          : 20,
@@ -60,7 +60,7 @@ params = {
     'ou_sigma'                    : 0.2,
     'ou_mu'                       : 0.0,
     'seed'                        : 1,
-    'trajectory_length'           : 50,
+    'trajectory_length'           : 5,
     'window_length'               : 5,
     'num_validation_episodes'     : 3,
     'validate_interval'           : 1000,

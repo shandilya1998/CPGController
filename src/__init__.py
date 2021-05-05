@@ -1,1 +1,1 @@
-from . import gait_genertation, rl, reward, simulations
+from . import rl, simulations, reward, gait_generation
