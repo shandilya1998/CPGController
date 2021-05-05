@@ -1159,10 +1159,19 @@ class Quadruped:
         )
         return self.r_motion
 
+    def get_motion_reward_v2(self):
+        self.r_motion = self.compute_reward.motion_reward_v2(
+            self.pos,
+            self.last_pos,
+            self.v_real,
+            self.motion_state
+        )
+
     def get_stability_reward(self, v_exp = None):
         reward = 0.0
         reward -=  0.75 * np.sqrt(np.sum((self.orientation)**2))
         if self.upright:
+            """
             t_1 = max(self.A_time[0], self.B_time[0])
             t_2 = max(self.A_time[-1], self.B_time[-1])
             self.Tb = t_2 - t_1
@@ -1203,7 +1212,8 @@ class Quadruped:
                 self.mass,
                 self.gravity
             )
-            #reward += np.nan_to_num(self.stability)
+            reward += np.nan_to_num(self.stability)
+            """
             if self.compute_reward.zmp.support_plane.flag:
                 reward += -1.0
             if math.isnan(reward):
