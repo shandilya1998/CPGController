@@ -7,9 +7,9 @@ RUN apt-get update && \
         curl \
         ca-certificates \
         sudo \
-	gdb \
+        gdb \
         git \
-	vim \
+        vim \
         bzip2 \
         libx11-6 && \
     apt-get clean all
