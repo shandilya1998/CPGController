@@ -39,11 +39,11 @@ class Env:
         )
         observation = observation[:-1]
         self.COT +=  0.005 * self.quadruped.get_COT()
-        self.r_motion += self.quadruped.get_motion_reward()
+        self.r_motion += self.quadruped.get_motion_reward_v2()
         self.quadruped.set_support_lines()
         self.stability += self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
-        reward += self.COT + self.r_motion + self.stability
+        reward += self.r_motion + self.stability
         self._state = observation
         done = False
         self._episode_ended = last_step
