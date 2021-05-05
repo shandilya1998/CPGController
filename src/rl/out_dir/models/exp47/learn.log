@@ -18,3 +18,3217 @@ Unable to init server: Could not connect: Connection refused
 [0m[ INFO] [1620229181.865557361, 6.601000000]: Ready to take commands for planning group front_left_leg.[0m
 [0m[ INFO] [1620229183.160661950, 7.401000000]: Ready to take commands for planning group back_right_leg.[0m
 [0m[ INFO] [1620229184.544254689, 8.201000000]: Ready to take commands for planning group back_left_leg.[0m
+2021-05-05 17:39:13.477595: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:44): Gdk-CRITICAL **: 17:39:19.048: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620236362.074870273, 10.951000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620236362.076156623, 10.952000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620236362.076209327, 10.952000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620236363.291463263, 12.145000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620236363.947539873, 12.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620236364.749356531, 13.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620236365.751916596, 14.600000000]: Ready to take commands for planning group back_left_leg.[0m
+0it [00:00, ?it/s]11it [00:00, 100.08it/s]22it [00:00, 89.97it/s] 32it [00:00, 77.40it/s]40it [00:00, 69.29it/s]48it [00:00, 70.03it/s]58it [00:00, 76.95it/s]67it [00:00, 79.01it/s]76it [00:01, 72.72it/s]84it [00:01, 68.71it/s]91it [00:01, 65.44it/s]101it [00:01, 72.63it/s]110it [00:01, 76.49it/s]118it [00:01, 76.67it/s]126it [00:01, 72.78it/s]134it [00:01, 66.42it/s]135it [00:01, 72.39it/s]
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/app/rl/torch/rdpg.py", line 127, in train
+    validate_reward = self.evaluate(
+  File "/app/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/app/rl/torch/env.py", line 42, in step
+    self.r_motion += self.quadruped.get_motion_reward_v2()
+  File "/app/simulations/ws/src/quadruped/scripts/quadruped_torch.py", line 1163, in get_motion_reward_v2
+    self.r_motion = self.compute_reward.motion_reward_v2(
+  File "/app/reward/__init__.py", line 90, in motion_reward_v2
+    motion = np.srt(motion)
+AttributeError: module 'numpy' has no attribute 'srt'
+2021-05-05 17:40:44.448300: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:475): Gdk-CRITICAL **: 17:40:46.312: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620236450.596697674, 2.737000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620236450.597800971, 2.738000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620236450.597919225, 2.738000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620236451.856156043, 3.976000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620236452.487315534, 4.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620236453.090325436, 5.201000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620236453.692116473, 5.800000000]: Ready to take commands for planning group back_left_leg.[0m
+0it [00:00, ?it/s]11it [00:00, 106.22it/s]22it [00:00, 89.06it/s] 32it [00:00, 77.32it/s]40it [00:00, 71.14it/s]48it [00:00, 69.81it/s]58it [00:00, 77.40it/s]67it [00:00, 80.10it/s]76it [00:00, 75.09it/s]84it [00:01, 69.33it/s]92it [00:01, 65.80it/s]102it [00:01, 74.31it/s]111it [00:01, 76.17it/s]119it [00:01, 74.77it/s]127it [00:01, 70.22it/s]135it [00:01, 64.31it/s]135it [00:01, 72.24it/s]
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/app/rl/torch/rdpg.py", line 127, in train
+    validate_reward = self.evaluate(
+  File "/app/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/app/rl/torch/env.py", line 42, in step
+    self.r_motion += self.quadruped.get_motion_reward_v2()
+TypeError: unsupported operand type(s) for +=: 'float' and 'NoneType'
+2021-05-05 17:42:11.114822: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:901): Gdk-CRITICAL **: 17:42:13.045: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620236537.121618380, 2.436000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620236537.122914852, 2.438000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620236537.122991692, 2.438000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620236538.328348749, 3.632000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620236539.312486068, 4.600000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620236540.115007928, 5.401000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620236540.916039355, 6.201000000]: Ready to take commands for planning group back_left_leg.[0m
+0it [00:00, ?it/s]11it [00:00, 106.99it/s]22it [00:00, 83.52it/s] 31it [00:00, 78.03it/s]39it [00:00, 73.07it/s]47it [00:00, 69.22it/s]57it [00:00, 76.40it/s]65it [00:00, 76.69it/s]73it [00:00, 73.83it/s]81it [00:01, 70.75it/s]89it [00:01, 65.55it/s]99it [00:01, 73.18it/s]108it [00:01, 77.42it/s]116it [00:01, 77.61it/s]124it [00:01, 73.31it/s]132it [00:01, 67.88it/s]135it [00:01, 72.67it/s]
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/app/rl/torch/rdpg.py", line 127, in train
+    validate_reward = self.evaluate(
+  File "/app/rl/torch/evaluator.py", line 37, in __call__
+    observation, reward, done, info = env.step(
+  File "/app/rl/torch/env.py", line 44, in step
+    self.stability += self.quadruped.get_stability_reward()
+  File "/app/simulations/ws/src/quadruped/scripts/quadruped_torch.py", line 1218, in get_stability_reward
+    if self.compute_reward.zmp.support_plane.flag:
+AttributeError: 'SupportPlane' object has no attribute 'flag'
+2021-05-05 17:44:54.834484: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:1330): Gdk-CRITICAL **: 17:44:56.684: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620236700.684265154, 2.392000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620236700.685369846, 2.393000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620236700.685682595, 2.393000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620236701.886580246, 3.585000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620236702.503626890, 4.201000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620236703.506279648, 5.200000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620236704.307404709, 6.000000000]: Ready to take commands for planning group back_left_leg.[0m
+0it [00:00, ?it/s]12it [00:00, 115.10it/s]24it [00:00, 89.67it/s] 34it [00:00, 80.73it/s]43it [00:00, 70.93it/s]53it [00:00, 78.21it/s]62it [00:00, 80.36it/s]71it [00:00, 78.11it/s]79it [00:01, 72.16it/s]87it [00:01, 67.37it/s]94it [00:01, 68.00it/s]103it [00:01, 73.63it/s]111it [00:01, 74.89it/s]119it [00:01, 72.49it/s]127it [00:01, 69.46it/s]135it [00:01, 66.38it/s]135it [00:01, 73.22it/s]
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:-7.320447482541203[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:0.11060476303100586 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:3.922706127166748 steps:16[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:18.31582736968994 steps:89[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-1.4535930901765823 steps:91[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:16.556108236312866 steps:150[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:8.79539678990841 steps:179[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:0.22553658485412598 steps:185[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:1.8161265552043915 steps:194[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:4.698442876338959 steps:215[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-1.1903046369552612 steps:217[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-2.3341682478785515 steps:219[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:2.7562685906887054 steps:229[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:6.458033502101898 steps:251[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:4.817968741059303 steps:264[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:1.516493171453476 steps:272[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:2.6165071427822113 steps:285[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:11.07202422618866 steps:326[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:7.407272279262543 steps:350[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:-1.460658147931099 steps:352[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:2.80497607588768 steps:362[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:1.8275301158428192 steps:369[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-0.9539890289306641 steps:371[00m
+[RDDPG] Resetting Environment
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 560, in connect
+    self.socket.connect((dest_addr, dest_port))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 509, in call
+    transport.connect(dest_addr, dest_port, service_uri)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_base.py", line 589, in connect
+    raise TransportInitError(str(e)) #re-raise i/o error
+rospy.exceptions.TransportInitError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 35, in <module>
+    rdpg.train(params['train_episode_count'], checkpoint_path, True)
+  File "/app/rl/torch/rdpg.py", line 174, in train
+    state, reward, done, info = self.env.step(
+  File "/app/rl/torch/env.py", line 43, in step
+    self.quadruped.set_support_lines()
+  File "/app/simulations/ws/src/quadruped/scripts/quadruped_torch.py", line 1025, in set_support_lines
+    current_pose = self.kinematics.get_end_effector_fk(
+  File "/app/simulations/ws/src/quadruped/scripts/kinematics.py", line 84, in get_end_effector_fk
+    msg = self.compute_fk_proxy(
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 442, in __call__
+    return self.call(*args, **kwds)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/impl/tcpros_service.py", line 512, in call
+    raise ServiceException("unable to connect to service: %s"%e)
+rospy.service.ServiceException: unable to connect to service: [Errno 111] Connection refused
+2021-05-05 17:52:09.685726: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:3813): Gdk-CRITICAL **: 17:52:11.526: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620237135.816648005, 2.615000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620237135.817667665, 2.615000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620237135.817822416, 2.615000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[33m[ WARN] [1620237136.454986019, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg1 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455040282, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg2 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455056879, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_left_leg3 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455082079, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg1 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455101953, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg2 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455120317, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame back_right_leg3 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455144755, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg1 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455160779, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg2 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455177416, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_left_leg3 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455194759, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg1 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455211694, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg2 at time 3.211000 according to authority unknown_publisher[0m
+[33m[ WARN] [1620237136.455236126, 3.248000000]: TF_REPEATED_DATA ignoring data with redundant timestamp for frame front_right_leg3 at time 3.211000 according to authority unknown_publisher[0m
+[0m[ INFO] [1620237137.106262203, 3.897000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620237137.809856718, 4.601000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620237138.821472892, 5.601000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620237139.825940471, 6.601000000]: Ready to take commands for planning group back_left_leg.[0m
+0it [00:00, ?it/s]10it [00:00, 96.84it/s]20it [00:00, 82.80it/s]29it [00:00, 76.80it/s]37it [00:00, 70.84it/s]45it [00:00, 64.15it/s]55it [00:00, 72.98it/s]63it [00:00, 74.91it/s]71it [00:00, 73.04it/s]79it [00:01, 69.81it/s]87it [00:01, 66.07it/s]95it [00:01, 68.63it/s]104it [00:01, 74.34it/s]112it [00:01, 73.47it/s]120it [00:01, 70.54it/s]128it [00:01, 67.19it/s]135it [00:01, 65.94it/s]135it [00:01, 70.58it/s]
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0000000: mean_reward:-24.764703195542097[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 0: episode_reward:-6.053836822509766 steps:2[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 1: episode_reward:-28.56941284239292 steps:16[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 2: episode_reward:-42.32354258000851 steps:38[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 3: episode_reward:-5.726903989911079 steps:40[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 4: episode_reward:-5.552749156951904 steps:42[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 5: episode_reward:-22.27857644855976 steps:52[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 6: episode_reward:-20.81413546204567 steps:62[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 7: episode_reward:-19.10144966840744 steps:71[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 8: episode_reward:-5.819454073905945 steps:73[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 9: episode_reward:-14.089850217103958 steps:79[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 10: episode_reward:-35.419681534171104 steps:97[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 11: episode_reward:-5.629623726010323 steps:99[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 12: episode_reward:-18.635198265314102 steps:108[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 13: episode_reward:-23.38491541147232 steps:120[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 14: episode_reward:-671.6828294992447 steps:501[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 15: episode_reward:-15.074419021606445 steps:507[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 16: episode_reward:-5.5926197320222855 steps:509[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 17: episode_reward:-56.63759262859821 steps:539[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 18: episode_reward:-17.03013163805008 steps:547[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 19: episode_reward:-20.74529755860567 steps:563[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 20: episode_reward:-14.178393751382828 steps:569[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 21: episode_reward:-16.653565123677254 steps:576[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 22: episode_reward:-51.576813355088234 steps:602[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 23: episode_reward:-10.29187536239624 steps:606[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 24: episode_reward:-5.916606664657593 steps:608[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 25: episode_reward:-5.868359208106995 steps:610[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 26: episode_reward:-26.96632908284664 steps:624[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 27: episode_reward:-13.50741358101368 steps:630[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 28: episode_reward:-18.723859176039696 steps:639[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 29: episode_reward:-22.15411128103733 steps:650[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 30: episode_reward:-17.952108412981033 steps:658[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 31: episode_reward:-5.526440620422363 steps:660[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 32: episode_reward:-5.635432004928589 steps:662[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 33: episode_reward:-5.9675602465868 steps:664[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 34: episode_reward:-5.846756532788277 steps:666[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 35: episode_reward:-16.6895322650671 steps:674[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 36: episode_reward:-39.21120588481426 steps:693[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 37: episode_reward:-84.8247489631176 steps:739[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 38: episode_reward:-13.799725487828255 steps:745[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 39: episode_reward:-5.581269979476929 steps:747[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 40: episode_reward:-16.820514664053917 steps:755[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 41: episode_reward:-17.950269490480423 steps:763[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 42: episode_reward:-12.158330708742142 steps:768[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 43: episode_reward:-11.415624931454659 steps:773[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 44: episode_reward:-50.44194036722183 steps:799[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 45: episode_reward:-5.92260105907917 steps:801[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 46: episode_reward:-15.500684216618538 steps:808[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 47: episode_reward:-70.79982343316078 steps:846[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 48: episode_reward:-11.967149257659912 steps:851[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 49: episode_reward:-18.220092490315437 steps:859[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 50: episode_reward:-18.379533901810646 steps:867[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 51: episode_reward:-13.550465360283852 steps:873[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 52: episode_reward:-13.466992050409317 steps:879[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 53: episode_reward:-5.726664334535599 steps:881[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 54: episode_reward:-5.5796812772750854 steps:883[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 55: episode_reward:-36.2634521573782 steps:900[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 56: episode_reward:-5.588845610618591 steps:902[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 57: episode_reward:-6.060061573982239 steps:904[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 58: episode_reward:-26.14474479854107 steps:917[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 59: episode_reward:-12.947092860937119 steps:923[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 60: episode_reward:-52.73241239786148 steps:950[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 61: episode_reward:-19.85979253053665 steps:959[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 62: episode_reward:-5.784604549407959 steps:961[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 63: episode_reward:-68.66750241816044 steps:997[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
+  rdpg.train(params['train_episode_count'], checkpoint_path, True)
+[RDDPG] Update Time: 8.39197
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 64: episode_reward:-26.667083650827408 steps:1010[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 65: episode_reward:-17.25889201462269 steps:1018[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.57436
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 66: episode_reward:-18.93509343266487 steps:1027[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 67: episode_reward:-5.747264578938484 steps:1029[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 68: episode_reward:-5.542607858777046 steps:1031[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.23070
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 69: episode_reward:-22.732095435261726 steps:1042[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42783
+[RDDPG] Episode Done
+[92m [RDDPG] 70: episode_reward:-5.593524768948555 steps:1044[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 71: episode_reward:-9.669242143630981 steps:1048[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.06050
+[RDDPG] Episode Done
+[92m [RDDPG] 72: episode_reward:-17.78269238770008 steps:1056[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 73: episode_reward:-15.606654584407806 steps:1063[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 74: episode_reward:-9.597726732492447 steps:1067[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.42548
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 75: episode_reward:-13.069471269845963 steps:1073[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.54795
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 76: episode_reward:-20.770314186811447 steps:1083[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 77: episode_reward:-9.53238745033741 steps:1087[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 78: episode_reward:-7.352921724319458 steps:1090[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.43294
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 79: episode_reward:-14.989412009716034 steps:1097[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 80: episode_reward:-11.698411226272583 steps:1102[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.23925
+[RDDPG] Episode Done
+[92m [RDDPG] 81: episode_reward:-5.675540804862976 steps:1104[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 82: episode_reward:-16.038849741220474 steps:1111[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 83: episode_reward:-5.669084668159485 steps:1113[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.56622
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 84: episode_reward:-9.704969048500061 steps:1117[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 85: episode_reward:-9.641315773129463 steps:1121[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 86: episode_reward:-13.637967213988304 steps:1127[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.36663
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 87: episode_reward:-9.516060262918472 steps:1131[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 88: episode_reward:-15.362166732549667 steps:1138[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.04016
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 89: episode_reward:-8.198676943778992 steps:1141[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 90: episode_reward:-14.01801648736 steps:1147[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 91: episode_reward:-5.68344783782959 steps:1149[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.66703
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 92: episode_reward:-9.443206936120987 steps:1153[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 93: episode_reward:-5.680007845163345 steps:1155[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 94: episode_reward:-9.581380799412727 steps:1159[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 95: episode_reward:-7.68454372882843 steps:1162[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.94092
+[RDDPG] Episode Done
+[92m [RDDPG] 96: episode_reward:-5.556050851941109 steps:1164[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 97: episode_reward:-11.81814706325531 steps:1169[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 98: episode_reward:-13.086941078305244 steps:1175[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.38404
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 99: episode_reward:-7.56686694920063 steps:1178[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 100: episode_reward:-9.799884989857674 steps:1182[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 101: episode_reward:-7.793859243392944 steps:1185[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.46351
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.30232
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 102: episode_reward:-30.94626758992672 steps:1201[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 103: episode_reward:-9.598204925656319 steps:1205[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 104: episode_reward:-7.524044394493103 steps:1208[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 105: episode_reward:-5.830590516328812 steps:1210[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.43220
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 106: episode_reward:-7.692193150520325 steps:1213[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 107: episode_reward:-8.076763987541199 steps:1216[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 108: episode_reward:-7.6257853507995605 steps:1219[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 109: episode_reward:-6.000972583889961 steps:1221[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.76410
+[RDDPG] Episode Done
+[92m [RDDPG] 110: episode_reward:-7.658349990844727 steps:1224[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 111: episode_reward:-6.010410785675049 steps:1226[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 112: episode_reward:-7.862669974565506 steps:1229[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 113: episode_reward:-5.902327805757523 steps:1231[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 114: episode_reward:-8.05655212700367 steps:1234[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.24565
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 115: episode_reward:-7.818935871124268 steps:1237[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 116: episode_reward:-5.832452610135078 steps:1239[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 117: episode_reward:-6.05809922516346 steps:1241[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 118: episode_reward:-8.303648546338081 steps:1244[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 119: episode_reward:-8.300302028656006 steps:1247[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.56597
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 120: episode_reward:-8.012630417943 steps:1250[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 121: episode_reward:-7.970751166343689 steps:1253[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 122: episode_reward:-7.678566098213196 steps:1256[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 123: episode_reward:-6.270262122154236 steps:1258[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.22501
+[RDDPG] Episode Done
+[92m [RDDPG] 124: episode_reward:-5.86958284676075 steps:1260[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 125: episode_reward:-6.7865263521671295 steps:1262[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 126: episode_reward:-7.91927182674408 steps:1265[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 127: episode_reward:-5.7478837966918945 steps:1267[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 128: episode_reward:-5.691536620259285 steps:1269[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 129: episode_reward:-6.756277441978455 steps:1271[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.13312
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 130: episode_reward:-5.736723139882088 steps:1273[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 131: episode_reward:-5.708708196878433 steps:1275[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 132: episode_reward:-8.587458610534668 steps:1278[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 133: episode_reward:-6.6681190729141235 steps:1280[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 134: episode_reward:-5.739546686410904 steps:1282[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.40817
+[RDDPG] Episode Done
+[92m [RDDPG] 135: episode_reward:-5.917319297790527 steps:1284[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 136: episode_reward:-5.755553677678108 steps:1286[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 137: episode_reward:-6.753262355923653 steps:1288[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 138: episode_reward:-6.460095837712288 steps:1290[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 139: episode_reward:-6.124957799911499 steps:1292[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 140: episode_reward:-6.7050312757492065 steps:1294[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.18360
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.03726
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.83136
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.03555
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.90971
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.48306
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.22468
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.15686
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.59892
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.39353
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.43382
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.31394
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.51944
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.52532
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.37840
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.81601
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.63238
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.63918
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.90616
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.29168
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.81132
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.82229
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.55963
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.59409
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.15563
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.85018
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.68403
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.40902
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.93914
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.69697
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.55045
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.50790
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.55739
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.52151
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.70071
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32020
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.15892
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.17789
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42036
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.66209
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.89577
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.92057
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 141: episode_reward:-877.4959011822939 steps:1794[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 142: episode_reward:-5.732319474220276 steps:1796[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 143: episode_reward:-6.99355947971344 steps:1798[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.50695
+[RDDPG] Episode Done
+[92m [RDDPG] 144: episode_reward:-5.8821187019348145 steps:1800[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 145: episode_reward:-6.25566291809082 steps:1802[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 146: episode_reward:-6.246255874633789 steps:1804[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 147: episode_reward:-6.658889800310135 steps:1806[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 148: episode_reward:-5.6872334480285645 steps:1808[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 149: episode_reward:-6.726483538746834 steps:1810[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42343
+[RDDPG] Episode Done
+[92m [RDDPG] 150: episode_reward:-5.922336578369141 steps:1812[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 151: episode_reward:-6.618441104888916 steps:1814[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 152: episode_reward:-6.780956029891968 steps:1816[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 153: episode_reward:-6.095922589302063 steps:1818[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 154: episode_reward:-5.9318541288375854 steps:1820[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 155: episode_reward:-5.787765860557556 steps:1822[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.88685
+[RDDPG] Episode Done
+[92m [RDDPG] 156: episode_reward:-5.872162818908691 steps:1824[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 157: episode_reward:-5.644477963447571 steps:1826[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 158: episode_reward:-5.8906217366456985 steps:1828[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 159: episode_reward:-5.801877334713936 steps:1830[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 160: episode_reward:-5.939970135688782 steps:1832[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 161: episode_reward:-6.020362570881844 steps:1834[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.43541
+[RDDPG] Episode Done
+[92m [RDDPG] 162: episode_reward:-5.7388811856508255 steps:1836[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 163: episode_reward:-6.425204753875732 steps:1838[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 164: episode_reward:-5.821189522743225 steps:1840[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 165: episode_reward:-6.518426179885864 steps:1842[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 166: episode_reward:-5.793763637542725 steps:1844[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 167: episode_reward:-5.708747982978821 steps:1846[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.52212
+[RDDPG] Episode Done
+[92m [RDDPG] 168: episode_reward:-6.002192974090576 steps:1848[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 169: episode_reward:-6.076763987541199 steps:1850[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 170: episode_reward:-6.554770588874817 steps:1852[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 171: episode_reward:-6.898223400115967 steps:1854[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 172: episode_reward:-5.863292649388313 steps:1856[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 173: episode_reward:-5.671967387199402 steps:1858[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.82095
+[RDDPG] Episode Done
+[92m [RDDPG] 174: episode_reward:-5.653647378087044 steps:1860[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 175: episode_reward:-6.062100201845169 steps:1862[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 176: episode_reward:-6.56228506565094 steps:1864[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 177: episode_reward:-6.848049163818359 steps:1866[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 178: episode_reward:-6.550309970974922 steps:1868[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 179: episode_reward:-6.660694554448128 steps:1870[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.00690
+[RDDPG] Episode Done
+[92m [RDDPG] 180: episode_reward:-6.017020538449287 steps:1872[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 181: episode_reward:-5.989782691001892 steps:1874[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 182: episode_reward:-6.239600136876106 steps:1876[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 183: episode_reward:-6.357965350151062 steps:1878[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 184: episode_reward:-6.665236115455627 steps:1880[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 185: episode_reward:-5.6506966054439545 steps:1882[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.26397
+[RDDPG] Episode Done
+[92m [RDDPG] 186: episode_reward:-6.047868609428406 steps:1884[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 187: episode_reward:-6.7250591069459915 steps:1886[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 188: episode_reward:-5.780175641179085 steps:1888[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 189: episode_reward:-6.4977641105651855 steps:1890[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 190: episode_reward:-6.317124843597412 steps:1892[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 191: episode_reward:-6.429013967514038 steps:1894[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.29908
+[RDDPG] Episode Done
+[92m [RDDPG] 192: episode_reward:-5.8635571002960205 steps:1896[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 193: episode_reward:-5.943697810173035 steps:1898[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 194: episode_reward:-6.327424049377441 steps:1900[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 195: episode_reward:-6.806886911392212 steps:1902[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 196: episode_reward:-6.0957536697387695 steps:1904[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 197: episode_reward:-5.754900097846985 steps:1906[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.27469
+[RDDPG] Episode Done
+[92m [RDDPG] 198: episode_reward:-6.219596698880196 steps:1908[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 199: episode_reward:-5.865652084350586 steps:1910[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 200: episode_reward:-6.865338206291199 steps:1912[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 201: episode_reward:-5.881269961595535 steps:1914[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 202: episode_reward:-5.80302095413208 steps:1916[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 203: episode_reward:-5.617954328656197 steps:1918[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41199
+[RDDPG] Episode Done
+[92m [RDDPG] 204: episode_reward:-5.8590240478515625 steps:1920[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 205: episode_reward:-5.904432728886604 steps:1922[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 206: episode_reward:-5.794547915458679 steps:1924[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 207: episode_reward:-6.581904843449593 steps:1926[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 208: episode_reward:-5.980701327323914 steps:1928[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 209: episode_reward:-5.751165747642517 steps:1930[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.50319
+[RDDPG] Episode Done
+[92m [RDDPG] 210: episode_reward:-5.811831116676331 steps:1932[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 211: episode_reward:-5.641633704304695 steps:1934[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 212: episode_reward:-5.244664281606674 steps:1936[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 213: episode_reward:-6.8172348737716675 steps:1938[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 214: episode_reward:-5.846530079841614 steps:1940[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 215: episode_reward:-6.63859748840332 steps:1942[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.57187
+[RDDPG] Episode Done
+[92m [RDDPG] 216: episode_reward:-5.72772116959095 steps:1944[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 217: episode_reward:-6.683527663350105 steps:1946[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 218: episode_reward:-5.955109432339668 steps:1948[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 219: episode_reward:-6.109159469604492 steps:1950[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 220: episode_reward:-5.761911988258362 steps:1952[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 221: episode_reward:-6.593737363815308 steps:1954[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.00332
+[RDDPG] Episode Done
+[92m [RDDPG] 222: episode_reward:-6.0470606833696365 steps:1956[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 223: episode_reward:-6.904000997543335 steps:1958[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 224: episode_reward:-6.701531171798706 steps:1960[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 225: episode_reward:-6.876748591661453 steps:1962[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 226: episode_reward:-5.621700763702393 steps:1964[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 227: episode_reward:-6.334809139370918 steps:1966[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.87341
+[RDDPG] Episode Done
+[92m [RDDPG] 228: episode_reward:-5.66981466114521 steps:1968[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 229: episode_reward:-5.779061198234558 steps:1970[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 230: episode_reward:-6.123283267021179 steps:1972[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 231: episode_reward:-6.284978747367859 steps:1974[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 232: episode_reward:-6.1668078899383545 steps:1976[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 233: episode_reward:-5.733744859695435 steps:1978[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.93705
+[RDDPG] Episode Done
+[92m [RDDPG] 234: episode_reward:-6.079764321446419 steps:1980[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 235: episode_reward:-6.0647499561309814 steps:1982[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 236: episode_reward:-5.926424503326416 steps:1984[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 237: episode_reward:-6.268388748168945 steps:1986[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 238: episode_reward:-6.841086104512215 steps:1988[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 239: episode_reward:-5.680051565170288 steps:1990[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.41610
+[RDDPG] Episode Done
+[92m [RDDPG] 240: episode_reward:-5.761788368225098 steps:1992[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 241: episode_reward:-6.604176163673401 steps:1994[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 242: episode_reward:-5.732030391693115 steps:1996[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 243: episode_reward:-6.2326099425554276 steps:1998[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 244: episode_reward:-6.513784408569336 steps:2000[00m
+[RDDPG] Start Evaluation
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[93m [RDDPG] Step_0002000: mean_reward:-6.2202476263046265[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 245: episode_reward:-5.676361560821533 steps:2002[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41980
+[RDDPG] Episode Done
+[92m [RDDPG] 246: episode_reward:-6.617152646183968 steps:2004[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 247: episode_reward:-6.366362005472183 steps:2006[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 248: episode_reward:-6.289525032043457 steps:2008[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 249: episode_reward:-6.883247494697571 steps:2010[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 250: episode_reward:-5.604465842247009 steps:2012[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 251: episode_reward:-5.753979444503784 steps:2014[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.98426
+[RDDPG] Episode Done
+[92m [RDDPG] 252: episode_reward:-5.694962501525879 steps:2016[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 253: episode_reward:-5.723518565297127 steps:2018[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 254: episode_reward:-6.1472299844026566 steps:2020[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 255: episode_reward:-6.265068888664246 steps:2022[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 256: episode_reward:-6.487729072570801 steps:2024[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 257: episode_reward:-6.456223487854004 steps:2026[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.34841
+[RDDPG] Episode Done
+[92m [RDDPG] 258: episode_reward:-5.8463054895401 steps:2028[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 259: episode_reward:-5.648322582244873 steps:2030[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 260: episode_reward:-5.861075043678284 steps:2032[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 261: episode_reward:-6.141028717160225 steps:2034[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 262: episode_reward:-5.961447715759277 steps:2036[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 263: episode_reward:-5.704138353466988 steps:2038[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.75357
+[RDDPG] Episode Done
+[92m [RDDPG] 264: episode_reward:-6.844666123390198 steps:2040[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 265: episode_reward:-5.988324046134949 steps:2042[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 266: episode_reward:-6.575005367398262 steps:2044[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 267: episode_reward:-5.79397614300251 steps:2046[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 268: episode_reward:-6.601965740323067 steps:2048[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 269: episode_reward:-5.789590433239937 steps:2050[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.18173
+[RDDPG] Episode Done
+[92m [RDDPG] 270: episode_reward:-5.8768147975206375 steps:2052[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 271: episode_reward:-6.734591126441956 steps:2054[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 272: episode_reward:-6.769084692001343 steps:2056[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 273: episode_reward:-5.759903147816658 steps:2058[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 274: episode_reward:-4.1400801837444305 steps:2060[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 275: episode_reward:-5.944123104214668 steps:2062[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.03786
+[RDDPG] Episode Done
+[92m [RDDPG] 276: episode_reward:-6.63752281665802 steps:2064[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 277: episode_reward:-5.690466597676277 steps:2066[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 278: episode_reward:-5.893980503082275 steps:2068[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 279: episode_reward:-5.666162446141243 steps:2070[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 280: episode_reward:-5.739034608006477 steps:2072[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 281: episode_reward:-5.848450064659119 steps:2074[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.22174
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.49063
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.58319
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.12435
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.26473
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.20002
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.73469
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.29452
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.52472
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.51290
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.82695
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.31270
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.07309
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.03822
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.22825
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.92273
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.32057
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.53169
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.66518
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.86746
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.73317
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.07339
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.29690
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.01399
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.79897
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.66458
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.07578
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.59963
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.69342
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.78196
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 11.13412
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.98488
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.34633
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41652
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.73268
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.59298
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.46812
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.10435
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.76377
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.61350
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.32119
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.49089
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 282: episode_reward:-876.5108205229044 steps:2574[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 283: episode_reward:-5.848644450306892 steps:2576[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 284: episode_reward:-5.635777950286865 steps:2578[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.99738
+[RDDPG] Episode Done
+[92m [RDDPG] 285: episode_reward:-6.562351107597351 steps:2580[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 286: episode_reward:-6.730711534619331 steps:2582[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 287: episode_reward:-5.7992346584796906 steps:2584[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 288: episode_reward:-5.671428203582764 steps:2586[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 289: episode_reward:-5.649122357368469 steps:2588[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 290: episode_reward:-5.7501374036073685 steps:2590[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.77623
+[RDDPG] Episode Done
+[92m [RDDPG] 291: episode_reward:-5.6449514627456665 steps:2592[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 292: episode_reward:-5.8324284106493 steps:2594[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 293: episode_reward:-5.940222382545471 steps:2596[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 294: episode_reward:-5.8162421733140945 steps:2598[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 295: episode_reward:-5.895438313484192 steps:2600[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 296: episode_reward:-5.710536599159241 steps:2602[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42400
+[RDDPG] Episode Done
+[92m [RDDPG] 297: episode_reward:-5.794989183545113 steps:2604[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 298: episode_reward:-6.3111220598220825 steps:2606[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 299: episode_reward:-6.176279306411743 steps:2608[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 300: episode_reward:-7.712002158164978 steps:2611[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 301: episode_reward:-5.81539249420166 steps:2613[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 302: episode_reward:-5.942110493779182 steps:2615[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.94917
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.80032
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.99457
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.93726
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.15687
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.07906
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.56975
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.97607
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.02149
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.05900
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.50336
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.90943
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.05562
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.75778
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.90487
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41417
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.29690
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.33420
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.54082
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.77278
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.04903
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.36195
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.18549
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.72583
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.08267
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.32045
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.90924
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.22037
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.68821
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.14320
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.92099
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.43290
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.33870
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.33627
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.83446
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.60811
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.88581
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.65749
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.23622
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.09869
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.73284
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.21579
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 303: episode_reward:-876.1120838969946 steps:3115[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 304: episode_reward:-5.6452494859695435 steps:3117[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 305: episode_reward:-6.765948608517647 steps:3119[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.84871
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.17505
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.08796
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.05936
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.84363
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.39479
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.77668
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.86945
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.39531
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.05988
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.81778
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.91364
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.30636
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.80505
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.80592
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.67249
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.16646
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.04905
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.72036
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.74931
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.81777
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.44615
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.43156
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.34709
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.83006
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.06761
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.31896
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.89697
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.34842
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.93548
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.40585
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.47080
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.21769
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.98181
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.75038
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.88135
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42276
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.57735
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.60655
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.54852
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.82274
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.31974
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 306: episode_reward:-876.0356048196554 steps:3619[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 307: episode_reward:-6.173862889409065 steps:3621[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 308: episode_reward:-5.842529967427254 steps:3623[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.10754
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.92179
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.00261
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.67394
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.85653
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.41390
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.91251
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.06874
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.10043
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.12167
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41095
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.22624
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.12608
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.90969
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.20072
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.69010
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.86264
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.43797
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.58118
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.89644
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.92576
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.04135
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.16296
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.89178
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.21209
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.65589
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41610
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.87189
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.73717
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.08197
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.22824
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.20830
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.15493
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.99410
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.17670
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41464
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.37243
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41281
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.57813
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.48597
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.11769
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.45796
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 309: episode_reward:-876.4008285850286 steps:4123[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 310: episode_reward:-6.9998146295547485 steps:4125[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 311: episode_reward:-5.631776332855225 steps:4127[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.74014
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.48869
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.21914
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.68481
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.99864
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.30108
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.53206
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.28281
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.82045
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.90234
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.44370
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.27404
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.39945
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.11605
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.34080
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.12519
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.78953
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.08519
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.67245
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.34030
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.56763
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.74932
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.06056
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.76927
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.20705
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.84631
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.25597
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.99309
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.06465
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.75052
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.21621
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.91385
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.68461
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.71327
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.67529
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.44281
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.04586
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.92091
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.34868
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.67610
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.09054
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.60531
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 312: episode_reward:-875.9973645508289 steps:4627[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 313: episode_reward:-5.987794995307922 steps:4629[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 314: episode_reward:-5.663926124572754 steps:4631[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.98316
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.29746
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.95011
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.70339
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.03949
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.71088
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.15857
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.25402
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41365
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.82455
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.24094
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.17728
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.78416
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.38598
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.45582
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.89240
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.94971
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.70497
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.65801
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.25316
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.55704
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.96093
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.13304
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.64241
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.52840
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.28496
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.65658
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.02066
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.91046
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.89022
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.08308
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.61429
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41338
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.78551
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.04578
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.22740
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.43698
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.96049
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42750
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.43384
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.18835
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.56303
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 315: episode_reward:-875.9357047528028 steps:5131[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 316: episode_reward:-6.83923077583313 steps:5133[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 317: episode_reward:-5.693771511316299 steps:5135[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.88222
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.30805
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.64009
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.78192
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.45988
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.68979
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.44970
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.61899
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.38450
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.60102
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.04725
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.28132
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.99141
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.41884
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.02870
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.87012
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.47445
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.42127
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.59152
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.64425
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.24401
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.41077
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.30822
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.94147
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.32514
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.28383
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.94994
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.03375
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.10814
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.51681
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 10.35738
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 9.78463
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 8.25508
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.85249
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.17856
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.27755
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00174
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.15528
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.16407
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.60762
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.11043
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.43160
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 318: episode_reward:-876.3208837360144 steps:5635[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 319: episode_reward:-7.690215781331062 steps:5638[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.50240
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.92800
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.92017
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.27479
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.33366
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.67600
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.09586
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.85762
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.18542
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.28621
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.42870
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.18525
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.67852
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.64834
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.35711
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.41079
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.15533
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.13331
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.89675
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.78721
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.72467
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.94820
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.87132
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32252
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.50748
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.34393
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.41899
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.06124
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.47455
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.63361
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.41404
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.02203
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.49924
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.63504
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.72565
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.61744
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.54540
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.58787
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00111
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.21693
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.38815
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.73073
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 320: episode_reward:-875.873835593462 steps:6138[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 321: episode_reward:-7.753262042999268 steps:6141[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.79042
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 322: episode_reward:-9.67339512705803 steps:6145[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 323: episode_reward:-7.7304501086473465 steps:6148[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 324: episode_reward:-9.925109341740608 steps:6152[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.60108
+[RDDPG] Episode Done
+[92m [RDDPG] 325: episode_reward:-10.079521134495735 steps:6156[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 326: episode_reward:-9.803631782531738 steps:6160[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 327: episode_reward:-12.545483902096748 steps:6165[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.26700
+[RDDPG] Episode Done
+[92m [RDDPG] 328: episode_reward:-7.78579743206501 steps:6168[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 329: episode_reward:-5.66171407699585 steps:6170[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 330: episode_reward:-7.764311075210571 steps:6173[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 331: episode_reward:-9.734029531478882 steps:6177[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.46815
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 332: episode_reward:-9.623804211616516 steps:6181[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 333: episode_reward:-7.645089864730835 steps:6184[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 334: episode_reward:-7.820740297436714 steps:6187[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 335: episode_reward:-9.925166368484497 steps:6191[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.56204
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.36531
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.13153
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.22832
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.78666
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.47404
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.52443
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90622
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.63910
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.19146
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.41546
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.68981
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.93324
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.76234
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.24245
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.09917
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.24345
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.03002
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.87003
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.05033
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.81417
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.03153
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.21768
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.80309
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.34286
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.31832
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.75809
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.95092
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.64365
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.60010
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.35963
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.58353
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.15727
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.29248
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.28838
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.36917
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.99894
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.99009
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.02629
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.89890
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.68911
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.52455
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 336: episode_reward:-875.5497108697891 steps:6691[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 337: episode_reward:-7.7112947553396225 steps:6694[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.70292
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.22252
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.67012
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.83522
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.76368
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.91824
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.31346
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.48140
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.98475
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.19925
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.43962
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.81272
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.36151
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.79999
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.39886
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.96932
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.13417
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.49756
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.02504
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.49026
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 3.85301
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.60615
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.73798
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.73179
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.78654
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.79603
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.47401
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.16052
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.17152
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.65729
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.00947
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.20786
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.94420
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.25586
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.31938
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.21052
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.53256
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.91414
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.64971
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.62209
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.13540
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.63074
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 338: episode_reward:-875.7658121734858 steps:7194[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 339: episode_reward:-7.738407641649246 steps:7197[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.39214
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.89517
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.25628
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.35701
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.99421
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.05085
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.45816
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00967
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.35957
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.71883
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.87197
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.29527
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.27961
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.82176
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.34252
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.92511
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.58877
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.26193
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.29413
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.29406
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.92347
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.77030
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.08851
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.74804
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.41434
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.83412
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.22554
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.96341
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90193
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.73937
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.14392
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.54527
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.69456
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.66519
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.09185
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.73475
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.76745
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00792
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.36443
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.94767
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.38139
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.76342
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 340: episode_reward:-875.568897485733 steps:7697[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 341: episode_reward:-9.688493013381958 steps:7701[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.70368
+[RDDPG] Episode Done
+[92m [RDDPG] 342: episode_reward:-8.2296953946352 steps:7704[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 343: episode_reward:-9.773152619600296 steps:7708[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 344: episode_reward:-7.71806788444519 steps:7711[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 345: episode_reward:-9.731029748916626 steps:7715[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.19903
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.73414
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.87426
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.40741
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.01567
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.93441
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.08778
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.89068
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.75947
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.05735
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.52342
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.29507
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.61633
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.18113
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.99920
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.09151
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.62008
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.20124
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.41533
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.83683
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.15456
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.93449
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.63409
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.06978
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.88058
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.29450
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.41078
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.75350
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.75852
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.92979
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.83133
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.25344
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32587
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.38998
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.23785
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.12365
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.14380
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.82809
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.19876
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.34115
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.22841
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.24363
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 346: episode_reward:-875.5488073080778 steps:8215[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 347: episode_reward:-7.834458589553833 steps:8218[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.51179
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.22619
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.25207
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.59908
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.94987
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.07632
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.95579
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.70569
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.34850
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00460
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.78789
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.58035
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.27719
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.09567
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.41380
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32462
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.11901
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.18393
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.81892
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.88864
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.81747
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.23158
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.89387
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.34565
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32174
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.57337
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.93515
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00630
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.48694
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.06384
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.99545
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.20991
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.47584
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.03067
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.81122
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.23366
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.33364
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.68078
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.59918
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.84054
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.91208
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.04075
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 348: episode_reward:-875.7591165155172 steps:8718[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 349: episode_reward:-7.86955614387989 steps:8721[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.49227
+[RDDPG] Episode Done
+[92m [RDDPG] 350: episode_reward:-7.678765133023262 steps:8724[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 351: episode_reward:-9.8425562530756 steps:8728[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 352: episode_reward:-7.547486066818237 steps:8731[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 353: episode_reward:-7.912498354911804 steps:8734[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.17294
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00733
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.33614
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.87268
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.94908
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.10875
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90485
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.82712
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.83168
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.69692
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.13608
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.06074
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.82374
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.24126
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.51595
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.80370
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.58473
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.93997
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.39831
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.59469
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.08516
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.62441
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.08933
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.31482
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.33398
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.95278
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.11614
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.10759
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.95908
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90537
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.50220
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.76263
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.82795
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.75201
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.92113
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.48236
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.66469
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 7.34307
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.77566
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.79341
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.84694
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.68324
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 354: episode_reward:-876.0800946801901 steps:9234[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 355: episode_reward:-9.821730569005013 steps:9238[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.80693
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.32482
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.37238
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.66258
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.07394
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.18331
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.20963
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.52687
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.83582
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.32380
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.87476
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.40861
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.71900
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.42017
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.07625
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.02497
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.76486
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.91132
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.00775
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.91264
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.82324
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.14962
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.73164
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.06818
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.68738
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.74120
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90084
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.47559
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.75526
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.80661
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.50784
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.75680
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.96491
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.76492
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.88141
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.06973
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.98226
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.52340
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.77065
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.26321
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 6.92867
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.90588
+[RDDPG] Last Step of episode
+[RDDPG] Episode Done
+[92m [RDDPG] 356: episode_reward:-875.8584365546703 steps:9738[00m
+[RDDPG] Resetting Environment
+[RDDPG] Quadruped Not Upright
+[RDDPG] Episode Done
+[92m [RDDPG] 357: episode_reward:-9.915691256523132 steps:9742[00m
+[RDDPG] Resetting Environment
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.45001
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.46132
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.50673
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 4.50387
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.62622
+[RDDPG] Updating Policy
+[RDDPG] Update Time: 5.86351
