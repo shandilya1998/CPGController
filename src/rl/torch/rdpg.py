@@ -11,6 +11,8 @@ from rl.torch.util import *
 import time
 from plot import plot_fit_curve_polymonial_5
 import matplotlib.pyplot as plt
+from gait_generation.gait_generator import Signal
+from tqdm import tqdm
 
 USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
@@ -71,7 +73,33 @@ class RDPG(object):
         self.epsilon = self.params['epsilon']
         self.is_training = True
 
+        self.signal_gen = Signal(
+            self.trajectory_length + 1,
+            self.params['dt']
+        )
+        self.create_desired_motion_lst()
+
         if USE_CUDA: self.agent.cuda()
+
+    def create_desired_motion_lst(self):
+        self.Tst = self.params['Tst']
+        self.Tsw = self.params['Tsw']
+        self.theta_h = self.params['theta_h']
+        self.theta_k = self.params['theta_k']
+        self.desired_motion = []
+        for tst, tsw, theta_h, theta_k in tqdm(zip(
+            self.Tst,
+            self.Tsw,
+            self.theta_h,
+            self.theta_k
+        )):
+            self.signal_gen.build(tsw, tst, theta_h, theta_k)
+            signal, _ = self.signal_gen.get_signal()
+            signal = signal[:, 1:].astype(np.float32)
+            v = self.signal_gen.compute_v((0.1+0.015)*2.2)
+            motion = np.array([0, -1, 0, 0, -1 * v ,0], dtype = np.float32)
+            self.desired_motion.append(motion)
+        self.desired_motion.append(np.zeros((6,), dtype = np.float32))
 
     def train(self, num_iterations, checkpoint_path, debug):
         self.agent.is_training = True
@@ -109,6 +137,9 @@ class RDPG(object):
                     validate_reward
                 )
             )
+        goal_id = np.random.randint(0, len(self.desired_motion))
+        desired_motion = self.desired_motion[goal_id]
+        self.env.quadruped.set_motion_state(desired_motion)
         while step < num_iterations:
             episode_steps = 0
             total_reward = 0.0
@@ -211,6 +242,9 @@ class RDPG(object):
                     episode += 1
                     self.total_rewards.append(total_reward)
                     self.agent.reset_gru_hidden_state(done=True)
+                    goal_id = np.random.randint(0, len(self.desired_motion))
+                    desired_motion = self.desired_motion[goal_id]
+                    self.env.quadruped.set_motion_state(desired_motion)
                     break
 
             # [optional] evaluate

@@ -1203,7 +1203,7 @@ class Quadruped:
                 self.mass,
                 self.gravity
             )
-            reward += np.nan_to_num(self.stability)
+            #reward += np.nan_to_num(self.stability)
             if self.compute_reward.zmp.support_plane.flag:
                 reward += -1.0
             if math.isnan(reward):
