@@ -1,7 +1,7 @@
 import numpy as np
-from rl.constants import params
+from rl.torch.constants import params
 import torch
-from simulations.ws.src.quadruped.scripts.quadruped import Quadruped
+from simulations.ws.src.quadruped.scripts.quadruped_torch import Quadruped
 
 class Env:
     def __init__(self,

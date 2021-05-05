@@ -20,7 +20,8 @@ def remove_outliers(x, max_deviations = 1):
     return x
 
 
-def plot_fit_curve_polymonial_5(x, y, path = None, figsize = (6,6), plot = True):
+def plot_fit_curve_polymonial_5(x, y, path = None, figsize = (6,6), plot = True,
+        x_label = None, y_label = None, title = None):
     popt, _ = curve_fit(objective_polynomial_5, x, y)
     a, b, c, d, e, f = popt
     fig = None
@@ -32,6 +33,12 @@ def plot_fit_curve_polymonial_5(x, y, path = None, figsize = (6,6), plot = True)
     y_line = objective_polynomial_5(x_line, a, b, c, d, e, f)
     if plot:
         ax.plot(x_line, y_line, '--', color='red')
+        if x_label is not None:
+            ax.set_xlabel(x_label)
+        if y_label is not None:
+            ax.set_ylabel(y_label)
+        if title is not None:
+            ax.set_title(title)
         fig.savefig(path)
     if not plot:
         return x_line, y_line

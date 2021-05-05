@@ -57,8 +57,8 @@ class Agent(object):
         ))
         return action
 
-    def select_action(self, state, noise_enable=True, decay_epsilon=True):
-        action, _ = self.actor(torch.unsqueeze(state[0], 0), torch.unsqueeze(state[1], 0))
+    def select_action(self, state, noise_enable=True, decay_epsilon=True, train = False):
+        action, h = self.actor(torch.unsqueeze(state[0], 0), torch.unsqueeze(state[1], 0))
         action = to_numpy(action).squeeze(0)
         if noise_enable == True:
             action += self.is_training * max(self.epsilon, 0)*self.random_process.sample()
@@ -66,7 +66,10 @@ class Agent(object):
         action = np.clip(action, -1., 1.)
         if decay_epsilon:
             self.epsilon -= self.depsilon
-        return to_tensor(np.expand_dims(action, 0)).detach()
+        if train:
+            return to_tensor(np.expand_dims(action, 0)).detach(), [_.detach() for _ in h]
+        else:
+            return to_tensor(np.expand_dims(action, 0)).detach()
 
     def reset_gru_hidden_state(self, done=True):
         self.actor.reset_gru_hidden_state(done)
