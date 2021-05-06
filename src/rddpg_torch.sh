@@ -1,8 +1,8 @@
-export ROS_MASTER_URI=http://localhost:11315
-export GAZEBO_MASTER_URI=http://localhost:11316
+export ROS_MASTER_URI=http://localhost:11313
+export GAZEBO_MASTER_URI=http://localhost:11314
 
 OUT_PATH="rl/out_dir/models"
-EXPERIMENT=49
+EXPERIMENT=48
 
 nohup roslaunch quadruped quadruped_control.launch \
     >> $OUT_PATH/exp$EXPERIMENT/ros.log &
