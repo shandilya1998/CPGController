@@ -90,6 +90,20 @@ class FitnessFunction:
         motion = np.sqrt(motion)
         return -motion
 
+    def motion_reward_v3(self, pos, last_pos, v_real, desired_motion):
+        norm = 1.0
+        if np.linalg.norm(pos - last_pos) != 0:
+            norm = np.linalg.norm(pos - last_pos)
+        motion = np.dot((pos - last_pos)/norm, desired_motion[:3])
+        norm_1 = 1.0
+        norm_2 = 1.0
+        if np.linalg.norm(v_real) != 0:
+            norm_1 = np.linalg.norm(v_real)
+        if np.linalg.norm(desired_motion[3:]) != 0:
+            norm_1 = np.linalg.norm(desired_motion[3:])
+        motion += np.dot(v_real/norm_1, desired_motion[3:]/norm_2)
+        return motion
+
     def motion_reward(self, pos, last_pos, desired_motion):
         motion = np.dot(pos - last_pos, desired_motion[:3])
         return motion
