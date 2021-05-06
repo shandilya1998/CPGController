@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export ROS_MASTER_URI=http://localhost:11315
 export GAZEBO_MASTER_URI=http://localhost:11316
 
