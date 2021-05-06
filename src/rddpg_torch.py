@@ -25,7 +25,7 @@ if __name__ == '__main__':
         params,
         args.experiment
     )
-    rdpg = RDPG(env, params)
+    rdpg = RDPG(env, params, experiment = args.experiment)
     checkpoint_path = os.path.join(args.out_path, 'exp{exp}'.format(
         exp = args.experiment
     ))
