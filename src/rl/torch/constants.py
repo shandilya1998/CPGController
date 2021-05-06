@@ -63,6 +63,7 @@ params = {
     'window_length'               : 6,
     'num_validation_episodes'     : 5,
     'validate_interval'           : 5000,
+    'step_version'                : 2
 }
 
 class TensorSpec:
@@ -249,8 +250,10 @@ params.update({
     'num_data' : num_data,
     'pretrain_bs': bs,
     'train_test_split' : (num_data - bs) / num_data,
-    'pretrain_test_interval' : 3
-})
+    'pretrain_test_interval' : 3,
+    'pretrain_epochs' : 500,
+    'pretrain_ds_path': 'data/pretrain_rddpg_6'
+    })
 
 
 params_ars = {
