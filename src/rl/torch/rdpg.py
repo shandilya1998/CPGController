@@ -139,13 +139,14 @@ class RDPG(object):
             )
         pkl = open(os.path.join(
             checkpoint_path,
-            'robot_state_mean_std.pickle'), 'wb'
+            'robot_state_mean_var.pickle'), 'wb'
         )
         pickle.dump({
             'mean' : self.env.mean,
             'var' : self.env.var
         }, pkl)
         pkl.close()
+        self.agent.save_model(checkpoint_path)
         goal_id = np.random.randint(0, len(self.desired_motion))
         desired_motion = self.desired_motion[goal_id]
         self.env.quadruped.set_motion_state(desired_motion)
@@ -258,11 +259,11 @@ class RDPG(object):
                         print('[RDDPG] Saving Model')
                         pkl = open(os.path.join(
                             checkpoint_path,
-                            'robot_state_mean_std.pickle'), 'wb'
+                            'robot_state_mean_var.pickle'), 'wb'
                         )
                         pickle.dump({
                             'mean' : self.env.mean,
-                            'std' : self.env.std
+                            'var' : self.env.var
                         }, pkl)
                         pkl.close()
                         self.save(checkpoint_path, step)
