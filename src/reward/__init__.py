@@ -66,6 +66,12 @@ class FitnessFunction:
         d1 = d_edge
         d2 = ((self.params['L'] + self.params['W']) / 8) * sinT
         d3 = np.sum(((self.params['L']+self.params['W'])*0.9/(self.params['W']*4))*d_spt)
+        if np.isnan(d1):
+            d1 = -1.0
+        if np.isnan(d2):
+            d2 = 1.0
+        if np.isnan(d3):
+            d3 = 1.0
         stability = np.sum(d1 - d2 - d3)
         return d1, d2, d3, stability
 
@@ -80,9 +86,23 @@ class FitnessFunction:
 
     def motion_reward_v2(self, pos, last_pos, v_real, desired_motion):
         #motion = np.dot(pos - last_pos, desired_motion[:3])
-        motion = -np.abs(pos - last_pos - desired_motion[:3])
-        vel = -np.abs(v_real - desired_motion[3:])
-        motion = np.sum(motion + vel)
+        motion = np.sum(np.square(pos - last_pos - desired_motion[:3])) + \
+            np.sum(np.square(v_real - desired_motion[3:]))
+        motion = np.sqrt(motion)
+        return -motion
+
+    def motion_reward_v3(self, pos, last_pos, v_real, desired_motion):
+        norm = 1.0
+        if np.linalg.norm(pos - last_pos) != 0:
+            norm = np.linalg.norm(pos - last_pos)
+        motion = np.dot((pos - last_pos)/norm, desired_motion[:3])
+        norm_1 = 1.0
+        norm_2 = 1.0
+        if np.linalg.norm(v_real) != 0:
+            norm_1 = np.linalg.norm(v_real)
+        if np.linalg.norm(desired_motion[3:]) != 0:
+            norm_1 = np.linalg.norm(desired_motion[3:])
+        motion += np.dot(v_real/norm_1, desired_motion[3:]/norm_2)
         return motion
 
     def motion_reward(self, pos, last_pos, desired_motion):
