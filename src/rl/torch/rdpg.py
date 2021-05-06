@@ -157,7 +157,7 @@ class RDPG(object):
             )
         pkl = open(os.path.join(
             checkpoint_path,
-            'robot_state_mean_std.pickle'), 'wb'
+            'robot_state_mean_var.pickle'), 'wb'
         )
         pickle.dump({
             'mean' : self.env.mean,
@@ -275,7 +275,7 @@ class RDPG(object):
                         print('[RDDPG] Saving Model')
                         pkl = open(os.path.join(
                             checkpoint_path,
-                            'robot_state_mean_std.pickle'), 'wb'
+                            'robot_state_mean_var.pickle'), 'wb'
                         )
                         pickle.dump({
                             'mean' : self.env.mean,
