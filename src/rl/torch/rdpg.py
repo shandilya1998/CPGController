@@ -13,6 +13,7 @@ from plot import plot_fit_curve_polymonial_5
 import matplotlib.pyplot as plt
 from gait_generation.gait_generator import Signal
 from tqdm import tqdm
+from rl.torch.pretrain import pretrain, GaitDataset
 
 USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
@@ -22,7 +23,7 @@ if USE_CUDA:
 
 class RDPG(object):
     def __init__(self, env, params, steps = None, cell = None, \
-        window_length = None
+        window_length = None, experiment = 0
     ):
         self.params = params
         if params['seed'] > 0:
@@ -79,6 +80,7 @@ class RDPG(object):
         )
         self.create_desired_motion_lst()
 
+        self.experiment = experiment
         if USE_CUDA: self.agent.cuda()
 
     def create_desired_motion_lst(self):
@@ -120,6 +122,22 @@ class RDPG(object):
         self.motion = []
         self.val_reward = []
         #self.save(checkpoint_path, step)
+        self.agent.save_model(checkpoint_path)
+        goal_id = np.random.randint(0, len(self.desired_motion))
+        desired_motion = self.desired_motion[goal_id]
+        self.env.quadruped.set_motion_state(desired_motion)
+        dataset = GaitDataset(self.params['pretrain_ds_path'], self.params['pretrain_bs'])
+        pretrain(
+            self.params['pretrain_epochs'],
+            self.params['pretrain_bs'],
+            checkpoint_path,
+            self.experiment,
+            dataset,
+            self.agent,
+            self.actor_optim,
+            self.env,
+            self.memory
+        )
         policy = lambda x: self.agent.select_action(
             x,
             decay_epsilon=False
@@ -146,9 +164,6 @@ class RDPG(object):
             'var' : self.env.var
         }, pkl)
         pkl.close()
-        goal_id = np.random.randint(0, len(self.desired_motion))
-        desired_motion = self.desired_motion[goal_id]
-        self.env.quadruped.set_motion_state(desired_motion)
         while step < num_iterations:
             episode_steps = 0
             total_reward = 0.0
@@ -164,7 +179,9 @@ class RDPG(object):
                     first_step = False
                 # reset if it is the start of episode
                 if state0 is None:
-                    state0 = deepcopy(self.env.reset(version = 1))
+                    state0 = deepcopy(self.env.reset(
+                        version = self.params['step_version']
+                    ))
                     state0 = [
                         to_tensor(state0[0]),
                         to_tensor(state0[1])
@@ -185,7 +202,7 @@ class RDPG(object):
                     state0[0].cpu().numpy(),
                     first_step,
                     last_step,
-                    version = 1
+                    version = self.params['step_version']
                 )
 
                 if np.isnan(reward):
@@ -262,7 +279,7 @@ class RDPG(object):
                         )
                         pickle.dump({
                             'mean' : self.env.mean,
-                            'std' : self.env.std
+                            'var' : self.env.var
                         }, pkl)
                         pkl.close()
                         self.save(checkpoint_path, step)
