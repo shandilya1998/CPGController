@@ -103,7 +103,7 @@ class RDPG(object):
 
     def train(self, num_iterations, checkpoint_path, debug):
         self.agent.is_training = True
-        step = episode = episode_steps = trajectory_steps = 0
+        step = episode = episode_steps = trajectory_steps = val_step = 0
         episode_reward = 0.
         state0 = None
         last_step = False
@@ -206,6 +206,7 @@ class RDPG(object):
                 )
                 # update
                 step += 1
+                val_step += 1
                 episode_steps += 1
                 trajectory_steps += 1
                 episode_reward += reward
@@ -220,10 +221,33 @@ class RDPG(object):
                         except RuntimeError:
                             pass
 
-                # [optional] save intermideate model
-                if step % int(num_iterations/100) == 0:
-                    print('[RDDPG] Saving Model')
-                    self.agent.save_model(checkpoint_path)
+                # [optional] evaluate
+                if self.evaluate is not None and \
+                    self.validate_steps > 0 and \
+                    val_step % self.validate_steps == 0:
+                    print('[RDDPG] Start Evaluation')
+                    policy = lambda x: self.agent.select_action(
+                        x,
+                        decay_epsilon=False
+                    )
+                    validate_reward = self.evaluate(
+                        self.env,
+                        policy,
+                        debug=False,
+                        visualize=False
+                    )
+                    self.val_reward.append(validate_reward)
+                    if debug:
+                        prYellow(
+                            '[RDDPG] Step_{:07d}: mean_reward:{}'.format(
+                                step,
+                                validate_reward
+                            )
+                        )
+                    if step > 0:
+                        print('[RDDPG] Saving Model')
+                        self.save(checkpoint_path, step)
+                        self.agent.save_model(checkpoint_path)
 
                 if done: # end of episode
                     print('[RDDPG] Episode Done')
@@ -246,32 +270,6 @@ class RDPG(object):
                     desired_motion = self.desired_motion[goal_id]
                     self.env.quadruped.set_motion_state(desired_motion)
                     break
-
-            # [optional] evaluate
-            if self.evaluate is not None and \
-                self.validate_steps > 0 and \
-                step % self.validate_steps == 0:
-                print('[RDDPG] Start Evaluation')
-                policy = lambda x: self.agent.select_action(
-                    x,
-                    decay_epsilon=False
-                )
-                validate_reward = self.evaluate(
-                    self.env,
-                    policy,
-                    debug=False,
-                    visualize=False
-                )
-                self.val_reward.append(validate_reward)
-                if debug:
-                    prYellow(
-                        '[RDDPG] Step_{:07d}: mean_reward:{}'.format(
-                            step,
-                            validate_reward
-                        )
-                    )
-                if step > 0:
-                    self.save(checkpoint_path, step)
 
     def plot(self, checkpoint_path, file_name, y, x_label, y_label, title):
         x = list(range(len(y)))

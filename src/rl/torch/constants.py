@@ -62,7 +62,7 @@ params = {
     'trajectory_length'           : 12,
     'window_length'               : 6,
     'num_validation_episodes'     : 5,
-    'validate_interval'           : 1000,
+    'validate_interval'           : 5000,
 }
 
 class TensorSpec:
