@@ -120,7 +120,7 @@ class Env:
             done = True
         if not self.quadruped.upright:
             print('[RDDPG] Quadruped Not Upright')
-            done = True
+            #done = True
 
         return self._state, reward, done, None
 
@@ -140,7 +140,7 @@ class Env:
         )
         observation = observation[:-1]
         self.COT +=  0.005 * self.quadruped.get_COT()
-        self.r_motion += self.quadruped.get_motion_reward_v3()
+        self.r_motion += self.quadruped.get_motion_reward_v2()
         self.quadruped.set_support_lines()
         self.stability += self.quadruped.get_stability_reward()
         reward += self.quadruped.reward
@@ -153,7 +153,7 @@ class Env:
             done = True
         if not self.quadruped.upright:
             print('[RDDPG] Quadruped Not Upright')
-            done = True
+            #done = True
 
         return self._state, reward, done, None
 
