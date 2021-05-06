@@ -13613,3 +13613,53 @@ rddpg_torch.py:35: FutureWarning: arrays to stack must be passed as a "sequence"
 [RDDPG] Updating Policy
 [RDDPG] Update Time: 4.52747
 [RDDPG] Updating Policy
+2021-05-06 06:31:05.976159: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:47): Gdk-CRITICAL **: 06:31:11.075: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620282675.724134933, 1.303000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620282675.728310602, 1.305000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620282675.729139622, 1.306000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620282677.579227330, 2.220000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620282678.954728117, 3.000000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620282680.403282609, 3.800000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620282682.011202730, 4.601000000]: Ready to take commands for planning group back_left_leg.[0m
+Traceback (most recent call last):
+  File "rddpg_torch.py", line 24, in <module>
+    env = Env(
+  File "/app/rl/torch/env.py", line 12, in __init__
+    self.quadruped = Quadruped(params, experiment)
+  File "/app/simulations/ws/src/quadruped/scripts/quadruped_torch.py", line 608, in __init__
+    rospy.sleep(10.0)
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/timer.py", line 165, in sleep
+    raise rospy.exceptions.ROSInterruptException("ROS shutdown request")
+rospy.exceptions.ROSInterruptException: ROS shutdown request
+2021-05-06 06:32:13.486470: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(rddpg_torch.py:452): Gdk-CRITICAL **: 06:32:16.677: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[DDPG] Waiting for joint trajectory action
+[DDPG] Found joint trajectory action!
+[0m[ INFO] [1620282743.801343553, 1.128000000]: Loading robot model 'quadruped'...[0m
+[0m[ INFO] [1620282743.802691606, 1.128000000]: No root/virtual joint specified in SRDF. Assuming fixed joint[0m
+[33m[ WARN] [1620282743.802744897, 1.128000000]: Link dummy_link has visual geometry but no collision geometry. Collision geometry will be left empty. Fix your URDF file by explicitly specifying collision geometry.[0m
+[0m[ INFO] [1620282745.775097812, 2.009000000]: Ready to take commands for planning group front_right_leg.[0m
+[0m[ INFO] [1620282746.995605640, 2.800000000]: Ready to take commands for planning group front_left_leg.[0m
+[0m[ INFO] [1620282748.352033539, 3.600000000]: Ready to take commands for planning group back_right_leg.[0m
+[0m[ INFO] [1620282749.628043617, 4.401000000]: Ready to take commands for planning group back_left_leg.[0m
