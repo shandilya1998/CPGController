@@ -9,7 +9,7 @@ import numpy as np
 
 # This is to be understood as a transition: Given `state0`, performing `action`
 # yields `reward` and results in `state1`, which might be `terminal`.
-Experience = namedtuple('Experience', 'state0, action, reward, state1, terminal1')
+Experience = namedtuple('Experience', 'state0, action, hs, reward, state1, terminal1')
 
 
 def sample_batch_indexes(low, high, size):
@@ -274,8 +274,8 @@ class EpisodicMemory(Memory):
         self.memory = RingBuffer(self.num_episodes)
         self.trajectory = [] # Temporal list of episode
 
-    def append(self, state0, action, reward, terminal, training=True):
-        self.trajectory.append(Experience(state0=state0, action=action, reward=reward, state1=None, terminal1=terminal)) # 
+    def append(self, state0, action, hs, reward, terminal, training=True):
+        self.trajectory.append(Experience(state0=state0, action=action, hs=hs,reward=reward, state1=None, terminal1=terminal)) # 
         if len(self.trajectory) >= self.max_episode_length:
             self.memory.append(self.trajectory)
             self.trajectory = []
