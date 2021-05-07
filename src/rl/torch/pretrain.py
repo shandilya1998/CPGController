@@ -202,6 +202,8 @@ def pretrain(epochs, batch_size, checkpoint_dir, experiment, \
         if epoch % 3 == 0:
             if prev_loss < total_loss[-1]:
                 break
+            else:
+                prev_loss = total_loss[-1]
         dataset.shuffle()
 
 if __name__ == '__main__':
