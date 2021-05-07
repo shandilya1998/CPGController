@@ -28,19 +28,29 @@ def to_tensor(ndarray, volatile=False, requires_grad=False, dtype=FLOAT):
 class GaitDataset(torch.utils.data.Dataset):
     def __init__(self, data_dir, batch_size):
         Y = np.load(
-            os.path.join(data_dir, 'Y.npy')
+            os.path.join(data_dir, 'Y.npy'),
+            allow_pickle = True,
+            fix_imports=True
         )
         X_0 = np.load(
-            os.path.join(data_dir, 'X_0.npy')
+            os.path.join(data_dir, 'X_0.npy'),
+            allow_pickle = True,
+            fix_imports=True
         )
         X_1 = np.load(
-            os.path.join(data_dir, 'X_1.npy')
+            os.path.join(data_dir, 'X_1.npy'),
+            allow_pickle = True,
+            fix_imports=True
         )
         F = np.load(
-            os.path.join(data_dir, 'F.npy')
+            os.path.join(data_dir, 'F.npy'),
+            allow_pickle = True,
+            fix_imports=True
         )
         MU = np.load(
-            os.path.join(data_dir, 'MU.npy')
+            os.path.join(data_dir, 'MU.npy'),
+            allow_pickle = True,
+            fix_imports=True
         )
         X = list(zip(X_0, X_1))
         Y = [Y[i] for i in range(Y.shape[0])]
@@ -152,12 +162,12 @@ def execute_policy(x, y, batch_size, agent, actor_optim, \
         ls = loss.detach().cpu().numpy(),
         t = time.perf_counter() - start
     ))
-    if validate:
-        print('[RDDPG] Epoch {ep} Step {st} Reward {ls:.5f}'.format(
+    print('[RDDPG] Epoch {ep} Step {st} Reward {ls:.5f}'.format(
             ep = epoch,
             st = step,
             ls = total_reward
         ))
+    if validate:
         pkl = open(
             os.path.join(checkpoint_dir, 'loss_{}.pickle'.format(
                 epoch
