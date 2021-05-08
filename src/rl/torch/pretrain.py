@@ -28,6 +28,7 @@ def to_tensor(ndarray, volatile=False, requires_grad=False, dtype=FLOAT):
 class GaitDataset(torch.utils.data.Dataset):
     def __init__(self, data_dir, batch_size):
         Y = np.load(
+<<<<<<< HEAD
             os.path.join(data_dir, 'Y.npy'),
             allow_pickle = True,
             fix_imports=True
@@ -51,6 +52,21 @@ class GaitDataset(torch.utils.data.Dataset):
             os.path.join(data_dir, 'MU.npy'),
             allow_pickle = True,
             fix_imports=True
+=======
+            os.path.join(data_dir, 'Y.npy')
+        )
+        X_0 = np.load(
+            os.path.join(data_dir, 'X_0.npy')
+        )
+        X_1 = np.load(
+            os.path.join(data_dir, 'X_1.npy')
+        )
+        F = np.load(
+            os.path.join(data_dir, 'F.npy')
+        )
+        MU = np.load(
+            os.path.join(data_dir, 'MU.npy')
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
         )
         X = list(zip(X_0, X_1))
         Y = [Y[i] for i in range(Y.shape[0])]
@@ -162,12 +178,20 @@ def execute_policy(x, y, batch_size, agent, actor_optim, \
         ls = loss.detach().cpu().numpy(),
         t = time.perf_counter() - start
     ))
+<<<<<<< HEAD
     print('[RDDPG] Epoch {ep} Step {st} Reward {ls:.5f}'.format(
+=======
+    if validate:
+        print('[RDDPG] Epoch {ep} Step {st} Reward {ls:.5f}'.format(
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
             ep = epoch,
             st = step,
             ls = total_reward
         ))
+<<<<<<< HEAD
     if validate:
+=======
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
         pkl = open(
             os.path.join(checkpoint_dir, 'loss_{}.pickle'.format(
                 epoch
@@ -197,7 +221,10 @@ def pretrain(epochs, batch_size, checkpoint_dir, experiment, \
     validate = False
     step, (x, y) = next(enumerate(dataset))
     steps = y.shape[1]
+<<<<<<< HEAD
     prev_loss = 1e20
+=======
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
     execute_policy(x, y, batch_size, agent, \
         actor_optim, 0, 0, env, memory, checkpoint_dir, \
         False, False)

@@ -1181,8 +1181,11 @@ class Quadruped:
         reward = 0.0
         reward -=  0.75 * np.sqrt(np.sum((self.orientation)**2))
         if self.upright:
+<<<<<<< HEAD
             #pass
             #"""
+=======
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
             t_1 = max(self.A_time[0], self.B_time[0])
             t_2 = max(self.A_time[-1], self.B_time[-1])
             self.Tb = t_2 - t_1
@@ -1228,7 +1231,10 @@ class Quadruped:
                 reward += -1.0
             if math.isnan(reward):
                 reward = -2.0
+<<<<<<< HEAD
             #"""
+=======
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
         else:
             reward += -1.0
         return reward

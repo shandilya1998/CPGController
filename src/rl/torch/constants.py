@@ -251,7 +251,11 @@ params.update({
     'pretrain_bs': bs,
     'train_test_split' : (num_data - bs) / num_data,
     'pretrain_test_interval' : 3,
+<<<<<<< HEAD
     'pretrain_epochs' : 18,
+=======
+    'pretrain_epochs' : 500,
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
     'pretrain_ds_path': 'data/pretrain_rddpg_6'
     })
 

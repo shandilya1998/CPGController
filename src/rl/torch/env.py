@@ -119,8 +119,13 @@ class Env:
             print('[RDDPG] Last Step of episode')
             done = True
         if not self.quadruped.upright:
+<<<<<<< HEAD
             #print('[RDDPG] Quadruped Not Upright')
             done = True
+=======
+            print('[RDDPG] Quadruped Not Upright')
+            #done = True
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
 
         return self._state, reward, done, None
 
@@ -152,8 +157,13 @@ class Env:
             print('[RDDPG] Last Step of episode')
             done = True
         if not self.quadruped.upright:
+<<<<<<< HEAD
             #print('[RDDPG] Quadruped Not Upright')
             done = True
+=======
+            print('[RDDPG] Quadruped Not Upright')
+            #done = True
+>>>>>>> 51b1d0dec8c48ac9194f5638088efcdc21b46f1b
 
         return self._state, reward, done, None
 
