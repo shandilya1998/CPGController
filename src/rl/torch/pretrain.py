@@ -197,6 +197,7 @@ def pretrain(epochs, batch_size, checkpoint_dir, experiment, \
     validate = False
     step, (x, y) = next(enumerate(dataset))
     steps = y.shape[1]
+    prev_loss = 1e20
     execute_policy(x, y, batch_size, agent, \
         actor_optim, 0, 0, env, memory, checkpoint_dir, \
         False, False)
